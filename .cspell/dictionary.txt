@@ -136,3 +136,5 @@ feedparser
 onezone
 denoising
 synergize
+virtualenv
+uvicorn

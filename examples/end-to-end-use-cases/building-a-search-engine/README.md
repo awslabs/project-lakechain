@@ -120,7 +120,7 @@ You can now access the web interface by visiting [http://localhost:8000](http://
 
 You can prompt the search with keywords or sentences that will be used to perform a semantic search on the documents indexed by the pipeline in OpenSearch. The example displays a list of unique documents that best match the query.
 
-> 💁 Note that this example does not filter out documents below a certain similary score, it only displays a Top 20 ranking of the most relevant documents.
+> 💁 Note that this example does not filter out documents below a certain similarity score, it only displays a Top 20 ranking of the most relevant documents.
 
 <br />
 <p align="center">
