@@ -8,7 +8,7 @@
 
 > [!Note]
 > The Lakechain Core package is part of [Project Lakechain](https://github.com/awslabs/project-lakechain), an AI-powered document processing pipeline framework based on the AWS CDK.
-> For more information on how to use this package, please refer to the [Project Documentation](https://bookish-adventure-737v6mw.pages.github.io/).
+> For more information on how to use this package, please refer to the [Project Documentation](https://awslabs.github.io/project-lakechain/).
 
 ## Overview
 

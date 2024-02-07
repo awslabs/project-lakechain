@@ -24,7 +24,7 @@
 ## 🚀 Getting Started
 
 > [!Important]
-> 👉 Head to our [documentation](https://bookish-adventure-737v6mw.pages.github.io/) which contains all the information required to understand the project, and quickly start building!
+> 👉 Head to our [documentation](https://awslabs.github.io/project-lakechain/) which contains all the information required to understand the project, and quickly start building!
 
 ## What's Lakechain ❓
 

@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/awslabs/project-lakechain/issues"
   },
-  "homepage": "https://bookish-adventure-737v6mw.pages.github.io/",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
     "zod": "^3.22.4",
     "zod-error": "^1.5.0",
