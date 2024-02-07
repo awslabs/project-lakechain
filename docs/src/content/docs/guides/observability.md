@@ -16,7 +16,7 @@ During a pipeline execution, each middleware's associated compute (Lambda functi
 
 ![CloudWatch Logs](../../../assets/cloudwatch-logs.png)
 
-> ℹ️ In Lakechain, you can control the log retention period for each middleware by using the [Middleware API](/guides/api). This helps meet customers compliance, while being able to limit cost.
+> ℹ️ In Lakechain, you can control the log retention period for each middleware by using the [Middleware API](/project-lakechain/guides/api). This helps meet customers compliance, while being able to limit cost.
 
 <br>
 
@@ -50,4 +50,4 @@ With Lambda Insights integration, customers gain more visibility into Lambda sys
 
 Container Insights apply to container based middlewares, and provide a similar level of integration as Lambda Insights, featuring system-level metric collection for containers, and performance log events using [embedded metric format](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format.html).
 
-> ℹ️ CloudWatch Insights are turned off by default. But you can use the [Middleware API](/guides/api) to enable Lambda and Container Insights for each of your middlewares.
+> ℹ️ CloudWatch Insights are turned off by default. But you can use the [Middleware API](/project-lakechain/guides/api) to enable Lambda and Container Insights for each of your middlewares.

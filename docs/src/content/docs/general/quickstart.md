@@ -4,7 +4,7 @@ title: Quickstart
 
 To help you kickstart your journey with Project Lakechain, we are going to walk you through the step-by-step deployment of your first pipeline by deploying one of the [examples](https://github.com/awslabs/project-lakechain/tree/main/examples) we've built for you.
 
-> 💁 The [pre-requisites](/general/pre-requisites) section helps you ensure you have the necessary setup on your development environment and are ready to go!
+> 💁 The [pre-requisites](/project-lakechain/general/pre-requisites) section helps you ensure you have the necessary setup on your development environment and are ready to go!
 
 ---
 
@@ -28,13 +28,13 @@ This is how the pipeline we are going to deploy looks like.
 
 ![Face Blurring Pipeline](../../../assets//face-blurring-pipeline.png)
 
-1. The [S3 Trigger](/triggers/s3-event-trigger) monitors any uploaded document from the source S3 buckets, and translates the S3 event into a [Cloud Event](/general/events) that's understood by the rest of the middlewares.
+1. The [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) monitors any uploaded document from the source S3 buckets, and translates the S3 event into a [Cloud Event](/project-lakechain/general/events) that's understood by the rest of the middlewares.
 
-2. The [Rekognition Image Processor](/image-processing/rekognition-image-processor) handles face detections, and enriches document metadata with detected faces information.
+2. The [Rekognition Image Processor](/project-lakechain/image-processing/rekognition-image-processor) handles face detections, and enriches document metadata with detected faces information.
 
-3. The [Image Layer Processor](/image-processing/image-layer-processor) uses face detection information to blur faces and highlight face landmarks in the image.
+3. The [Image Layer Processor](/project-lakechain/image-processing/image-layer-processor) uses face detection information to blur faces and highlight face landmarks in the image.
 
-4. At the end of the pipeline, the [S3 Storage Connector](/storage-connectors/s3-storage-connector) stores the transformed image in the destination S3 bucket.
+4. At the end of the pipeline, the [S3 Storage Connector](/project-lakechain/connectors/s3-storage-connector) stores the transformed image in the destination S3 bucket.
 
 <br>
 

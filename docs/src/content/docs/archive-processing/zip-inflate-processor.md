@@ -21,7 +21,7 @@ The Zip inflate processor makes it possible to extract the content of Zip archiv
 
 ### 🗄️ Inflating Archives
 
-To use this middleware, you import it in your CDK stack and connect it to a data source that provides Zip archives, such as the [S3 Trigger](/triggers/s3-event-trigger) if your Zip archives are stored in S3.
+To use this middleware, you import it in your CDK stack and connect it to a data source that provides Zip archives, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) if your Zip archives are stored in S3.
 
 > ℹ️ The below example shows how to create a pipeline that inflates Zip archives uploaded to an S3 bucket.
 

@@ -21,7 +21,7 @@ The image layer processor middleware provides the capability to draw layers on t
 
 ### 🖊️ Highlight Areas
 
-In the below example, we are coupling the [Rekognition Image Processor](/image-processing/rekognition-image-processor) middleware with the image layer processor to draw bounding boxes around detected faces in an image.
+In the below example, we are coupling the [Rekognition Image Processor](/project-lakechain/image-processing/rekognition-image-processor) middleware with the image layer processor to draw bounding boxes around detected faces in an image.
 
 > 💁 The image layer processor uses the information provided by the Rekognition image processor to determine around which area to draw the bounding boxes.
 

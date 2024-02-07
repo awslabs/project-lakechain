@@ -4,7 +4,7 @@ title: Concepts
 
 ## 🏗 Pipelines
 
-Project Lakechain articulates around the concept of *pipelines* which are the unit of execution of any document processing job. Pipelines get executed by *triggers* based on document events emitted by a data source. For example, you can declare a pipeline that is triggered every time you upload a new document on an S3 bucket by using the [S3 Trigger](/triggers/s3-event-trigger).
+Project Lakechain articulates around the concept of *pipelines* which are the unit of execution of any document processing job. Pipelines get executed by *triggers* based on document events emitted by a data source. For example, you can declare a pipeline that is triggered every time you upload a new document on an S3 bucket by using the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ![Lakechain Pipeline](../../../assets//s3-trigger.png)
 
@@ -12,7 +12,7 @@ Each pipeline can be composed of one or many components that we call *middleware
 
 ### Your First Pipeline
 
-Let's say you want to create an audio transcription pipeline that takes audio recordings as an input, and produces structured text transcriptions as an output. With Lakechain you can compose your pipeline by leveraging the [Transcribe Audio Processor](/audio-processing/transcribe-audio-processor) middleware to do just that.
+Let's say you want to create an audio transcription pipeline that takes audio recordings as an input, and produces structured text transcriptions as an output. With Lakechain you can compose your pipeline by leveraging the [Transcribe Audio Processor](/project-lakechain/audio-processing/transcribe-audio-processor) middleware to do just that.
 
 ![Transcribe Pipeline](../../../assets//transcribe-pipeline.png)
 
@@ -44,7 +44,7 @@ Every middleware declares a set of supported input and output types expressed as
 
 This allows Lakechain to raise deployment-time exceptions if you connect middlewares that don't have overlapping input and output types, the same way a typed programming language would prevent you to compile your code if you try to pass an unsupported type to a function or method.
 
-Some middlewares, such as the [S3 Trigger](/triggers/s3-event-trigger) may declare a *variant* as an output type, because customers can store *any* type of document into an S3 bucket. In those cases, only middlewares that support the concrete type of the document — known at runtime — will be triggered. This filtering makes your middlewares type-safe in any situation, thus preventing potential errors and unnecessary costs.
+Some middlewares, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) may declare a *variant* as an output type, because customers can store *any* type of document into an S3 bucket. In those cases, only middlewares that support the concrete type of the document — known at runtime — will be triggered. This filtering makes your middlewares type-safe in any situation, thus preventing potential errors and unnecessary costs.
 
 ![Event Filtering](../../../assets//event-filtering.png)
 

@@ -20,7 +20,7 @@ M1 has read-only access to the initial document in the S3 bucket. It can read th
 
 #### Cache Access Policy
 
-While middlewares can only access documents provided by their immediate predecessors, they can still share metadata with each other using the Lakechain cache storage. This storage is implemented on top of S3, and is used to store metadata that are too large to fit in a [Cloud Event](/general/events).
+While middlewares can only access documents provided by their immediate predecessors, they can still share metadata with each other using the Lakechain cache storage. This storage is implemented on top of S3, and is used to store metadata that are too large to fit in a [Cloud Event](/project-lakechain/general/events).
 
 The cache storage is readable by all middlewares in a pipeline. However, each middleware is only given write access to its own specific prefix within the cache storage, and cannot modify or delete metadata produced by other middlewares.
 

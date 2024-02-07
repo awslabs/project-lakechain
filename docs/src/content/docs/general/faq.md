@@ -6,7 +6,7 @@ title: FAQ
 
 Project Lakechain is a framework allowing AWS customers develop and deploy scalable and resilient document processing pipelines on AWS. Project Lakechain is built on top of the [AWS CDK](https://aws.amazon.com/cdk/), allowing customers to express their pipelines as infrastructure-as-code and follow best-practices of consistent, repeatable, auditable and versioned infrastructure.
 
-With Lakechain, developers can compose their pipelines using [middlewares](/general/concepts#-middlewares), and model them in the shape of a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph).
+With Lakechain, developers can compose their pipelines using [middlewares](/project-lakechain/general/concepts#-middlewares), and model them in the shape of a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph).
 
 <br />
 
@@ -14,9 +14,9 @@ With Lakechain, developers can compose their pipelines using [middlewares](/gene
 
 ##### What's different about Project Lakechain?
 
-Project Lakechain has been built on top of a cloud-native architecture with scale, security and cost-efficiency in mind since the very beginning. It leverages a strong foundation for high-throughput message-passing based on AWS SQS and AWS SNS, and a [security model](/guides/security-model) based on AWS IAM to keep customer data secure and private.
+Project Lakechain has been built on top of a cloud-native architecture with scale, security and cost-efficiency in mind since the very beginning. It leverages a strong foundation for high-throughput message-passing based on AWS SQS and AWS SNS, and a [security model](/project-lakechain/guides/security-model) based on AWS IAM to keep customer data secure and private.
 
-> ℹ️ See the [Architecture Overview](/guides/architecture) section for more details on the architecture of Lakechain.
+> ℹ️ See the [Architecture Overview](/project-lakechain/guides/architecture) section for more details on the architecture of Lakechain.
 
 By providing dozens of existing middlewares, built for the Cloud, and addressing the most common needs for processing documents using Machine-Learning, Generative AI, NLP, and Computer Vision, Project Lakechain provides an ideal blueprint for rapid prototyping and validation of ideas.
 
@@ -44,7 +44,7 @@ No, Project Lakechain is currently not intended for production-use. It is intend
 
 ##### What are the requirements to use Project Lakechain?
 
-You can find the technical requirements for using Project Lakechain in the [Pre-requisites](/general/pre-requisites) section of the documentation.
+You can find the technical requirements for using Project Lakechain in the [Pre-requisites](/project-lakechain/general/pre-requisites) section of the documentation.
 
 <br />
 

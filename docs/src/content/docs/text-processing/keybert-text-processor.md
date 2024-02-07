@@ -21,7 +21,7 @@ This middleware is based on the [KeyBERT](https://github.com/MaartenGr/KeyBERT) 
 
 ### 🏷️ Keyword Extraction
 
-To use this middleware, you import it in your CDK stack and connect it to a data source that provides text documents, such as the [S3 Trigger](/triggers/s3-event-trigger) if your text documents are stored in S3.
+To use this middleware, you import it in your CDK stack and connect it to a data source that provides text documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) if your text documents are stored in S3.
 
 ```typescript
 import { KeybertTextProcessor } from '@project-lakechain/keybert-text-processor';

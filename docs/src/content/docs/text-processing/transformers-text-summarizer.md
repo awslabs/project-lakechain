@@ -23,7 +23,7 @@ The Transformers summarizer allows to run [Huggingface summarizer models](https:
 
 ### 📝 Summarizing Text
 
-To use this middleware, you import it in your CDK stack and connect it to a data source that provides text documents, such as the [S3 Trigger](/triggers/s3-event-trigger) if your text documents are stored in S3.
+To use this middleware, you import it in your CDK stack and connect it to a data source that provides text documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) if your text documents are stored in S3.
 
 > ℹ️ The below example shows how to create a pipeline that summarizes text documents uploaded to an S3 bucket.
 
@@ -135,7 +135,7 @@ const summarizer = new TransformersTextSummarizer.Builder()
 
 ### 🏗️ Architecture
 
-This middleware supports both `CPU` and `GPU` compute types. We implemented 2 different architectures, one that's GPU based and using ECS, the other which is CPU based and serverless, based on AWS Lambda. You can use the [`.withComputeType`](/guides/api#compute-types) API to select the compute type you want to use.
+This middleware supports both `CPU` and `GPU` compute types. We implemented 2 different architectures, one that's GPU based and using ECS, the other which is CPU based and serverless, based on AWS Lambda. You can use the [`.withComputeType`](/project-lakechain/guides/api#compute-types) API to select the compute type you want to use.
 
 > 💁 By default, this implementation will run on the `CPU` compute type.
 

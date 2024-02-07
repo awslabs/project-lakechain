@@ -48,7 +48,7 @@ class Stack extends cdk.Stack {
 
 ### 📝 Metadata
 
-This middleware will automatically extract feed item metadata and make them available as part of the output [CloudEvents](/general/events). The following metadata are extracted, when available, from feed items.
+This middleware will automatically extract feed item metadata and make them available as part of the output [CloudEvents](/project-lakechain/general/events). The following metadata are extracted, when available, from feed items.
 
 | Metadata      | Description |
 |---------------|-------------|

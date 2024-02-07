@@ -23,7 +23,7 @@ The Polly Synthesizer allows to synthesize speech from text using the [Amazon Po
 
 To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline.
 
-> 💁 In the below example, we use the [NLP Processor](/text-processing/nlp-text-processor) to detect the language of the text and then use the Polly synthesizer to convert the text to speech using the detected language.
+> 💁 In the below example, we use the [NLP Processor](/project-lakechain/text-processing/nlp-text-processor) to detect the language of the text and then use the Polly synthesizer to convert the text to speech using the detected language.
 
 ```typescript
 import { PollySynthesizer } from '@project-lakechain/polly-synthesizer';
@@ -64,7 +64,7 @@ class Stack extends cdk.Stack {
 
 #### Language Override
 
-Amazon Polly needs to know the source language of the text to be able to associate with with a voice that is fit for synthesizing the text. In the previous example, we've used the [NLP Processor](/text-processing/nlp-text-processor) to detect the language of the text and then use the Polly synthesizer to convert the text to speech using the detected language.
+Amazon Polly needs to know the source language of the text to be able to associate with with a voice that is fit for synthesizing the text. In the previous example, we've used the [NLP Processor](/project-lakechain/text-processing/nlp-text-processor) to detect the language of the text and then use the Polly synthesizer to convert the text to speech using the detected language.
 
 You can however manually override the source language of the text if your source documents share a common known language that is [supported by Amazon Polly](https://docs.aws.amazon.com/polly/latest/dg/SupportedLanguage.html).
 

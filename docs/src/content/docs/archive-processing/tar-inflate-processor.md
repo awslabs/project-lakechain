@@ -21,7 +21,7 @@ The TAR inflate processor makes it possible to extract, on-the-fly, the content 
 
 ### 🗄️ Inflating Archives
 
-To use this middleware, you import it in your CDK stack and connect it to a data source that provides TAR archives, such as the [S3 Trigger](/triggers/s3-event-trigger) if your TAR archives are stored in S3.
+To use this middleware, you import it in your CDK stack and connect it to a data source that provides TAR archives, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger) if your TAR archives are stored in S3.
 
 > ℹ️ The below example shows how to create a pipeline that inflates TAR archives uploaded to an S3 bucket.
 

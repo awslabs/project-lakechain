@@ -86,7 +86,7 @@ Name             | Description | Format     | Mandatory
 
 ## 📖 Metadata
 
-The `metadata` object contains additional information about the document. Metadata are enriched by middlewares through the lifecycle of a pipeline. For example, the [Image Metadata Extractor](/image-processing/image-metadata-extractor) enriches the metadata object with information such as image dimensions, EXIF tags, authors, camera model, etc.
+The `metadata` object contains additional information about the document. Metadata are enriched by middlewares through the lifecycle of a pipeline. For example, the [Image Metadata Extractor](/project-lakechain/image-processing/image-metadata-extractor) enriches the metadata object with information such as image dimensions, EXIF tags, authors, camera model, etc.
 
 ```json
 {

@@ -24,7 +24,7 @@ paragraph break and the segmented text is returned.
 
 ### 📝 Splitting Text
 
-To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/triggers/s3-event-trigger).
+To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ```typescript
 import { TilingTextSplitter } from '@project-lakechain/tiling-text-splitter';

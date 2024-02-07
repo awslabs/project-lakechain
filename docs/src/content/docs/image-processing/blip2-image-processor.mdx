@@ -30,7 +30,7 @@ The BLIP2 image processor makes it possible to generate captions for images with
 
 To use this middleware, you have to import it in your CDK stack and specify a VPC in which the cluster will be deployed.
 
-> 💁 Note that you will need to specify a data source that the BLIP2 processor will use as an input, such as the [S3 trigger](/triggers/s3-event-trigger).
+> 💁 Note that you will need to specify a data source that the BLIP2 processor will use as an input, such as the [S3 trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ```typescript
 import { Blip2ImageProcessor } from '@project-lakechain/blip2-image-processor';
@@ -90,7 +90,7 @@ The BLIP2 image processor does not modify or alter source images in any way. It 
 <details>
   <summary>💁 Click to expand example</summary>
   
-  > ℹ️ Below is an example of a [CloudEvent](/general/events) emitted by the BLIP2 processor.
+  > ℹ️ Below is an example of a [CloudEvent](/project-lakechain/general/events) emitted by the BLIP2 processor.
 
   ```json
   {

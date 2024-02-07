@@ -173,7 +173,7 @@ The Bedrock embedding processor does not modify or alter source documents in any
 
 Both the Titan and Cohere embedding models have limits on the number of input tokens they can process. For more information, you can consult the [Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/limits.html) to understand these limits.
 
-> 💁 To limit the size of upstream text documents, we recommend to use a text splitter to chunk text documents before they are passed to this middleware, such as the [Recursive Character Text Splitter](/text-splitters/recursive-character-text-splitter).
+> 💁 To limit the size of upstream text documents, we recommend to use a text splitter to chunk text documents before they are passed to this middleware, such as the [Recursive Character Text Splitter](/project-lakechain/text-splitters/recursive-character-text-splitter).
 
 Furthermore, this middleware applies a throttling of 10 concurrently processed documents from its input queue to ensure that it does not exceed the limits of the embedding models it uses — see [Bedrock Quotas](https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html) for more information.
 

@@ -8,7 +8,7 @@ To provide a high-throughput and distributed computing foundation for processing
 
 The heart of Project Lakechain lies in its messaging system, allowing middlewares to process documents and communicate with each other. To model DAGs in Lakechain, we built on top of a solid foundation, leveraging [AWS SQS](https://aws.amazon.com/sqs/) and [AWS SNS](https://aws.amazon.com/sns/).
 
-As seen in the [Concepts](/general/concepts) section, each middleware exposes an input for handling documents to process, and an output to publish the result of a processing job. In fact, each input is modeled as an SQS queue, and each output as an SNS topic.
+As seen in the [Concepts](/project-lakechain/general/concepts) section, each middleware exposes an input for handling documents to process, and an output to publish the result of a processing job. In fact, each input is modeled as an SQS queue, and each output as an SNS topic.
 
 ![Middleware I/O](../../../assets/middleware-io.png)
 
@@ -90,7 +90,7 @@ This design makes it possible to model complex DAGs, while keeping the integrati
 
 ### Filtering
 
-In the [concepts](/general/concepts) section, we mentioned that middlewares can declare the types of documents they support, and additional conditionals that have to be met before they are invoked. This is made possible by using [SNS filtering](https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html), where Lakechain automatically *compiles* at deployment-time constraints declared by each middleware into a set of SNS filtering policies that get applied at runtime.
+In the [concepts](/project-lakechain/general/concepts) section, we mentioned that middlewares can declare the types of documents they support, and additional conditionals that have to be met before they are invoked. This is made possible by using [SNS filtering](https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html), where Lakechain automatically *compiles* at deployment-time constraints declared by each middleware into a set of SNS filtering policies that get applied at runtime.
 
 This is the reason why a middleware that only supports images, is not invoked when another type of document triggers a pipeline.
 
@@ -114,7 +114,7 @@ The 0.80$/million message exchanged calculation goes as follow :
 ## 🗂️ Caching
 
 Each middleware only gets read access to the document made available to it by previous middlewares. However,
-[pointers](/general/events/#using-pointers) that are parts of a document event need to be accessible by all middlewares across a pipeline.
+[pointers](/project-lakechain/general/events/#using-pointers) that are parts of a document event need to be accessible by all middlewares across a pipeline.
 
 To allow middlewares access pointers referenced in a document event, a distributed cache is provided to each middlewares part of the same pipeline. The cache is implemented on top of S3 ([Standard Class](https://aws.amazon.com/s3/storage-classes/)) and provides a cost-efficient, scalable, low-latency and high-throughput solution for storing and retrieving pointers when needed.
 

@@ -15,7 +15,7 @@ title: Firehose Connector
 
 ---
 
-The Firehose storage connector makes it possible to forward [CloudEvents](/general/events) emitted by one or multiple middlewares in a pipeline to a user-defined Kinesis Firehose delivery stream. This connector allows to nicely decouple the processing of your documents with third-party applications that can consume processed documents from a delivery stream.
+The Firehose storage connector makes it possible to forward [CloudEvents](/project-lakechain/general/events) emitted by one or multiple middlewares in a pipeline to a user-defined Kinesis Firehose delivery stream. This connector allows to nicely decouple the processing of your documents with third-party applications that can consume processed documents from a delivery stream.
 
 > 💁 This connector only forwards the CloudEvents emitted by middlewares to the delivery stream, and not the documents themselves.
 

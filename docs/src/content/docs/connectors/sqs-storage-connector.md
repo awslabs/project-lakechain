@@ -17,7 +17,7 @@ title: SQS Connector
 
 The SQS storage connector makes it possible to capture the result of one or multiple middlewares in a pipeline and store their results in a user-defined SQS queue. This connector allows to nicely decouple the processing of your documents with third-party applications that can consume processed documents from a queue.
 
-> 💁 This connector only forwards the [CloudEvents](/general/events) emitted by middlewares to the SQS queue, and not the documents themselves.
+> 💁 This connector only forwards the [CloudEvents](/project-lakechain/general/events) emitted by middlewares to the SQS queue, and not the documents themselves.
 
 ---
 

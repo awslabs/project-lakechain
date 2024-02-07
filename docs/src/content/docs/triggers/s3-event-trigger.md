@@ -86,7 +86,7 @@ const trigger = new S3EventTrigger.Builder()
 
 ### 🏗️ Architecture
 
-The S3 trigger receives S3 events from subscribed buckets on its SQS input queue. They are consumed by a Lambda function used to translate S3 events into a [CloudEvent](/general/events). The Lambda function also takes care of identifying the mime-type of a document based on its extension, the S3 reported mime-type, or the content of the document itself.
+The S3 trigger receives S3 events from subscribed buckets on its SQS input queue. They are consumed by a Lambda function used to translate S3 events into a [CloudEvent](/project-lakechain/general/events). The Lambda function also takes care of identifying the mime-type of a document based on its extension, the S3 reported mime-type, or the content of the document itself.
 
 ![Architecture](../../../assets/s3-event-trigger-architecture.png)
 

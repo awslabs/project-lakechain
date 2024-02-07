@@ -21,7 +21,7 @@ The character text splitter can be used to split text documents at scale based o
 
 ### 📝 Splitting Text
 
-To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/triggers/s3-event-trigger).
+To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ```typescript
 import { CharacterTextSplitter } from '@project-lakechain/character-text-splitter';

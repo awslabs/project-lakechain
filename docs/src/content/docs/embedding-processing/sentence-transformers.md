@@ -152,7 +152,7 @@ The Sentence Transformers middleware does not modify or alter source documents i
 
 Sentence Transformer models have limits on the number of input tokens they can process. For more information, you can consult the documentation of the specific model you are using to understand these limits.
 
-> 💁 To limit the size of upstream text documents, we recommend to use a text splitter to chunk text documents before they are passed to this middleware, such as the [Recursive Character Text Splitter](/text-splitters/recursive-character-text-splitter).
+> 💁 To limit the size of upstream text documents, we recommend to use a text splitter to chunk text documents before they are passed to this middleware, such as the [Recursive Character Text Splitter](/project-lakechain/text-splitters/recursive-character-text-splitter).
 
 <br>
 

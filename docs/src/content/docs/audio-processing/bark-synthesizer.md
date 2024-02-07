@@ -21,7 +21,7 @@ The Bark synthesizer middleware synthesizes input text documents into voices usi
 
 ### 🐶 Synthesizing Text
 
-To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline and connect it to a data source that provides input documents, such as the [S3 Trigger](/triggers/s3-event-trigger).
+To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline and connect it to a data source that provides input documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ```typescript
 import { BarkSynthesizer } from '@project-lakechain/bark-synthesizer';
@@ -53,7 +53,7 @@ class Stack extends cdk.Stack {
 
 #### Input Language
 
-The Bark synthesizer needs to know what is the source language of the text to be able to select the appropriate voice for the text-to-speech synthesis. The first location used by the middleware to infer the source language is the document metadata. If a previous middleware, such as the [NLP Text Processor](/text-processing/nlp-text-processor), has already detected the language of the document, the synthesizer will use that information. If no language was specified, the Bark synthesizer will assume the input document language to be english.
+The Bark synthesizer needs to know what is the source language of the text to be able to select the appropriate voice for the text-to-speech synthesis. The first location used by the middleware to infer the source language is the document metadata. If a previous middleware, such as the [NLP Text Processor](/project-lakechain/text-processing/nlp-text-processor), has already detected the language of the document, the synthesizer will use that information. If no language was specified, the Bark synthesizer will assume the input document language to be english.
 
 > ℹ️ Below is an example showcasing how to use the NLP Text processor to detect the language of input text documents to enrich their metadata before the Bark synthesizer is invoked.
 

@@ -42,7 +42,7 @@ In its most basic form, a middleware requires at least three components.
 
 ### Source & Destination
 
-As described in the [architecture](/guides/architecture) section, middlewares can consume documents from other middlewares in a pipeline. Similarly, they produce documents that can be consumed by other middlewares.
+As described in the [architecture](/project-lakechain/guides/architecture) section, middlewares can consume documents from other middlewares in a pipeline. Similarly, they produce documents that can be consumed by other middlewares.
 
 In the below example, we show how to connect 2 middlewares together in a sequential manner. This means that whenever `A` produces a document, `B` will receive it as input.
 
@@ -118,7 +118,7 @@ const B = new MiddlewareB.Builder()
   .build();
 ```
 
-Conditionals can be expressed with the `when` API, and are applied on the structure of the input [CloudEvent](/general/events) document using different operators such as `lt`, `gt`, `lte`, `gte`, `equals`, `includes` and `startsWith`.
+Conditionals can be expressed with the `when` API, and are applied on the structure of the input [CloudEvent](/project-lakechain/general/events) document using different operators such as `lt`, `gt`, `lte`, `gte`, `equals`, `includes` and `startsWith`.
 
 You can also combine multiple conditions to express `and` statements.
 
@@ -390,7 +390,7 @@ middleware.grantReadProcessedDocuments(fn);
 
 By default, Lakechain uses AWS managed keys for encryption at rest, and encryption in-transit provided by AWS services. Customers can also provide their own [Customer Managed Keys (CMK)](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk) to encrypt data at rest and create end-to-end encrypted pipelines.
 
-> 💁 See the [Encryption Security Model](/guides/security-model#-encryption) for more information.
+> 💁 See the [Encryption Security Model](/project-lakechain/guides/security-model#-encryption) for more information.
 
 You can use the `.withKmsKey` API to provide a CMK to a middleware.
 
@@ -454,7 +454,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-> 💁 Customers having strong security and compliance requirements can also pass a VPC instance to middlewares (including those based on AWS Lambda) that are configured with specific VPC Endpoints. For more information please read our [Using VPC Endpoints](/guides/security-model#-vpc-endpoints) guide.
+> 💁 Customers having strong security and compliance requirements can also pass a VPC instance to middlewares (including those based on AWS Lambda) that are configured with specific VPC Endpoints. For more information please read our [Using VPC Endpoints](/project-lakechain/guides/security-model#-vpc-endpoints) guide.
 
 <br>
 

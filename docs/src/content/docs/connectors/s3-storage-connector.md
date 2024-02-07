@@ -15,7 +15,7 @@ title: S3 Connector
 
 ---
 
-The S3 storage connector makes it possible to capture the result of one or multiple middlewares in a pipeline and store their results in a user-defined S3 bucket destination. This connector supports storing both the [CloudEvents](/general/events) emitted by middlewares, but also optionally copy the output document itself to the destination bucket.
+The S3 storage connector makes it possible to capture the result of one or multiple middlewares in a pipeline and store their results in a user-defined S3 bucket destination. This connector supports storing both the [CloudEvents](/project-lakechain/general/events) emitted by middlewares, but also optionally copy the output document itself to the destination bucket.
 
 ---
 

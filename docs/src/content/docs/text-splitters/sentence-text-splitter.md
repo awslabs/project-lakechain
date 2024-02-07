@@ -21,7 +21,7 @@ The sentence text splitter can be used to split text documents at scale based on
 
 ### 📝 Splitting Text
 
-To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/triggers/s3-event-trigger).
+To use this middleware, you import it in your CDK stack, and connect it to a data source providing text documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
 
 ```typescript
 import { SentenceTextSplitter } from '@project-lakechain/sentence-text-splitter';

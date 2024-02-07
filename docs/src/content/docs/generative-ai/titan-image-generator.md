@@ -23,7 +23,7 @@ The Bedrock image generators package enables developers to use image generation 
 
 To generate images as part of your pipelines from a text prompt, you can use the `TitanImageGenerator` construct. This construct either takes the content of input text document as a prompt for generating an image, allowing you to nicely chain documents together, or can also take a user-provided prompt.
 
-> ℹ️ The below example demonstrates how to use the Titan image generator to create images from an arbitrary prompt every 5 minutes, using the [Scheduler Trigger](/triggers/scheduler-event-trigger).
+> ℹ️ The below example demonstrates how to use the Titan image generator to create images from an arbitrary prompt every 5 minutes, using the [Scheduler Trigger](/project-lakechain/triggers/scheduler-event-trigger).
 
 ```typescript
 import * as scheduler from '@aws-cdk/aws-scheduler-alpha';
