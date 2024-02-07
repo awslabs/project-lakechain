@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/bark-synthesizer",
   "description": "Synthesize text to audio using the Bark model.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -34,8 +34,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.1.1",
-    "@project-lakechain/ecs-cluster": "^0.1.1"
+    "@project-lakechain/core": "^0.1.2",
+    "@project-lakechain/ecs-cluster": "^0.1.2"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
