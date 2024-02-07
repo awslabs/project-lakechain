@@ -6,7 +6,7 @@ title: Recursive Splitter
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.1.0
+  0.1.4
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   @project-lakechain/recursive-character-text-splitter
