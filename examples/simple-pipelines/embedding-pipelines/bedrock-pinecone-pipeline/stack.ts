@@ -67,7 +67,7 @@ export class BedrockPineconePipeline extends cdk.Stack {
     const pineconeApiKey = secrets.Secret.fromSecretNameV2(
       this,
       'PineconeApiKey',
-      process.env.PINECONE_API_KEY_SECRET_NAME as string
+      process.env.PINECONE_API_KEY_SECRET_NAME
     );
 
     ///////////////////////////////////////////

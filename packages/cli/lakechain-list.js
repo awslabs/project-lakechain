@@ -57,7 +57,8 @@ chain.use(async (input, output, next) => {
   const res = await fetch(
     `${opts.registry}/-/v1/search?text=scope:aws`
   );
-  next(input.list = await res.json());
+  input.list = await res.json()
+  next();
 });
 
 /**

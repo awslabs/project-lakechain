@@ -1,6 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { Match, Template } from 'aws-cdk-lib/assertions';
-import { CacheStorage, CacheStorageProps } from '../../../src/cache-storage';
+import { CacheStorage } from '../../../src/cache-storage';
 import { Middleware, MiddlewareProps, MiddlewareBuilder } from '../../../src/middleware';
 import { Construct } from 'constructs';
 import { ServiceDescription } from '../../../src/service';

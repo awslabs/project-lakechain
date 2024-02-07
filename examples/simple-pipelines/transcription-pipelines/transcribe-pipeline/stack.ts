@@ -22,7 +22,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { TranscribeAudioProcessor, OutputFormat } from '@project-lakechain/transcribe-audio-processor';
+import { TranscribeAudioProcessor } from '@project-lakechain/transcribe-audio-processor';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**

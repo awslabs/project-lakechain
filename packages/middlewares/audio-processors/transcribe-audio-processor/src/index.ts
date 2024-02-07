@@ -30,9 +30,12 @@ import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
 import { OutputFormat } from './definitions/output-format';
-import { TranscribeAudioProcessorProps, TranscribeAudioProcessorSchema } from './definitions/opts';
 import { compile } from './definitions/options-compiler';
 
+import {
+  TranscribeAudioProcessorProps,
+  TranscribeAudioProcessorSchema
+} from './definitions/opts';
 import {
   Middleware,
   MiddlewareBuilder,
