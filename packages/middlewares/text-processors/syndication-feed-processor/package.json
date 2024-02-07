@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/syndication-feed-processor",
   "description": "Parses RSS and Atom syndication feeds.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -34,7 +34,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.1.2"
+    "@project-lakechain/core": "^0.1.3"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
