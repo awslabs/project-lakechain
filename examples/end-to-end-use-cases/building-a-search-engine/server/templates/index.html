@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/static/css/search.css">
+  </head>
+  <body>
+    <center>
+      <form action="/search" method="GET">
+        <div class="logo">
+          <img alt="search" width="100" src="/static/images/search.png">
+        </div>
+        <div class="bar">
+          <input class="searchbar" type="text" title="Search" name="q" minlength="1" autofocus required>
+        </div>
+        <div class="buttons">
+          <button class="button" type="submit">Search</button>
+        </div>
+      </form>
+    </center>
+  </body>
+</html>

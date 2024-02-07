@@ -1,0 +1,28 @@
+name: Close inactive issues
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  close-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@3f3b0175e8c66fb49b9a6d5a0cd1f8436d4c3ab6
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-issue-stale: 30
+          days-before-issue-close: 14
+          stale-issue-label: "stale"
+          remove-stale-when-updated: true
+          stale-issue-message: "This issue is stale because it has been open for 30 days with no activity."
+          close-issue-message: "This issue was closed because it has been inactive for 14 days since being marked as stale."
+          # Include only issues that were labeled as `need-response` (aka only issues that need a response from the customer)
+          only-issue-labels: need-response
+          days-before-pr-stale: -1
+          days-before-pr-close: -1

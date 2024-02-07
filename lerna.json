@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore(release): %s [skip ci]"
+    }
+  },
+  "packages": [
+    "packages/*",
+    "packages/constructs/*",
+    "packages/middlewares/*/*",
+    "examples/simple-pipelines/*",
+    "examples/simple-pipelines/*-pipelines/*",
+    "examples/end-to-end-use-cases/*"
+  ],
+  "version": "0.1.1",
+  "npmClient": "npm"
+}

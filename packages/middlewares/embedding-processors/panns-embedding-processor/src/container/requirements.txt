@@ -1,0 +1,6 @@
+boto3==1.34.22
+panns-inference==0.1.1
+librosa==0.10.1
+numpy==1.26.3
+torch==2.1.2
+pydub==0.25.1

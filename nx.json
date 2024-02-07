@@ -1,0 +1,73 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "build-pkg",
+          "lint"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/"
+      ]
+    },
+    "build-pkg": {
+      "dependsOn": [
+        "^build-pkg"
+      ],
+      "outputs": [
+        "{projectRoot}/dist/"
+      ]
+    },
+    "clean": {
+      "dependsOn": [
+        "^clean"
+      ]
+    },
+    "audit": {
+      "dependsOn": [
+        "^audit"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ]
+    },
+    "synth": {
+      "dependsOn": [
+        "^build",
+        "^synth"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "prettier:check": {
+      "dependsOn": [
+        "^prettier:check"
+      ]
+    },
+    "test:coverage": {
+      "dependsOn": [
+        "^test:coverage"
+      ]
+    },
+    "postbuild": {
+      "dependsOn": [
+        "^postbuild"
+      ]
+    }
+  }
+}

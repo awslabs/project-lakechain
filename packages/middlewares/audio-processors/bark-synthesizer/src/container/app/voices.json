@@ -1,0 +1,686 @@
+[
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_0",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_1",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_2",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_3",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_4",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_6",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_7",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_8",
+    "LanguageName": "English",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "en",
+    "Id": "v2/en_speaker_9",
+    "LanguageName": "English",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_0",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_1",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_2",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_3",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_4",
+    "LanguageName": "Chinese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_5",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_7",
+    "LanguageName": "Chinese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_8",
+    "LanguageName": "Chinese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "zh",
+    "Id": "v2/zh_speaker_9",
+    "LanguageName": "Chinese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_0",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_1",
+    "LanguageName": "French",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_2",
+    "LanguageName": "French",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_3",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_4",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_5",
+    "LanguageName": "French",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_6",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_7",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "fr",
+    "Id": "v2/fr_speaker_8",
+    "LanguageName": "French",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_0",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_1",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_2",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_3",
+    "LanguageName": "German",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_4",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_5",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_6",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_7",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_8",
+    "LanguageName": "German",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "de",
+    "Id": "v2/de_speaker_9",
+    "LanguageName": "German",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_0",
+    "LanguageName": "Hindi",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_2",
+    "LanguageName": "Hindi",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_4",
+    "LanguageName": "Hindi",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_5",
+    "LanguageName": "Hindi",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_6",
+    "LanguageName": "Hindi",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_7",
+    "LanguageName": "Hindi",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_8",
+    "LanguageName": "Hindi",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "hi",
+    "Id": "v2/hi_speaker_9",
+    "LanguageName": "Hindi",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_0",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_1",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_2",
+    "LanguageName": "Italian",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_3",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_4",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_5",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_6",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_7",
+    "LanguageName": "Italian",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_8",
+    "LanguageName": "Italian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "it",
+    "Id": "v2/it_speaker_9",
+    "LanguageName": "Italian",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_0",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_2",
+    "LanguageName": "Japanese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_3",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_4",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_5",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_6",
+    "LanguageName": "Japanese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_7",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_8",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ja",
+    "Id": "v2/ja_speaker_9",
+    "LanguageName": "Japanese",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_0",
+    "LanguageName": "Korean",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_1",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_2",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_3",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_4",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_5",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_6",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_7",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_8",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ko",
+    "Id": "v2/ko_speaker_9",
+    "LanguageName": "Korean",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_0",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_1",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_2",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_3",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_4",
+    "LanguageName": "Polish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_5",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_6",
+    "LanguageName": "Polish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_7",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_8",
+    "LanguageName": "Polish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pl",
+    "Id": "v2/pl_speaker_9",
+    "LanguageName": "Polish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_0",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_1",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_2",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_3",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_4",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_5",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_7",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_8",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "pt",
+    "Id": "v2/pt_speaker_9",
+    "LanguageName": "Portuguese",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ru",
+    "Id": "v2/ru_speaker_0",
+    "LanguageName": "Russian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ru",
+    "Id": "v2/ru_speaker_3",
+    "LanguageName": "Russian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ru",
+    "Id": "v2/ru_speaker_4",
+    "LanguageName": "Russian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "ru",
+    "Id": "v2/ru_speaker_5",
+    "LanguageName": "Russian",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "ru",
+    "Id": "v2/ru_speaker_7",
+    "LanguageName": "Russian",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_0",
+    "LanguageName": "Spanish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_1",
+    "LanguageName": "Spanish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_4",
+    "LanguageName": "Spanish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_6",
+    "LanguageName": "Spanish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_7",
+    "LanguageName": "Spanish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_8",
+    "LanguageName": "Spanish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "es",
+    "Id": "v2/es_speaker_9",
+    "LanguageName": "Spanish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_0",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_1",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_2",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_3",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_4",
+    "LanguageName": "Turkish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_5",
+    "LanguageName": "Turkish",
+    "Gender": "Female"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_6",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_8",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  },
+  {
+    "LanguageCode": "tr",
+    "Id": "v2/tr_speaker_9",
+    "LanguageName": "Turkish",
+    "Gender": "Male"
+  }
+]

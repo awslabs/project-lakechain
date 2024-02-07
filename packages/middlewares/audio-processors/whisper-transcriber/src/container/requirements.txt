@@ -1,0 +1,7 @@
+boto3==1.34.29
+pydantic==2.5.3
+ctranslate2==3.24.0
+faster-whisper==0.10.0
+tiktoken==0.5.2
+numba==0.58.1
+git+https://github.com/openai/whisper.git@ba3f3cd54b0e5b8ce1ab3de13e32122d0d5f98ab

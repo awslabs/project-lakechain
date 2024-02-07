@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/search.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/images.css">
+    <script src="/static/js/search.js"></script>
+  </head>
+  <body>
+    <div class="search">
+      <center>
+        <form action="/search/images" method="GET">
+          <a href="/">
+            <div>
+              <img alt="search" width="70" src="/static/images/search.png" style="margin-bottom: 20px;">
+            </div>
+          </a>
+          <div class="bar">
+            <input id="search-input" class="searchbar" type="text" title="Search" name="q" minlength="1" required>
+          </div>
+        </form>
+        <div class="menu">
+          <a href="/search" class="menu-link">
+            <?xml version="1.0" ?><svg style="margin-bottom: -5px" width="20" height="20" enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/></svg>
+            &nbsp;Documents
+          </a>
+          <a href="/search/images" class="menu-link">
+            <?xml version="1.0" ?>
+            <svg style="margin-bottom: -5px" width="20" height="20" id="Layer_1" style="enable-background:new 0 0 64 64;" version="1.1" viewBox="0 0 64 64" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css">
+              .st0{fill:#134563;}
+            </style><g><g id="Icon-Image" transform="translate(278.000000, 232.000000)"><path class="st0" d="M-226.2-181.6h-39.5c-2.3,0-4.2-1.9-4.2-4.2v-28.2c0-2.3,1.9-4.2,4.2-4.2h39.5     c2.3,0,4.2,1.9,4.2,4.2v28.2C-222-183.5-223.9-181.6-226.2-181.6L-226.2-181.6z M-265.8-215.5c-0.8,0-1.4,0.6-1.4,1.4v28.2     c0,0.8,0.6,1.4,1.4,1.4h39.5c0.8,0,1.4-0.6,1.4-1.4v-28.2c0-0.8-0.6-1.4-1.4-1.4H-265.8L-265.8-215.5z" id="Fill-12"/><path class="st0" d="M-238.9-201.5c-3.1,0-5.5-2.5-5.5-5.5s2.5-5.5,5.5-5.5s5.5,2.5,5.5,5.5     S-235.9-201.5-238.9-201.5L-238.9-201.5z M-238.9-210c-1.6,0-2.9,1.3-2.9,2.9c0,1.6,1.3,2.9,2.9,2.9c1.6,0,2.9-1.3,2.9-2.9     C-236-208.7-237.3-210-238.9-210L-238.9-210z" id="Fill-13"/><polyline class="st0" id="Fill-14" points="-231.4,-182.1 -254.5,-203.8 -267.7,-191.6 -269.5,-193.5 -254.5,-207.4 -229.6,-184      -231.4,-182.1    "/><polyline class="st0" id="Fill-15" points="-224.2,-189.3 -231.9,-195.5 -238.3,-190.2 -240,-192.3 -231.9,-198.9 -222.6,-191.3      -224.2,-189.3    "/></g></g></svg>
+            &nbsp;Images
+          </a>
+        </div>
+      </center>
+    </div>
+    <div class="container">
+      {% if results|length == 0 %}
+        <center>
+          <div class="no-results">No results found</div>
+        </center>
+      {% endif %}
+      {% for result in results %}
+      <a href="{{ result['_source']['data']['document']['presigned_url'] }}">
+        <figure>
+          <img loading="lazy" src="{{ result['_source']['data']['document']['presigned_url'] }}" alt="" />
+          <figcaption>{{ result['_source']['data']['metadata']['keywords'][0] }}</figcaption>
+        </figure>
+      </a>
+      {% endfor %}
+    </div>
+  </body>
+</html>

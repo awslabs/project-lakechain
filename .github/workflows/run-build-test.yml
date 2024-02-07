@@ -1,0 +1,26 @@
+name: Run unit tests and builds the project
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [18, 20]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Install dependencies
+        run: npm install
+      - name: Build all packages
+        run: npm run build
+      - name: Run linting
+        run: npm run lint
+      - name: Run unit tests
+        run: npm test

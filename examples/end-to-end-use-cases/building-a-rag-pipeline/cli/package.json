@@ -1,0 +1,41 @@
+{
+  "name": "rag-cli",
+  "version": "1.0.0",
+  "description": "A CLI for interacting with documents.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "rag-cli": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "postinstall": "npm run build",
+    "clean": "npx rimraf dist/"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-sdk/credential-provider-node": "^3.451.0",
+    "@opensearch-project/opensearch": "^2.5.0",
+    "commander": "^11.1.0",
+    "figlet": "^1.7.0",
+    "ora": "^7.0.1",
+    "prompts": "^2.4.2",
+    "zod": "^3.22.4",
+    "zod-error": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "@types/node": "^20.9.3",
+    "@types/prompts": "^2.4.9",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}

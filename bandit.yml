@@ -1,0 +1,2 @@
+skips: ['B311', 'B108', 'B110']
+exclude_dirs: ['cdk.out', 'node_modules', 'dist']

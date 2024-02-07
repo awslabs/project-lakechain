@@ -1,0 +1,47 @@
+{
+  "name": "building-a-rag-pipeline",
+  "description": "End-to-end RAG pipeline using Amazon Bedrock and Amazon OpenSearch.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=building-a-rag-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/ cli/node_modules cli/dist",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/opensearch-vector-storage-connector": "*",
+    "@project-lakechain/pdf-text-converter": "*",
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/transcribe-audio-processor": "*",
+    "@project-lakechain/recursive-character-text-splitter": "*",
+    "@project-lakechain/bedrock-embedding-processors": "*",
+    "@project-lakechain/opensearch-domain": "*",
+    "@project-lakechain/bedrock-text-processors": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  }
+}

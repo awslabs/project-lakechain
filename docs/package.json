@@ -1,0 +1,33 @@
+{
+  "name": "@project-lakechain/docs",
+  "description": "The official documentation for Project Lakechain.",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx astro dev",
+    "start": "npx astro dev",
+    "build": "npx astro build",
+    "preview": "npx astro preview",
+    "astro": "npx astro",
+    "audit": "npm audit",
+    "clean": "npx rimraf .astro/ node_modules/ dist/"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@astrojs/starlight": "^0.17.2",
+    "astro": "^4.3.2",
+    "sharp": "^0.33.2"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5"
+  }
+}

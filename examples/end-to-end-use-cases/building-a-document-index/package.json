@@ -1,0 +1,51 @@
+{
+  "name": "building-a-document-index",
+  "description": "End-to-end document metadata extraction with OpenSearch.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=building-a-document-index --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/audio-metadata-extractor": "*",
+    "@project-lakechain/image-metadata-extractor": "*",
+    "@project-lakechain/video-metadata-extractor": "*",
+    "@project-lakechain/nlp-text-processor": "*",
+    "@project-lakechain/opensearch-storage-connector": "*",
+    "@project-lakechain/pdf-text-converter": "*",
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/rekognition-image-processor": "*",
+    "@project-lakechain/sharp-image-transform": "*",
+    "@project-lakechain/opensearch-index": "*",
+    "@project-lakechain/opensearch-saved-object": "*",
+    "@project-lakechain/opensearch-domain": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "article-curation",
+  "description": "Builds a pipeline converting HTML articles into plain text.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=article-curation --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/scheduler-event-trigger": "*",
+    "@project-lakechain/syndication-feed-processor": "*",
+    "@project-lakechain/newspaper3k": "*",
+    "@project-lakechain/s3-storage-connector": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0",
+    "@aws-cdk/aws-scheduler-alpha": "^2.126.0-alpha.0",
+    "@aws-cdk/aws-scheduler-targets-alpha": "^2.126.0-alpha.0"
+  }
+}

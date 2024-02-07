@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest an idea for Project Lakechain
+title: 'Feature request: TITLE'
+labels: ['type/feature-request', 'triage']
+projects: ['project-lakechain']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to suggest an idea to the Project Lakechain project.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Use case
+      description: Please help us understand your use case or problem you're facing
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Solution/User Experience
+      description: Please share what a good solution would look like to this use case
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative solutions
+      description: Please describe what alternative solutions to this use case, if any
+      render: Markdown
+    validations:
+      required: false

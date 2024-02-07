@@ -1,0 +1,14 @@
+{
+  "date": "2017-02-10 17:00",
+  "array": [{
+    "name": "foo",
+    "value": "bar"
+  }, {
+    "name": "bar",
+    "value": "baz"
+  }],
+  "object": {
+    "foo": "bar",
+    "bar": "baz"
+  }
+}

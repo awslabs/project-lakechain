@@ -1,0 +1,41 @@
+{
+  "name": "image-watermarking-pipeline",
+  "description": "A pipeline showcasing how to watermark images.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build-pkg": "npx lerna run build --scope=image-watermarking-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "ts-jest": "^29.0.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/sharp-image-transform": "*",
+    "@project-lakechain/s3-storage-connector": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  }
+}

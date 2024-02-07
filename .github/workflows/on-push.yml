@@ -1,0 +1,23 @@
+name: Push Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    uses: ./.github/workflows/run-lint.yml
+  security-checks:
+    uses: ./.github/workflows/run-security-checks.yml
+    secrets: inherit
+  build-and-test:
+    needs: [lint, security-checks]
+    uses: ./.github/workflows/run-build-test.yml

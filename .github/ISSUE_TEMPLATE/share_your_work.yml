@@ -1,0 +1,50 @@
+name: I Made This (showcase your work)
+description: Share what you built using Project Lakechain 💞💞. Blog post, workshops, presentation, sample apps, etc.
+title: '[I Made This]: <TITLE>'
+labels: ['community-content']
+projects: ['project-lakechain']
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping spread the word out on Project Lakechain, truly!
+  - type: input
+    id: content
+    attributes:
+      label: Link to your material
+      description: |
+        Please share the original link to your material.
+
+        *Note: Short links will be expanded when added to Project Lakechain documentation*
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe in one paragraph what's in it for users
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Preferred contact
+      description: What's your preferred contact? We'll list it next to this content
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: (Optional) Additional notes
+      description: |
+        Any notes you might want to share with us related to this material.
+
+        *Note: These notes are explicitly to Project Lakechain maintainers. It will not be added to the community resources page.*
+    validations:
+      required: false
+  - type: checkboxes
+    id: acknowledgment
+    attributes:
+      label: Acknowledgment
+      options:
+        - label: I understand this content may be removed from Project Lakechain documentation if it doesn't conform with the [Code of Conduct](https://aws.github.io/code-of-conduct)
+          required: true

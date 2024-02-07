@@ -1,0 +1,159 @@
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.logo {
+  margin-top: 200px;
+  margin-bottom: 30px;
+}
+
+.bar {
+  margin: 0 auto;
+  max-width: 575px;
+  border-radius: 30px;
+  border: 1px solid #dcdcdc;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  background-color: white;
+}
+
+.bar:hover {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+}
+
+.bar:focus-within {
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+  outline:none;
+}
+
+.searchbar {
+  height:45px;
+  border:none;
+  width:80%;
+  font-size:16px;
+  outline: none;
+}
+
+.buttons {
+  margin-top:30px;
+}
+
+.button {
+  background-color: #f5f5f5;
+  border:none;
+  color:#707070;
+  font-size:15px;
+  padding: 10px 20px;
+  margin:5px;
+  border-radius:4px;
+  outline:none;
+}
+
+.button:hover {
+  border: 1px solid #c8c8c8;
+  padding: 9px 19px;
+  color:#808080;
+}
+
+.button:focus {
+  border:1px solid #4885ed;
+  padding: 9px 19px;
+}
+
+.search {
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 280px;
+  padding: 50px;
+  margin-bottom: 50px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.search-results {
+  padding-top: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-bottom: 20px;
+}
+
+.search-result {
+  margin-bottom: 20px;
+}
+
+.search-result a {
+  text-decoration: none;
+}
+
+.truncate {
+  max-width: 700px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.description {
+  max-width: 700px;
+}
+
+.url {
+  color: green;
+}
+
+.tags {
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  background-color: #f6f6f6; /* Example color */
+  color: black;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.tag:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+  cursor: pointer;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 20px;
+}
+
+.menu {
+  justify-content: start;
+  padding: 10px;
+  margin-top: 38px;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  text-decoration: none;
+  color: gray;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.menu-link.active {
+  border-bottom: 3px solid #919191;
+  padding-bottom: 8px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}

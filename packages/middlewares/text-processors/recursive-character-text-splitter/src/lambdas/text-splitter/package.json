@@ -1,0 +1,36 @@
+{
+  "name": "recursive-character-text-splitter-lambda",
+  "version": "0.1.0",
+  "description": "A function splitting text.",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild index.ts --platform=node --target=es2022 --bundle --minify --outfile=dist/index.js",
+    "lint": "eslint .",
+    "clean": "npx shx rm -rf dist/ node_modules/ coverage/"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-lambda-powertools/batch": "^1.18.0",
+    "@aws-lambda-powertools/logger": "^1.18.0",
+    "@aws-lambda-powertools/metrics": "^1.18.0",
+    "@aws-lambda-powertools/tracer": "^1.18.0",
+    "langchain": "^0.1.5",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.504.0",
+    "@aws-sdk/client-sns": "^3.504.0",
+    "@types/aws-lambda": "^8.10.126",
+    "@types/lodash": "^4.14.202",
+    "esbuild": "^0.20.0"
+  }
+}

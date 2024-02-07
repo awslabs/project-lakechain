@@ -1,0 +1,83 @@
+{
+  "name": "@project-lakechain/core",
+  "description": "Core package for building middlewares with Project Lakechain.",
+  "version": "0.1.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./service": "./dist/service.js",
+    "./middleware": "./dist/middleware.js",
+    "./compute-type": "./dist/compute-type.js",
+    "./cache-storage": "./dist/cache-storage.js",
+    "./renderer": "./dist/visualization/dag-renderer/index.js",
+    "./dsl": "./dist/dsl/index.js",
+    "./dsl/intent": "./dist/dsl/intent.js",
+    "./dsl/vocabulary/filters": "./dist/dsl/vocabulary/filters.js",
+    "./dsl/vocabulary/conditions": "./dist/dsl/vocabulary/conditions.js",
+    "./dsl/vocabulary/reference": "./dist/dsl/vocabulary/reference.js",
+    "./layers/mediainfo": "./dist/layers/mediainfo/index.js",
+    "./layers/powertools": "./dist/layers/powertools/index.js",
+    "./layers/sharp": "./dist/layers/sharp/index.js"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check .",
+    "test": "jest --passWithNoTests"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.8.10",
+    "@types/semver": "^7.5.6",
+    "@types/tmp": "^0.2.6",
+    "jest": "^29.7.0",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^10.7.0",
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0",
+    "lodash": "^4.17.21",
+    "mime-types": "^2.1.35",
+    "semver": "^7.5.4",
+    "table": "^6.8.1",
+    "tmp": "^0.2.1",
+    "zod": "^3.22.4",
+    "zod-error": "^1.5.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "lakechain",
+    "document",
+    "processing",
+    "framework"
+  ],
+  "gitHead": "0981e5ed8b075a825d718d2b3757107fd93eab9f"
+}

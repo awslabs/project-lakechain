@@ -1,0 +1,181 @@
+---
+title: BLIP2 Processor
+---
+
+import { Image } from 'astro:assets';
+import captioning from '../../../assets/image-captioning.png';
+
+<span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
+  Unstable API
+</span>
+<span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
+  0.1.0
+</span>
+<span title="Label: Pro" data-view-component="true" class="Label Label--package">
+  @project-lakechain/blip2-image-processor
+</span>
+<br />
+
+---
+
+The BLIP2 image processor makes it possible to generate captions for images within a Lakechain pipeline. It deploys an auto-scaled cluster of GPU-enabled containers to process images using the [BLIP2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2) image model, such that all the processing remains on customers AWS environment.
+
+<br />
+<p align="center">
+  <img width="300" src={captioning.src} />
+</p>
+<br />
+
+### 📷 Captioning
+
+To use this middleware, you have to import it in your CDK stack and specify a VPC in which the cluster will be deployed.
+
+> 💁 Note that you will need to specify a data source that the BLIP2 processor will use as an input, such as the [S3 trigger](/triggers/s3-event-trigger).
+
+```typescript
+import { Blip2ImageProcessor } from '@project-lakechain/blip2-image-processor';
+import { CacheStorage } from '@project-lakechain/core';
+
+class Stack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string) {
+    // Sample VPC.
+    const vpc = new ec2.Vpc(this, 'Vpc', {});
+
+    // The cache storage.
+    const cache = new CacheStorage(this, 'Cache');
+
+    // Create the BLIP2 processor.
+    const blipProcessor = new Blip2ImageProcessor.Builder()
+      .withScope(this)
+      .withIdentifier('ImageProcessor')
+      .withCacheStorage(cache)
+      .withVpc(vpc)
+      .withSource(source) // 👈 Specify a data source
+      .build();
+  }
+}
+```
+
+<br />
+
+---
+
+#### Auto-Scaling
+
+The cluster of containers deployed by this middleware will auto-scale based on the number of images that need to be processed. The cluster scales up to a maximum of 5 instances by default, and scales down to zero when there are no images to process.
+
+> ℹ️ You can configure the maximum amount of instances that the cluster can auto-scale to by using the `withMaxInstances` method.
+
+```typescript
+import { Blip2ImageProcessor } from '@project-lakechain/blip2-image-processor';
+
+const blipProcessor = new Blip2ImageProcessor.Builder()
+  .withScope(this)
+  .withIdentifier('ImageProcessor')
+  .withCacheStorage(cache)
+  .withVpc(vpc)
+  .withSource(source)
+  .withMaxInstances(10) // 👈 Maximum amount of instances
+  .build();
+```
+
+<br />
+
+---
+
+### 📄 Output
+
+The BLIP2 image processor does not modify or alter source images in any way. It instead enriches the metadata of their document by setting the `description` field to the output of the captioning result. It will also specify the dimensions of the image.
+
+<details>
+  <summary>💁 Click to expand example</summary>
+  
+  > ℹ️ Below is an example of a [CloudEvent](/general/events) emitted by the BLIP2 processor.
+
+  ```json
+  {
+    "specversion": "1.0",
+    "id": "1780d5de-fd6f-4530-98d7-82ebee85ea39",
+    "type": "document-created",
+    "time": "2023-10-22T13:19:10.657Z",
+    "data": {
+        "chainId": "6ebf76e4-f70c-440c-98f9-3e3e7eb34c79",
+        "source": {
+            "url": "s3://bucket/image.png",
+            "type": "image/png",
+            "size": 245328,
+            "etag": "1243cbd6cf145453c8b5519a2ada4779"
+        },
+        "document": {
+            "url": "s3://bucket/image.png",
+            "type": "image/png",
+            "size": 245328,
+            "etag": "1243cbd6cf145453c8b5519a2ada4779"
+        },
+        "metadata": {
+          "description": "A man sitting on a wooden chair in a cozy room.",
+          "properties": {
+            "kind": "image",
+            "attrs": {
+              "width": 1280,
+              "height": 720
+            }
+          }
+        },
+        "callStack": []
+    }
+  }
+  ```
+
+</details>
+
+<br />
+
+---
+
+### 🏗️ Architecture
+
+The BLIP2 image processor requires GPU-enabled instances ([g5.2xlarge](https://aws.amazon.com/fr/ec2/instance-types/g5/)) to run the BLIP2 image model. To orchestrate deployments, it deploys an ECS auto-scaled cluster of containers that consume documents from the middleware input queue. The cluster is deployed in the private subnet of the given VPC, and caches the model on an EFS storage to optimize cold-starts.
+
+> ℹ️ The average cold-start for the BLIP2 image processor is around 3 minutes when no instances are running.
+
+![Architecture](../../../assets/blip2-image-processor-architecture.png)
+
+<br />
+
+---
+
+### 🏷️ Properties
+
+<br />
+
+##### Supported Inputs
+
+|  Mime Type  | Description |
+| ----------- | ----------- |
+| `image/bmp` | Bitmap image |
+| `image/gif` | GIF image |
+| `image/jpeg` | JPEG image |
+| `image/png` | PNG image |
+| `image/tiff` | TIFF image |
+| `image/webp` | WebP image |
+| `image/x-pcx` | PCX image |
+
+##### Supported Outputs
+
+*This middleware supports as outputs the same types as the supported inputs.*
+
+##### Supported Compute Types
+
+| Type  | Description |
+| ----- | ----------- |
+| `GPU` | This middleware requires GPU instances to run the BLIP2 image model. |
+
+<br />
+
+---
+
+### 📖 Examples
+
+- [Image Captioning Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-captioning-pipeline) - Builds a pipeline demonstrating image captioning using the BLIP2 model.
+- [Image-to-Image Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-to-image-pipeline) - An example showcasing how to transform images from using Amazon Bedrock.

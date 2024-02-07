@@ -1,0 +1,38 @@
+# Release automatic generation file.
+
+change-template: "* $TITLE (#$NUMBER) by @$AUTHOR"
+tag-template: 'v$NEXT_PATCH_VERSION'
+categories:
+  - title: '⚡ Breaking Changes'
+    labels:
+      - breaking-change
+  - title: '🌟 Enhancements and Features'
+    labels:
+      - enhancement
+      - new-middleware
+      - existing-middleware
+      - typescript-sdk
+      - tests
+      - framework
+  - title: '📜 Documentation updates'
+    labels:
+      - documentation
+  - title: '🐛 Bug and hot fixes'
+    labels:
+      - bug
+      - hotfix
+exclude-labels:
+  - ignore-for-release
+  - duplicate
+template: |
+  ## Summary
+
+  **[Human readable summary of changes]**
+
+  ## Changes
+
+  $CHANGES
+
+  ## This release was made possible by the following contributors:
+
+  $CONTRIBUTORS

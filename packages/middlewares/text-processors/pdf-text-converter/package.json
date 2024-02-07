@@ -1,0 +1,48 @@
+{
+  "name": "@project-lakechain/pdf-text-converter",
+  "description": "Converts PDF documents into plain text.",
+  "version": "0.1.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "postbuild": "npx shx cp -r ./src/lambdas dist/",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.2.1",
+    "esbuild": "^0.20.0",
+    "rimraf": "^5.0.5",
+    "shx": "^0.3.4"
+  },
+  "dependencies": {
+    "@project-lakechain/core": "^0.1.1"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  },
+  "gitHead": "0981e5ed8b075a825d718d2b3757107fd93eab9f"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "panns-opensearch-pipeline",
+  "description": "An example showcasing an audio embedding pipeline using PANNS and OpenSearch.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=panns-opensearch-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/panns-embedding-processor": "*",
+    "@project-lakechain/opensearch-vector-storage-connector": "*",
+    "@project-lakechain/opensearch-domain": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.126.0",
+    "constructs": "^10.3.0"
+  }
+}

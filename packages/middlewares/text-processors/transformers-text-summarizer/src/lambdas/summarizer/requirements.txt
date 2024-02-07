@@ -1,0 +1,10 @@
+boto3==1.29.5
+aws_lambda_powertools==2.27.1
+aws-xray-sdk==2.12.1
+transformers==4.36.0
+numpy==1.26.2
+sentencepiece==0.1.99
+nltk==3.8.1
+nlpretext==1.2.2
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.1.1

@@ -1,0 +1,17 @@
+tests
+jest.config.js
+tsconfig.json
+.vscode
+.github
+.gradle
+node_modules
+.idea
+.vscode
+coverage
+tslint.json
+tsconfig.json
+.npmignore
+.eslintignore
+.huskyrc.js
+.eslintrc.json
+examples

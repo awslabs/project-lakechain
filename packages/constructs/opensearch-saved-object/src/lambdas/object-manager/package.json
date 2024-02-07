@@ -1,0 +1,29 @@
+{
+  "name": "object-manager-lambda",
+  "version": "1.0.0",
+  "description": "A custom resource managing an OpenSearch saved object.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "esbuild index.ts --platform=node --target=es2022 --bundle --minify --outfile=dist/index.js",
+    "lint": "eslint .",
+    "clean": "npx shx rm -rf dist/ node_modules/"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-sdk/credential-provider-node": "^3.451.0",
+    "@opensearch-project/opensearch": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "esbuild": "^0.18.15",
+    "eslint": "^8.43.0"
+  }
+}

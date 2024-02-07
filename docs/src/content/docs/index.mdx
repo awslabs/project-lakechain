@@ -1,0 +1,43 @@
+---
+title: Project Lakechain
+description: Building document processing pipelines with Project Lakechain
+template: splash
+hero:
+  tagline: Build Serverless, Modular and Scalable document processing pipelines on AWS using Infrastructure as Code! 🚀
+  image:
+    file: /src/assets/icon.png
+  actions:
+    - text: Getting Started
+      link: /general/introduction
+      icon: right-arrow
+      variant: primary
+    - text: GitHub Repository
+      link: https://github.com/awslabs/project-lakechain
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+	<Card title="Introduction" icon="open-book">
+		See our [Introduction](/general/introduction) to understand what Project Lakechain is and how it works.
+	</Card>
+	<Card title="Pre-requisites" icon="setting">
+		Our [Pre-requisites](/general/pre-requisites) guide walks you through the steps required to get started with Project Lakechain.
+	</Card>
+	<Card title="Quickstart" icon="rocket">
+		To kickstart in no time your first pipeline, see our [Getting Started](/general/quickstart) guide.
+	</Card>
+	<Card title="Architecture" icon="puzzle">
+		Our [Architecture](/guides/architecture) guide dives deep into how Project Lakechain has been designed, and the core infrastructure components powering it.
+	</Card>
+	<Card title="Middlewares" icon="laptop">
+		Learn about the available [Middlewares](/general/concepts) ready made for you to use in your pipelines, and the overall concept of the framework.
+	</Card>
+	<Card title="Examples" icon="document">
+		We've also built ready-to-use [Examples](/guides/examples) that you can use to help you pave your journey.
+	</Card>
+	<Card title="FAQ" icon="information">
+		Check out our compilation of the most asked questions in our [FAQ](/general/faq) section.
+	</Card>
+</CardGrid>
