@@ -12,9 +12,14 @@ permissions:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 0
       - name: Install dependencies
         run: npm install
       - name: Build all packages
@@ -25,7 +30,13 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
       - name: Release packages
-        run: npx lerna publish --no-private --no-changelog --yes
+        run: |
+          NPM_CONFIG_PROVENANCE=true npx lerna publish --no-private --no-changelog --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Set release version
+        id: set-release-version
+        run: |
+          VERSION=$(cat lerna.json | jq .version -r)
+          echo RELEASE_VERSION="$VERSION" >> "$GITHUB_OUTPUT"
