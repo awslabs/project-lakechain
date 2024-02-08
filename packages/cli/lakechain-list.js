@@ -55,7 +55,7 @@ chain.use(initialization);
  */
 chain.use(async (input, output, next) => {
   const res = await fetch(
-    `${opts.registry}/-/v1/search?text=scope:aws`
+    `${opts.registry}/-/v1/search?text=scope:project-lakechain`
   );
   input.list = await res.json()
   next();
