@@ -7,6 +7,9 @@
   "files": [
     "dist/"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npx tsc",
     "postbuild": "npx shx cp -r ./src/container dist/ && npx shx cp -r ./src/lambdas dist/",
@@ -45,5 +48,5 @@
     "*.{ts, json}": "npx eslint",
     "*.{js,json,md}": "npx prettier --check"
   },
-  "gitHead": "eb6d2165af8c7429a41ca8b8d2784abfe71d6b45"
+  "gitHead": "ac966bf2d24f6710af0cb53da95bdce46aabaafd"
 }
