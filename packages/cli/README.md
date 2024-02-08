@@ -20,7 +20,7 @@ npm install --global @project-lakechain/cli
 To verify that the CLI has been correctly installed, run the following command.
 
 ```bash
-$ lakechain --version
+$ lkc --version
 0.1.0
 ```
 
@@ -40,7 +40,7 @@ It features multiple commands that we describe in this documentation. The below 
 
 ## Help
 
-After installing the CLI, you can run the `lakechain` command to list all of the commands it implements along with their description.
+After installing the CLI, you can run the `lkc` command to list all of the commands it implements along with their description.
 
 For each command that's implemented, you can also add the `--help` flag to get more information about a specific command.
 
