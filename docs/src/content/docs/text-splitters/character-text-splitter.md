@@ -6,7 +6,7 @@ title: Character Splitter
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.1.4
+  0.3.4
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   @project-lakechain/character-text-splitter
