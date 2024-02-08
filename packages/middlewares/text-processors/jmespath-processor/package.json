@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/jmespath-processor",
   "description": "Applies JMESPath expressions to JSON documents.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -40,8 +40,8 @@
     "@aws-lambda-powertools/logger": "^1.18.0",
     "@aws-lambda-powertools/metrics": "^1.18.0",
     "@aws-lambda-powertools/tracer": "^1.18.0",
-    "@project-lakechain/core": "^0.1.4",
-    "@project-lakechain/sdk": "^0.1.4",
+    "@project-lakechain/core": "^0.2.0",
+    "@project-lakechain/sdk": "^0.2.0",
     "jmespath": "^0.16.0"
   },
   "peerDependencies": {

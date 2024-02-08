@@ -1,7 +1,7 @@
 {
   "name": "building-a-search-engine",
   "description": "End-to-end search engine multi-modal ingestion.",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,16 +30,16 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/opensearch-vector-storage-connector": "*",
-    "@project-lakechain/pdf-text-converter": "*",
-    "@project-lakechain/pandoc-text-converter": "*",
-    "@project-lakechain/recursive-character-text-splitter": "*",
-    "@project-lakechain/bedrock-embedding-processors": "*",
-    "@project-lakechain/opensearch-domain": "*",
-    "@project-lakechain/clip-image-processor": "*",
-    "@project-lakechain/sharp-image-transform": "*",
-    "@project-lakechain/keybert-text-processor": "*"
+    "@project-lakechain/bedrock-embedding-processors": "^0.2.0",
+    "@project-lakechain/clip-image-processor": "^0.2.0",
+    "@project-lakechain/keybert-text-processor": "^0.2.0",
+    "@project-lakechain/opensearch-domain": "^0.2.0",
+    "@project-lakechain/opensearch-vector-storage-connector": "^0.2.0",
+    "@project-lakechain/pandoc-text-converter": "^0.2.0",
+    "@project-lakechain/pdf-text-converter": "^0.2.0",
+    "@project-lakechain/recursive-character-text-splitter": "^0.2.0",
+    "@project-lakechain/s3-event-trigger": "^0.2.0",
+    "@project-lakechain/sharp-image-transform": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

@@ -1,7 +1,7 @@
 {
   "name": "audio-recording-summarization-pipeline",
   "description": "Builds a pipeline for summarizing audio recordings using Amazon Transcribe and Amazon Bedrock.",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,10 +30,10 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/transcribe-audio-processor": "*",
-    "@project-lakechain/bedrock-text-processors": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/bedrock-text-processors": "^0.2.0",
+    "@project-lakechain/s3-event-trigger": "^0.2.0",
+    "@project-lakechain/s3-storage-connector": "^0.2.0",
+    "@project-lakechain/transcribe-audio-processor": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

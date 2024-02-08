@@ -1,7 +1,7 @@
 {
   "name": "pii-redaction-pipeline",
   "description": "A PII redaction pipeline using Project Lakechain.",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -31,12 +31,12 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/nlp-text-processor": "*",
-    "@project-lakechain/pdf-text-converter": "*",
-    "@project-lakechain/pandoc-text-converter": "*",
-    "@project-lakechain/s3-storage-connector": "*",
-    "@project-lakechain/text-transform-processor": "*"
+    "@project-lakechain/nlp-text-processor": "^0.2.0",
+    "@project-lakechain/pandoc-text-converter": "^0.2.0",
+    "@project-lakechain/pdf-text-converter": "^0.2.0",
+    "@project-lakechain/s3-event-trigger": "^0.2.0",
+    "@project-lakechain/s3-storage-connector": "^0.2.0",
+    "@project-lakechain/text-transform-processor": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

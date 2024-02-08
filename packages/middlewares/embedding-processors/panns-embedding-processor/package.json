@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/panns-embedding-processor",
   "description": "A processor generating embeddings for audio documents using Pretrained Audio Neural Networks.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -34,8 +34,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.1.4",
-    "@project-lakechain/ecs-cluster": "^0.1.4"
+    "@project-lakechain/core": "^0.2.0",
+    "@project-lakechain/ecs-cluster": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

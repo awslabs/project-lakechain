@@ -1,7 +1,7 @@
 {
   "name": "topic-modeling-pipeline",
   "description": "An example showcasing how to extract relevant topics from text documents.",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/keybert-text-processor": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/keybert-text-processor": "^0.2.0",
+    "@project-lakechain/s3-event-trigger": "^0.2.0",
+    "@project-lakechain/s3-storage-connector": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

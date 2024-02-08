@@ -1,7 +1,7 @@
 {
   "name": "image-captioning",
   "description": "Builds a pipeline demonstrating image captioning using the BLIP2 model.",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/blip2-image-processor": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/blip2-image-processor": "^0.2.0",
+    "@project-lakechain/s3-event-trigger": "^0.2.0",
+    "@project-lakechain/s3-storage-connector": "^0.2.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
