@@ -29,7 +29,7 @@ jobs:
           npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
       - name: Release packages
         run: |
-          NPM_CONFIG_PROVENANCE=true npx lerna publish --no-private --no-changelog --yes
+          npx lerna publish --no-private --no-changelog --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
