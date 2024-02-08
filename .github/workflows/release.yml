@@ -29,7 +29,7 @@ jobs:
           npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
       - name: Version
         run: |
-          npx lerna version minor --force-publish --no-commit-hooks --yes
+          npx lerna version --force-publish --no-changelog --no-commit-hooks --yes
       - name: Release packages
         run: |
           npx lerna publish --no-private --no-changelog --yes
