@@ -40,7 +40,11 @@ It features multiple commands that we describe in this documentation. The below 
 
 ## Help
 
-After installing the CLI, you can run the `lkc` command to list all of the commands it implements along with their description.
+After installing the CLI, you can run the `lkc` command without arguments to list all of the commands it implements along with their description.
+
+```bash
+$ lkc
+```
 
 For each command that's implemented, you can also add the `--help` flag to get more information about a specific command.
 
