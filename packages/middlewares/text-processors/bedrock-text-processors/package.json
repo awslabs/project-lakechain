@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/bedrock-text-processors",
   "description": "Generative text processing using Amazon Bedrock models.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -41,8 +41,8 @@
     "@aws-lambda-powertools/metrics": "^1.18.0",
     "@aws-lambda-powertools/parameters": "^1.18.0",
     "@aws-lambda-powertools/tracer": "^1.18.0",
-    "@project-lakechain/core": "^0.1.3",
-    "@project-lakechain/sdk": "^0.1.3"
+    "@project-lakechain/core": "^0.1.4",
+    "@project-lakechain/sdk": "^0.1.4"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
