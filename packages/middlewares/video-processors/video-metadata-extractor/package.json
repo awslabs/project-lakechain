@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/video-metadata-extractor",
   "description": "Extracts the metadata of video files.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -34,8 +34,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.0",
-    "@project-lakechain/layers": "^0.3.0"
+    "@project-lakechain/core": "^0.3.1",
+    "@project-lakechain/layers": "^0.3.1"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/nlp-text-processor",
   "description": "Extracts features from text documents using natural language processing.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -42,8 +42,8 @@
     "@aws-lambda-powertools/logger": "^1.18.0",
     "@aws-lambda-powertools/metrics": "^1.18.0",
     "@aws-lambda-powertools/tracer": "^1.18.0",
-    "@project-lakechain/core": "^0.3.0",
-    "@project-lakechain/sdk": "^0.3.0",
+    "@project-lakechain/core": "^0.3.1",
+    "@project-lakechain/sdk": "^0.3.1",
     "lodash": "^4.17.21",
     "truncate-utf8-bytes": "^1.0.2",
     "wink-eng-lite-web-model": "^1.5.2",
