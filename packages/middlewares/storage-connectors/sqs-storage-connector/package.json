@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/sqs-storage-connector",
   "description": "Stores documents and their metadata in an SQS queue.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -35,7 +35,7 @@
     "rimraf": "^5.0.5"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.3"
+    "@project-lakechain/core": "^0.3.4"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

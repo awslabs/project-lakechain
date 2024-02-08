@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/whisper-transcriber",
   "description": "An audio document transcription middleware based on OpenAI Whisper.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -38,8 +38,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.3",
-    "@project-lakechain/ecs-cluster": "^0.3.3"
+    "@project-lakechain/core": "^0.3.4",
+    "@project-lakechain/ecs-cluster": "^0.3.4"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

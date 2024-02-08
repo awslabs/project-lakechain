@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/sentence-text-splitter",
   "description": "Transforms text into chunks of tokens using a sentence text splitter.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -37,7 +37,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.3"
+    "@project-lakechain/core": "^0.3.4"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
