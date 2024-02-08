@@ -45,5 +45,5 @@
     "*.{ts, json}": "npx eslint",
     "*.{js,json,md}": "npx prettier --check"
   },
-  "gitHead": "0981e5ed8b075a825d718d2b3757107fd93eab9f"
+  "gitHead": "eb6d2165af8c7429a41ca8b8d2784abfe71d6b45"
 }
