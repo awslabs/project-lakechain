@@ -36,30 +36,26 @@ $ lakechain --version
 
 The Lakechain CLI is at the center of the new Developer Experience for helping developers use and develop Lakechain middlewares. It provides an easy-to-use interface to generate boilerplate code, and invoke middlewares locally.
 
-It features multiple commands that we describe in this documentation.
+It features multiple commands that we describe in this documentation. The below section describes the different commands that the CLI implements along with examples illustrating the usage of each one of them.
 
-## 🛠 Usage
-
-The below section describes the different commands that the CLI implements along with examples illustrating the usage of each one of them.
-
-### Help
+## Help
 
 After installing the CLI, you can run the `lakechain` command to list all of the commands it implements along with their description.
 
 For each command that's implemented, you can also add the `--help` flag to get more information about a specific command.
 
 ```bash
-$ lakechain init --help
+$ lkc init --help
 ```
 
-### Init
+## Init
 
 The `init` command generates a new middleware boilerplate code in the current directory.
 
 ##### Example
 
 ```bash
-$ lakechain init
+$ lkc init
 ```
 
 ##### Options
@@ -69,14 +65,14 @@ $ lakechain init
 - `-a, --author <author>` - The author of the middleware.
 - `-l, --license <license>` - The license of the middleware.
 
-### List
+## List
 
 The `list` command lists all the official Lakechain middlewares along with their description and attributes from the middleware store on the NPM registry.
 
 ##### Example
 
 ```bash
-$ lakechain list
+$ lkc list
 ```
 
 ##### Options
@@ -84,14 +80,14 @@ $ lakechain list
 - `-r, --registry <registry>` - The base URL of an alternative NPM registry. Defaults to https://registry.npmjs.org/.
 - `-o, --output <output>` - The output format of the list (table, json). Defaults to `table`.
 
-### Search
+## Search
 
-The `search` command makes it possible to search for middlewares in the official Lakechain middleware store using keywords.
+The `search` command makes it possible to search for middlewares in the official Lakechain middleware store using a search query.
 
 ##### Example
 
 ```bash
-$ lakechain search --text "pdf"
+$ lkc search --query "pdf"
 ```
 
 ##### Options
@@ -100,38 +96,18 @@ $ lakechain search --text "pdf"
 - `-r, --registry <registry>` - The base URL of an alternative NPM registry. Defaults to https://registry.npmjs.org/.
 - `-o, --output <output>` - The output format of the list (table, json). Defaults to `table`.
 
-### Info
-
-The `info` command displays detailed information about a specific middleware.
-
-##### Example
-
-```bash
-$ lakechain info --name @project-lakechain/pdf-text-converter
-```
-
-##### Options
-
-- `-n, --name <name>` - The name of the middleware.
-- `-r, --registry <registry>` - The base URL of an alternative NPM registry. Defaults to https://registry.npmjs.org/.
-- `-o, --output <output>` - The output format of the list (table, json). Defaults to `table`.
-
-### Run
+## Run
 
 The `run` command allows to run middlewares locally within a Docker container, pass a document to them, and specify additional options.
 
 ##### Example
 
 ```bash
-$ lakechain run \
+$ lkc run \
   --name @project-lakechain/pdf-text-converter \
   --document s3://<bucket>/<key>
 ```
 
-### Build
+## Build
 
-### Audit
-
-### Examples
-
-### Config
+## Examples

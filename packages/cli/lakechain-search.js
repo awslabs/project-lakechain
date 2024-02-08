@@ -23,8 +23,9 @@ import { program } from 'commander';
  * Command-line interface.
  */
 program
-  .name('lkc list')
-  .description('Lists all the official Lakechain packages.')
+  .name('lkc search')
+  .description('Searches for middlewares in the official Lakechain store.')
+  .requiredOption('-q, --query <query>', 'The search query.')
   .option('-r, --registry <registry>', 'The base URL of an alternative NPM registry.', 'https://registry.npmjs.org/')
   .option('-o, --output <output>', 'The output format of the list (table, json).', 'table')
   .parse(process.argv);
@@ -55,7 +56,7 @@ chain.use(initialization);
  */
 chain.use(async (input, _, next) => {
   const res = await fetch(
-    `${opts.registry}/-/v1/search?text=scope:${scope}&size=100`
+    `${opts.registry}/-/v1/search?text=${scope} ${opts.query}&size=10`
   );
   input.list = await res.json()
   next();

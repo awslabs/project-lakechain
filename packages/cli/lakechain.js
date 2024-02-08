@@ -29,14 +29,13 @@ const { version, description } = JSON.parse(
  */
 program
   .version(version)
-  .name('lakechain')
+  .name('lkc')
   .description(description)
-  .command('config', 'Configuration management of the Lakechain CLI.')
-  .command('examples', 'Downloads examples for Project Lakchain in the current directory.')
-  .command('info <packages...>', 'Displays information about one or more given middleware(s).')
   .command('init', 'Provides an assistant to create a new Lakechain middleware.')
   .command('list', 'Lists all the official Lakechain packages.')
+  .command('docs', 'Opens the Project Lakechain documentation.')
   .command('search <query>', 'Searches for a middleware in the official Lakechain store.')
+  .command('examples', 'Downloads examples for Project Lakchain in the current directory.')
   .command('run', 'Runs a Lakechain middleware locally.')
   .showSuggestionAfterError(true)
   .parse(process.argv);
