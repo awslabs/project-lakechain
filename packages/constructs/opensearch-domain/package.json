@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/opensearch-domain",
   "description": "Creates an OpenSearch domain with Cognito authentication.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
