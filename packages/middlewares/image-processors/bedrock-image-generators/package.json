@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/bedrock-image-generators",
   "description": "Image generation using Amazon Bedrock models.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -44,8 +44,8 @@
     "@aws-lambda-powertools/metrics": "^1.18.0",
     "@aws-lambda-powertools/parameters": "^1.18.0",
     "@aws-lambda-powertools/tracer": "^1.18.0",
-    "@project-lakechain/core": "^0.3.2",
-    "@project-lakechain/sdk": "^0.3.2"
+    "@project-lakechain/core": "^0.3.3",
+    "@project-lakechain/sdk": "^0.3.3"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

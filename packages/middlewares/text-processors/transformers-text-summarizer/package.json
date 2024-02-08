@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/transformers-text-summarizer",
   "description": "Provides abstractive text summarization using the HuggingFace transformers library.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -37,8 +37,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.2",
-    "@project-lakechain/ecs-cluster": "^0.3.2"
+    "@project-lakechain/core": "^0.3.3",
+    "@project-lakechain/ecs-cluster": "^0.3.3"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
