@@ -1,7 +1,7 @@
 {
   "name": "building-a-document-index",
   "description": "End-to-end document metadata extraction with OpenSearch.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,19 +30,19 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/audio-metadata-extractor": "^0.2.0",
-    "@project-lakechain/image-metadata-extractor": "^0.2.0",
-    "@project-lakechain/nlp-text-processor": "^0.2.0",
-    "@project-lakechain/opensearch-domain": "^0.2.0",
-    "@project-lakechain/opensearch-index": "^0.2.0",
-    "@project-lakechain/opensearch-saved-object": "^0.2.0",
-    "@project-lakechain/opensearch-storage-connector": "^0.2.0",
-    "@project-lakechain/pandoc-text-converter": "^0.2.0",
-    "@project-lakechain/pdf-text-converter": "^0.2.0",
-    "@project-lakechain/rekognition-image-processor": "^0.2.0",
-    "@project-lakechain/s3-event-trigger": "^0.2.0",
-    "@project-lakechain/sharp-image-transform": "^0.2.0",
-    "@project-lakechain/video-metadata-extractor": "^0.2.0"
+    "@project-lakechain/audio-metadata-extractor": "^0.3.0",
+    "@project-lakechain/image-metadata-extractor": "^0.3.0",
+    "@project-lakechain/nlp-text-processor": "^0.3.0",
+    "@project-lakechain/opensearch-domain": "^0.3.0",
+    "@project-lakechain/opensearch-index": "^0.3.0",
+    "@project-lakechain/opensearch-saved-object": "^0.3.0",
+    "@project-lakechain/opensearch-storage-connector": "^0.3.0",
+    "@project-lakechain/pandoc-text-converter": "^0.3.0",
+    "@project-lakechain/pdf-text-converter": "^0.3.0",
+    "@project-lakechain/rekognition-image-processor": "^0.3.0",
+    "@project-lakechain/s3-event-trigger": "^0.3.0",
+    "@project-lakechain/sharp-image-transform": "^0.3.0",
+    "@project-lakechain/video-metadata-extractor": "^0.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

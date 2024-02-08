@@ -1,7 +1,7 @@
 {
   "name": "delay-pipeline",
   "description": "An example showcasing how to delay a pipeline execution.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "tsc",
@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/delay": "^0.2.0",
-    "@project-lakechain/passthrough": "^0.2.0",
-    "@project-lakechain/s3-event-trigger": "^0.2.0"
+    "@project-lakechain/delay": "^0.3.0",
+    "@project-lakechain/passthrough": "^0.3.0",
+    "@project-lakechain/s3-event-trigger": "^0.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

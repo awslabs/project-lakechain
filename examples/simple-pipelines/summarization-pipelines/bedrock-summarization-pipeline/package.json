@@ -1,7 +1,7 @@
 {
   "name": "bedrock-summarization-pipeline",
   "description": "Builds a pipeline for text summarization using Amazon Bedrock.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,11 +30,11 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/bedrock-text-processors": "^0.2.0",
-    "@project-lakechain/pandoc-text-converter": "^0.2.0",
-    "@project-lakechain/pdf-text-converter": "^0.2.0",
-    "@project-lakechain/s3-event-trigger": "^0.2.0",
-    "@project-lakechain/s3-storage-connector": "^0.2.0"
+    "@project-lakechain/bedrock-text-processors": "^0.3.0",
+    "@project-lakechain/pandoc-text-converter": "^0.3.0",
+    "@project-lakechain/pdf-text-converter": "^0.3.0",
+    "@project-lakechain/s3-event-trigger": "^0.3.0",
+    "@project-lakechain/s3-storage-connector": "^0.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

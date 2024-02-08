@@ -1,7 +1,7 @@
 {
   "name": "text-splitting",
   "description": "Builds a pipeline for splitting text documents using different text splitting algorithms.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,13 +30,13 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/character-text-splitter": "^0.2.0",
-    "@project-lakechain/nlp-text-processor": "^0.2.0",
-    "@project-lakechain/recursive-character-text-splitter": "^0.2.0",
-    "@project-lakechain/s3-event-trigger": "^0.2.0",
-    "@project-lakechain/s3-storage-connector": "^0.2.0",
-    "@project-lakechain/sentence-text-splitter": "^0.2.0",
-    "@project-lakechain/tiling-text-splitter": "^0.2.0"
+    "@project-lakechain/character-text-splitter": "^0.3.0",
+    "@project-lakechain/nlp-text-processor": "^0.3.0",
+    "@project-lakechain/recursive-character-text-splitter": "^0.3.0",
+    "@project-lakechain/s3-event-trigger": "^0.3.0",
+    "@project-lakechain/s3-storage-connector": "^0.3.0",
+    "@project-lakechain/sentence-text-splitter": "^0.3.0",
+    "@project-lakechain/tiling-text-splitter": "^0.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

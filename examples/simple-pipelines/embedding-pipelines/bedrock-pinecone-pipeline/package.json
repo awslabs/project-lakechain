@@ -1,7 +1,7 @@
 {
   "name": "bedrock-pinecone-pipeline",
   "description": "An example showcasing an embedding pipeline using Amazon Bedrock and Pinecone.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -30,10 +30,10 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/bedrock-embedding-processors": "^0.2.0",
-    "@project-lakechain/pinecone-storage-connector": "^0.2.0",
-    "@project-lakechain/recursive-character-text-splitter": "^0.2.0",
-    "@project-lakechain/s3-event-trigger": "^0.2.0"
+    "@project-lakechain/bedrock-embedding-processors": "^0.3.0",
+    "@project-lakechain/pinecone-storage-connector": "^0.3.0",
+    "@project-lakechain/recursive-character-text-splitter": "^0.3.0",
+    "@project-lakechain/s3-event-trigger": "^0.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
