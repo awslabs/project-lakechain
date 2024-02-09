@@ -15,7 +15,7 @@
  */
 
 import { defaultProvider } from '@aws-sdk/credential-provider-node';
-import { Client } from '@opensearch-project/opensearch/.';
+import { Client } from '@opensearch-project/opensearch';
 import { AwsSigv4Signer } from '@opensearch-project/opensearch/aws';
 
 /**
