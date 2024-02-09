@@ -6,7 +6,7 @@
 
 ## Overview
 
-This command-line interface gives an example of how customers can implement Retrieval Augmented Generation (RAG) using the [RAG Pipeline](../../examples/end-to-end-use-cases/building-a-rag-pipeline/) example.
+This command-line interface gives an example of how customers can implement Retrieval Augmented Generation (RAG) using the [RAG Pipeline](../../../examples/end-to-end-use-cases/building-a-rag-pipeline/) example.
 
 While the pipeline itself processes documents, creates embeddings for each of their chunks, and stores those embeddings in Amazon OpenSearch, this CLI allows you to ask questions to your documents stored in OpenSearch using a large language model powered by Amazon Bedrock.
 
