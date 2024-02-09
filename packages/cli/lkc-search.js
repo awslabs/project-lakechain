@@ -95,7 +95,7 @@ chain.use((input, _, next) => {
     table.push([
       pkg.package.name.replace('/', '/\n'),
       pkg.package.description
-        .match(new RegExp(`.{1,${maxDescription}}`, 'g')).join('\n'),
+        .match(new RegExp(`.{1,${maxDescription}}`, 'g'))?.join('\n'),
       pkg.package.version
     ]);
   });

@@ -1,10 +1,12 @@
 {
   "name": "@project-lakechain/cli",
   "version": "0.3.4",
-  "private": true,
   "description": "📟 The official CLI for Project Lakechain.",
   "type": "module",
   "main": "lakechain.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "lkc": "lkc.js"
   },

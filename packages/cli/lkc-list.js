@@ -16,6 +16,8 @@
 
 import Chain from 'middleware-chain-js';
 import Table from 'cli-table3';
+import chalk from 'chalk';
+
 import { initialization } from './lib/middlewares/initialization-routines.js';
 import { program } from 'commander';
 
@@ -26,7 +28,13 @@ program
   .name('lkc list')
   .description('Lists all the official Lakechain packages.')
   .option('-r, --registry <registry>', 'The base URL of an alternative NPM registry.', 'https://registry.npmjs.org/')
-  .option('-o, --output <output>', 'The output format of the list (table, json).', 'table')
+  .option('-o, --output <output>', 'The output format of the list (table, json).', (value) => {
+    if (!['table', 'json'].includes(value)) {
+      console.error(chalk.red('Invalid output format'));
+      process.exit(1);
+    }
+    return (value);
+  }, 'table')
   .parse(process.argv);
 
 /**
@@ -84,13 +92,14 @@ chain.use((input, _, next) => {
     table.push([
       pkg.package.name.replace('/', '/\n'),
       pkg.package.description
-        .match(new RegExp(`.{1,${maxDescription}}`, 'g')).join('\n'),
+        .match(new RegExp(`.{1,${maxDescription}}`, 'g'))?.join('\n'),
       pkg.package.version
     ]);
   });
 
   // Render the table.
   console.log(table.toString());
+  console.log(`\n${input.list.total} packages found`);
 });
 
 /**
