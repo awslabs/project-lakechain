@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Client } from '@opensearch-project/opensearch';
+import { Client } from '@opensearch-project/opensearch/.';
 
 /**
  * Issues a query to OpenSearch to retrieve the most similar
