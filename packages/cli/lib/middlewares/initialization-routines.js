@@ -15,8 +15,6 @@
  */
 
 import updates from 'update-notifier';
-import agent from 'proxy-agent';
-
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path'; 
 
