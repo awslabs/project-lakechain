@@ -34,7 +34,7 @@ export const queryLlm = async (
       prompt: `Human:\n\n${prompt}\n\nAnswer the user question:${question}\n\nAssistant:`,
       max_tokens_to_sample: 4096
     }),
-    modelId,
+    modelId: modelId,
     accept: 'application/json',
     contentType: 'application/json'
   });
