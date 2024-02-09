@@ -25,11 +25,11 @@ import { BedrockRuntime, ResponseStream } from '@aws-sdk/client-bedrock-runtime'
  */
 export const queryLlm = async (
   client: BedrockRuntime,
+  modelId: string,
   prompt: string,
-  question: string,
-  modelId: string
+  question: string
 ): Promise<AsyncIterable<ResponseStream> | undefined> => {
-  const response = await client.invokeModelWithResponseStream({
+    const response = await client.invokeModelWithResponseStream({
     body: JSON.stringify({
       prompt: `Human:\n\n${prompt}\n\nAnswer the user question:${question}\n\nAssistant:`,
       max_tokens_to_sample: 4096
