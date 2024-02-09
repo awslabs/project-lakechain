@@ -6,7 +6,7 @@
   "type": "module",
   "main": "lakechain.js",
   "bin": {
-    "lkc": "lakechain.js"
+    "lkc": "lkc.js"
   },
   "scripts": {},
   "repository": {
@@ -29,12 +29,16 @@
   },
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
+    "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.3",
     "commander": "^12.0.0",
+    "fs-extra": "^11.2.0",
     "middleware-chain-js": "^2.0.2",
+    "mkdirp": "^3.0.1",
     "open": "^10.0.3",
     "ora": "^8.0.1",
+    "prompts": "^2.4.2",
     "proxy-agent": "^6.3.1",
     "update-notifier": "^7.0.0",
     "zod": "^3.22.4",
