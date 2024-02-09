@@ -16,15 +16,15 @@
 
 import path from 'path';
 import fs from 'fs';
-import fse from 'fs-extra/esm'
+import fse from 'fs-extra/esm';
 import prompts from 'prompts';
 import boxen from 'boxen';
 import Chain from 'middleware-chain-js';
+import chalk from 'chalk';
 
 import { initialization } from './lib/middlewares/initialization-routines.js';
 import { program } from 'commander';
 import { mkdirp } from 'mkdirp';
-import chalk from 'chalk';
 
 /**
  * Command-line interface.

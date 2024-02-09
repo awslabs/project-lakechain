@@ -40,6 +40,7 @@ program
   .command('docs', 'Opens the Project Lakechain documentation.')
   .command('search <query>', 'Searches for a middleware in the official Lakechain store.')
   .command('examples', 'Download examples for Project Lakechain on the file-system.')
+  .command('doctor', 'Diagnoses the environment and suggests solutions.')
   .showSuggestionAfterError(true)
   .parse(process.argv);
 

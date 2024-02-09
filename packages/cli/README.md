@@ -70,7 +70,7 @@ $ lkc init
 - `-t, --type <type>` - The type of the project to generate (`app` or `middleware`).
 - `-n, --name <name>` - The name of the project.
 - `-d, --description <description>` - The description of the project.
-- `-o, --output <output>` - A path on the filesystem in which the project will be created (the currend directory by default).
+- `-o, --output <output>` - A path on the filesystem in which the project will be created (the current directory by default).
 
 ## List
 
