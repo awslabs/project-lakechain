@@ -14,9 +14,19 @@
  * limitations under the License.
  */
 
-import { readFileSync } from 'fs';
 import updates from 'update-notifier';
 import agent from 'proxy-agent';
+
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path'; 
+
+// The current directory name.
+const __dir = new URL(dirname(import.meta.url)).pathname;
+
+// Retrieving package informations.
+const pkg = JSON.parse(
+  readFileSync(join(__dir, '..', '..', 'package.json'), 'utf-8')
+);
 
 /**
  * Exporting the initialization routines, ensuring
@@ -28,7 +38,6 @@ export const initialization = [
    * Verifies whether a new version of the CLI is available.
    */
   (_1, _2, next) => {
-    const pkg = JSON.parse(readFileSync('./package.json'));
     try {
       // Checks for updates once a day.
       updates({ pkg, updateCheckInterval: 1000 * 60 * 60 * 24 }).notify();

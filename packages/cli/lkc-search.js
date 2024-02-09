@@ -63,6 +63,16 @@ chain.use(async (input, _, next) => {
 });
 
 /**
+ * Empty result handler.
+ */
+chain.use((input, _, next) => {
+  if (input.list.objects.length === 0) {
+    return (console.log('No results found.'));
+  }
+  next();
+});
+
+/**
  * Table formatter.
  */
 chain.use((input, _, next) => {

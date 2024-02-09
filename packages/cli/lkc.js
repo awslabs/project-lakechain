@@ -17,26 +17,29 @@
  */
 
 import { readFileSync } from 'fs';
+import { join, dirname } from 'path'; 
 import { program } from 'commander';
+
+// The current directory.
+const __dir = new URL(dirname(import.meta.url)).pathname;
 
 // Retrieving package informations.
 const { version, description } = JSON.parse(
-  readFileSync('./package.json')
+  readFileSync(join(__dir, 'package.json'), 'utf-8')
 );
 
 /**
  * Command-line interface.
  */
 program
-  .version(version)
   .name('lkc')
+  .version(version)
   .description(description)
-  .command('init', 'Provides an assistant to create a new Lakechain middleware.')
+  .command('init', 'An assistant to create a new Lakechain middleware.')
   .command('list', 'Lists all the official Lakechain packages.')
   .command('docs', 'Opens the Project Lakechain documentation.')
   .command('search <query>', 'Searches for a middleware in the official Lakechain store.')
-  .command('examples', 'Downloads examples for Project Lakchain in the current directory.')
-  .command('run', 'Runs a Lakechain middleware locally.')
+  .command('examples', 'Download examples for Project Lakechain on the file-system.')
   .showSuggestionAfterError(true)
   .parse(process.argv);
 
