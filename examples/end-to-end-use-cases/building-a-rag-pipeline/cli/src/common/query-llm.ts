@@ -27,7 +27,7 @@ export const queryLlm = async (
   client: BedrockRuntime,
   prompt: string,
   question: string,
-  modelId = 'anthropic.claude-instant-v1'
+  modelId: string
 ): Promise<AsyncIterable<ResponseStream> | undefined> => {
   const response = await client.invokeModelWithResponseStream({
     body: JSON.stringify({
