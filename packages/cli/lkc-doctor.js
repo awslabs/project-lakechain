@@ -103,7 +103,7 @@ program
     await exists('tsc');
     spinner.succeed('`tsc` is installed on this system.');
   } catch (error) {
-    spinner.fail('`tsc` was not found on this system.');
+    spinner.warn('`tsc` was not found on this system.');
   }
 
   // AWS CDK.
@@ -112,7 +112,7 @@ program
     await exists('cdk');
     spinner.succeed('`cdk` is installed on this system.');
   } catch (error) {
-    spinner.fail('`cdk` was not found on this system.');
+    spinner.warn('`cdk` was not found on this system.');
   }
 
   console.log();

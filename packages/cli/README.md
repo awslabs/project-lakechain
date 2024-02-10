@@ -113,4 +113,13 @@ The `docs` command is a shortcut to open the official Lakechain documentation in
 $ lkc docs
 ```
 
-## Examples
+## Doctor
+
+The `doctor` command checks the environment for any issues that might prevent customers from deploying pipelines using Lakechain and the AWS CDK.
+
+##### Example
+
+```bash
+$ lkc doctor
+```
+
