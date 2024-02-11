@@ -6,10 +6,11 @@
     "test": "bin/test.js"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
+    "build": "npx tsc",
+    "watch": "npx tsc -w",
+    "postinstall": "npm run build",
+    "test": "npx jest",
+    "deploy": "npx cdk deploy"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

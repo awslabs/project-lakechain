@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "es2022",
     "module": "NodeNext",
-    "moduleResolution": "nodenext",
     "lib": [
       "es2020",
       "dom"
     ],
+    "moduleResolution": "nodenext",
     "outDir": "dist/",
+    "removeComments": false,
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -22,12 +23,11 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "typeRoots": ["./node_modules/@types"]
   },
   "exclude": [
     "node_modules",
-    "cdk.out"
+    "cdk.out",
+    "dist/"
   ]
 }

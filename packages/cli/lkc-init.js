@@ -75,7 +75,9 @@ chain.use(async (_1, _2, next) => {
     mkdirp.sync(opts.output);
   }
   if (fs.readdirSync(opts.output).length > 0) {
-    return (console.log(`The directory '${opts.output}' is not empty. Aborting.`));
+    return (console.log(
+      `The directory '${opts.output}' is not empty. Use --output to specify an empty directory.`
+    ));
   }
   next();
 });

@@ -14,5 +14,10 @@ program
  */
 const url = 'https://awslabs.github.io/project-lakechain/';
 
-console.log(`Opening ${url}...`);
-await open('https://awslabs.github.io/project-lakechain/');
+(async () => {
+  try {
+    await open('https://awslabs.github.io/project-lakechain/');
+  } catch (error) {
+    console.log(`Could not open local browser. Open ${url} in your browser manually.`);
+  }
+})();
