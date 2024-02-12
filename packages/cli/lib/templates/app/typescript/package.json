@@ -9,12 +9,17 @@
     "build": "npx tsc",
     "watch": "npx tsc -w",
     "postinstall": "npm run build",
-    "test": "npx jest",
-    "deploy": "npx cdk deploy"
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "20.11.17",
+    "esbuild": "^0.20.0",
     "aws-cdk": "2.126.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
