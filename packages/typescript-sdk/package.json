@@ -59,6 +59,7 @@
     "@aws-lambda-powertools/logger": "^1.18.0",
     "@aws-lambda-powertools/metrics": "^1.18.0",
     "@aws-lambda-powertools/tracer": "^1.18.0",
+    "@aws-lambda-powertools/batch": "^1.18.0",
     "class-transformer": "^0.5.1",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.2.1",

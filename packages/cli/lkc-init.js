@@ -105,7 +105,7 @@ chain.use(async (_1, _2, next) => {
  * Prompt the user for a project name.
  */
 chain.use(async (_1, _2, next) => {
-  if (!opts.name) {
+  if (!opts.name && opts.type === 'app') {
     const response = await prompts({
       type: 'text',
       name: 'name',
@@ -121,7 +121,7 @@ chain.use(async (_1, _2, next) => {
  * Prompt the user for a project description.
  */
 chain.use(async (_1, _2, next) => {
-  if (!opts.description) {
+  if (!opts.description && opts.type === 'app') {
     const response = await prompts({
       type: 'text',
       name: 'description',
@@ -140,6 +140,28 @@ chain.use(async (_1, _2, next) => {
 chain.use(async (_1, _2, next) => {
   const source = path.join(__dir, 'lib', 'templates', opts.type, 'typescript');
   await fse.copy(source, opts.output);
+  next();
+});
+
+/**
+ * Patch the project with the name and description.
+ */
+chain.use(async (_1, _2, next) => {
+  if (opts.type === 'app') {
+    const packageJson = JSON.parse(fs.readFileSync(
+      path.join(opts.output, 'package.json')
+    ));
+
+    // Patch the project file.
+    packageJson.name = opts.name;
+    packageJson.description = opts.description;
+
+    // Write the updates,
+    fs.writeFileSync(
+      path.join(opts.output, 'package.json'),
+      JSON.stringify(packageJson, null, 2)
+    );
+  }
   next();
 });
 
