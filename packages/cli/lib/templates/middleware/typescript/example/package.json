@@ -1,0 +1,33 @@
+{
+  "name": "sample-stack",
+  "description": "A sample stack for testing a custom middleware.",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "watch": "npx tsc -w",
+    "postinstall": "npm run build",
+    "test": "npx jest",
+    "deploy": "npx cdk deploy"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "^0.3.4",
+    "simple-text-processor": "file:../",
+    "@project-lakechain/s3-storage-connector": "^0.3.4",
+    "aws-cdk-lib": "2.126.0",
+    "constructs": "^10.3.0",
+    "source-map-support": "^0.5.21"
+  }
+}
