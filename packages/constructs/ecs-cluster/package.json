@@ -43,7 +43,7 @@
     "@types/aws-lambda": "^8.10.133",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.16",
-    "cdk-nag": "^2.28.27",
+    "cdk-nag": "^2.28.33",
     "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
