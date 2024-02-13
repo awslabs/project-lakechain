@@ -78,6 +78,5 @@
     "@types/uuid": "^9.0.8",
     "aws-sdk-client-mock": "^3.0.1",
     "tsx": "^4.7.0"
-  },
-  "gitHead": "2d0451327646858a19a555e6b6afd8ac2ef5070d"
+  }
 }

@@ -46,6 +46,5 @@
   "lint-staged": {
     "*.{ts, json}": "npx eslint",
     "*.{js,json,md}": "npx prettier --check"
-  },
-  "gitHead": "2d0451327646858a19a555e6b6afd8ac2ef5070d"
+  }
 }
