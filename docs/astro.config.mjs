@@ -64,6 +64,9 @@ export default defineConfig({
 					label: 'Observability',
 					link: '/guides/observability'
 				}, {
+					label: 'Tags',
+					link: '/guides/tagging'
+				}, {
 					label: 'Examples',
 					link: '/guides/examples'
 				}]
