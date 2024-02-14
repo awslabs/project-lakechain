@@ -46,6 +46,8 @@ program
   .option('-r, --opensearch-region <opensearch-region>', '(Optional) The AWS region in which OpenSearch is deployed.')
   .option('-b, --bedrock-region <bedrock-region>', '(Optional) The AWS region in which Bedrock is deployed.')
   .option('-k, --number-of-similar-documents <number-of-similar-documents>', '(Optional) The number of similar documents to retrieve.')
+  .option('-m, --embeddings-model-id <embeddings-model-id>', '(Optional) The model to use to create embeddings.')
+  .option('-l, --llm-model-id <llm-model-id>', '(Optional) The model to use to query the large language model.')
   .parse(process.argv);
 
 /**
@@ -74,6 +76,14 @@ const OptionsSchema = z.object({
     .number()
     .min(1)
     .max(20)
+    .optional(),
+  embeddingsModelId: z
+    .string()
+    .default('amazon.titan-embed-text-v1')
+    .optional(),
+  llmModelId: z
+    .string()
+    .default('anthropic.claude-instant-v1')
     .optional()
 });
 
@@ -143,7 +153,7 @@ try {
   let embeddings = null;
   spinner = ora('Creating embeddings for the question...').start();
   try {
-    embeddings = await createEmbeddings(bedrock, question);
+    embeddings = await createEmbeddings(bedrock, options.embeddingsModelId, question);
     spinner.succeed('Embeddings created.');
   } catch (err) {
     spinner.fail('Embeddings creation failed.');
@@ -194,7 +204,7 @@ try {
   let events = null;
   try {
     spinner = ora('Querying the LLM...').start();
-    events = await queryLlm(bedrock, prompt, question);
+    events = await queryLlm(bedrock, options.llmModelId, prompt, question);
     spinner.succeed('Stream created.');
   } catch (err) {
     spinner.fail('Stream creation failed.');

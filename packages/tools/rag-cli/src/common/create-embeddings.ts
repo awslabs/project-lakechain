@@ -24,13 +24,14 @@ import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
  */
 export const createEmbeddings = async (
   client: BedrockRuntime,
+  modelId: string,
   text: string
 ): Promise<Array<number>> => {
   const response = await client.invokeModel({
     body: JSON.stringify({
       inputText: text
     }),
-    modelId: 'amazon.titan-embed-text-v1',
+    modelId: modelId,
     accept: 'application/json',
     contentType: 'application/json'
   });

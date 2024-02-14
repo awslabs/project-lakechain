@@ -146,16 +146,16 @@ If it works, you should get a `403` response in return to the request, as we're 
 
 ## ✨ Run the Retrieval
 
-We've created a handy CLI tool, called the [RAG CLI](./cli/), that you can use to run the retrieval step of the RAG pipeline. Before using it, prepare the following information that we will need to feed to the CLI.
+We've created a handy CLI tool, called the [RAG CLI](../../../packages/tools/rag-cli/), that you can use to run the retrieval step of the RAG pipeline. Before using it, prepare the following information that we will need to feed to the CLI.
 
 - The endpoint of the OpenSearch domain (from the CDK outputs).
 - The AWS region in which the OpenSearch domain is deployed.
 - The AWS region from which you want to use Amazon Bedrock. *[See the Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html#bedrock-regions) for more information on the AWS regions supported.*
 
-Once done, head with your terminal to the [`cli`](./cli/) directory and install the dependencies of the CLI:
+Once done, head with your terminal to the [`cli`](../../../packages/tools/rag-cli/) directory and install the dependencies of the CLI:
 
 ```bash
-cd ./cli
+cd ../../../packages/tools/rag-cli/
 npm install
 ```
 

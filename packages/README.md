@@ -15,6 +15,7 @@ The packages are organized under the following sections :
 - [TypeScript SDK](./typescript-sdk) - The TypeScript SDK is a library providing the functionalities to easily build middleware's compute such as AWS Lambda functions, or ECS containers.
 - [Constructs](./constructs) - The Lakechain construct library is a set of CDK constructs that are shared across middlewares and examples.
 - [CLI](./cli/) - The Lakechain CLI is a command line interface that provides a set of commands to help developers bootstrap new middlewares, and manage their development workflow.
+- [RAG CLI](./tools/rag-cli/) - The RAG CLI is a command line interface that allows you to ask questions to your documents stored in OpenSearch using a large language model powered by Amazon Bedrock.
 
 ## Build
 
