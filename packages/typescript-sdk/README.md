@@ -374,30 +374,3 @@ const descriptor = new S3ObjectDescriptor.Builder()
 // Display the S3 URI.
 console.log(`URI: ${descriptor.asUri()}`);
 ```
-
----
-
-### Copying from S3-to-S3
-
-In certain circumstances, you might need to copy data from one bucket to another. To do so, the SDK provides a helper that will copy an object source to its destination in streaming, meaning that the entire object will not be entirely loaded in memory, making it possible to copy large objects.
-
-> **Note**
-> The use of copies in any high-throughput computing system is generally
-> discouraged for its high cost and low performance implications.
-> We recommend using other options such as passing an object by reference
-> (its URI) or using pre-signed URLs when possible.
-> We are providing this API for convenience in cases where it is not possible
-> to use other options.
-
-```typescript
-import { S3StreamCopier } from '@project-lakechain/sdk/helpers';
-
-// Copy an object from one bucket to another.
-const copier = new S3StreamCopier.Builder()
-  .withSource('s3://source-bucket/source-object')
-  .withDestination('s3://destination-bucket/destination-object')
-  .build();
-
-// Start the copy operation.
-await copier.copy();
-```
