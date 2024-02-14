@@ -84,6 +84,23 @@ const trigger = new S3EventTrigger.Builder()
 
 ---
 
+### 🗂️ Metadata
+
+The S3 event trigger middleware converts S3 native events into the [CloudEvents](/project-lakechain/general/events) specification and enriches the document description with required metadata, such as the mime-type, the size, and the Etag associated with the document.
+
+All those information cannot be inferred from the S3 event alone, and to efficiently compile those metadata, this middleware uses the following algorithm.
+
+1. The **Size**, **Etag**, and **URL** of the S3 object are taken from the S3 event and added to the Cloud Event.
+2. If the object is a directory, it is ignored, as this middleware only processes documents.
+3. The middleware tries to infer the mime-type of the document from the object extension.
+4. If the mime-type cannot be inferred from the extension, we try to infer it from the S3 reported content type.
+5. If the mime-type cannot be inferred from the S3 reported content type, we try to infer it from the first bytes of the document using a chunked request.
+6. If the mime-type cannot be inferred at all, we set the mime-type to `application/octet-stream`.
+
+<br>
+
+---
+
 ### 🏗️ Architecture
 
 The S3 trigger receives S3 events from subscribed buckets on its SQS input queue. They are consumed by a Lambda function used to translate S3 events into a [CloudEvent](/project-lakechain/general/events). The Lambda function also takes care of identifying the mime-type of a document based on its extension, the S3 reported mime-type, or the content of the document itself.
