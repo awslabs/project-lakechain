@@ -2,9 +2,9 @@
 title: Tags
 ---
 
-Project Lakechain makes it possible to apply a specific [tagging strategy](https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html) to all the AWS resources created by middlewares across your pipelines.
+Project Lakechain makes it possible to apply a specific [tagging strategy](https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/building-your-tagging-strategy.html) to all the AWS resources created by middlewares across your pipelines.
 
-> ℹ️ Tagging is a best practice to help you manage your AWS resources. It is a metadata that consists of a key-value pair that you can assign to AWS resources. It allows you to categorize resources, and track costs and usage across your AWS environments.
+> ℹ️ [Tagging](https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html) is a best practice to help you manage your AWS resources. It is a metadata that consists of a key-value pair that you can assign to AWS resources. It allows you to categorize resources, and track costs and usage across your AWS environments.
 
 <br>
 
