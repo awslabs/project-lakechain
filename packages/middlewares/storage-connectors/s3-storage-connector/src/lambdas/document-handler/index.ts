@@ -19,11 +19,12 @@ import path from 'path';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
-import { S3DocumentDescriptor, S3StreamCopier } from '@project-lakechain/sdk/helpers';
+import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 
 import {
   S3Client,
   PutObjectCommand,
+  CopyObjectCommand,
   StorageClass
 } from '@aws-sdk/client-s3';
 import {
@@ -74,33 +75,32 @@ class Lambda implements LambdaInterface {
     const data = event.data();
     const document = data.document();
     const outputPrefix = `output/${data.chainId()}`;
-
+    const sourceUri = S3DocumentDescriptor.fromUri(document.url());
+    const promises = [];
+    
     // If `COPY_DOCUMENTS` is set to `true`, we copy the
     // the current document to the target bucket.
     if (COPY_DOCUMENTS) {
-      const copier = new S3StreamCopier.Builder()
-        .withSource(document)
-        .withDestination(new S3DocumentDescriptor.Builder()
-          .withBucket(TARGET_BUCKET)
-          .withKey(path.join(outputPrefix, document.filename().basename()))
-          .build()
-        )
-        .withOptions({
-          ContentType: document.mimeType(),
-          StorageClass: STORAGE_CLASS
-        })
-        .build();
-      await copier.copy();
+      promises.push(s3.send(new CopyObjectCommand({
+        Bucket: TARGET_BUCKET,
+        Key: path.join(outputPrefix, document.filename().basename()),
+        CopySource: `${sourceUri.bucket()}/${sourceUri.key()}`,
+        ContentType: document.mimeType(),
+        StorageClass: STORAGE_CLASS
+      })));
     }
 
     // We also copy the document metadata to the target bucket.
-    await s3.send(new PutObjectCommand({
+    promises.push(s3.send(new PutObjectCommand({
       Bucket: TARGET_BUCKET,
       Key: path.join(outputPrefix, `${document.filename().basename()}.metadata.json`),
       Body: JSON.stringify(event),
       ContentType: 'application/json',
       StorageClass: STORAGE_CLASS
-    }));
+    })));
+
+    // We wait for all the promises to resolve.
+    await Promise.all(promises);
 
     return (logger.info(event as any));
   }
