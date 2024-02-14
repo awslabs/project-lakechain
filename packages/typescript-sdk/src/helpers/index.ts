@@ -16,4 +16,3 @@
 
 export * from './s3-stream.js';
 export * from './s3-object-descriptor.js';
-export * from './s3-stream-copier.js';
