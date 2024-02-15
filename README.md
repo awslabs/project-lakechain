@@ -4,7 +4,7 @@
   <img width="240" src="docs/src/assets/icon.png">
   <br><br>
   <h2 align="center">Project Lakechain &nbsp;<img alt="Static Badge" src="https://img.shields.io/badge/Alpha-e28743"></h2>
-  <p align="center">A cloud-native, AI-powered, document processing framework built on top of the AWS CDK.</p>
+  <p align="center">Cloud-native, AI-powered, document processing pipelines on AWS.</p>
   <p align="center">
     <a href="https://codespaces.new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
   </p>
@@ -33,7 +33,7 @@ This project has been designed to help AWS customers build and scale different t
 
 ## Show me the code ❗
 
-Below is an example of a pipeline built with Lakechain that deploys the infrastructure required to automatically transcribe audio files uploaded to S3, in just a few lines of code.
+Below is an example of a pipeline that deploys the infrastructure required to automatically transcribe audio files uploaded to S3, in just a few lines of code.
 
 > 👇 This pipeline will scale to millions of documents.
 
@@ -41,7 +41,7 @@ Below is an example of a pipeline built with Lakechain that deploys the infrastr
 export class TranscriptionStack extends cdk.Stack {
   constructor(scope: Construct, id: string) {
 
-    // Listens for new documents on S3.
+    // Listen for new documents on S3.
     const trigger = new S3EventTrigger.Builder()
       .withScope(this)
       .withIdentifier('Trigger')
@@ -50,14 +50,14 @@ export class TranscriptionStack extends cdk.Stack {
       .build();
 
     trigger
-      // Transcribe uploaded audio files with Amazon Transcribe.
+      // Transcribe audio documents with Amazon Transcribe.
       .pipe(new TranscribeAudioProcessor.Builder()
         .withScope(this)
         .withIdentifier('Transcribe')
         .withCacheStorage(cache)
         .build()
       )
-      // Store transcription results in a destination bucket.
+      // Store transcription results in S3.
       .pipe(new S3StorageConnector.Builder()
         .withScope(this)
         .withIdentifier('Storage')
