@@ -28,6 +28,7 @@
     "url": "https://github.com/awslabs/project-lakechain/issues"
   },
   "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@aws-sdk/client-comprehend": "^3.511.0",
     "@aws-sdk/client-s3": "^3.511.0",

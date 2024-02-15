@@ -36,6 +36,7 @@
   "bugs": {
     "url": "https://github.com/awslabs/project-lakechain/issues"
   },
+  "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@commitlint/cli": "18.6.0",
     "@commitlint/config-conventional": "18.6.0",
