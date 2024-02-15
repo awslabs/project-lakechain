@@ -110,16 +110,6 @@ export class CacheStorage {
   }
 
   /**
-   * @param key the key of the element to put
-   * in the cache.
-   * @param data the data to put in the cache.
-   * @returns the path to the element in the cache.
-   */
-  private getPath(key: string, data: string) {
-    return (`${this.props.serviceName}/${this.hash(key, data)}`);
-  }
-
-  /**
    * Inserts a new element in the cache.
    * @param key the key of the element to put
    * in the cache.
@@ -134,7 +124,8 @@ export class CacheStorage {
       serialized = JSON.stringify(data);
     }
 
-    const path = this.getPath(key, serialized);
+    // The path where the serialized data will be stored.
+    const path = `${this.props.serviceName}/${this.hash(key, data)}`;
 
     // Create an S3 URI pointing to the location
     // of the serialized data.

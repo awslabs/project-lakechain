@@ -19,7 +19,8 @@ import { CloudEvent } from '../models/cloud-event/cloud-event.js';
 import { logger, tracer } from '../powertools/index.js';
 import {
   SNSClient,
-  PublishCommand
+  PublishCommand,
+  MessageAttributeValue
 } from '@aws-sdk/client-sns';
 
 /**
@@ -57,12 +58,22 @@ export interface NextTarget {
   snsTopicArn: string;
 }
 
+/**
+ * A set of properties describing how to publish an event
+ * to the next middlewares in a pipeline.
+ */
 export interface NextProps {
 
   /**
    * The next target to publish the event to.
    */
   target: NextTarget;
+
+  /**
+   * Additional attributes to associate with the
+   * SNS event attributes.
+   */
+  attributes?: Record<string, MessageAttributeValue>;
 
   /**
    * Whether to log the event.
@@ -74,19 +85,19 @@ export interface NextProps {
  * Publishes the given cloud event to an SNS topic
  * for further processing by the next middlewares.
  * @param event the cloud event object to publish.
- * @param target an optional object describing the
- * next target to publish the event to.
+ * @param props the next properties to use.
  * @returns a promise which resolves when the event has been published.
  */
-export const send = (event: CloudEvent, target?: NextTarget) => {
+const send = (event: CloudEvent, props?: NextProps) => {
   // Update the call stack with the current service.
   event.data().props.callStack.unshift(SERVICE_NAME);
 
   // Publish the event to the SNS topic.
   return (sns.send(
     new PublishCommand({
-      TopicArn: target?.snsTopicArn,
-      Message: JSON.stringify(event)
+      TopicArn: props?.target.snsTopicArn,
+      Message: JSON.stringify(event),
+      MessageAttributes: props?.attributes
     })
   ));
 };
@@ -120,7 +131,7 @@ export const next = (
         }
 
         // Forward the event to the next middlewares.
-        await send(event, props.target);
+        await send(event, props);
       }
 
       return (event);

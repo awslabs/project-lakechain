@@ -113,7 +113,7 @@ class Builder {
    * @returns A new document instance.
    */
   public build(): Document {
-    return new Document(DocumentSchema.parse(this.props));
+    return (new Document(DocumentSchema.parse(this.props)));
   }
 }
 
