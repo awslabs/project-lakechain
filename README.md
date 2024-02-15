@@ -23,14 +23,13 @@
 
 ## 🚀 Getting Started
 
-> [!Important]
 > 👉 Head to our [documentation](https://awslabs.github.io/project-lakechain/) which contains all the information required to understand the project, and quickly start building!
 
 ## What's Lakechain ❓
 
 Project Lakechain is an experimental framework based on the [AWS Cloud Development Kit (CDK)](https://github.com/aws/aws-cdk) that makes it easy to express and deploy scalable document processing pipelines on AWS using infrastructure-as-code. It emphasizes on modularity of pipelines, and provides **40+** ready to use components for prototyping complex document pipelines that can scale out of the box to millions of documents.
 
-This project has been designed to help AWS customers build and scale different types of document processing pipelines, ranging a wide array of use-cases including Metadata Extraction, Document Conversion, NLP analysis, Text Summarization, Text Translation, Audio Transcription, Computer Vision, [Retrieval Augmented Generation](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) pipelines, and much more!
+This project has been designed to help AWS customers build and scale different types of document processing pipelines, ranging a wide array of use-cases including *metadata extraction*, *document conversion*, *NLP analysis*, *text summarization*, *translations*, *audio transcriptions*, *computer vision*, *[Retrieval Augmented Generation](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) pipelines*, and much more!
 
 ## Show me the code ❗
 
@@ -50,15 +49,15 @@ export class TranscriptionStack extends cdk.Stack {
       .withBucket(bucket)
       .build();
 
-    // Transcribes uploaded audio files with Amazon Transcribe,
-    // and stores the result in a destination bucket.
     trigger
+      // Transcribe uploaded audio files with Amazon Transcribe.
       .pipe(new TranscribeAudioProcessor.Builder()
         .withScope(this)
         .withIdentifier('Transcribe')
         .withCacheStorage(cache)
         .build()
       )
+      // Store transcription results in a destination bucket.
       .pipe(new S3StorageConnector.Builder()
         .withScope(this)
         .withIdentifier('Storage')
