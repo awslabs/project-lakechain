@@ -134,7 +134,9 @@ class Lambda implements LambdaInterface {
 
   /**
    * Inserts the given event and associated vector embeddings
-   * into the OpenSearch domain index.
+   * into the OpenSearch collection index.
+   * @note OpenSearch collections don't support identifiers
+   * when inserting documents in the index.
    * @param event the event to process.
    * @returns a promise that resolves when the event
    * has been processed.
@@ -153,7 +155,7 @@ class Lambda implements LambdaInterface {
       body.text = await this.getDocument(event);
     }
 
-    return (await client.index({
+    return (client.index({
       index: INDEX_NAME,
       body
     }));
@@ -177,7 +179,7 @@ class Lambda implements LambdaInterface {
       body.text = await this.getDocument(event);
     }
 
-    return (await client.index({
+    return (client.index({
       id: this.getId(event),
       index: INDEX_NAME,
       body
@@ -191,9 +193,9 @@ class Lambda implements LambdaInterface {
    */
   async processEvent(event: CloudEvent): Promise<any> {
     if (SERVICE_IDENTIFIER === 'es') {
-      return (await this.processEsEvent(event));
+      return (this.processEsEvent(event));
     } else if (SERVICE_IDENTIFIER === 'aoss') {
-      return (await this.processAossEvent(event));
+      return (this.processAossEvent(event));
     }
   }
 

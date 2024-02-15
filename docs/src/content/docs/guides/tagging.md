@@ -18,9 +18,9 @@ By default, the Lakechain framework applies a set of tags to all the supported A
 
 | Tag       | Value               | Description |
 | --------- | ------------------- | ----------- |
-| `Context` | `project-lakechain` | Tags all resources created by Lakechain. |
-| `Service` | Middleware name | Tags all resources created by a middleware. |
-| `Version` | Semantic version | The version of the specific middleware. |
+| Context | `project-lakechain` | Tags all resources created by Lakechain. |
+| Service | Middleware name | Tags all resources created by a middleware. |
+| Version | Semantic version | The version of the specific middleware. |
 
 <br>
 
