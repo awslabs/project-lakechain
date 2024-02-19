@@ -36,7 +36,7 @@
     "@types/aws-lambda": "^8.10.119",
     "@types/jest": "^29.0.0",
     "@types/node": "^20.2.1",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.20.1",
     "rimraf": "^5.0.5",
     "sharp": "^0.33.2"
   },
@@ -50,7 +50,7 @@
     "@project-lakechain/sdk": "^0.3.4"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.126.0",
+    "aws-cdk-lib": "^2.128.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

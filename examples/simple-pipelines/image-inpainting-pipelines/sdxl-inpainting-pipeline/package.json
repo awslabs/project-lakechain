@@ -25,7 +25,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.20.1",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2"
   },
@@ -36,7 +36,7 @@
     "@project-lakechain/sharp-image-transform": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.126.0",
+    "aws-cdk-lib": "^2.128.0",
     "constructs": "^10.3.0"
   }
 }

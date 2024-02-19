@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.20.1",
     "ts-jest": "^29.0.0",
     "ts-node": "^10.9.2"
   },
@@ -36,7 +36,7 @@
     "@project-lakechain/transcribe-audio-processor": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.126.0",
+    "aws-cdk-lib": "^2.128.0",
     "constructs": "^10.3.0"
   }
 }
