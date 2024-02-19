@@ -36,7 +36,9 @@ The primary audience for Project Lakechain are all developers within a Cloud, De
 
 ##### Is Project Lakechain production-ready?
 
-No, Project Lakechain is currently not intended for production-use. It is intended for rapid prototyping and experimentation only. It can however serve as an excellent blueprint of how production-ready pipelines could look like for customers looking to build their own.
+No, Project Lakechain is currently released under Alpha preview, and is intended for rapid prototyping and experimentation only. While the middlewares and the core framework are being evolved fast as we receive feedbacks and strengthen our [Roadmap](https://github.com/orgs/awslabs/projects/153), it also means that their APIs are considered unstable until we reach **1.0.0**.
+
+We take our customer workloads very seriously, and we're currently working towards a Beta release that will contain the core features we intend to ship, full test coverage across the framework, and more stable APIs overall. We're continuously looking for feedbacks to improve Project Lakechain, and we're looking to hear from you! If you encounter bugs, regressions, or have feature requests, we'd be very happy to [listen for your feedbacks](https://github.com/awslabs/project-lakechain/issues/new/choose).
 
 <br />
 
