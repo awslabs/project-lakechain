@@ -45,7 +45,7 @@ export class ConditionalPipelineStack extends cdk.Stack {
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline demonstrating how to use conditionals in pipelines.',
+      description: 'A pipeline demonstrating how to use conditionals.',
       ...env
     });
 

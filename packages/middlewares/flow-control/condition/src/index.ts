@@ -145,7 +145,9 @@ export class Condition extends Middleware {
     } else if (typeof props.conditional === 'function') {
       conditional = this.serializeFn(props.conditional);
     } else {
-      throw new Error('Invalid conditional expression.');
+      throw new Error(`
+        Invalid or missing conditional expression in condition middleware.
+      `);
     }
 
     ///////////////////////////////////////////

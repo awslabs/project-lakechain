@@ -8,11 +8,11 @@ import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
 export const DelayPropsSchema = MiddlewarePropsSchema.extend({
 
   /**
-   * The duration for the delay.
+   * The duration for the delay, or the time at which the
+   * next middlewares in the pipeline will be called.
    * This can be either a `cdk.Duration` to determine a relative delay,
    * or a `Date` object to determine an absolute time at which the
    * next middlewares in the pipeline will be called.
-   * @default true
    */
   time: z
     .union([
