@@ -35,7 +35,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/simple-pipelines/conditionals`](/examples/simple-pipelines/conditionals) in the repository and run the following commands to build the example:
+Head to the directory [`examples/simple-pipelines/conditional-pipeline`](/examples/simple-pipelines/conditional-pipeline) in the repository and run the following commands to build the example:
 
 ```bash
 npm install
