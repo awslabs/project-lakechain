@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/delay": "^0.3.0",
-    "@project-lakechain/passthrough": "^0.3.0",
-    "@project-lakechain/s3-event-trigger": "^0.3.0"
+    "@project-lakechain/delay": "*",
+    "@project-lakechain/passthrough": "*",
+    "@project-lakechain/s3-event-trigger": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

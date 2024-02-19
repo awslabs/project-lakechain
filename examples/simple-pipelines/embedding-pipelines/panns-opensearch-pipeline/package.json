@@ -30,10 +30,10 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/opensearch-domain": "^0.3.0",
-    "@project-lakechain/opensearch-vector-storage-connector": "^0.3.0",
-    "@project-lakechain/panns-embedding-processor": "^0.3.0",
-    "@project-lakechain/s3-event-trigger": "^0.3.0"
+    "@project-lakechain/opensearch-domain": "*",
+    "@project-lakechain/opensearch-vector-storage-connector": "*",
+    "@project-lakechain/panns-embedding-processor": "*",
+    "@project-lakechain/s3-event-trigger": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

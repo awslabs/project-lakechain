@@ -30,10 +30,10 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "^0.3.0",
-    "@project-lakechain/s3-storage-connector": "^0.3.0",
-    "@project-lakechain/tar-inflate-processor": "^0.3.0",
-    "@project-lakechain/zip-inflate-processor": "^0.3.0"
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/tar-inflate-processor": "*",
+    "@project-lakechain/zip-inflate-processor": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

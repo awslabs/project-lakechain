@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/bedrock-image-generators": "^0.3.0",
-    "@project-lakechain/s3-storage-connector": "^0.3.0",
-    "@project-lakechain/scheduler-event-trigger": "^0.3.0"
+    "@project-lakechain/bedrock-image-generators": "*",
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/scheduler-event-trigger": "*"
   },
   "peerDependencies": {
     "@aws-cdk/aws-scheduler-alpha": "^2.126.0-alpha.0",

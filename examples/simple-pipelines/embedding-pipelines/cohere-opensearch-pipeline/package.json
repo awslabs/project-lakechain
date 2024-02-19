@@ -30,11 +30,11 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/bedrock-embedding-processors": "^0.3.0",
-    "@project-lakechain/opensearch-collection": "^0.3.0",
-    "@project-lakechain/opensearch-vector-storage-connector": "^0.3.0",
-    "@project-lakechain/recursive-character-text-splitter": "^0.3.0",
-    "@project-lakechain/s3-event-trigger": "^0.3.0"
+    "@project-lakechain/bedrock-embedding-processors": "*",
+    "@project-lakechain/opensearch-collection": "*",
+    "@project-lakechain/opensearch-vector-storage-connector": "*",
+    "@project-lakechain/recursive-character-text-splitter": "*",
+    "@project-lakechain/s3-event-trigger": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",

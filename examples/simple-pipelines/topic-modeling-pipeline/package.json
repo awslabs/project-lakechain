@@ -30,9 +30,9 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/keybert-text-processor": "^0.3.0",
-    "@project-lakechain/s3-event-trigger": "^0.3.0",
-    "@project-lakechain/s3-storage-connector": "^0.3.0"
+    "@project-lakechain/keybert-text-processor": "*",
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.126.0",
