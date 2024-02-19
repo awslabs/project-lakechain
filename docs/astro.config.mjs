@@ -240,6 +240,9 @@ export default defineConfig({
 				}, {
 					label: 'Delay',
 					link: '/flow-control/delay'
+				}, {
+					label: 'Condition',
+					link: '/flow-control/condition'
 				}]
 			}, {
 				label: 'Video Processing',

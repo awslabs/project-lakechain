@@ -39,7 +39,7 @@ import { SentenceTransformersProps, SentenceTransformersPropsSchema } from './de
 const description: ServiceDescription = {
   name: 'sentence-transformers',
   description: 'Creates embeddings from text-oriented documents using Sentence Transformers models.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

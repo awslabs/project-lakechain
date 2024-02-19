@@ -36,7 +36,7 @@ import {
 const description: ServiceDescription = {
   name: 'firehose-storage-connector',
   description: 'Forwards document metadata to a Firehose delivery stream.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

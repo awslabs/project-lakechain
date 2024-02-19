@@ -99,9 +99,9 @@ A.pipe(B).pipe(C);
 
 ---
 
-### Conditionals
+### Filters
 
-The Middleware API exposes a built-in conditional API that can be applied on a middleware connection. The conditional API makes it possible to describe a condition that gets compiled at deployment time into an [SNS filtering](https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html) rule. Use conditions to filter documents coming from another middleware.
+The Middleware API exposes a built-in filtering API that can be applied on a middleware connection. The filtering API makes it possible to describe a condition that gets compiled at deployment time into an [SNS filtering](https://docs.aws.amazon.com/sns/latest/dg/sns-message-filtering.html) rule. Use filters to filter documents coming from another middleware.
 
 > ℹ️ The below example keeps only documents that have a size inferior to 1MB.
 
@@ -118,17 +118,17 @@ const B = new MiddlewareB.Builder()
   .build();
 ```
 
-Conditionals can be expressed with the `when` API, and are applied on the structure of the input [CloudEvent](/project-lakechain/general/events) document using different operators such as `lt`, `gt`, `lte`, `gte`, `equals`, `includes` and `startsWith`.
+Filters can be expressed with the `when` API, and are applied on the structure of the input [CloudEvent](/project-lakechain/general/events) document using different operators such as `lt`, `gt`, `lte`, `gte`, `equals`, `includes` and `startsWith`.
 
-You can also combine multiple conditions to express `and` statements.
+You can also combine multiple filters using `and` statements.
 
 > ℹ️ The below example keeps only images that have a size superior to 1MB, and a width equals to 1920px.
 
 ```typescript
-import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
+import { when } from '@project-lakechain/core/dsl';
 
-// The conditional statement.
-const condition = when('data.document.size')
+// The filtering statement.
+const filter = when('data.document.size')
   .gt(1024 * 1024)
   .and(
     when('data.metadata.properties.attrs.dimensions.width').equals(1920)
@@ -138,11 +138,13 @@ const B = new MiddlewareB.Builder()
   .withScope(this)
   .withIdentifier('B')
   .withCacheStorage(cache)
-  .withSource(A, condition)
+  .withSource(A, filter)
   .build();
 ```
 
 > ℹ️ `or` statements are not supported yet.
+
+If you need to express more complex conditions, that also applies on the content of the document, see the [Condition](/project-lakechain/flow-control/condition) middleware.
 
 <br>
 

@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'recursive-character-text-splitter',
   description: 'Transforms text into chunks of tokens using Langchain\'s recursive character text splitter.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

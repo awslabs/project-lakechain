@@ -37,11 +37,11 @@ const imageTransform = new SharpImageTransform.Builder()
   .withSharpTransforms(
     sharp()
       .resize(500)
-      .composite([{
-        input: r.reference(
-          r.url(`s3://${source.bucketName}/watermark/watermark.png`)
-        )
-      }])
+      .composite([
+        {
+          input: r.reference(r.url(`s3://${source.bucketName}/watermark/watermark.png`))
+        }
+      ])
       .png()
   )
   .build();

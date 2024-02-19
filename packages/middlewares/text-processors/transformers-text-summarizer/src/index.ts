@@ -46,7 +46,7 @@ import {
 const description: ServiceDescription = {
   name: 'transformers-text-summarizer',
   description: 'Provides abstractive text summarization using the HuggingFace transformers library.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

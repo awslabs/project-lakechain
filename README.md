@@ -29,7 +29,7 @@
 
 Project Lakechain is an experimental framework based on the [AWS Cloud Development Kit (CDK)](https://github.com/aws/aws-cdk) that makes it easy to express and deploy scalable document processing pipelines on AWS using infrastructure-as-code. It emphasizes on modularity of pipelines, and provides **40+** ready to use components for prototyping complex document pipelines that can scale out of the box to millions of documents.
 
-This project has been designed to help AWS customers build and scale different types of document processing pipelines, ranging a wide array of use-cases including *metadata extraction*, *document conversion*, *NLP analysis*, *text summarization*, *translations*, *audio transcriptions*, *computer vision*, *[Retrieval Augmented Generation](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) pipelines*, and much more!
+This project has been designed to help AWS customers build and scale different types of document processing pipelines, ranging a wide array of use-cases including _metadata extraction_, _document conversion_, _NLP analysis_, _text summarization_, _translations_, _audio transcriptions_, _computer vision_, _[Retrieval Augmented Generation](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) pipelines_, and much more!
 
 ## Show me the code ❗
 
@@ -40,7 +40,6 @@ Below is an example of a pipeline that deploys the infrastructure required to au
 ```typescript
 export class TranscriptionStack extends cdk.Stack {
   constructor(scope: Construct, id: string) {
-
     // Listen for new documents on S3.
     const trigger = new S3EventTrigger.Builder()
       .withScope(this)
@@ -51,19 +50,21 @@ export class TranscriptionStack extends cdk.Stack {
 
     trigger
       // Transcribe audio documents with Amazon Transcribe.
-      .pipe(new TranscribeAudioProcessor.Builder()
-        .withScope(this)
-        .withIdentifier('Transcribe')
-        .withCacheStorage(cache)
-        .build()
+      .pipe(
+        new TranscribeAudioProcessor.Builder()
+          .withScope(this)
+          .withIdentifier('Transcribe')
+          .withCacheStorage(cache)
+          .build()
       )
       // Store transcription results in S3.
-      .pipe(new S3StorageConnector.Builder()
-        .withScope(this)
-        .withIdentifier('Storage')
-        .withCacheStorage(cache)
-        .withDestinationBucket(destination)
-        .build()
+      .pipe(
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('Storage')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
       );
   }
 }

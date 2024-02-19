@@ -1,6 +1,6 @@
 # 📖 Document Indexing Pipeline
 
-> 👉 This example showcases how to build a simple, but powerful, document indexing pipeline using Project Lakechain. *Please note that this is only an example, and not a production-ready application.*
+> 👉 This example showcases how to build a simple, but powerful, document indexing pipeline using Project Lakechain. _Please note that this is only an example, and not a production-ready application._
 
 It demonstrates how to support a variety of document types as an input (PDFs, images, audio and video files), extract as much metadata about these documents as possible, and index the document metadata automatically into an OpenSearch index to make them searchable, run analytics query on them, and build dashboards to visualize the results.
 
@@ -35,8 +35,8 @@ In this pipeline, we are making use of multiple middlewares to extract metadata 
 
 Data ingestion providers pipe documents into a pipeline, and trigger a new _pipeline execution_ for each piped document.
 
-| Middleware            | Description                                            | Trigger                                                          |
-| --------------------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
+| Middleware | Description                                            | Trigger                                                          |
+| ---------- | ------------------------------------------------------ | ---------------------------------------------------------------- |
 | S3 Trigger | Responsible for ingesting documents from an S3 bucket. | Triggers whenever a new object is uploaded to the source bucket. |
 
 ### Document Processors

@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'transcribe-audio-processor',
   description: 'Transcribes audio files asynchronously using Amazon Transcribe.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

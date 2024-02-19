@@ -40,7 +40,7 @@ import {
 const description: ServiceDescription = {
   name: 'simple-text-processor',
   description: 'A sample middleware implementation.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

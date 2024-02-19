@@ -15,7 +15,7 @@ flowchart LR
 
 ## ❓ What is Happening
 
-Image inpainting allows to mask a section of an image and to replace the masked section with an AI generated image. In this example we show how to use a mask prompt to mask a *house* in an input image, and replace the house with a the following prompt: *Modern house*.
+Image inpainting allows to mask a section of an image and to replace the masked section with an AI generated image. In this example we show how to use a mask prompt to mask a _house_ in an input image, and replace the house with a the following prompt: _Modern house_.
 
 Below is an example of the result of the inpainting process executed by this example.
 

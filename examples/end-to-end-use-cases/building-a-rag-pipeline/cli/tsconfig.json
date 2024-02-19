@@ -10,10 +10,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "./dist"
-  ]
+  "include": ["./src/**/*"],
+  "exclude": ["./dist"]
 }

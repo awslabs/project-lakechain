@@ -1,6 +1,6 @@
 # 🔍 Building a Search Engine
 
-> 👉 This example showcases how to build a search engine multi-modal ingestion pipeline using Project Lakechain. *Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application.*
+> 👉 This example showcases how to build a search engine multi-modal ingestion pipeline using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 ## :dna: Pipeline
 
@@ -45,7 +45,7 @@ The following requirements are needed to deploy the infrastructure required to r
 - [Docker](https://docs.docker.com/get-docker/) is required to be running to build middlewares.
 - [Node.js](https://nodejs.org/en/download/) v18+ and NPM.
 - [Python](https://www.python.org/downloads/) v3.8+ and [Pip](https://pip.pypa.io/en/stable/installation/).
-<br>
+  <br>
 
 ## 🚀 Deploy
 
@@ -61,6 +61,7 @@ You can then deploy the example to your account (ensure your deployment machine 
 ```bash
 npm run deploy
 ```
+
 <br>
 
 ## 📥 Ingest Documents
@@ -104,7 +105,7 @@ uvicorn main:app
 ```
 
 > 👉 This will start the web server on local port `8000`. Note that the web-server will download the CLIP model locally to be able to create embeddings for image search queries.
-<br>
+> <br>
 
 ## 🌐 Web Interface
 
@@ -136,7 +137,7 @@ You can prompt the search with keywords or sentences that will be used to perfor
   <img src="assets/lions.png">
 </p>
 
-*Images credits from [Unsplash](https://unsplash.com/fr/s/photos/lions).*
+_Images credits from [Unsplash](https://unsplash.com/fr/s/photos/lions)._
 
 **"Sea, Sun and Boats"**
 
@@ -144,7 +145,7 @@ You can prompt the search with keywords or sentences that will be used to perfor
   <img src="assets/sea-sun-and-boats.png">
 </p>
 
-*Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sea-and-boats).*
+_Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sea-and-boats)._
 
 **"Sports"**
 
@@ -152,7 +153,7 @@ You can prompt the search with keywords or sentences that will be used to perfor
   <img src="assets/sports.png">
 </p>
 
-*Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sports).*
+_Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sports)._
 
 <br>
 

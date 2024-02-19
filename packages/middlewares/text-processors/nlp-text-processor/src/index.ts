@@ -36,7 +36,7 @@ import { NlpTextProcessorProps, NlpTextProcessorPropsSchema } from './definition
 const description: ServiceDescription = {
   name: 'nlp-text-processor',
   description: 'Extracts features from text documents using natural language processing.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

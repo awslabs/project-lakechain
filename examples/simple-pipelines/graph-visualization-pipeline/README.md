@@ -37,6 +37,7 @@ renderer.render([
 In the stack associated with this example, we use the [Mermaid](https://mermaid-js.github.io/mermaid/#/) rendering engine to render the pipeline into an SVG image that can be seen on the deployment machine. The rendered diagrams look as follow.
 
 <br><br>
+
 <p align="center">
   <img width="700" src="assets/graph.svg">
 </p>

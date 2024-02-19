@@ -1,5 +1,5 @@
 # 🖼️ Clip Embedding Pipeline
- 
+
 > In this example, we showcase how to create vector embeddings for images using the [OpenAI CLIP](https://github.com/openai/CLIP) model, hosted on AWS.
 
 [Vector embeddings](https://www.pinecone.io/learn/vector-embeddings/) are a type of representation for data, usually words or images, where similar items have similar representations in a multi-dimensional space. Think of them as a way to translate complex items, like words or pictures, into lists of numbers (which we call vectors) that capture their semantics and relationships to other items.

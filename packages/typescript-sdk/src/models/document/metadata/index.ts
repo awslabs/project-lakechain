@@ -105,6 +105,16 @@ export const DocumentMetadataSchema = z.object({
     .optional(),
 
   /**
+   * Custom metadata associated with the entire document.
+   * This is a free form object that can contain any
+   * custom metadata.
+   */
+  custom: z
+    .record(z.any())
+    .describe('Custom metadata associated with the document.')
+    .optional(),
+
+  /**
    * Specialized properties for the document.
    */
   properties: z.discriminatedUnion('kind', [

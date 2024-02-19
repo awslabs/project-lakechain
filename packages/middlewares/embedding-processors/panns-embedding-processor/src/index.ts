@@ -36,7 +36,7 @@ import { PannsEmbeddingProcessorProps, PannsEmbeddingProcessorPropsSchema } from
 const description: ServiceDescription = {
   name: 'panns-embedding-processor',
   description: 'A processor generating embeddings for audio documents using Pre-trained Audio Neural Networks.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

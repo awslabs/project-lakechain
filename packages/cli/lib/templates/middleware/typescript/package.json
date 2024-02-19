@@ -1,7 +1,7 @@
 {
   "name": "simple-text-processor",
   "description": "A sample Lakechain middleware project.",
-  "version": "0.1.0",
+  "version": "0.3.4",
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

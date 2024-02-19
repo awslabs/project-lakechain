@@ -43,7 +43,7 @@ import {
 const description: ServiceDescription = {
   name: 'text-transform-processor',
   description: 'A middleware providing a way to transform text documents at scale.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

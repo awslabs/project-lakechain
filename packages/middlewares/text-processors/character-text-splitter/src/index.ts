@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'character-text-splitter',
   description: 'Transforms text into chunks of tokens using Langchain\'s character text splitter.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

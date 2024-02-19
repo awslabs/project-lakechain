@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'rekognition-image-processor',
   description: 'Processes images using Amazon Rekognition.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

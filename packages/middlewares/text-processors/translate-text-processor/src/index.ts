@@ -47,7 +47,7 @@ import {
 const description: ServiceDescription = {
   name: 'translate-text-processor',
   description: 'Translates text documents asynchronously using Amazon Translate.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

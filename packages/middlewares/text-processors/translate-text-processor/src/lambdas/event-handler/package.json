@@ -1,6 +1,6 @@
 {
   "name": "translate-lambda",
-  "version": "0.1.0",
+  "version": "0.3.4",
   "description": "Lambda function to translate text using Amazon Translate.",
   "main": "dist/index.js",
   "scripts": {

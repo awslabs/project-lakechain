@@ -57,7 +57,7 @@ graph LR;
 
 <br>
 
-The events exchanged between middlewares follow the same *language* for data interchange, and this SDK provides a simple, programmatic, access to that data.
+The events exchanged between middlewares follow the same _language_ for data interchange, and this SDK provides a simple, programmatic, access to that data.
 
 The following example assumes you are receiving events in your middleware from an SQS queue, and you want to de-serialize the events into TypeScript objects within an AWS Lambda environment.
 
@@ -70,7 +70,7 @@ import { CloudEvent } from '@project-lakechain/sdk';
  */
 const handler = (event: SQSEvent) => {
   const events = event.Records.map((r) => {
-    return (CloudEvent.from(r.body));
+    return CloudEvent.from(r.body);
   });
 };
 ```
@@ -81,7 +81,7 @@ The above example recursively de-serializes the `CloudEvent` payloads associated
 
 ### Accessing Documents
 
-The most important element in a document processing pipeline is the document itself, and the TypeScript SDK  provides a way to easily retrieve the information about the source document and the currently processed document in the pipeline.
+The most important element in a document processing pipeline is the document itself, and the TypeScript SDK provides a way to easily retrieve the information about the source document and the currently processed document in the pipeline.
 
 ```typescript
 /**
@@ -225,7 +225,7 @@ const handleEvent = async (event: CloudEvent) => {
     .withEtag(transformedDocument.etag)
     .withType('text/plain')
     .build();
-  
+
   return (event);
 };
 ```
@@ -268,9 +268,9 @@ const handleEvent = async (event: CloudEvent) => {
 
 The TypeScript SDK provides a very convenient way to reference arbitrary resources using [Uniform Resource Identifier (URIs)](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) when those resources are too voluminous to be included in the event payload.
 
-Let's assume you are building a middleware that extracts faces and their bounding boxes from images. You might want to *reference* those bounding boxes using a URI instead of *including* them as part of the `CloudEvent` payload shared with middlewares. This is because the event might become too large to be carried over message queues such as SQS, or event buses such as SNS.
+Let's assume you are building a middleware that extracts faces and their bounding boxes from images. You might want to _reference_ those bounding boxes using a URI instead of _including_ them as part of the `CloudEvent` payload shared with middlewares. This is because the event might become too large to be carried over message queues such as SQS, or event buses such as SNS.
 
-To address this issue, the TypeScript SDK uses the concept of *typed-pointers* which allows to reference a remote resource while preserving its original type, and thus, being able to serialize and de-serialize it safely. If you look at the standard definition for document metadata, there are many which are pointers to remote resources such as NLP processing results, face recognition and object detection results, etc.
+To address this issue, the TypeScript SDK uses the concept of _typed-pointers_ which allows to reference a remote resource while preserving its original type, and thus, being able to serialize and de-serialize it safely. If you look at the standard definition for document metadata, there are many which are pointers to remote resources such as NLP processing results, face recognition and object detection results, etc.
 
 You can find below a simplistic example, where we create a typed pointer to a remote resource, and then de-reference it to access the original resource.
 
@@ -332,7 +332,7 @@ const handleEvent = async (event: CloudEvent) => {
 
   // Set the pointer in the document metadata.
   metadata.properties.attrs.faces = pointer;
-  
+
   return (event);
 };
 ```
@@ -366,10 +366,7 @@ It is also possible to create a descriptor by providing it with a bucket and a k
 import { S3ObjectDescriptor } from '@project-lakechain/sdk/helpers';
 
 // Create a descriptor from a bucket/key pair.
-const descriptor = new S3ObjectDescriptor.Builder()
-  .withBucket('my-bucket')
-  .withKey('my-key')
-  .build();
+const descriptor = new S3ObjectDescriptor.Builder().withBucket('my-bucket').withKey('my-key').build();
 
 // Display the S3 URI.
 console.log(`URI: ${descriptor.asUri()}`);

@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'tar-inflate-processor',
   description: 'Inflates tarballs from a source to a destination bucket.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

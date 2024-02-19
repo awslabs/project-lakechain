@@ -15,7 +15,7 @@ flowchart LR
 
 ## ❓ What is Happening
 
-Image outpainting refers to the process of replacing a portion of an image located outside of a contextual *mask*, with an AI generated image. In this example we show how to use a mask prompt to mask a *house* in an input image, and replace the environment around the house with a *Beautiful garden and swimming pool*.
+Image outpainting refers to the process of replacing a portion of an image located outside of a contextual _mask_, with an AI generated image. In this example we show how to use a mask prompt to mask a _house_ in an input image, and replace the environment around the house with a _Beautiful garden and swimming pool_.
 
 Below is an example of the result of the outpainting process executed by this example.
 

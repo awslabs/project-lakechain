@@ -37,7 +37,7 @@ import { SourceDescriptor } from './definitions/source-descriptor';
 const description: ServiceDescription = {
   name: 's3-event-trigger',
   description: 'An event-based trigger for Amazon S3.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

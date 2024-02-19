@@ -47,7 +47,7 @@ import {
 const description: ServiceDescription = {
   name: 'polly-synthesizer',
   description: 'Synthesizes text into speech using Amazon Polly.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

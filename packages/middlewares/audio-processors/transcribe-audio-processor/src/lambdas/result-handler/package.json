@@ -1,6 +1,6 @@
 {
   "name": "transcribe-result-handler-lambda",
-  "version": "0.1.0",
+  "version": "0.3.4",
   "description": "Handles transcription result events.",
   "main": "dist/index.js",
   "type": "module",

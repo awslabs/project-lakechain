@@ -39,7 +39,7 @@ import {
 const description: ServiceDescription = {
   name: 'passthrough',
   description: 'A middleware acting as a passthrough logging received events.',
-  version: '0.1.0',
+  version: '0.3.4',
   attrs: {}
 };
 

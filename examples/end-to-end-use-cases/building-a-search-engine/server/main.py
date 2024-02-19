@@ -67,7 +67,7 @@ def search_documents(request: Request):
 
   # Text semantic search.
   results = text_semantic_search(client=client, search=query)
-  
+
   # Add a presigned URL to the results and
   # extract metadata from the results.
   for result in results:
@@ -75,7 +75,7 @@ def search_documents(request: Request):
     metadata = result['metadata']
     source['presigned_url'] = presign_url(s3_url=source['url'], region=aws_region)
     source['title'] = metadata['title'] if 'title' in metadata else unquote(source['url'].split('/')[-1])
-  
+
   # Render the results.
   return templates.TemplateResponse("search.html", {"request": request, "results": results})
 

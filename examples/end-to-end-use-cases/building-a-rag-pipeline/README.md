@@ -1,6 +1,6 @@
 # 🤖 RAG Pipeline
 
-> 👉 This example showcases how to build an end-to-end [Retrieval Augmented Generation (RAG)](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) on AWS using Project Lakechain and the different middlewares it makes available. *Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application.*
+> 👉 This example showcases how to build an end-to-end [Retrieval Augmented Generation (RAG)](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) on AWS using Project Lakechain and the different middlewares it makes available. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 ## :dna: Pipeline
 
@@ -27,7 +27,6 @@ Retrieval Augmented Generation (RAG) is an advanced technique that synergize the
 
 The process starts with a specialized retrieval mechanism that queries a curated corpus or knowledge base, employing semantic search techniques, such as dense vector search, to find documents that closely match the semantic context of the input query. This method ensures the retrieval of highly relevant documents, tailored to the specific needs of the query at hand.
 
-
 <br />
 <p align="center">
   <img width="600" src="assets/rag.jpeg">
@@ -37,7 +36,6 @@ The process starts with a specialized retrieval mechanism that queries a curated
 By incorporating these retrieved document chunks into the LLMs prompt, RAG effectively broadens the model's knowledge base on-the-fly, allowing it to leverage up-to-date or specific information not originally included in its training data.
 
 This enriched in-context learning process enables the LLM to produce responses that are not only relevant but also deeply informed by the external content it dynamically interacts with. Consequently, RAG represents a powerful fusion of LLMs' natural language understanding and processing capabilities with the vast and expanding universe of information available in external documents, making it highly effective for answering complex and nuanced questions across a wide array of domains.
-
 
 <br />
 
@@ -150,7 +148,7 @@ We've created a handy CLI tool, called the [RAG CLI](./cli/), that you can use t
 
 - The endpoint of the OpenSearch domain (from the CDK outputs).
 - The AWS region in which the OpenSearch domain is deployed.
-- The AWS region from which you want to use Amazon Bedrock. *[See the Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html#bedrock-regions) for more information on the AWS regions supported.*
+- The AWS region from which you want to use Amazon Bedrock. _[See the Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html#bedrock-regions) for more information on the AWS regions supported._
 
 Once done, head with your terminal to the [`cli`](./cli/) directory and install the dependencies of the CLI:
 

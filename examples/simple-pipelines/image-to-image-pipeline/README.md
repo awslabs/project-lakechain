@@ -1,4 +1,4 @@
-# 🧑‍🎨  Image-to-Image Pipeline
+# 🧑‍🎨 Image-to-Image Pipeline
 
 > In this example, we showcase a fun experiment where we connect two image models together in a pipeline to transform an image into a similar image using Amazon Bedrock, BLIP2 and SDXL Generative AI capabilities.
 
