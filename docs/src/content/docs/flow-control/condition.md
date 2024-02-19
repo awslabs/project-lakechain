@@ -196,7 +196,7 @@ To help you decide whether you should use conditions in your pipelines, we've cr
 
 ### 🏗️ Architecture
 
-The `Condition` middleware is built on top of AWS Lambda. It uses an internal V8 virtual machien within the Lambda environment to evaluate conditions.
+The `Condition` middleware is built on top of AWS Lambda. It uses an internal V8 virtual machine within the Lambda environment to evaluate conditions.
 
 ![Condition Architecture](../../../assets/condition-architecture.png)
 
