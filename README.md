@@ -33,13 +33,11 @@ This project has been designed to help AWS customers build and scale different t
 
 ## Show me the code ❗
 
-Below is an example of a pipeline that deploys the infrastructure required to automatically transcribe audio files uploaded to S3, in just a few lines of code.
-
-> 👇 This pipeline will scale to millions of documents.
+> 👇 Below is an example of a pipeline that deploys the AWS infrastructure to automatically transcribe audio files uploaded to S3, in just a few lines of code. Scales to millions of documents.
 
 <br /><br />
 <p align="center">
-  <img width="640" src="assets/code.png">
+  <img width="630" src="assets/code.png">
 </p>
 <br /><br />
 
