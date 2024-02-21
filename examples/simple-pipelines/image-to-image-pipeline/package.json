@@ -1,7 +1,7 @@
 {
   "name": "image-to-image-pipeline",
   "description": "An example showcasing how to transform images from using Amazon Bedrock.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "tsc",

@@ -1,7 +1,7 @@
 {
   "name": "cohere-opensearch-pipeline",
   "description": "An example showcasing an embedding pipeline using Cohere models on Bedrock and OpenSearch.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

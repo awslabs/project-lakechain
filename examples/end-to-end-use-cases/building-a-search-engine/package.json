@@ -1,7 +1,7 @@
 {
   "name": "building-a-search-engine",
   "description": "End-to-end search engine multi-modal ingestion.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

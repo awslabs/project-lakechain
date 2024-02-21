@@ -1,7 +1,7 @@
 {
   "name": "image-moderation-pipeline",
   "description": "Builds a pipeline demonstrating how to classify moderated images.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "tsc",

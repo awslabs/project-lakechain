@@ -1,7 +1,7 @@
 {
   "name": "image-captioning",
   "description": "Builds a pipeline demonstrating image captioning using the BLIP2 model.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "tsc",

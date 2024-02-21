@@ -1,7 +1,7 @@
 {
   "name": "jmespath-parsing-pipeline",
   "description": "An example showcasing how parse JSON documents at scale.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

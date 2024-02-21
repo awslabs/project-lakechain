@@ -1,7 +1,7 @@
 {
   "name": "abstractive-summarization-pipeline",
   "description": "Builds a pipeline for text summarization using Transformers models.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

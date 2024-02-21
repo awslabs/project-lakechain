@@ -143,6 +143,7 @@ Name             | Description | Format
 **updatedAt**    | The date and time at which the document was last updated. | ISO 8601 UTC
 **image**        | A URL pointing to the main image representing the document. | URL
 **authors**      | The list of authors of the document. | Array
+**publisher**    | The publisher of the document. | Publisher
 **title**        | The title of the document. | String
 **description**  | A meaningful description of the document. | String
 **keywords**     | An array of prominent keywords associated with the document. | Array

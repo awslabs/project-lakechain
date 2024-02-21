@@ -1,7 +1,7 @@
 {
   "name": "metadata-extraction",
   "description": "Builds a simple metadata extraction pipeline.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

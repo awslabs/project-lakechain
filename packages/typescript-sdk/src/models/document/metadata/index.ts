@@ -19,10 +19,10 @@ import { ImageMetadataSchema } from './image/index.js';
 import { TextMetadataSchema } from './text/index.js';
 import { VideoMetadataSchema } from './video/index.js';
 import { AudioMetadataSchema } from './audio/index.js';
+import { PublisherSchema } from './attributes/publisher.js';
 
 /**
- * Represents additional metadata associated with
- * a `Document`.
+ * Represents additional metadata associated with a `Document`.
  *
  * These metadata are carried along the different middleware
  * services and can be progressively enriched along a middleware chain.
@@ -30,6 +30,16 @@ import { AudioMetadataSchema } from './audio/index.js';
  * interact with the document.
  */
 export const DocumentMetadataSchema = z.object({
+
+  /**
+   * The type of the document.
+   * This identifies the document as a specific type of content,
+   * for example 'article', 'book', 'paper', etc.
+   */
+  type: z
+    .string()
+    .describe('The type of the document.')
+    .optional(),
 
   /**
    * A ISO 8601 formatted date string
@@ -65,6 +75,13 @@ export const DocumentMetadataSchema = z.object({
   authors: z
     .array(z.string())
     .describe('The name of the author(s) of the document.')
+    .optional(),
+
+  /**
+   * The publisher of the document.
+   */
+  publisher: PublisherSchema
+    .describe('The publisher of the document.')
     .optional(),
 
   /**

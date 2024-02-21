@@ -37,38 +37,11 @@ Below is an example of a pipeline that deploys the infrastructure required to au
 
 > 👇 This pipeline will scale to millions of documents.
 
-```typescript
-export class TranscriptionStack extends cdk.Stack {
-  constructor(scope: Construct, id: string) {
-    // Listen for new documents on S3.
-    const trigger = new S3EventTrigger.Builder()
-      .withScope(this)
-      .withIdentifier('Trigger')
-      .withCacheStorage(cache)
-      .withBucket(bucket)
-      .build();
-
-    trigger
-      // Transcribe audio documents with Amazon Transcribe.
-      .pipe(
-        new TranscribeAudioProcessor.Builder()
-          .withScope(this)
-          .withIdentifier('Transcribe')
-          .withCacheStorage(cache)
-          .build()
-      )
-      // Store transcription results in S3.
-      .pipe(
-        new S3StorageConnector.Builder()
-          .withScope(this)
-          .withIdentifier('Storage')
-          .withCacheStorage(cache)
-          .withDestinationBucket(destination)
-          .build()
-      );
-  }
-}
-```
+<br />
+<p align="center">
+  <img width="690" src="assets/code.png">
+</p>
+<br />
 
 ## LICENSE
 

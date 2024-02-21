@@ -1,7 +1,7 @@
 {
   "name": "clip-embeddings-pipeline",
   "description": "An example showcasing how to create embeddings for images using CLIP.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

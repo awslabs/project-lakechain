@@ -1,7 +1,7 @@
 {
   "name": "pipeline-encryption",
   "description": "An example showcasing how to encrypt end-to-end a pipeline using a CMK.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "tsc",

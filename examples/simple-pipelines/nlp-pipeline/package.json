@@ -1,7 +1,7 @@
 {
   "name": "nlp-pipeline",
   "description": "Builds a pipeline for extracting metadata from text-oriented documents.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",

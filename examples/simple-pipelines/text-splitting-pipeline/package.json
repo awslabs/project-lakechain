@@ -1,7 +1,7 @@
 {
   "name": "text-splitting",
   "description": "Builds a pipeline for splitting text documents using different text splitting algorithms.",
-  "version": "0.3.0",
+  "version": "0.3.4",
   "private": true,
   "scripts": {
     "build": "npx tsc",
