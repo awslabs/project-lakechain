@@ -39,7 +39,7 @@ Below is an example of a pipeline that deploys the infrastructure required to au
 
 <br />
 <p align="center">
-  <img width="690" src="assets/code.png">
+  <img width="600" src="assets/code.png">
 </p>
 <br />
 
