@@ -37,11 +37,11 @@ Below is an example of a pipeline that deploys the infrastructure required to au
 
 > 👇 This pipeline will scale to millions of documents.
 
-<br />
+<br /><br />
 <p align="center">
-  <img width="600" src="assets/code.png">
+  <img width="640" src="assets/code.png">
 </p>
-<br />
+<br /><br />
 
 ## LICENSE
 
