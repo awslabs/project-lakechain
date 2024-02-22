@@ -21,8 +21,8 @@ import { WhisperModel } from "./whisper-model";
 
 /**
  * @return the characteristics of the GPU instance
- * to run in the cluster given the model size.
- * @param model the model size.
+ * to run in the cluster given a Whisper model.
+ * @param model the Whisper model to evaluate.
  */
 const getGpuInstanceByModel = (model: WhisperModel) => {
   switch (model) {
@@ -61,8 +61,8 @@ const getGpuInstanceByModel = (model: WhisperModel) => {
 
 /**
  * @return the characteristics of the CPU instance
- * to run in the cluster given the model size.
- * @param model the model size.
+ * to run in the cluster given a Whisper model.
+ * @param model the Whisper model to evaluate.
  */
 const getCpuInstanceByModel = (model: WhisperModel) => {
   switch (model) {

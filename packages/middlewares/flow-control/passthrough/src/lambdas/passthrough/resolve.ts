@@ -2,7 +2,7 @@ import { DocumentMetadata, DocumentMetadataSchema } from '@project-lakechain/sdk
 import { Pointer } from '@project-lakechain/sdk/pointer';
 
 /**
- * Walks down all the metadata attributes, and resolves
+ * Walks down all the given metadata attributes, and resolves
  * all pointers into their actual values. The metadata
  * will be copied and returned as a new deep copy.
  * @param metadata the metadata to resolve.

@@ -21,6 +21,7 @@ import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { getMetadata } from './get-metadata.js';
+
 import {
   SQSEvent,
   SQSRecord,

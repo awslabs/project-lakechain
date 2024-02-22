@@ -239,8 +239,9 @@ export class TranscribeAudioProcessor extends Middleware {
 
   /**
    * Called back when a new source middleware is connected
-   * to this middleware. The purpose is to allow the Transcribe
-   * role to access the source's processed documents.
+   * to this middleware. The purpose of overriding this method
+   * is to allow the Amazon Transcribe role to access the source's
+   * processed documents.
    * @param source the source middleware.
    */
   protected onSourceAdded(source: Middleware): void {

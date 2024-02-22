@@ -28,7 +28,7 @@ const cacheStorage = new CacheStorage();
  * `music-metadata` library.
  * @returns an image description object.
  */
-const getImage = (picture: any): object => {
+const getImage = (picture: any) => {
   return ({
     type: picture.format,
     data: picture.data.toString('base64')
