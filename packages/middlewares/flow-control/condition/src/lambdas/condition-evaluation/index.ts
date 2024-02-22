@@ -51,20 +51,18 @@ class Lambda implements LambdaInterface {
    * boolean result in the document metadata that will
    * be used to filter matched and un-matched branches.
    * @param event the event to process.
+   * @throws if the condition cannot be evaluated.
    */
   @next()
-  async processEvent(event: CloudEvent): Promise<any> {    
+  async processEvent(event: CloudEvent): Promise<CloudEvent> {    
     const metadata = event.data().metadata();
 
     // Evaluate the condition.
-    const res: boolean = await evaluate(event);
-    console.log(res);
+    const result = await evaluate(event);
 
     // Store the result in the document metadata.
-    if (!metadata.custom) {
-      metadata.custom = {};
-    }
-    metadata.custom['__condition_result'] = `${res}`;
+    metadata.custom ??= {};
+    metadata.custom['__condition_result'] = `${result}`;
 
     return (event);
   }
