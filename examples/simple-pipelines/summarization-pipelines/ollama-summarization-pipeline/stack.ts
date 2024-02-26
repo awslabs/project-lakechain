@@ -21,12 +21,17 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 import { Construct } from 'constructs';
-import { CacheStorage, ComputeType } from '@project-lakechain/core';
+import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { OllamaProcessor, OllamaModel } from '@project-lakechain/ollama-processor';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
+
+import {
+  OllamaProcessor,
+  OllamaModel,
+  InfrastructureDefinition
+} from '@project-lakechain/ollama-processor';
 
 /**
  * An example showcasing how to use Ollama models to summarize
@@ -124,21 +129,15 @@ export class OllamaSummarizationStack extends cdk.Stack {
         trigger
       ])
       .withModel(OllamaModel.LLAMA2)
-      .withPrompt(`
-        Give a detailed summary of the text with the following constraints:
-        - Write a very detailed summary in the same language as the original text.
-        - Keep the original meaning, style, and tone of the text in the summary.
-        - Do not say "Here is a summary", just write the summary as is.
-        - If you cannot summarize the text, just return an empty string without explanation.
-      `)
-      .withInfrastructure({
-        instanceType: ec2.InstanceType.of(
+      .withPrompt(`Provide a detailed summary of the document`)
+      .withInfrastructure(new InfrastructureDefinition.Builder()
+        .withMaxMemory(15 * 1024)
+        .withGpus(1)
+        .withInstanceType(ec2.InstanceType.of(
           ec2.InstanceClass.G4DN,
           ec2.InstanceSize.XLARGE2
-        ),
-        maxMemory: 15 * 1024,
-        gpus: 1
-      })
+        ))
+        .build())
       .build();
 
     // Write the results to the destination bucket.

@@ -15,93 +15,113 @@
  */
 
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as assets from 'aws-cdk-lib/aws-ecr-assets';
-import * as ecs from 'aws-cdk-lib/aws-ecs';
+import { z } from 'zod';
 
-export interface InfrastructureDefinition {
-  instanceType: ec2.InstanceType;
-  maxMemory: number;
-  gpus: number;
+/**
+ * The infrastructure definition schema.
+ */
+export const InfrastructureDefinitionPropsSchema = z.object({
+  instanceType: z.custom<ec2.InstanceType>(),
+  maxMemory: z.number(),
+  gpus: z.number()
+});
+
+// The type of the `InfrastructureDefinitionProps` schema.
+export type InfrastructureDefinitionProps = z.infer<typeof InfrastructureDefinitionPropsSchema>;
+
+/**
+ * The infrastructure definition builder.
+ */
+export class InfrastructureDefinitionBuilder {
+  private props: Partial<InfrastructureDefinitionProps> = {};
+
+  /**
+   * Sets the instance type to use.
+   * @param instanceType the instance type to use.
+   * @returns the builder instance.
+   */
+  public withInstanceType(instanceType: ec2.InstanceType) {
+    this.props.instanceType = instanceType;
+    return (this);
+  }
+
+  /**
+   * Sets the maximum memory to use.
+   * @param maxMemory the maximum memory to use.
+   * @returns the builder instance.
+   */
+  public withMaxMemory(maxMemory: number) {
+    this.props.maxMemory = maxMemory;
+    return (this);
+  }
+
+  /**
+   * Sets the number of GPUs to use.
+   * @param gpus the number of GPUs to use.
+   * @returns the builder instance.
+   */
+  public withGpus(gpus: number) {
+    this.props.gpus = gpus;
+    return (this);
+  }
+
+  public build(): InfrastructureDefinition {
+    return (InfrastructureDefinition.from(this.props));
+  }
 }
 
 /**
- * A helper function returning the platform (AMD64 or ARM64)
- * to use given an instance type.
- * @param instanceType the instance type to evaluate.
- * @returns the platform to use.
+ * Describes the infrastructure to use for running
+ * an ollama model.
  */
-const getPlatform = (instanceType: ec2.InstanceType) => {
-  if (instanceType.architecture === ec2.InstanceArchitecture.ARM_64) {
-    return assets.Platform.LINUX_ARM64;
-  } else {
-    return assets.Platform.LINUX_AMD64;
-  }
-};
+export class InfrastructureDefinition {
 
-/**
- * @returns whether the given instance type is a GPU instance.
- * @param instanceType the instance type to evaluate.
- */
-export const isGpu = (instanceType: ec2.InstanceType) => {
-  const name = instanceType.toString();
+  /**
+   * The `InfrastructureDefinition` builder.
+   */
+  public static Builder = InfrastructureDefinitionBuilder;
 
-  return (name.startsWith('g')
-    || name.startsWith('p')
-    || ['graphics', 'deep-learning'].includes(name)
-  );
-};
+  /**
+   * Creates a new instance of the `InfrastructureDefinition` class.
+   * @param props the infrastructure definition properties.
+   */
+  constructor(public props: InfrastructureDefinitionProps) {}
 
-/**
- * @returns the GPU configuration for the given infrastructure.
- * @param infrastructure the infrastructure to use.
- */
-export const getGpuConfiguration = (infrastructure: InfrastructureDefinition) => {
-  const instanceName = infrastructure.instanceType.toString();
-
-  if (!isGpu(infrastructure.instanceType)) {
-    throw new Error(`The instance type ${instanceName} is not a GPU instance.`);
+  /**
+   * @returns the instance type to use.
+   */
+  public instanceType() {
+    return (this.props.instanceType);
   }
 
-  return ({
-    instanceType: infrastructure.instanceType,
-    memoryLimitMiB: infrastructure.maxMemory,
-    gpuCount: infrastructure.gpus,
-    container: {
-      platform: getPlatform(infrastructure.instanceType)
-    },
-    machineImage: ecs.EcsOptimizedImage.amazonLinux2(
-      ecs.AmiHardwareType.GPU
-    )
-  });
-};
+  /**
+   * @returns the maximum memory to use.
+   */
+  public maxMemory() {
+    return (this.props.maxMemory);
+  }
 
-/**
- * @returns the CPU configuration for the given infrastructure.
- * @param infrastructure the infrastructure to use.
- */
-export const getCpuConfiguration = (infrastructure: InfrastructureDefinition) => {
-  return ({
-    instanceType: infrastructure.instanceType,
-    memoryLimitMiB: infrastructure.maxMemory,
-    gpuCount: 0,
-    container: {
-      platform: getPlatform(infrastructure.instanceType)
-    },
-    machineImage: ecs.EcsOptimizedImage.amazonLinux2(
-      ecs.AmiHardwareType.STANDARD
-    )
-  });
-};
+  /**
+   * @returns the number of GPUs to use.
+   */
+  public gpus() {
+    return (this.props.gpus);
+  }
 
-/**
- * @returns the configuration to use for the given infrastructure and compute type.
- * @param infrastructure the infrastructure to use.
- * @param computeType the compute type to use.
- */
-export const getConfiguration = (infrastructure: InfrastructureDefinition) => {
-  const useGpuInstance = isGpu(infrastructure.instanceType);
+  /**
+   * Creates a new instance of the `InfrastructureDefinition` class.
+   * @param props the infrastructure definition properties.
+   * @returns a new instance of the `InfrastructureDefinition` class.
+   */
+  public static from(props: any) {
+    return (new InfrastructureDefinition(InfrastructureDefinitionPropsSchema.parse(props)));
+  }
 
-  return (useGpuInstance
-    ? getGpuConfiguration(infrastructure)
-    : getCpuConfiguration(infrastructure));
-};
+  /**
+   * @returns the JSON representation of the
+   * infrastructure definition.
+   */
+  public toJSON() {
+    return (this.props);
+  }
+}

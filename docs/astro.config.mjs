@@ -138,6 +138,9 @@ export default defineConfig({
 				}, {
 					label: 'SDXL',
 					link: '/generative-ai/sdxl-image-generator'
+				}, {
+					label: 'Ollama',
+					link: '/generative-ai/ollama-processor'
 				}]
 			}, {
 				label: 'Connectors',

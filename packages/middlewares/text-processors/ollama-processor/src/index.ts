@@ -33,7 +33,8 @@ import { OllamaProcessorProps, OllamaProcessorPropsSchema } from './definitions/
 import { Middleware, MiddlewareBuilder } from '@project-lakechain/core/middleware';
 import { EcsCluster } from '@project-lakechain/ecs-cluster';
 import { OllamaModel } from './definitions/model';
-import { InfrastructureDefinition, getConfiguration } from './definitions/infrastructure';
+import { getConfiguration } from './definitions/ecs-configuration';
+import { InfrastructureDefinition } from './definitions/infrastructure';
 
 /**
  * The service description.
@@ -280,3 +281,4 @@ export class OllamaProcessor extends Middleware {
 }
 
 export { OllamaModel } from './definitions/model';
+export { InfrastructureDefinition } from './definitions/infrastructure';
