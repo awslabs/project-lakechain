@@ -62,7 +62,7 @@ def pull(model: str):
   """
   lock = FileLock(os.path.join(cache, f'{model}.lock'))
   
-  print(f'Created lock for file /tmp/{model}.lock, waiting for lock ...')
+  print(f'Created lock for model {model}.lock, waiting for lock ...')
   with lock.acquire(timeout=30):
     print('Acquired lock, pulling model ...')
     previous_ms = 0
