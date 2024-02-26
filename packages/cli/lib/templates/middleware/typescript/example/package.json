@@ -26,7 +26,7 @@
     "@project-lakechain/s3-event-trigger": "^0.3.4",
     "simple-text-processor": "file:../",
     "@project-lakechain/s3-storage-connector": "^0.3.4",
-    "aws-cdk-lib": "2.128.0",
+    "aws-cdk-lib": "2.130.0",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

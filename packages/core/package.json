@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@mermaid-js/mermaid-cli": "^10.7.0",
-    "aws-cdk-lib": "^2.128.0",
+    "aws-cdk-lib": "^2.130.0",
     "constructs": "^10.3.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
@@ -68,7 +68,7 @@
     "zod-error": "^1.5.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.128.0",
+    "aws-cdk-lib": "^2.130.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

@@ -37,7 +37,7 @@
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.20",
     "esbuild": "^0.20.1",
     "npkill": "^0.11.3",
     "rimraf": "^5.0.5",
@@ -47,7 +47,7 @@
     "@project-lakechain/core": "^0.3.4"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.128.0",
+    "aws-cdk-lib": "^2.130.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

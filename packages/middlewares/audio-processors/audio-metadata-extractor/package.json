@@ -30,18 +30,18 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^1.18.0",
-    "@aws-lambda-powertools/logger": "^1.18.0",
-    "@aws-lambda-powertools/metrics": "^1.18.0",
-    "@aws-lambda-powertools/tracer": "^1.18.0",
+    "@aws-lambda-powertools/batch": "^1.18.1",
+    "@aws-lambda-powertools/logger": "^1.18.1",
+    "@aws-lambda-powertools/metrics": "^1.18.1",
+    "@aws-lambda-powertools/tracer": "^1.18.1",
     "@project-lakechain/core": "^0.3.4",
     "@project-lakechain/sdk": "^0.3.4",
     "lodash": "^4.17.21",
     "music-metadata": "^7.14.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.515.0",
-    "@aws-sdk/client-sns": "^3.515.0",
+    "@aws-sdk/client-s3": "^3.521.0",
+    "@aws-sdk/client-sns": "^3.521.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.8.10",
@@ -49,7 +49,7 @@
     "rimraf": "^5.0.5"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.128.0",
+    "aws-cdk-lib": "^2.130.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
