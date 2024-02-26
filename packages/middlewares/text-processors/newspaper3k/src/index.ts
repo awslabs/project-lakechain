@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'newspaper3k',
   description: 'Converts HTML documents into plain text and extracts their metadata.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

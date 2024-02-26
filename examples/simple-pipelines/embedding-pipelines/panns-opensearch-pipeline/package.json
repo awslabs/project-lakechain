@@ -1,7 +1,7 @@
 {
   "name": "panns-opensearch-pipeline",
   "description": "An example showcasing an audio embedding pipeline using PANNS and OpenSearch.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

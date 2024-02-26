@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'pandoc-text-converter',
   description: 'Converts text-oriented documents using pandoc.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

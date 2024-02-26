@@ -1,7 +1,7 @@
 {
   "name": "delay-pipeline",
   "description": "An example showcasing how to delay a pipeline execution.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "tsc",

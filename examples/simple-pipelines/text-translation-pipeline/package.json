@@ -1,7 +1,7 @@
 {
   "name": "text-translation-pipeline",
   "description": "An example showcasing how to translate documents using Amazon Translate.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

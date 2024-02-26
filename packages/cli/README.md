@@ -18,14 +18,14 @@ To verify that the CLI has been correctly installed, run the following command.
 
 ```bash
 $ lkc --version
-0.3.4
+0.4.0
 ```
 
 Alternatively, you can also use `npx` to run the CLI without installing it globally.
 
 ```bash
 $ npx @project-lakechain/cli --version
-0.3.4
+0.4.0
 ```
 
 ## 🔖 Features

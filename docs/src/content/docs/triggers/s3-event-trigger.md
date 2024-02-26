@@ -6,7 +6,7 @@ title: S3 Trigger
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.3.4
+  0.4.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   @project-lakechain/s3-event-trigger

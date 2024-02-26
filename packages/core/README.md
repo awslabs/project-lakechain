@@ -43,7 +43,7 @@ import { ServiceDescription } from '@project-lakechain/core';
 const description: ServiceDescription = {
   name: 'sample-middleware',
   description: 'A sample middleware.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 ```

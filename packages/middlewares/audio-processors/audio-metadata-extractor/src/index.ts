@@ -40,7 +40,7 @@ import {
 const description: ServiceDescription = {
   name: 'audio-metadata-extractor',
   description: 'A middleware extracting metadata of audio files.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

@@ -46,7 +46,7 @@ import {
 const description: ServiceDescription = {
   name: 's3-storage-connector',
   description: 'Stores documents and their metadata in an S3 Bucket.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

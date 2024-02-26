@@ -1,7 +1,7 @@
 {
   "name": "face-detection-pipeline",
   "description": "An example showcasing how to build face detection pipelines using Project Lakechain.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "tsc",

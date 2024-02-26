@@ -47,7 +47,7 @@ import {
 const description: ServiceDescription = {
   name: 'condition',
   description: 'A middleware allowing to express complex conditions in pipelines.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

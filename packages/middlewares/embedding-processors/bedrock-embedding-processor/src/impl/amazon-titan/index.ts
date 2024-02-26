@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'amazon-titan-embedding-processor',
   description: 'Creates embeddings from documents using Amazon Titan models.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

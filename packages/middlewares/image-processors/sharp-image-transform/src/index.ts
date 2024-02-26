@@ -44,7 +44,7 @@ import {
 const description: ServiceDescription = {
   name: 'sharp-image-transform',
   description: 'Transforms images using the sharp library.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

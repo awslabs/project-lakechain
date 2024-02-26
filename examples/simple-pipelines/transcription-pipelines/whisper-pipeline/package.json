@@ -1,7 +1,7 @@
 {
   "name": "whisper-pipeline",
   "description": "Builds a pipeline for transcribing audio documents using the OpenAI Whisper model.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

@@ -50,7 +50,7 @@ import {
 const description: ServiceDescription = {
   name: 'opensearch-vector-storage-connector',
   description: 'Stores document embeddings in an OpenSearch vector index.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

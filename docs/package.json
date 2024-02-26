@@ -2,7 +2,7 @@
   "name": "@project-lakechain/docs",
   "description": "The official documentation for Project Lakechain.",
   "type": "module",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "dev": "npx astro dev",

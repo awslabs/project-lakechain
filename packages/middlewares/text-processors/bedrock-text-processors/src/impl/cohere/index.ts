@@ -48,7 +48,7 @@ import {
 const description: ServiceDescription = {
   name: 'cohere-text-processor',
   description: 'Generative text processing using Cohere models on Amazon Bedrock.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

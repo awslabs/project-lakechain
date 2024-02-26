@@ -43,7 +43,7 @@ import {
 const description: ServiceDescription = {
   name: 'keybert-text-processor',
   description: 'Extracts the main keywords from a text document using the KeyBERT model.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

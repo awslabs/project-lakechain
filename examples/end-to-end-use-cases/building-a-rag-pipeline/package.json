@@ -1,7 +1,7 @@
 {
   "name": "building-a-rag-pipeline",
   "description": "End-to-end RAG pipeline using Amazon Bedrock and Amazon OpenSearch.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

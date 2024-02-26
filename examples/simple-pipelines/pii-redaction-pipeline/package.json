@@ -1,7 +1,7 @@
 {
   "name": "pii-redaction-pipeline",
   "description": "A PII redaction pipeline using Project Lakechain.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

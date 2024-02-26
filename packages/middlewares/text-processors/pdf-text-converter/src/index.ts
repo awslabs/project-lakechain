@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'pdf-text-converter',
   description: 'Converts PDF documents into plain text.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

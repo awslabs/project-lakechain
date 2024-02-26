@@ -1,7 +1,7 @@
 {
   "name": "graph-rendering-pipeline",
   "description": "An example showcasing how to render a DAG using Mermaid.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "build": "tsc",

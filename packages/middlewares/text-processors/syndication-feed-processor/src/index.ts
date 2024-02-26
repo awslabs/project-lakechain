@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'syndication-feed-processor',
   description: 'Parses RSS and Atom syndication feeds.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 

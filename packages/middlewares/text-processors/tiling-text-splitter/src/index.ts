@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'tiling-text-splitter',
   description: 'Transforms text into chunks of tokens using the NLTK tiling algorithm.',
-  version: '0.3.4',
+  version: '0.4.0',
   attrs: {}
 };
 
