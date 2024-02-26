@@ -168,3 +168,5 @@ everythinglm
 bakllava
 sqlcoder
 tinydolphin
+qwen
+starcoder
