@@ -1,4 +1,4 @@
-FROM ollama/ollama
+FROM ollama/ollama:0.1.27
 
 ENV PYTHON_VERSION=3.10
 ENV PYTHONPATH /code/app
