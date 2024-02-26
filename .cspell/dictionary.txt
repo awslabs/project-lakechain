@@ -140,3 +140,15 @@ virtualenv
 uvicorn
 funclet
 funclets
+ollama
+meditron
+magicoder
+stablelm
+codebooga
+nexusraven
+mistrallite
+notux
+megadolphin
+wizardlm
+duckdb
+nsql
