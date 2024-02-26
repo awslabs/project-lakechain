@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/layers",
   "description": "Lambda layer library used by Project Lakechain.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -44,7 +44,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.4"
+    "@project-lakechain/core": "^0.4.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.130.0",

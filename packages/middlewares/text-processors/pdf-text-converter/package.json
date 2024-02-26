@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/pdf-text-converter",
   "description": "Converts PDF documents into plain text.",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -38,7 +38,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.3.4"
+    "@project-lakechain/core": "^0.4.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.130.0",
