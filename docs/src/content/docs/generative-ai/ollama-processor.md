@@ -19,7 +19,7 @@ The Ollama processor makes it possible to run the large-language models and imag
 
 Using this middleware, customers can transform their text documents (e.g summarization, translation, topic modeling, etc.) as well as extract meaningful information from their image documents.
 
-> 💁 You can access the list of models supported by Ollama [here](https://ollama.com/library).
+> 💁 You can view the list of models supported by Ollama [here](https://ollama.com/library).
 
 ---
 
