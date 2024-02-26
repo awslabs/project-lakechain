@@ -135,7 +135,7 @@ const ollama = new OllamaProcessor.Builder()
 
 ### 🌉 Infrastructure
 
-Every model requires a specific infrastructure to run optimally. To ensure the `OllamaProcessor` orchestrates your models using the most optimal instance, memory, and GPU allocation, you need to specify an instructure definition.
+Every model requires a specific infrastructure to run optimally. To ensure the `OllamaProcessor` orchestrates your models using the most optimal instance, memory, and GPU allocation, you need to specify an infrastructure definition.
 
 > 💁 The example below describes the infrastructure suited to run the `Mixtral` model requiring significant RAM and GPU memory to run.
 
