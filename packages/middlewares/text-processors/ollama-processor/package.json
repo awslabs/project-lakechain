@@ -1,0 +1,49 @@
+{
+  "name": "@project-lakechain/ollama-processor",
+  "description": "Processes documents using models supported by Ollama.",
+  "version": "0.3.4",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "postbuild": "npx shx cp -r ./src/container dist/",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": "Amazon Web Services (https://aws.amazon.com)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "devDependencies": {
+    "@types/jest": "^29.5.7",
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.1",
+    "rimraf": "^5.0.5",
+    "shx": "^0.3.4"
+  },
+  "dependencies": {
+    "@project-lakechain/core": "^0.3.4",
+    "@project-lakechain/ecs-cluster": "^0.3.4"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.128.0",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  }
+}

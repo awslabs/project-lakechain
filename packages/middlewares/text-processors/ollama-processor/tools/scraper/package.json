@@ -1,0 +1,45 @@
+{
+  "name": "ollama-scraper",
+  "description": "Generates the model definitions for ollama models.",
+  "private": true,
+  "version": "0.3.4",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "npx rimraf node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": "Amazon Web Services (https://aws.amazon.com)",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "devDependencies": {
+    "@types/jest": "^29.5.7",
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.1",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "crawlee": "^3.8.1",
+    "playwright": "^1.41.2"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  }
+}

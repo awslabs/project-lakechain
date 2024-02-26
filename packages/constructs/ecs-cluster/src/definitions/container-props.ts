@@ -44,7 +44,9 @@ export const ContainerPropsSchema = z.object({
    * The container CPU limit.
    * @default 4096
    */
-  cpuLimit: z.number().default(4096),
+  cpuLimit: z.number()
+    .default(4096)
+    .optional(),
 
   /**
    * The container memory limit.

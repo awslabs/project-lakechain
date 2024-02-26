@@ -1,0 +1,5 @@
+boto3==1.34.49
+aws_lambda_powertools==2.34.1
+aws-xray-sdk==2.12.1
+ollama===0.1.6
+filelock===3.13.1
