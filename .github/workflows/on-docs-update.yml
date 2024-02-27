@@ -14,7 +14,13 @@ permissions:
   id-token: write
 
 jobs:
+  # Lint the code and check for spelling errors.
+  lint:
+    uses: ./.github/workflows/run-lint.yml
+
+  # Build the documentation.
   build:
+    needs: lint
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
@@ -29,6 +35,7 @@ jobs:
         with:
           path: ./docs/dist
 
+  # Deploy the documentation to GitHub Pages.
   deploy:
     needs: build
     runs-on: ubuntu-latest
