@@ -112,7 +112,7 @@ export class S3DataSource implements DataSource {
    * the data source has been written to the specified
    * file. The promise resolves the path of the
    * output file.
-   * @param filePath the path to the file to write to.
+   * @param filePath the path to write the file to.
    * @note the file path must be absolute.
    */
   async asFile(filePath?: string): Promise<string> {
