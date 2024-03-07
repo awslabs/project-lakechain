@@ -1,0 +1,38 @@
+{
+  "name": "ffmpeg-processor",
+  "description": "Processes media documents using FFMPEG.",
+  "version": "0.4.0",
+  "private": true,
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "npx rimraf node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.523.0",
+    "@aws-sdk/client-sns": "^3.523.0",
+    "@aws-sdk/client-sqs": "^3.523.0",
+    "@project-lakechain/sdk": "^0.4.0",
+    "fluent-ffmpeg": "^2.1.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1",
+    "rimraf": "^5.0.5",
+    "@types/serialize-javascript": "^5.0.4"
+  }
+}

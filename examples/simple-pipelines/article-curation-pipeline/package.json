@@ -36,9 +36,9 @@
     "@project-lakechain/syndication-feed-processor": "*"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-scheduler-alpha": "^2.130.0-alpha.0",
-    "@aws-cdk/aws-scheduler-targets-alpha": "^2.130.0-alpha.0",
-    "aws-cdk-lib": "^2.130.0",
+    "@aws-cdk/aws-scheduler-alpha": "^2.131.0-alpha.0",
+    "@aws-cdk/aws-scheduler-targets-alpha": "^2.131.0-alpha.0",
+    "aws-cdk-lib": "^2.131.0",
     "constructs": "^10.3.0"
   }
 }
