@@ -12,9 +12,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from pydantic import BaseModel
 from enum import Enum
-from typing import Optional
 
 # A mapping between output formats and their
 # associated MIME types.
@@ -36,11 +34,3 @@ class TranscriptionOutput(str, Enum):
   # Return the MIME type associated with the output format.  
   def as_mime_type(self) -> str:
     return OutputFormats[self.value].value
-
-# Define a Pydantic model for a transcription.
-class TranscriptionInput(BaseModel):
-  s3_bucket: str
-  s3_key: str  
-  etag: str
-  output: TranscriptionOutput = 'vtt'
-  language: Optional[str] = None

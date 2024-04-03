@@ -76,6 +76,7 @@ class Lambda implements LambdaInterface {
     const document = data.document();
     const outputPrefix = `output/${data.chainId()}`;
     const sourceUri = S3DocumentDescriptor.fromUri(document.url());
+    const filename = document.filename().basename();
     const promises = [];
     
     // If `COPY_DOCUMENTS` is set to `true`, we copy the
@@ -83,8 +84,10 @@ class Lambda implements LambdaInterface {
     if (COPY_DOCUMENTS) {
       promises.push(s3.send(new CopyObjectCommand({
         Bucket: TARGET_BUCKET,
-        Key: path.join(outputPrefix, document.filename().basename()),
-        CopySource: `${sourceUri.bucket()}/${sourceUri.key()}`,
+        Key: path.join(outputPrefix, filename),
+        CopySource: encodeURIComponent(
+          `${sourceUri.bucket()}/${sourceUri.key()}`
+        ),
         ContentType: document.mimeType(),
         StorageClass: STORAGE_CLASS
       })));
@@ -93,7 +96,7 @@ class Lambda implements LambdaInterface {
     // We also copy the document metadata to the target bucket.
     promises.push(s3.send(new PutObjectCommand({
       Bucket: TARGET_BUCKET,
-      Key: path.join(outputPrefix, `${document.filename().basename()}.metadata.json`),
+      Key: path.join(outputPrefix, `${filename}.metadata.json`),
       Body: JSON.stringify(event),
       ContentType: 'application/json',
       StorageClass: STORAGE_CLASS

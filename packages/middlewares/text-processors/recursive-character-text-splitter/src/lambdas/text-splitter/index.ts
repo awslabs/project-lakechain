@@ -22,7 +22,6 @@ import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent, Document, DocumentMetadata } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 
 import {
@@ -44,14 +43,6 @@ const CHUNK_SIZE = parseInt(process.env.CHUNK_SIZE ?? '4000', 10);
 const CHUNK_OVERLAP = parseInt(process.env.CHUNK_OVERLAP ?? '200', 10);
 const SEPARATORS = JSON.parse(process.env.SEPARATORS ?? '["\n\n", "\n", " ", ""]');
 const TARGET_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
-
-/**
- * The S3 client.
- */
-const s3 = tracer.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
-  maxAttempts: 5
-}));
 
 /**
  * The async batch processor processes the received
@@ -107,29 +98,17 @@ class Lambda implements LambdaInterface {
     const event     = source.clone();
     const document  = event.data().document();
     const chainId   = event.data().chainId();
-    const size      = Buffer.from(chunk, 'utf-8').byteLength;
-    const outputKey = `${chainId}/${document.etag()}-${order}.txt`;
+    const outputKey = `${chainId}/recursive-text-splitter-${document.etag()}-${order}.txt`;
 
-    // Upload the chunk as a new document.
-    const res = await s3.send(new PutObjectCommand({
-      Bucket: TARGET_BUCKET,
-      Key: outputKey,
-      Body: chunk,
-      ContentType: 'text/plain'
-    }));
-
-    // Update the document.
-    event.data().props.document = new Document.Builder()
-      .withUrl(new S3DocumentDescriptor.Builder()
-        .withBucket(TARGET_BUCKET)
-        .withKey(outputKey)
-        .build()
-        .asUri()
-      )
-      .withType('text/plain')
-      .withSize(size)
-      .withEtag(res.ETag!.replace(/"/g, ''))
-      .build();
+    // Create a new document for the chunk.
+    event.data().props.document = await Document.create({
+      url: new S3DocumentDescriptor({
+        bucket: TARGET_BUCKET,
+        key: outputKey
+      }).asUri(),
+      type: 'text/plain',
+      data: Buffer.from(chunk, 'utf-8')
+    });
 
     // Update the metadata.
     merge(event.data().props.metadata, this.getMetadata(chunk, order));

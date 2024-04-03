@@ -18,7 +18,6 @@
 
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 
 import { Construct } from 'constructs';
@@ -26,7 +25,7 @@ import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { SdxlImageGenerator } from '@project-lakechain/bedrock-image-generators';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
-import { Blip2ImageProcessor } from '@project-lakechain/blip2-image-processor';
+import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
 
 /**
  * An example stack showcasing how to use Project Lakechain
@@ -36,7 +35,7 @@ import { Blip2ImageProcessor } from '@project-lakechain/blip2-image-processor';
  * The pipeline looks as follows:
  *
  * ┌────────────┐   ┌───────────────────────┐   ┌────────────────────────┐   ┌─────────────┐
- * │  S3 Input  ├──►│ Blip2 Image Processor ├──►│  SDXL Image Processor  ├──►│  S3 Output  │
+ * │  S3 Input  ├──►│  Anthropic Processor  ├──►│  SDXL Image Processor  ├──►│  S3 Output  │
  * └────────────┘   └───────────────────────┘   └────────────────────────┘   └─────────────┘
  *
  */
@@ -50,9 +49,6 @@ export class ImageToImageStack extends cdk.Stack {
       description: 'A pipeline using Amazon Bedrock and SDXL to transform input images.',
       ...env
     });
-
-    // The VPC in which the BLIP2 model will be deployed.
-    const vpc = this.createVpc('Vpc');
 
     ///////////////////////////////////////////
     ///////         S3 Storage          ///////
@@ -92,14 +88,20 @@ export class ImageToImageStack extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // Enrich the description of the images using
-    // image captioning.
-    const blipProcessor = new Blip2ImageProcessor.Builder()
+    // Generates a short description of the image using the
+    // Anthropic Claude v3 Haiku multi-modal model.
+    const anthropic = new AnthropicTextProcessor.Builder()
       .withScope(this)
-      .withIdentifier('ImageProcessor')
+      .withIdentifier('Anthropic')
       .withCacheStorage(cache)
-      .withVpc(vpc)
       .withSource(trigger)
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
+      .withPrompt(`
+        Create a short prompt of one sentence to generate an image similar to the provided image(s).
+      `)
+      .withModelParameters({
+        max_tokens: 256
+      })
       .build();
 
     // Generates new images using SDXL on Amazon Bedrock based on the
@@ -108,15 +110,11 @@ export class ImageToImageStack extends cdk.Stack {
       .withScope(this)
       .withIdentifier('ImageGenerator')
       .withCacheStorage(cache)
-      .withSource(blipProcessor)
-      // You can override the region to use for Amazon Bedrock.
-      // @see https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html#bedrock-regions
+      .withSource(anthropic)
       .withRegion('us-east-1')
-      // We reference the description attribute of previous images
-      // as the prompt for the image generation.
-      .withPrompt(r.reference(
-        r.attribute('data.metadata.description')
-      ))
+      // We use the output of the previous middleware
+      // as the prompt for generating new images.
+      .withPrompt(r.reference(r.document()))
       .build();
 
     // Write both the initial image and the generated image
@@ -127,7 +125,7 @@ export class ImageToImageStack extends cdk.Stack {
       .withCacheStorage(cache)
       .withDestinationBucket(destination)
       .withSources([
-        blipProcessor,
+        trigger,
         imageGenerator
       ])
       .build();
@@ -143,37 +141,6 @@ export class ImageToImageStack extends cdk.Stack {
       description: 'The name of the destination bucket.',
       value: destination.bucketName
     });
-  }
-
-  /**
-   * @param id the VPC identifier.
-   * @returns a new VPC with a public, private and isolated
-   * subnets for the pipeline.
-   */
-  private createVpc(id: string): ec2.IVpc {
-    return (new ec2.Vpc(this, id, {
-      enableDnsSupport: true,
-      enableDnsHostnames: true,
-      ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/20'),
-      maxAzs: 1,
-      subnetConfiguration: [{
-        // Used by NAT Gateways to provide Internet access
-        // to the containers.
-        name: 'public',
-        subnetType: ec2.SubnetType.PUBLIC,
-        cidrMask: 28
-      }, {
-        // Used by the containers.
-        name: 'private',
-        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
-        cidrMask: 24
-      }, {
-        // Used by EFS.
-        name: 'isolated',
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
-        cidrMask: 28
-      }]
-    }));
   }
 }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Readable } from 'stream';
+import { Readable, Writable } from 'stream';
 
 export interface DataSource {
 
@@ -22,6 +22,11 @@ export interface DataSource {
    * @returns a readable stream from the data source.
    */
   asReadStream(): Promise<Readable>;
+
+  /**
+   * @returns a writable stream to the data source.
+   */
+  asWriteStream(obj?: any): Writable;
 
   /**
    * @returns an array like buffer from the data source.

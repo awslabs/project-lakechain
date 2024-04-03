@@ -15,6 +15,7 @@
  */
 
 import path from 'path';
+import serialize from 'serialize-javascript';
 
 import * as cdk from 'aws-cdk-lib';
 import * as assets from 'aws-cdk-lib/aws-ecr-assets';
@@ -23,6 +24,7 @@ import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as efs from 'aws-cdk-lib/aws-efs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as esbuild from 'esbuild';
 
 import { Construct } from 'constructs';
 import { ServiceDescription } from '@project-lakechain/core/service';
@@ -32,13 +34,13 @@ import { CacheStorage } from '@project-lakechain/core';
 import { Middleware, MiddlewareBuilder } from '@project-lakechain/core/middleware';
 import { EcsCluster } from '@project-lakechain/ecs-cluster';
 import { InfrastructureDefinition } from './definitions/infrastructure';
+import { getConfiguration } from './definitions/ecs-configuration';
 
 import {
   FfmpegProcessorProps,
   FfmpegProcessorPropsSchema,
   IntentExpression
 } from './definitions/opts';
-import { getConfiguration } from './definitions/ecs-configuration';
 
 /**
  * The service description.
@@ -49,6 +51,12 @@ const description: ServiceDescription = {
   version: '0.4.0',
   attrs: {}
 };
+
+/**
+ * The name of the callable expression to invoke
+ * the user-provided intent.
+ */
+const INTENT_SYMBOL = '__callable';
 
 /**
  * The builder class for the `FfmpegProcessor` service.
@@ -153,7 +161,7 @@ export class FfmpegProcessor extends Middleware {
 
     // The configuration to use for the specified compute type.
     const configuration = getConfiguration(this.props.infrastructure);
-
+    
     // The container image to provision the ECS tasks with.
     const image = ecs.ContainerImage.fromDockerImageAsset(
       new assets.DockerImageAsset(this, 'FfmpegImage', {
@@ -179,7 +187,12 @@ export class FfmpegProcessor extends Middleware {
         gpuCount: configuration.gpuCount,
         environment: {
           POWERTOOLS_SERVICE_NAME: description.name,
-          PROCESSED_FILES_BUCKET: this.storage.id()
+          AWS_REGION: cdk.Stack.of(this).region,
+          AWS_XRAY_CONTEXT_MISSING: 'IGNORE_ERROR',
+          AWS_XRAY_LOG_LEVEL: 'silent',
+          PROCESSED_FILES_BUCKET: this.storage.id(),
+          INTENT: this.serializeFn(this.props.intent),
+          INTENT_SYMBOL
         }
       },
       autoScaling: {
@@ -208,7 +221,8 @@ export class FfmpegProcessor extends Middleware {
           permission: 750
         }
       },
-      containerInsights: this.props.cloudWatchInsights
+      containerInsights: this.props.cloudWatchInsights,
+      xraySidecar: true
     });
 
     // Allows this construct to act as a `IGrantable`
@@ -220,6 +234,22 @@ export class FfmpegProcessor extends Middleware {
     this.storage.grantWrite(cluster.taskRole);
 
     super.bind();
+  }
+
+  /**
+   * A helper used to serialize the user-provided intent into a string.
+   * This function also uses `esbuild` to validate the syntax of the
+   * provided function and minify it.
+   * @param fn the function to serialize.
+   * @param opts the esbuild transform options.
+   * @returns the serialized function.
+   */
+  private serializeFn(fn: IntentExpression, opts?: esbuild.TransformOptions): string {
+    const res = esbuild.transformSync(`const ${INTENT_SYMBOL} = ${serialize(fn)}\n`, {
+      minify: true,
+      ...opts
+    });
+    return (res.code);
   }
 
   /**
@@ -325,3 +355,12 @@ export class FfmpegProcessor extends Middleware {
     );
   }
 }
+
+export { InfrastructureDefinition } from './definitions/infrastructure';
+export {
+  CloudEvent,
+  FfmpegUtils,
+  FfmpegCommand,
+  FfmpegCommandOptions,
+  Ffmpeg
+} from './definitions/opts';

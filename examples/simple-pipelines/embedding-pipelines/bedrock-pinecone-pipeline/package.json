@@ -25,7 +25,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2"
   },
@@ -36,7 +36,7 @@
     "@project-lakechain/s3-event-trigger": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.131.0",
+    "aws-cdk-lib": "^2.135.0",
     "constructs": "^10.3.0"
   }
 }

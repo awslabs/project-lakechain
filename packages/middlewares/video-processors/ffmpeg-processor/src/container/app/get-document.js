@@ -16,6 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import xray from 'aws-xray-sdk';
 
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -34,10 +35,10 @@ const mimeTypes = JSON.parse(fs.readFileSync('./mime-types.json'));
 /**
  * The S3 client.
  */
-const s3 = new S3Client({
+const s3 = xray.captureAWSv3Client(new S3Client({
   region: process.env.AWS_REGION,
   maxAttempts: 3
-});
+}));
 
 /**
  * The default mime type to use in case a more precise
@@ -89,12 +90,13 @@ export const mimeTypeFromExtension = (file) => {
 };
 
 /**
+ * Creates a new document instance for the given file.
  * @param file the path of the file to associate
- * with a new cloud event.
+ * with a new document.
  * @returns a new document instance with the
  * object information.
  */
-export const getDocument = async (file, { chainId }) => {
+export const createDocument = async (file, { chainId }) => {
   const key = path.join(chainId, path.basename(file));
 
   // We first try to compute the mime type from the object
@@ -111,21 +113,11 @@ export const getDocument = async (file, { chainId }) => {
   // to the default mime type.
   mimeType ??= DEFAULT_MIME_TYPE;
 
-  // Get the size of the file.
-  const size = fs.statSync(file).size;
-
-  // Upload the file to the S3 bucket.
-  const res = await s3.send(new PutObjectCommand({
-    Bucket: TARGET_BUCKET,
-    Key: key,
-    Body: fs.createReadStream(file)
+  // Create a new document for the given file and upload
+  // it to S3.
+  return (Document.create({
+    url: createUrl(TARGET_BUCKET, key),
+    type: mimeType,
+    data: fs.createReadStream(file)
   }));
-
-  // Create the document.
-  return (new Document.Builder()
-    .withUrl(createUrl(TARGET_BUCKET, key))
-    .withType(mimeType)
-    .withEtag(res.ETag?.replace(/"/g, ''))
-    .withSize(size)
-    .build());
 };

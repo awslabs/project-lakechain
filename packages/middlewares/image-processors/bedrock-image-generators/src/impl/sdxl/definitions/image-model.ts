@@ -20,12 +20,6 @@
 export class SdxlImageModel {
 
   /**
-   * The Bedrock `stability.stable-diffusion-xl-v0` model.
-   * @see https://aws.amazon.com/bedrock/stable-diffusion/
-   */
-  public static STABILITY_DIFFUSION_XL_V0 = new SdxlImageModel('stability.stable-diffusion-xl-v0');
-
-  /**
    * The Bedrock `stability.stable-diffusion-xl-v1` model.
    * @see https://aws.amazon.com/bedrock/stable-diffusion/
    */

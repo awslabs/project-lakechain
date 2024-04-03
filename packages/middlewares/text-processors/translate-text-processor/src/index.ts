@@ -202,8 +202,8 @@ export class TranslateTextProcessor extends Middleware {
       assumedBy: new iam.ServicePrincipal('translate.amazonaws.com')
     });
 
-    // Allow the Amazon Translate service to read input
-    // documents and write translation results to the bucket.
+    // Allow the Amazon Translate service to read and write
+    // from the internal storage.
     this.storage.grantReadWrite(this.translateRole);
 
     ///////////////////////////////////////////
@@ -214,7 +214,9 @@ export class TranslateTextProcessor extends Middleware {
       description: 'Creates asynchronous translations for documents.',
       entry: path.resolve(__dirname, 'lambdas', 'event-handler', 'index.js'),
       vpc: this.props.vpc,
+      timeout: PROCESSING_TIMEOUT,
       runtime: EXECUTION_RUNTIME,
+      memorySize: 192,
       architecture: lambda.Architecture.ARM_64,
       tracing: lambda.Tracing.ACTIVE,
       environmentEncryption: this.props.kmsKey,
@@ -225,6 +227,7 @@ export class TranslateTextProcessor extends Middleware {
       environment: {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
+        SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         PROFANITY_REDACTION: this.props.profanityRedaction ? 'true' : 'false',
         FORMALITY: this.props.formality?.toString() ?? 'NONE',
@@ -244,7 +247,8 @@ export class TranslateTextProcessor extends Middleware {
 
     // Plug the SQS queue into the lambda function.
     this.processor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
-      batchSize: props.batchSize ?? 5,
+      batchSize: props.batchSize ?? 1,
+      maxConcurrency: 2,
       reportBatchItemFailures: true
     }));
 
@@ -257,18 +261,18 @@ export class TranslateTextProcessor extends Middleware {
     // and Amazon Comprehend for language detection.
     this.processor.addToRolePolicy(new iam.PolicyStatement({
       actions: [
+        'translate:TranslateDocument',
         'translate:StartTextTranslationJob',
         'comprehend:DetectDominantLanguage'
       ],
       resources: ['*']
     }));
 
-    // Allow the function to pass a role to the Amazon Translate service.
-    this.translateRole.grantPassRole(this.processor.grantPrincipal);
-
     // Function permissions.
     this.storage.grantWrite(this.processor);
     this.table.grantWriteData(this.processor);
+    this.eventBus.grantPublish(this.processor);
+    this.translateRole.grantPassRole(this.processor.grantPrincipal);
 
     ///////////////////////////////////////////
     //////     Result Handler Function    /////
@@ -278,6 +282,7 @@ export class TranslateTextProcessor extends Middleware {
       description: 'Handles translation results from Amazon Translate.',
       entry: path.resolve(__dirname, 'lambdas', 'result-handler', 'index.js'),
       vpc: this.props.vpc,
+      timeout: cdk.Duration.seconds(10),
       runtime: EXECUTION_RUNTIME,
       architecture: lambda.Architecture.ARM_64,
       tracing: lambda.Tracing.ACTIVE,
@@ -386,3 +391,5 @@ export class TranslateTextProcessor extends Middleware {
     );
   }
 }
+
+export { TranslateLanguage, Formality };

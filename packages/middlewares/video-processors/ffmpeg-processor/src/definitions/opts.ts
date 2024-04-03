@@ -14,20 +14,46 @@
  * limitations under the License.
  */
 
+import path from 'path';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 import { z } from 'zod';
 import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
 import { CloudEvent } from '@project-lakechain/sdk';
 import { InfrastructureDefinition } from './infrastructure';
-import { FfmpegCommand } from 'fluent-ffmpeg';
+import { FfmpegCommandOptions, FfmpegCommand } from 'fluent-ffmpeg';
+
+/**
+ * Declaration of the FFMPEG function.
+ * @param input an optional string or readable stream.
+ * @param options FFmpeg command options.
+ */
+export declare function FfmpegFunction(input?: string, options?: FfmpegCommandOptions): FfmpegCommand;
+
+/**
+ * Type for the FFMPEG function.
+ */
+export type Ffmpeg = typeof FfmpegFunction;
+
+/**
+ * Type for FFMPEG utils passed to the
+ * user-provider function.
+ */
+export type FfmpegUtils = {
+  file: (input: any) => string;
+  path: typeof path;
+};
 
 /**
  * A function expression that executes the FFMPEG evaluation.
  * @param event the cloud event to process.
  * @returns a promise resolving to a boolean value.
  */
-export type IntentExpression = (events: CloudEvent[], ffmpeg: FfmpegCommand) => Promise<FfmpegCommand>;
+export type IntentExpression = (
+  events: CloudEvent[],
+  ffmpeg: Ffmpeg,
+  utils: FfmpegUtils
+) => Promise<FfmpegCommand>;
 
 /**
  * The middleware properties.
@@ -86,3 +112,7 @@ export const FfmpegProcessorPropsSchema = MiddlewarePropsSchema.extend({
 
 // Export the `FfmpegProcessorProps` type.
 export type FfmpegProcessorProps = z.infer<typeof FfmpegProcessorPropsSchema>;
+
+// Export properties.
+export { CloudEvent } from '@project-lakechain/sdk';
+export { FfmpegCommandOptions, FfmpegCommand } from 'fluent-ffmpeg';

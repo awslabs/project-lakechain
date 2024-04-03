@@ -32,6 +32,8 @@ export const ModelParametersSchema = z.object({
    * higher-probability words.
    * When you set the temperature further away from zero,
    * the model may select a lower-probability word.
+   * @min 0
+   * @max 1
    */
   temperature: z
     .number()
@@ -41,11 +43,13 @@ export const ModelParametersSchema = z.object({
 
   /**
    * Specifies the number of token choices the model uses to generate the next token.
+   * @min 0
+   * @max 100_000_000
    */
-  topK: z
+  top_k: z
     .number()
     .min(0)
-    .max(500)
+    .max(100_000_000)
     .optional(),
 
   /**
@@ -54,8 +58,10 @@ export const ModelParametersSchema = z.object({
    * ignores less probable ones.
    * Top P is similar to Top K, but instead of capping the number of choices,
    * it caps choices based on the sum of their probabilities.
+   * @min 0
+   * @max 1
    */
-  topP: z
+  top_p: z
     .number()
     .min(0)
     .max(1)
@@ -63,8 +69,10 @@ export const ModelParametersSchema = z.object({
 
   /**
    * Specifies the maximum number of tokens to use in the generated response.
+   * @min 0
+   * @max 4096
    */
-  max_tokens_to_sample: z
+  max_tokens: z
     .number()
     .min(0)
     .max(4096)
@@ -90,7 +98,7 @@ export const AnthropicTextProcessorPropsSchema = TextProcessorPropsSchema.extend
    */
   modelParameters: ModelParametersSchema
     .default({
-      max_tokens_to_sample: 4096
+      max_tokens: 4096
     }),
 
   /**

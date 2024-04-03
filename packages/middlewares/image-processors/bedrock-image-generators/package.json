@@ -30,13 +30,13 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.523.0",
-    "@aws-sdk/client-s3": "^3.523.0",
-    "@aws-sdk/client-sns": "^3.523.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.540.0",
+    "@aws-sdk/client-s3": "^3.540.0",
+    "@aws-sdk/client-sns": "^3.540.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "rimraf": "^5.0.5"
   },
   "dependencies": {
@@ -49,7 +49,7 @@
     "@project-lakechain/sdk": "^0.4.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.131.0",
+    "aws-cdk-lib": "^2.135.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

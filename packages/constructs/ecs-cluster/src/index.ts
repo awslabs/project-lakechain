@@ -62,6 +62,11 @@ export class EcsCluster extends Construct {
   public container: ecs.ContainerDefinition;
 
   /**
+   * The X-Ray sidecar container definition.
+   */
+  public xraySidecar?: ecs.ContainerDefinition;
+
+  /**
    * The elastic file system associated with
    * the cluster.
    */
@@ -203,6 +208,11 @@ export class EcsCluster extends Construct {
     this.props.eventQueue.grantConsumeMessages(this.taskRole);
     this.props.eventBus.grantPublish(this.taskRole);
 
+    // Allow the tasks to write logs to X-Ray.
+    this.taskRole.addManagedPolicy(
+      iam.ManagedPolicy.fromAwsManagedPolicyName('AWSXRayDaemonWriteAccess')
+    );
+
     // Creating the capacity provider to be used by the cluster.
     // The capacity provider uses an autoscaling group allowing
     // to spread containers across a cluster of instances.
@@ -220,7 +230,7 @@ export class EcsCluster extends Construct {
     cluster.addAsgCapacityProvider(capacityProvider);
 
     ///////////////////////////////////////////
-    //////////       Container      ///////////
+    ///////   User-Provider Container   ///////
     ///////////////////////////////////////////
 
     this.container = this.taskDefinition.addContainer(this.props.containerProps.containerName, {
@@ -268,6 +278,34 @@ export class EcsCluster extends Construct {
     // to the task role and the autoscaling group.
     if (this.props.kmsKey) {
       this.props.kmsKey.grantDecrypt(this.taskRole);
+    }
+
+    ///////////////////////////////////////////
+    ///////   X-Ray Sidecar Container   ///////
+    ///////////////////////////////////////////
+
+    if (this.props.xraySidecar) {
+      this.xraySidecar = this.taskDefinition.addContainer('xray', {
+        image: ecs.ContainerImage.fromRegistry('amazon/aws-xray-daemon'),
+        memoryLimitMiB: 256,
+        cpu: 32,
+        portMappings: [{
+          hostPort: 2000,
+          containerPort: 2000,
+          protocol: ecs.Protocol.UDP
+        }],
+        logging: ecs.LogDrivers.awsLogs({
+          streamPrefix: 'xray',
+          logGroup: this.props.logGroup
+        }),
+        environment: {
+          AWS_REGION: cdk.Stack.of(this).region
+        }
+      });
+
+      // Reference the X-Ray daemon address as an environment variable
+      // to the user-provider container.
+      this.container.addEnvironment('AWS_XRAY_DAEMON_ADDRESS', '127.0.0.1:2000');
     }
 
     ///////////////////////////////////////////

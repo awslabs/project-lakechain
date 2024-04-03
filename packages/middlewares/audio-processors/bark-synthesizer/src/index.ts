@@ -168,7 +168,7 @@ export class BarkSynthesizer extends Middleware {
   constructor(scope: Construct, id: string, private props: BarkSynthesizerProps) {
     super(scope, id, description, {
       ...props,
-      queueVisibilityTimeout: cdk.Duration.minutes(45)
+      queueVisibilityTimeout: cdk.Duration.minutes(30)
     });
 
     // Validate the properties.

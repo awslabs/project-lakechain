@@ -119,7 +119,6 @@ export class CacheStorage extends Construct {
    *
    * @param identity The principal
    * @param objectsKeyPattern Restrict the permission to a certain key pattern (default '*'). Parameter type is `any` but `string` should be passed in.
-   * @param allowedActionPatterns Restrict the permissions to certain list of action patterns
    */
   public grantWrite(identity: iam.IGrantable, objectsKeyPattern?: any): iam.Grant {
     return (this.storage.grantWrite(identity, objectsKeyPattern));

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import xray from 'aws-xray-sdk';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import {
   SQSClient,
@@ -24,17 +25,25 @@ import {
 /**
  * The SQS client.
  */
-const sqs = new SQSClient({
+const sqs = xray.captureAWSv3Client(new SQSClient({
   region: process.env.AWS_REGION,
   maxAttempts: 3
-});
+}));
 
-const getEvents  = (message) => {
+/**
+ * Retrieves the cloud events from the SQS message.
+ * If the message contains a batch of cloud events, the
+ * function returns all the cloud events in the batch.
+ * Otherwise, it returns an array of a single cloud event.
+ * @param {*} message the SQS message.
+ * @returns an array of cloud events.
+ */
+const getEvents  = async (message) => {
   const event    = CloudEvent.from(message.Body);
   const document = event.data().document();
 
-  if (document.type() === 'application/cloudevents+json') {
-    const data = JSON.parse(document.data().asBuffer());
+  if (document.mimeType() === 'application/cloudevents+json') {
+    const data = JSON.parse(await document.data().asBuffer());
     return (data.map((event) => CloudEvent.from(event)));
   } else {
     return ([event]);
@@ -58,7 +67,7 @@ export const pollDocuments = async (queueUrl) => {
 
   if (Messages && Messages.length > 0) {
     return ({
-      events: getEvents(Messages[0]),
+      events: await getEvents(Messages[0]),
       receiptHandle: Messages[0].ReceiptHandle,
       delete: async () => {
         await sqs.send(new DeleteMessageCommand({
@@ -68,5 +77,6 @@ export const pollDocuments = async (queueUrl) => {
       }
     });
   }
+
   return (null);
 };

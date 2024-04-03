@@ -56,7 +56,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.minutes(5);
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(3);
 
 /**
  * The execution runtime for used compute.
@@ -66,7 +66,7 @@ const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
 /**
  * The default memory size to allocate for the compute.
  */
-const DEFAULT_MEMORY_SIZE = 128;
+const DEFAULT_MEMORY_SIZE = 256;
 
 /**
  * The builder for the `AnthropicTextProcessor` service.
@@ -92,24 +92,6 @@ class AnthropicTextProcessorBuilder extends MiddlewareBuilder {
    */
   public withModelParameters(parameters: ModelParameters) {
     this.middlewareProps.modelParameters = parameters;
-    return (this);
-  }
-
-  /**
-   * Sets the document on which to apply the prompt.
-   * @param document the document on which to apply the prompt.
-   * @returns the current builder instance.
-   */
-  public withDocument(document: string | r.IReference<any>) {
-    let reference = null;
-
-    if (typeof document === 'string') {
-      reference = r.reference(r.value(document));
-    } else {
-      reference = document;
-    }
-
-    this.middlewareProps.document = reference;
     return (this);
   }
 
@@ -225,7 +207,6 @@ export class AnthropicTextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         TEXT_MODEL: JSON.stringify(this.props.model),
-        DOCUMENT: JSON.stringify(this.props.document),
         PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
@@ -287,16 +268,7 @@ export class AnthropicTextProcessor extends Middleware {
    * type by this middleware.
    */
   supportedInputTypes(): string[] {
-    return ([
-      'text/plain',
-      'text/markdown',
-      'text/csv',
-      'text/html',
-      'application/x-subrip',
-      'text/vtt',
-      'application/json',
-      'application/json+scheduler'
-    ]);
+    return (this.props.model.inputs);
   }
 
   /**
@@ -304,9 +276,7 @@ export class AnthropicTextProcessor extends Middleware {
    * type by the data producer.
    */
   supportedOutputTypes(): string[] {
-    return ([
-      'text/plain'
-    ]);
+    return (this.props.model.outputs);
   }
 
   /**

@@ -1,4 +1,4 @@
-boto3==1.34.22
+boto3==1.34.76
 transformers==4.36.2
-Pillow==10.2.0
+Pillow==10.3.0
 torchvision==0.16.2

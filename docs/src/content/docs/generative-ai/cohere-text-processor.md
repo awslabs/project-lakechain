@@ -166,11 +166,3 @@ This middleware is based on a Lambda compute running on an ARM64 architecture, a
 | Type  | Description |
 | ----- | ----------- |
 | `CPU` | This middleware only supports CPU compute. |
-
-<br>
-
----
-
-### 📖 Examples
-
-- [Text Generation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-generation-pipeline) - An example showcasing how to generate text using Amazon Bedrock models.

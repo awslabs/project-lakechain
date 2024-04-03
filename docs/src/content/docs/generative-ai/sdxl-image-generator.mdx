@@ -4,6 +4,8 @@ title: SDXL
 
 import { Image } from 'astro:assets';
 import maskImage from '../../../assets/sdxl-mask-image.png';
+import originalImage from '../../../assets/sdxl-inpainting-original-image.png';
+import inpaintedImage from '../../../assets/sdxl-inpainting-inpainted-image.png';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
   Unstable API
@@ -23,15 +25,18 @@ import maskImage from '../../../assets/sdxl-mask-image.png';
 
 ---
 
-The Bedrock image generators package enables developers to use image generation models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html), and create images at scale within their pipelines. The Stable Diffusion XL image generator is part of this package and we will showcase how to leverage all of its functionalities in this documentation.
+The Bedrock image generators package enables developers to use image generation models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html), and create images at scale within their pipelines.
+The Stable Diffusion XL image generator is part of this package and we showcase in this documentation how to leverage all of its functionalities.
 
 ---
 
 ### 🖼️ Text-to-Image
 
-To generate images as part of your pipelines from a text prompt, you can use the `SdxlImageGenerator` construct. This construct either takes the content of input text document as a prompt for generating an image, allowing you to nicely chain documents together, or can also take a user-provided prompt.
+To generate images as part of your pipelines from a text prompt, you can use the `SdxlImageGenerator` construct.
+This construct either takes the content of input text document as a prompt for generating an image, allowing you to nicely chain documents together,
+or can also take a static prompt.
 
-> ℹ️ The below example demonstrates how to use the SDXL image generator to create images from an arbitrary prompt every 5 minutes, using the [Scheduler Trigger](/project-lakechain/triggers/scheduler-event-trigger).
+> ℹ️ The below example demonstrates how to use the SDXL image generator to create images from a static prompt every 5 minutes, using the [Scheduler Trigger](/project-lakechain/triggers/scheduler-event-trigger).
 
 ![Generated Image](../../../assets/sdxl-image-generation-pipeline.png)
 
@@ -74,11 +79,74 @@ class Stack extends cdk.Stack {
 
 ---
 
+
+### 👉 Using References
+
+While generating images based on a static prompt can be useful, the true power of Lakechain lies in its ability to combine
+multiple middlewares together to process documents dynamically. To generate images based on previous documents, you can use Lakechain references.
+
+References allows to reference the document currently processed by a middleware at runtime.
+
+#### Content Reference
+
+Below is an example where we dynamically reference the *content* of a text document as the prompt given to SDXL for generating an image.
+
+```typescript
+import { SdxlImageGenerator } from '@project-lakechain/bedrock-image-generators';
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
+
+const imageGenerator = new SdxlImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('SdxlImageGenerator')
+  .withSource(trigger)
+  .withPrompt(r.reference(r.document())) // 👈 Reference
+  .build();
+```
+
+#### Attribute Reference
+
+You can also reference an *attribute* of the document [Cloud Event](/project-lakechain/general/events) as the prompt.
+For example, using the document `description` attribute as a prompt to generate an image representing the current document.
+
+```typescript
+import { SdxlImageGenerator } from '@project-lakechain/bedrock-image-generators';
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
+
+const imageGenerator = new SdxlImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('SdxlImageGenerator')
+  .withSource(trigger)
+  .withPrompt(r.reference(
+    r.attribute('data.metadata.description') // 👈 Reference
+  ))
+  .build();
+```
+
+<br />
+
+---
+
 ### 🧑‍🎨 Image Inpainting
 
-SDXL models on Amazon Bedrock support image inpainting, which refers to the process of painting a new image within an existing image. SDXL supports generating an image and "painting" it within an existing image using a mask image, delimiting the area where the new image should be painted.
+SDXL models on Amazon Bedrock also support image inpainting, which refers to the process of painting a new image within an existing image.
+SDXL supports generating an image and "painting" it within an existing image using a mask image, delimiting the area where the new image should be painted.
 
-![Inpainting Process](../../../assets/sdxl-inpainting-process.png)
+<p align="center">
+  <table style="display: table; margin: auto">
+    <tr>
+      <th>Original Image</th>
+      <th>Inpainted Image</th>
+    </tr>
+    <tr>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="200" src={originalImage} alt="Original Image" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="190" src={inpaintedImage} alt="Inpainted Image" />
+      </td>
+    </tr>
+  </table>
+</p>
 
 The area for inpainting is defined using a black mask image, outlining the region of the image that should be inpainted.
 Below is an example of a mask we are using to inpaint the above image.
@@ -97,6 +165,7 @@ this image will be used as the base for inpainting.
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { SdxlImageGenerator } from '@project-lakechain/bedrock-image-generators';
 import { CacheStorage } from '@project-lakechain/core';
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 
 class Stack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string) {
@@ -162,33 +231,12 @@ const imageGenerator = new SdxlImageGenerator.Builder()
 
 ---
 
-### 🤖 Model Selection
-
-Amazon Bedrock supports different versions of the SDXL model and you can specify which model you would like to use by using the `.withModel` API.
-
-> 💁 By default, the `stability.stable-diffusion-xl-v1` model is used.
-
-```typescript
-import { SdxlImageGenerator, SdxlImageModel } from '@project-lakechain/bedrock-image-generators';
-
-const imageGenerator = new SdxlImageGenerator.Builder()
-  .withScope(this)
-  .withIdentifier('SdxlImageGenerator')
-  .withSource(trigger)
-  .withImageModel(SdxlImageModel.STABILITY_DIFFUSION_XL_V0)
-  .build();
-```
-
-> Currently, the `stability.stable-diffusion-xl-v0` and `stability.stable-diffusion-xl-v1` models are supported.
-
-<br />
-<br />
-
----
-
 ### ⚙️ Parameters
 
-You can pass additional parameters to the SDXL model for customizing how the SDXL model generates images. All the parameters supported by SDXL are supported.
+You can pass additional parameters to the SDXL model for customizing how the SDXL model generates images.
+All the parameters supported by SDXL are supported.
+
+> 💁 You can find a list of supported parameters in the [AWS SDXL model documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-diffusion-1-0-text-image.html).
 
 ```typescript
 import { SdxlImageGenerator } from '@project-lakechain/bedrock-image-generators';
@@ -255,3 +303,4 @@ region to generate images.
 
 - [Image Generation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-generation-pipeline) - An example showcasing how to generate image using Amazon Bedrock models.
 - [Image Inpainting Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-inpainting-pipelines/sdxl-inpainting-pipeline) - An example showcasing how to perform image inpainting using SDXL on Amazon Bedrock.
+- [Image Article Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-article-pipeline) - An example showcasing how to generate images from articles using Amazon Bedrock.

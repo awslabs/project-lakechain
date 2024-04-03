@@ -106,6 +106,15 @@ export const EcsClusterPropsSchema = z.object({
    */
   containerInsights: z
     .boolean()
+    .optional(),
+
+  /**
+   * Whether to enable the xray daemon sidecar.
+   * @default false
+   */
+  xraySidecar: z
+    .boolean()
+    .default(false)
     .optional()
 });
 

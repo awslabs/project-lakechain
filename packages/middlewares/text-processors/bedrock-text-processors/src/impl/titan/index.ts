@@ -96,24 +96,6 @@ class TitanTextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
-   * Sets the document on which to apply the prompt.
-   * @param document the document on which to apply the prompt.
-   * @returns the current builder instance.
-   */
-  public withDocument(document: string | r.IReference<any>) {
-    let reference = null;
-
-    if (typeof document === 'string') {
-      reference = r.reference(r.value(document));
-    } else {
-      reference = document;
-    }
-
-    this.middlewareProps.document = reference;
-    return (this);
-  }
-
-  /**
    * Sets the prompt to use for generating text.
    * @param prompt the prompt to use for generating text.
    * @returns the current builder instance.
@@ -225,7 +207,6 @@ export class TitanTextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         TEXT_MODEL: JSON.stringify(this.props.model),
-        DOCUMENT: JSON.stringify(this.props.document),
         PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
@@ -295,6 +276,7 @@ export class TitanTextProcessor extends Middleware {
       'application/x-subrip',
       'text/vtt',
       'application/json',
+      'application/xml',
       'application/json+scheduler'
     ]);
   }

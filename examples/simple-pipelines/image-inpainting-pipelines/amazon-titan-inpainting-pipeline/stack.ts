@@ -112,8 +112,8 @@ export class TitanInpaintingPipeline extends cdk.Stack {
       .withSource(imageTransform)
       .withRegion('us-east-1')
       .withTask(new ImageInpaintingTask.Builder()
-        .withTextPrompt('Modern house')
-        .withMaskPrompt('house')
+        .withTextPrompt('A yellow car with the logo "La Poste" on it.')
+        .withMaskPrompt('car')
         .build()
       )
       .build();

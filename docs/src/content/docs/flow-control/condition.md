@@ -22,13 +22,13 @@ title: Condition
 
 The `Condition` middleware allows developers to express complex conditional expressions within their document processing pipelines, that wouldn't be possible using [Filter Expressions](/project-lakechain/guides/api#filters).
 
-With conditional expressions you can either express your conditions using a closure expression in your CDK code and have it executed in the cloud at runtime, or you can provide a Lambda function that gets synchronously invoked to evaluate the condition.
+With conditional expressions you can either express your conditions using a [Funclet](/project-lakechain/guides/funclets) in your CDK code and have it executed in the cloud at runtime, or you can provide a Lambda function that gets synchronously invoked to evaluate the condition.
 
 ---
 
 ### ❓ Using Conditions
 
-To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline. You can define a conditional expression in TypeScript that will get serialized by Lakechain and evaluated at runtime.
+To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline. You can define a funclet in TypeScript that will get serialized by Lakechain and evaluated at runtime.
 
 > 💁 In this example, we create a simple condition that verifies whether the `version` field in JSON documents is equal to `1.0.0`.
 
@@ -76,29 +76,15 @@ class Stack extends cdk.Stack {
 
 ---
 
-#### Conditional Expressions
+#### Funclet Signature
 
-Conditional expressions (we also call them *"funclets"*) use the power of a full programming language to express complex conditions. They are asynchronous and can be defined as TypeScript named functions, anonymous functions, or arrow functions.
+Funclet expressions use the power of a full programming language to express complex conditions. They are asynchronous and can be defined as TypeScript named functions, anonymous functions, or arrow functions.
 
-Each expression takes a `CloudEvent` describing the document being processed as an input argument, and returns a promise to a boolean value representing the result of the evaluation.
+Each conditional funclet takes a `CloudEvent` describing the document being processed as an input argument, and must return a promise to a boolean value representing the result of the evaluation.
 
 ```typescript
 type ConditionalExpression = (event: CloudEvent) => Promise<boolean>;
 ```
-
-<br>
-
----
-
-#### VM
-
-The execution of funclets is performed in a restricted V8 [virtual machine](https://nodejs.org/api/vm.html) within an AWS Lambda container and must execute in 10 seconds or less.
-
-The Condition middleware uses a Lambda compute limited to 128 MB of memory which should be enough for the vast majority of use-cases. It is however possible to allocate more memory to the environment by using the [`.withMemorySize`](http://localhost:4321/project-lakechain/guides/api#memory-size) API.
-
-The V8 virtual machine makes the following symbols available to funclets : `console`, `require`, `setTimeout`, `setInterval`, `setImmediate`.
-
-> 💁 **Important** - One current limit of funclets is that you cannot use expressions located outside of the scope of the funclet closure. All variables must be self-contained within the scope of the funclet.
 
 <br>
 

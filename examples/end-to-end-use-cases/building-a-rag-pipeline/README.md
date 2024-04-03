@@ -23,7 +23,7 @@ flowchart LR
 
 ## What's RAG ❓
 
-Retrieval Augmented Generation (RAG) is an advanced technique that synergize the in-context learning capabilities of large language models (LLMs) with the power of dynamic information retrieval from a specialized corpus of documents. This approach enhances the LLMs ability to process and generate responses by feeding it chunks of relevant information directly into its prompt, thus enriching the context with external knowledge.
+Retrieval Augmented Generation (RAG) is a technique that synergize the in-context learning capabilities of large language models (LLMs) with the power of dynamic information retrieval from a specialized corpus of documents. This approach enhances the LLMs ability to process and generate responses by feeding it chunks of relevant information directly into its prompt, thus enriching the context with external knowledge.
 
 The process starts with a specialized retrieval mechanism that queries a curated corpus or knowledge base, employing semantic search techniques, such as dense vector search, to find documents that closely match the semantic context of the input query. This method ensures the retrieval of highly relevant documents, tailored to the specific needs of the query at hand.
 
@@ -34,8 +34,6 @@ The process starts with a specialized retrieval mechanism that queries a curated
 <br />
 
 By incorporating these retrieved document chunks into the LLMs prompt, RAG effectively broadens the model's knowledge base on-the-fly, allowing it to leverage up-to-date or specific information not originally included in its training data.
-
-This enriched in-context learning process enables the LLM to produce responses that are not only relevant but also deeply informed by the external content it dynamically interacts with. Consequently, RAG represents a powerful fusion of LLMs' natural language understanding and processing capabilities with the vast and expanding universe of information available in external documents, making it highly effective for answering complex and nuanced questions across a wide array of domains.
 
 <br />
 

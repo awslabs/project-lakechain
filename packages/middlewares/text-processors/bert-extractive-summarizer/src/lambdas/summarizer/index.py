@@ -67,7 +67,7 @@ def process_document(event: dict) -> dict:
   """
   document   = event['data']['document']
   chain_id   = event['data']['chainId']
-  output_key = f"{chain_id}/{document['etag']}.txt";
+  output_key = f"{chain_id}/{document['etag']}.txt"
   
   # Load the content of the document in memory.
   text = load_document(document['url'])

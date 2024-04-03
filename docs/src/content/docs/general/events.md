@@ -43,7 +43,11 @@ Each *Cloud Event* is a JSON versioned document flowing through a pipeline execu
 }
 ```
 
-There are multiple elements to this JSON document, that we will cover step-by-step.
+> 💁 There are several elements to this JSON document that we will cover step-by-step.
+
+<br>
+
+---
 
 ### Top-level Attributes
 
@@ -54,6 +58,10 @@ Name             | Description | Format     | Mandatory
 **type**         | The type of the event. Can be *document-created* or *document-deleted*. | Enum | Yes
 **time**         | The date and time when the event has been created. | ISO 8601 UTC | Yes
 **data**         | The data envelope containing information about the document being processed. | Object | Yes
+
+<br>
+
+---
 
 ### Data Envelope
 
@@ -66,6 +74,10 @@ Name             | Description | Format     | Mandatory
 **document**     | A pointer to the *current* version of a document being processed in the pipeline. This is the pointer that is used by middlewares to chain their transformations. | [Document](#document-type) | Yes
 **metadata**     | An object containing additional metadata about the document. | Object | Yes
 **callStack**    | An array that keeps track of the middlewares that have so far been executed in the pipeline. This field is mostly provided for debugging purposes. | Array | Yes
+
+<br>
+
+---
 
 ### Document Type
 
@@ -131,6 +143,10 @@ The `metadata` object contains additional information about the document. Metada
 
 Extracting metadata from documents can help in the process of transforming unstructured data into a more structured representation. When building Generative AI applications and integrating with LLMs, metadata can play an important role in your prompt engineering and help yield better results.
 
+<br>
+
+---
+
 ### Top-level Attributes
 
 The metadata object has the following top-level attributes that are common across all types of documents.
@@ -149,6 +165,10 @@ Name             | Description | Format
 **keywords**     | An array of prominent keywords associated with the document. | Array
 **rating**       | A rating between 1 and 5 representing the quality of the document. | Number
 **properties**   | A discriminated union of metadata specific to the type of document. | Object
+
+<br>
+
+---
 
 ### Using Pointers
 
@@ -192,3 +212,39 @@ Let's say you are using a middleware to perform object detection on images. Inst
 ```
 
 Middlewares are responsible for serializing values into pointers, and resolve back the pointer into an object to access the underlying data at runtime.
+
+<br>
+
+---
+
+## 🧩 Composite Events
+
+Composite events in Lakechain represent a paradigm shift from processing singular, discrete events to managing a collection of related documents as a single, cohesive unit. These events are particularly useful in workflows where the relationships between documents are just as important as the documents themselves.
+
+This grouping allows multiple documents sharing a common context to be processed together, maintaining their semantic relationships throughout the pipeline.
+
+<br>
+
+---
+
+### Example
+
+Let's picture a simple use-case where you want to build a multi-language video subtitling pipeline.
+
+In that case, your pipeline would be handling a collection of multi-lingual subtitles, and a video. By aggregating multiple documents together, you create a semantically coherent envelope that can be consumed as a whole by a middleware (e.g the [FFMPEG](/project-lakechain/video-processing/ffmpeg-processor) middleware) which will stitch the subtitles with the video, effectively transforming a collection of documents into a single one.
+
+![Composite Events](../../../assets/composite-events-pipeline.png)
+
+The only middleware capable of producing composite events is the [Reducer](/project-lakechain/flow-control/reducer) middleware which can aggregate, according to different strategies, multiple events together. This allows you to model and express complex map-reduce pipelines in a simple and efficient way.
+
+<br>
+
+---
+
+### Structure
+
+Lakechain defines a specific document mime-type for composite events. This event has the same structure as any cloud event, with the following specificities.
+
+- It has the `application/cloudevents+json` mime-type.
+- The content of the document is a JSON array of Cloud Events.
+- It can contain any number of events.

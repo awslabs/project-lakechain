@@ -24,15 +24,15 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.523.0",
-    "@aws-sdk/client-sns": "^3.523.0",
-    "@aws-sdk/client-sqs": "^3.523.0",
-    "@project-lakechain/sdk": "^0.4.0",
+    "@aws-sdk/client-s3": "^3.540.0",
+    "@aws-sdk/client-sns": "^3.540.0",
+    "@aws-sdk/client-sqs": "^3.540.0",
+    "@project-lakechain/sdk": "^0.4.2",
+    "aws-xray-sdk": "^3.5.4",
     "fluent-ffmpeg": "^2.1.2"
   },
   "devDependencies": {
-    "esbuild": "^0.20.1",
-    "rimraf": "^5.0.5",
-    "@types/serialize-javascript": "^5.0.4"
+    "esbuild": "^0.20.2",
+    "rimraf": "^5.0.5"
   }
 }

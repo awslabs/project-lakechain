@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-export type PollyEngine = "standard" | "neural";
+/**
+ * Specifies the available engines (standard, neural or long-form) for
+ * Amazon Polly to use when processing input text for speech synthesis.
+ */
+export type PollyEngine = 'standard' | 'neural' | 'long-form';

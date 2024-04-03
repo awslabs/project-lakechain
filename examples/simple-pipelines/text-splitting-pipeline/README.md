@@ -11,10 +11,12 @@ flowchart LR
   S3 -. Text .-> Recursive[Recursive Character Text Splitter]
   S3 -. Text .-> Tiling[Tiling Text Splitter]
   S3 -. Text .-> Sentence[Sentence Text Splitter]
+  S3 -. Text .-> Regexp[Regexp Text Splitter]
   Character -. Chunks .-> S3Storage[S3 Storage Connector]
   Recursive -. Chunks .-> S3Storage
   Tiling -. Chunks .-> S3Storage
   Sentence -. Chunks .-> S3Storage
+  Regexp -. Chunks .-> S3Storage
   S3Storage -.-> Output[Output Bucket]
 ```
 
@@ -28,6 +30,7 @@ The middlewares used in this pipeline are:
 - **Recursive Character Text Splitter** - splits text based on characters and measure chunk length by number of characters.
 - **Tiling Text Splitter** - splits text into chunks of a given number of characters using a tiling algorithm provided by [NLTK](https://www.nltk.org/).
 - **Sentence Text Splitter** - splits text into chunks of a maximum number of bytes, while respecting sentence boundaries.
+- **Regexp Text Splitter** - splits text based on a string or regular expression.
 
 > 💁 The text splitters will emit chunks as multiple documents. The destination S3 bucket will therefore contain one object per chunk, per text splitter.
 

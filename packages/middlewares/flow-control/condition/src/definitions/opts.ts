@@ -8,7 +8,7 @@ import { CloudEvent } from '@project-lakechain/sdk';
  * @param event the cloud event to process.
  * @returns a promise resolving to a boolean value.
  */
-export type ConditionalExpression = (event: CloudEvent) => Promise<boolean>;
+export type ConditionalExpression = (event: Readonly<CloudEvent>) => Promise<boolean>;
 
 /**
  * The middleware properties.

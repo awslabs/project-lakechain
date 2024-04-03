@@ -92,7 +92,7 @@ def on_chunk(chunk: str, order: int, event: dict):
   """
   document   = event['data']['document']
   chain_id   = event['data']['chainId']
-  output_key = f"{chain_id}/{document['etag']}-{order}.txt";
+  output_key = f"{chain_id}/tiling-text-splitter-{document['etag']}-{order}.txt"
   
   # Write the converted file to the S3 bucket.
   result = s3_client.put_object(

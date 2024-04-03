@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/**
+ * Describes the attributes associated with a voice
+ * supported by Amazon Polly.
+ */
 export interface VoiceMap {
   Gender: string;
   Id: string;
@@ -44,7 +48,8 @@ export const map: VoiceMap[] = [
     "LanguageName": "US English",
     "Name": "Kevin",
     "SupportedEngines": [
-      "neural"
+      "neural",
+      "standard"
     ]
   },
   {
@@ -572,8 +577,7 @@ export const map: VoiceMap[] = [
     "LanguageName": "US English",
     "Name": "Matthew",
     "SupportedEngines": [
-      "neural",
-      "standard"
+      "neural"
     ]
   },
   {
@@ -608,8 +612,7 @@ export const map: VoiceMap[] = [
     "LanguageName": "US English",
     "Name": "Justin",
     "SupportedEngines": [
-      "neural",
-      "standard"
+      "neural"
     ]
   },
   {
@@ -903,7 +906,8 @@ export const map: VoiceMap[] = [
     "LanguageName": "US English",
     "Name": "Ruth",
     "SupportedEngines": [
-      "neural"
+      "neural",
+      "long-form"
     ]
   },
   {
@@ -981,6 +985,30 @@ export const map: VoiceMap[] = [
     "Name": "Daniel",
     "SupportedEngines": [
       "neural"
+    ]
+  },
+  {
+    "Gender": "Female",
+    "Id": "Danielle",
+    "LanguageCode": "en-US",
+    "ISO-639-1": "en",
+    "LanguageName": "US English",
+    "Name": "Danielle",
+    "SupportedEngines": [
+      "neural",
+      "long-form"
+    ]
+  },
+  {
+    "Gender": "Male",
+    "Id": "Gregory",
+    "LanguageCode": "en-US",
+    "ISO-639-1": "en",
+    "LanguageName": "US English",
+    "Name": "Gregory",
+    "SupportedEngines": [
+      "neural",
+      "long-form"
     ]
   },
   {
@@ -1067,6 +1095,17 @@ export const map: VoiceMap[] = [
     "ISO-639-1": "ar",
     "LanguageName": "Gulf Arabic",
     "Name": "Zayd",
+    "SupportedEngines": [
+      "neural"
+    ]
+  },
+  {
+    "Gender": "Female",
+    "Id": "Burcu",
+    "LanguageCode": "tr-TR",
+    "ISO-639-1": "tr",
+    "LanguageName": "Turkish",
+    "Name": "Burcu",
     "SupportedEngines": [
       "neural"
     ]

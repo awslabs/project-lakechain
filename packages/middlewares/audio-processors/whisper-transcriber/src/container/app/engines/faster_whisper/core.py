@@ -73,7 +73,7 @@ class FasterWhisper:
     outputFile = StringIO()
     self.write_result(result, outputFile, output)
     outputFile.seek(0)
-    return outputFile
+    return outputFile, result['language']
 
   def write_result(self, result: dict, file: BinaryIO, output: str):
       if output == "srt":

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { PollyEngine } from "./engine";
-import { PollyVoice } from "./voice";
+import { PollyEngine } from './engine';
+import { PollyVoice } from './voice';
 
 /**
  * Describes an association between a voice and an engine.

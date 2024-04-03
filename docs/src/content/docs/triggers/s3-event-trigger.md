@@ -106,6 +106,88 @@ All those information cannot be inferred from the S3 event alone, and to efficie
 
 ---
 
+### 📤 Events
+
+This middleware emits [Cloud Events](/project-lakechain/general/events) whenever an object is created, modified, or deleted in the monitored bucket(s). Below is an example of events emitted by the S3 trigger middleware upon a creation (or modification), and a deletion of an object.
+
+<details>
+  <summary>💁 Click to expand example</summary>
+<table>
+<tr>
+<td>Event Type</td>
+<td>Example</td>
+</tr>
+<tr>
+<td>Document Creation or Update</td>
+<td>
+
+```json
+{
+  "specversion": "1.0",
+  "id": "1780d5de-fd6f-4530-98d7-82ebee85ea39",
+  "type": "document-created",
+  "time": "2023-10-22T13:19:10.657Z",
+  "data": {
+      "chainId": "6ebf76e4-f70c-440c-98f9-3e3e7eb34c79",
+      "source": {
+          "url": "s3://bucket/document.txt",
+          "type": "text/plain",
+          "size": 26378,
+          "etag": "1243cbd6cf145453c8b5519a2ada4779"
+      },
+      "document": {
+          "url": "s3://bucket/document.txt",
+          "type": "text/plain",
+          "size": 26378,
+          "etag": "1243cbd6cf145453c8b5519a2ada4779"
+      },
+      "metadata": {},
+      "callStack": [
+        "s3-event-trigger"
+      ]
+  }
+}
+```
+
+</td>
+</tr>
+<tr>
+<td>Document Deletion</td>
+<td>
+
+```json
+{
+  "specversion": "1.0",
+  "id": "2f20a29d-c96f-4e2f-a64e-855a9c1e14bb",
+  "type": "document-deleted",
+  "time": "2023-10-22T13:20:00.657Z",
+  "data": {
+      "chainId": "dd50a7f2-4263-4266-bb5f-dea2ab8970c3",
+      "source": {
+          "url": "s3://bucket/document.txt",
+          "type": "text/plain"
+      },
+      "document": {
+          "url": "s3://bucket/document.txt",
+          "type": "text/plain"
+      },
+      "metadata": {},
+      "callStack": [
+        "s3-event-trigger"
+      ]
+  }
+}
+```
+
+</td>
+</tr>
+</table>
+</details>
+
+<br>
+
+---
+
 ### 🏗️ Architecture
 
 The S3 trigger receives S3 events from subscribed buckets on its SQS input queue. They are consumed by a Lambda function used to translate S3 events into a [CloudEvent](/project-lakechain/general/events). The Lambda function also takes care of identifying the mime-type of a document based on its extension, the S3 reported mime-type, or the content of the document itself.

@@ -47,19 +47,20 @@ class OpenAIWhisper:
     of the given audio input, in the given output format.
     :param file_path: The audio file input to transcribe.
     :param output: The output format to use (e.g. 'srt', 'vtt', 'tsv', 'json', 'txt').
-    :param language: The language to use for transcription (e.g. 'en', 'es', 'fr').
+    :param language: An optional language to use for transcription (e.g. 'en', 'es', 'fr').
+    :return: A stream containing the formatted transcript, and the language of the transcript.
     """
     options_dict = {'task' : 'transcribe'}
     if language:
       options_dict['language'] = language
     
     with self.lock:
-      result = self.model.transcribe(file_path)
+      result = self.model.transcribe(file_path, **options_dict)
 
     outputFile = StringIO()
     self.write_result(result, outputFile, output)
     outputFile.seek(0)
-    return outputFile
+    return outputFile, result['language']
 
   def write_result(self, result: dict, file: BinaryIO, output: str):
     """

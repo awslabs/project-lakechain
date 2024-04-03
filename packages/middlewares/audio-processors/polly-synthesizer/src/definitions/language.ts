@@ -15,7 +15,7 @@
  */
 
 /**
- * The different supported languages by Amazon Polly.
+ * The different supported languages by Amazon Polly in ISO 639-1 format.
  * @see https://docs.aws.amazon.com/polly/latest/dg/SupportedLanguage.html
  */
 export type PollyLanguage = 'en' |
@@ -39,4 +39,5 @@ export type PollyLanguage = 'en' |
   'pl' |
   'ca' |
   'is' |
-  'ro';
+  'ro' |
+  'cy';

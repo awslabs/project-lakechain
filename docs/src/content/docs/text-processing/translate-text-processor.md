@@ -20,9 +20,9 @@ title: Translate
 
 ---
 
-The Translate text processor makes it possible to asynchronously translate documents from one language to a set of output languages using the [Amazon Translate](https://aws.amazon.com/translate/) service at scale.
+The Translate text processor makes it possible to translate documents from one language to a set of languages. at scale, using the [Amazon Translate](https://aws.amazon.com/translate/) service. It suports various document formats such as Text, HTML, Docx, PowerPoint, Excel, and Xliff.
 
-This middleware leverages the [batch translation capabilities](https://docs.aws.amazon.com/translate/latest/dg/async.html) of Amazon Translate to translate documents. Batch translations are slower than synchronous translations, but support larger documents and formats. This middleware can translate `.txt`, `.html`, `.docx`, `.pptx`, `.xlsx`, and `.xliff` documents.
+Using Amazon Translate, the input documents formatting and structure is preserved during the translation process, and the output documents are stored in the same format as the input documents.
 
 ---
 
@@ -51,13 +51,13 @@ class Stack extends cdk.Stack {
       .build();
     
     // Translate uploaded text documents.
-    trigger.pipe(new TranslateTextProcessor.Builder()
+    const translate = new TranslateTextProcessor.Builder()
       .withScope(this)
       .withIdentifier('TranslateTextProcessor')
       .withCacheStorage(cache)
       .withSource(trigger)
       .withOutputLanguages(['fr', 'es'])
-      .build());
+      .build();
   }
 }
 ```
@@ -104,11 +104,25 @@ const translate = new TranslateTextProcessor.Builder()
 
 ---
 
+### ⏱️ Sync vs Async Jobs
+
+> ℹ️ This middleware uses both the [real-time synchronous](https://docs.aws.amazon.com/translate/latest/dg/sync-console.html) API, and the [asynchronous batch translation](https://docs.aws.amazon.com/translate/latest/dg/async.html) API provided by Amazon Translate to translate documents.
+
+Synchronous translations are faster, but have a limit of 100KB per document with support for Text, Docx, and HTML documents. Asynchronous batch jobs on the other hand support much larger documents sizes (up to 20MB per document) and a wider array of document types, but are significantly slower than synchronous translations.
+
+This middleware will intelligently determines the right job type to use for each input document based on its size and format in order to optimize the translation process.
+
+<br>
+
+---
+
 ### 🏗️ Architecture
 
-This middleware implements an event-driven architecture leveraging Amazon Translate batch jobs, and runs several Lambda computes based on the ARM64 architecture to orchestrate the translation jobs.
+The processing flow implemented by this middleware depends on whether synchronous or asynchronous jobs are used to translate documents.
 
-This means that this middleware does not spend time waiting for the translations to be completed, but instead asynchronously keeps tracks of each translation jobs and forwards them to the next middlewares in the pipeline once they are completed.
+When using synchronous translations, the middleware uses the Amazon Translate real-time API to translate documents using a Lambda function which waits for the translations to be completed before forwarding them to the next middlewares in the pipeline.
+
+When using asynchronous translations, This middleware uses an event-driven architecture leveraging Amazon Translate batch jobs, DynamoDB to maintain a mapping between jobs, and runs several Lambda computes based on the ARM64 architecture to orchestrate the overall translations.
 
 ![Architecture](../../../assets/translate-text-processor-architecture.png)
 

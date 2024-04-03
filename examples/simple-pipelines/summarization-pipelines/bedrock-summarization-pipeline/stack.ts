@@ -119,8 +119,7 @@ export class BedrockSummarizationStack extends cdk.Stack {
         trigger
       ])
       .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_INSTANT_V1)
-      // This is the prompt that will get applied on the document.
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
       .withPrompt(`
         Give a detailed summary of the text with the following constraints:
         - Write a very detailed summary in the same language as the original text.
@@ -130,7 +129,7 @@ export class BedrockSummarizationStack extends cdk.Stack {
       `)
       .withModelParameters({
         temperature: 0.5,
-        max_tokens_to_sample: 4096
+        max_tokens: 4096
       })
       .build();
 

@@ -42,6 +42,13 @@ export const voice = (voice: PollyVoice, engine: PollyEngine): VoiceDescriptor =
 };
 
 /**
+ * @returns the identifier for the long-form engine.
+ */
+export const longform = (voiceName: PollyVoice): VoiceDescriptor => {
+  return (voice(voiceName, 'long-form'));
+};
+
+/**
  * @returns the identifier for the neural engine.
  */
 export const neural = (voiceName: PollyVoice): VoiceDescriptor => {

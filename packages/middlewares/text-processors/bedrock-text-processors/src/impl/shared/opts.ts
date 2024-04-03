@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import * as dsl from '@project-lakechain/core/dsl';
 import { z } from 'zod';
 import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
 import { OverflowStrategy } from './strategy';
@@ -23,15 +22,6 @@ import { OverflowStrategy } from './strategy';
  * Common properties across text processors.
  */
 export const TextProcessorPropsSchema = MiddlewarePropsSchema.extend({
-
-  /**
-   * A reference to the input document.
-   * @default points to the current document.
-   */
-  document: z.custom<dsl.IReference<
-    dsl.IReferenceSubject
-  >>()
-    .default(dsl.reference(dsl.document())),
 
   /**
    * The AWS region in which the model will

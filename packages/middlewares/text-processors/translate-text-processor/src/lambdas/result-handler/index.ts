@@ -15,16 +15,22 @@
  */
 
 import path from 'path';
+import merge from 'lodash/merge';
 
 import { Context, S3Event, S3EventRecord } from 'aws-lambda';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
-import { next } from '@project-lakechain/sdk/decorators';
+import { nextAsync } from '@project-lakechain/sdk/decorators';
 import { TranslationDetails } from '../definitions/translation-details.js';
+
+import {
+  S3Client,
+  GetObjectCommand,
+  HeadObjectCommand
+} from '@aws-sdk/client-s3';
 
 /**
  * The DynamoDB client.
@@ -55,6 +61,15 @@ const unquote = (key: string): string => {
 };
 
 /**
+ * @param bucket the bucket name to encode.
+ * @param key the key name to encode.
+ * @returns the URI for the specified bucket and key.
+ */
+const toUri = (bucket: string, key: string): URL => {
+  return (new S3DocumentDescriptor({ bucket, key }).asUri());
+};
+
+/**
  * The lambda class definition containing the lambda handler.
  * @note using a `LambdaInterface` is required in
  * this context in order to be able to use annotations
@@ -79,60 +94,67 @@ class Lambda implements LambdaInterface {
   }
 
   /**
-   * Handles the translation result produced by Amazon Translate
-   * and forwards the produced document(s) to the next middlewares.
-   * @param event the cloud event to process.
-   * @returns the cloud event associated with the translation file.
-   */
-  @next()
-  async onEvent(event: CloudEvent): Promise<CloudEvent> {
-    return (event);
-  }
-
-  /**
+   * This method takes a `TranslationDetails` object and returns
+   * an array of cloud events associated with the translated documents.
+   * @param metadata the metadata file issued by Amazon Translate.
    * @note we are expecting in the metadata file a `outputDataPrefix`
    * property containing the prefix of the produced documents that looks as follows:
    * s3://${bucket}/outputs/${jobName}/${accountId}-TranslateText-${jobId}
-   * @param metadata the metadata file issued by Amazon Translate.
    */
-  async getEvents(metadata: TranslationDetails) {
+  async toEvents(metadata: TranslationDetails) {
     const outputPrefix = new URL(metadata.outputDataPrefix);
     const paths = outputPrefix.pathname.split('/').slice(1);
     const event = await this.getJobEvent(paths[1]);
     const events = [];
 
     for (const detail of metadata.details) {
-      const key = path.join(...paths, detail.targetFile);
+      const clone    = event.clone();
+      const document = clone.data().document();
+      const key      = path.join(...paths, detail.targetFile);
 
       // Get information about the translated document.
-      const data = await s3.send(new GetObjectCommand({
+      const data = await s3.send(new HeadObjectCommand({
         Bucket: outputPrefix.hostname,
         Key: key
       }));
 
       // Update the document.
-      const document = event.data().document();
-      document.props.url = new S3DocumentDescriptor({
-        bucket: outputPrefix.hostname,
-        key
-      }).asUri();
+      document.props.url = toUri(outputPrefix.hostname, key);
       document.props.etag = data.ETag?.replace(/"/g, '');
       document.props.size = data.ContentLength;
 
-      events.push(event);
+      // Update the metadata.
+      merge(clone.data().props.metadata, {
+        properties: {
+          kind: 'text',
+          attrs: {
+            language: metadata.targetLanguageCode
+          }
+        }
+      });
+
+      events.push(clone);
     }
 
     return (events);
   }
 
   /**
-   * We try to parse the metadata file issued by Amazon Translate.
+   * This method attempts to parse the translation metadata file
+   * created by Amazon Translate containing the files produced
+   * by the translation job.
    * @param record the S3 event record to process containing
    * information about the produced metadata file by Amazon Translate.
    * @returns a promise to the S3 event record.
    */
-  async onMetadataFile(record: S3EventRecord): Promise<S3EventRecord> {
+  async onS3Event(record: S3EventRecord): Promise<S3EventRecord> {
     const key = unquote(record.s3.object.key);
+
+    // Amazon Translate creates a job description which is initially empty.
+    // We ignore any empty file.
+    if (record.s3.object.size === 0) {
+      return (record);
+    }
 
     try {
       // Load the metadata file in memory.
@@ -145,10 +167,11 @@ class Lambda implements LambdaInterface {
       const metadata: TranslationDetails = JSON.parse(data as string);
 
       // Resolve the cloud event associated with each translated document.
-      const events = await this.getEvents(metadata);
+      const events = await this.toEvents(metadata);
 
+      // Forward the new documents to the next middlewares.
       for (const event of events) {
-        await this.onEvent(event);
+        await nextAsync(event);
       }
     } catch (err) {
       logger.error(err as any);
@@ -166,7 +189,7 @@ class Lambda implements LambdaInterface {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handler(event: S3Event, _: Context): Promise<any> {
     return (Promise.all(
-      event.Records.map((record) => this.onMetadataFile(record))
+      event.Records.map((record) => this.onS3Event(record))
     ));
   }
 }

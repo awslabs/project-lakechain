@@ -120,7 +120,10 @@ export const SdxlImageGeneratorPropsSchema = MiddlewarePropsSchema.extend({
   /**
    * The prompt to use for generating images.
    */
-  prompt: z.custom<dsl.IReference<any>>(),
+  prompt: z.custom<dsl.IReference<any>>(
+    (value) => !!value,
+    { message: 'A prompt is required by the SDXL middleware.' }
+  ),
 
   /**
    * The negative prompts to use when generating images.

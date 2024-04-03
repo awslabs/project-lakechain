@@ -75,7 +75,9 @@ const evaluateExpression = async (event: CloudEvent, opts?: RunningCodeOptions):
 
   // If the expression did not return a promise, we throw an error.
   if (!res.then) {
-    throw new Error('Invalid conditional expression. Promise expected.');
+    throw new Error(`
+      Invalid conditional expression return type, a promise is expected.
+    `);
   }
 
   return ((await res) === true);

@@ -45,7 +45,7 @@ const RESULT_TOPIC  = process.env.SNS_RESULT_TOPIC as string;
  */
 const polly = tracer.captureAWSv3Client(new PollyClient({
   region: process.env.AWS_REGION,
-  maxAttempts: 5
+  maxAttempts: 10
 }));
 
 /**

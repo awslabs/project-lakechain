@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/jest": "^29.0.0",
     "@types/node": "^20.2.1",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "rimraf": "^5.0.1",
     "shx": "^0.3.4"
   },
@@ -41,7 +41,7 @@
     "@project-lakechain/core": "^0.4.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.131.0",
+    "aws-cdk-lib": "^2.135.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

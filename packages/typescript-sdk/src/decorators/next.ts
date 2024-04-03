@@ -84,27 +84,44 @@ export interface NextProps {
 /**
  * Publishes the given cloud event to an SNS topic
  * for further processing by the next middlewares.
+ * This function can be invoked by environments where
+ * decorators are not supported.
  * @param event the cloud event object to publish.
- * @param props the next properties to use.
- * @returns a promise which resolves when the event has been published.
+ * @param props the properties to use.
  */
-const send = (event: CloudEvent, props?: NextProps) => {
-  // Update the call stack with the current service.
-  event.data().props.callStack.unshift(SERVICE_NAME);
+export const nextAsync = async (
+  event: CloudEvent,
+  props: NextProps = {
+    target: { snsTopicArn: SNS_TARGET_TOPIC },
+    logEvent: true
+  }
+) => {
+  if (event) {
+    // Log the event with the Powertools logger.
+    if (props.logEvent) {
+      logger.info(event as any);
+    }
 
-  // Publish the event to the SNS topic.
-  return (sns.send(
-    new PublishCommand({
-      TopicArn: props?.target.snsTopicArn,
-      Message: JSON.stringify(event),
-      MessageAttributes: props?.attributes
-    })
-  ));
+    // Update the call stack with the current service.
+    event.data().props.callStack.unshift(SERVICE_NAME);
+
+    // Publish the event to the SNS topic.
+    return (sns.send(
+      new PublishCommand({
+        TopicArn: props.target.snsTopicArn,
+        Message: JSON.stringify(event),
+        MessageAttributes: props.attributes
+      })
+    ));
+  }
+
+  return (null);
 };
 
 /**
  * Passes the cloud event produced by the decorated function
  * to the next middlewares.
+ * @param props the properties to use.
  * @returns the decoration function.
  */
 export const next = (
@@ -124,15 +141,8 @@ export const next = (
       // Call the original function and get the cloud event from it.
       const event = await originalMethod.apply(handlerRef, args);
 
-      if (event) {
-        // Log the event with the Powertools logger.
-        if (props.logEvent) {
-          logger.info(event as any);
-        }
-
-        // Forward the event to the next middlewares.
-        await send(event, props);
-      }
+      // Forward the event to the next middlewares.
+      await nextAsync(event, props);
 
       return (event);
     };

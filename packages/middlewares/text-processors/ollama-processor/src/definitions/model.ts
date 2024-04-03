@@ -36,7 +36,7 @@ export interface OllamaModelDefinition {
  * An array of base input mime-types
  * supported by ollama text models.
  */
-const BASE_TEXT_INPUTS = [
+export const BASE_TEXT_INPUTS = [
   'text/plain',
   'text/markdown',
   'text/csv',
@@ -44,6 +44,15 @@ const BASE_TEXT_INPUTS = [
   'application/x-subrip',
   'text/vtt',
   'application/json'
+];
+
+/**
+ * An array of base input mime-types
+ * supported by ollama multimodal models.
+ */
+export const BASE_IMAGE_INPUTS = [
+  'image/png',
+  'image/jpeg'
 ];
 
 /**
@@ -100,8 +109,7 @@ export class OllamaModel {
     tag: 'latest',
     inputs: [
       'text/plain',
-      'image/png',
-      'image/jpeg'
+      ...BASE_IMAGE_INPUTS
     ],
     outputs: ['text/plain']
   });
@@ -367,6 +375,16 @@ export class OllamaModel {
   });
 
   /**
+   * The `starcoder2` model.
+   * @see https://ollama.com/library/starcoder2
+   */
+  public static STARCODER2 = new OllamaModel('starcoder2', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `medllama2` model.
    * @see https://ollama.com/library/medllama2
    */
@@ -404,8 +422,7 @@ export class OllamaModel {
     tag: 'latest',
     inputs: [
       'text/plain',
-      'image/png',
-      'image/jpeg'
+      ...BASE_IMAGE_INPUTS
     ],
     outputs: ['text/plain']
   });
@@ -455,6 +472,16 @@ export class OllamaModel {
    * @see https://ollama.com/library/tinydolphin
    */
   public static TINYDOLPHIN = new OllamaModel('tinydolphin', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `dolphincoder` model.
+   * @see https://ollama.com/library/dolphincoder
+   */
+  public static DOLPHINCODER = new OllamaModel('dolphincoder', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']

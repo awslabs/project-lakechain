@@ -1,0 +1,4 @@
+boto3==1.34.75
+aws_lambda_powertools==2.36.0
+aws-xray-sdk==2.13.0
+rembg==2.0.56

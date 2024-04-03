@@ -21,6 +21,7 @@ import { v5 } from 'uuid';
 import { DataSource } from './data-sources/data-source.js';
 import { createDataSource } from './data-sources/factory.js';
 import { FileProperties } from './file-properties.js';
+import { Readable } from 'stream';
 
 /**
  * The schema for the document object.
@@ -155,6 +156,52 @@ export class Document {
       data = JSON.parse(data);
     }
     return (new Document(DocumentSchema.parse(data)));
+  }
+
+  /**
+   * Creates a new document instance and stores the document in the
+   * storage associated with the given URL.
+   * @param input an object describing the attributes of the document.
+   * @returns a new instance of a document.
+   */
+  static async create(input: {
+    url: URL | string,
+    type: string,
+    data: Buffer | Readable
+  }): Promise<Document> {
+    let size         = 0;
+    const dataSource = createDataSource(input.url);
+    const writable   = dataSource.asWriteStream({ ContentType: input.type });
+    const document   = new Document.Builder()
+      .withUrl(input.url)
+      .withType(input.type);
+
+    // Track the size of the data being written.
+    writable.on('data', (chunk) => size += chunk.length);
+
+    // Write the data to the data source.
+    if (input.data instanceof Buffer) {
+      writable.end(input.data);
+    } else if (input.data instanceof Readable) {
+      input.data.pipe(writable);
+    }
+
+    // Create a promise that resolves when the write is complete.
+    const promise = new Promise((resolve, reject) => {
+      writable.on('uploaded', (res: any) => {
+        if (res.ETag) {
+          document.withEtag(res.ETag.replace(/"/g, ''));
+        }
+        document.withSize(size);
+        resolve(document.build());
+      });
+      writable.on('error', (err) => {
+        console.error('Failed to write data to the data source.');
+        reject(err);
+      });
+    });
+
+    return (promise as Promise<Document>);
   }
 
   /**

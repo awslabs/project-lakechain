@@ -54,7 +54,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.minutes(5);
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(1);
 
 /**
  * The execution runtime for used compute.
@@ -141,7 +141,7 @@ export class S3StorageConnector extends Middleware {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
-        6 * PROCESSING_TIMEOUT.toSeconds()
+        3 * PROCESSING_TIMEOUT.toSeconds()
       )
     });
 

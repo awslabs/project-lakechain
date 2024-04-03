@@ -64,6 +64,9 @@ export default defineConfig({
 					label: 'Observability',
 					link: '/guides/observability'
 				}, {
+					label: 'Funclets',
+					link: '/guides/funclets'
+				}, {
 					label: 'Tags',
 					link: '/guides/tagging'
 				}, {
@@ -99,6 +102,9 @@ export default defineConfig({
 				}, {
 					label: 'Rekognition',
 					link: '/image-processing/rekognition-image-processor'
+				}, {
+					label: 'Background Removal',
+					link: '/image-processing/rembg-image-processor'
 				}]
 			}, {
 				label: 'Embeddings',
@@ -193,14 +199,14 @@ export default defineConfig({
 					label: 'Text Transform',
 					link: '/text-processing/text-transform-processor'
 				}, {
-					label: 'Transformers Summarizer',
-					link: '/text-processing/transformers-text-summarizer'
-				}, {
 					label: 'Translate',
 					link: '/text-processing/translate-text-processor'
 				}, {
 					label: 'JMESPath',
 					link: '/text-processing/jmespath-processor'
+				}, {
+					label: 'Subtitles',
+					link: '/text-processing/subtitle-processor'
 				}]
 			}, {
 				label: 'Audio Processing',
@@ -234,6 +240,9 @@ export default defineConfig({
 				}, {
 					label: 'Tiling Text Splitter',
 					link: '/text-splitters/tiling-text-splitter'
+				}, {
+					label: 'Regexp Text Splitter',
+					link: '/text-splitters/regexp-text-splitter'
 				}]
 			}, {
 				label: 'Flow Control',
@@ -246,12 +255,18 @@ export default defineConfig({
 				}, {
 					label: 'Condition',
 					link: '/flow-control/condition'
+				}, {
+					label: 'Reducer',
+					link: '/flow-control/reducer'
 				}]
 			}, {
 				label: 'Video Processing',
 				items: [{
 					label: 'Metadata Extractor',
 					link: '/video-processing/metadata-extractor'
+				}, {
+					label: 'FFMPEG',
+					link: '/video-processing/ffmpeg-processor'
 				}]
 			}, {
 				label: 'Archive Processing',

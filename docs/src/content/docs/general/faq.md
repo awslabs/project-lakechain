@@ -4,7 +4,7 @@ title: FAQ
 
 ##### What is Project Lakechain?
 
-Project Lakechain is a framework allowing AWS customers develop and deploy scalable and resilient document processing pipelines on AWS. Project Lakechain is built on top of the [AWS CDK](https://aws.amazon.com/cdk/), allowing customers to express their pipelines as infrastructure-as-code and follow best-practices of consistent, repeatable, auditable and versioned infrastructure.
+Project Lakechain is a framework enabling AWS customers to develop and deploy scalable and resilient document processing pipelines on AWS. Project Lakechain is built on top of the [AWS CDK](https://aws.amazon.com/cdk/), allowing to express pipelines as infrastructure-as-code and follow best-practices of repeatable, auditable and versioned infrastructure.
 
 With Lakechain, developers can compose their pipelines using [middlewares](/project-lakechain/general/concepts#-middlewares), and model them in the shape of a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph).
 
@@ -26,7 +26,7 @@ By providing dozens of existing middlewares, built for the Cloud, and addressing
 
 ##### Who is Project Lakechain for?
 
-The primary audience for Project Lakechain are all developers within a Cloud, DevOps or Data-Science team looking to deploy scalable document processing pipelines on AWS using the AWS CDK.
+The primary audience for Project Lakechain are developers within a Cloud, DevOps or Data-Science team looking to prototype scalable document processing pipelines on AWS using the AWS CDK.
 
 > 💁 Project Lakechain assumes a good understanding of the AWS CDK concepts by developers. If you are new to the AWS CDK, we recommend you start by reading the [AWS CDK Developer Guide](https://docs.aws.amazon.com/cdk/latest/guide/home.html).
 
@@ -62,7 +62,7 @@ You can find all the examples we've built for developers in the [Examples](https
 
 ##### In what language is Project Lakechain written?
 
-As of today, Project Lakechain is available to all users using the AWS CDK in TypeScript. We are working on adding support for other languages in the future.
+As of today, Project Lakechain is available to all users using the AWS CDK in TypeScript.
 
 <br />
 

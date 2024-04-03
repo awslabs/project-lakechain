@@ -19,12 +19,12 @@ import path from 'path';
 import tmp from 'tmp';
 
 import { promisify } from 'util';
-import { Readable, pipeline as pipe } from 'stream';
+import { Readable, Writable, pipeline as pipe } from 'stream';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { DataSource } from '../data-source.js';
 import { tracer } from '../../../../powertools/index.js';
 import { S3DocumentDescriptor } from '../../../../helpers/s3-object-descriptor.js';
-
+import { S3Stream } from '../../../../helpers/s3-stream.js';
 
 /**
  * The S3 client instance.
@@ -70,6 +70,23 @@ export class S3DataSource implements DataSource {
     }
 
     return (res.Body as Readable);
+  }
+
+  /**
+   * @returns a writable stream to the data source.
+   */
+  asWriteStream(obj: any = {}): Writable {
+    const { writeStream, promise } = new S3Stream().createS3WriteStream({
+      bucket: this.descriptor.bucket(),
+      key: this.descriptor.key()
+    }, obj);
+
+    promise.then((res) => {
+      writeStream.emit('uploaded', res);
+      writeStream.destroy();
+    });
+
+    return (writeStream);
   }
 
   /**

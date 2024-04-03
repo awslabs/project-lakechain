@@ -1,4 +1,4 @@
-boto3==1.29.5
-aws_lambda_powertools==2.27.1
-aws-xray-sdk==2.12.1
+boto3==1.34.69
+aws_lambda_powertools==2.35.1
+aws-xray-sdk==2.13.0
 nltk==3.8.1

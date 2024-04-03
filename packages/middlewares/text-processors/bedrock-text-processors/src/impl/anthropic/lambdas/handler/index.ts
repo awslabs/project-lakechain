@@ -17,13 +17,16 @@
 import { SQSEvent, Context, SQSRecord } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
-import { CloudEvent } from '@project-lakechain/sdk/models';
+import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { AnthropicTextModel } from '../../definitions/model';
 
+import {
+  AnthropicTextModel,
+  BASE_IMAGE_INPUTS,
+  BASE_TEXT_INPUTS
+} from '../../definitions/model';
 import {
   BatchProcessor,
   EventType,
@@ -34,7 +37,6 @@ import {
  * Environment variables.
  */
 const TEXT_MODEL = JSON.parse(process.env.TEXT_MODEL as string) as AnthropicTextModel;
-const DOCUMENT = JSON.parse(process.env.DOCUMENT as string);
 const PROMPT = JSON.parse(process.env.PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
 const PROCESSED_FILES_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
@@ -48,18 +50,24 @@ const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
 }));
 
 /**
- * The S3 client.
- */
-const s3 = tracer.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
-  maxAttempts: 5
-}));
-
-/**
  * The async batch processor processes the received
  * events from SQS in parallel.
  */
 const processor = new BatchProcessor(EventType.SQS);
+
+/**
+ * Group an array of elements by a given key.
+ * @param arr the array to group.
+ * @param key the key to group by.
+ * @returns a record mapping the given key to the
+ * elements of the array.
+ */
+const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+  arr.reduce((groups, item) => {
+    (groups[key(item)] ||= []).push(item);
+    return groups;
+  }, {} as Record<K, T[]>
+);
 
 /**
  * The lambda class definition containing the lambda handler.
@@ -70,12 +78,104 @@ const processor = new BatchProcessor(EventType.SQS);
 class Lambda implements LambdaInterface {
 
   /**
-   * @param event the cloud event to use to resolve
-   * the prompt.
-   * @returns the prompt to use for generating text.
+   * Resolves the input documents to process.
+   * This function supports both single and composite events.
+   * @param event the received event.
+   * @returns a promise to an array of CloudEvents to process.
    */
-  private async getPrompt(event: CloudEvent) {
-    return (`\n\nHuman:${await event.resolve(DOCUMENT)}\n\n${await event.resolve(PROMPT)}\n\nAssistant:`);
+  private async resolveEvents(event: CloudEvent): Promise<CloudEvent[]> {
+    const document = event.data().document();
+
+    if (document.mimeType() === 'application/cloudevents+json') {
+      const data = JSON.parse((await document
+        .data()
+        .asBuffer())
+        .toString('utf-8')
+      );
+      return (data.map((event: string) => CloudEvent.from(event)));
+    } else {
+      return ([event]);
+    }
+  }
+
+  /**
+   * Computes a list of messages constructed from the input documents.
+   * @param event the received event.
+   * @returns an array of messages to use for generating text.
+   */
+  private async getMessages(event: CloudEvent) {
+    const messages = [{ role: 'user', content: [] as any[] }];
+
+    // Get the input documents.
+    const events = (await this
+      .resolveEvents(event))
+      .filter((e: CloudEvent) => {
+        const type = e.data().document().mimeType();
+        return (BASE_TEXT_INPUTS.includes(type) || BASE_IMAGE_INPUTS.includes(type));
+      });
+
+    // If no documents match the supported types, throw an error.
+    if (events.length === 0) {
+      throw new Error('No valid input documents found.');
+    }
+    
+    // Group documents by either `text` or `image` type.
+    const group = groupBy(events, e => {
+      const type = e.data().document().mimeType();
+      return (BASE_TEXT_INPUTS.includes(type) ? 'text' : 'image');
+    });
+
+    // Text documents are concatenated into a single message
+    // in the case where we're handling a composite event.
+    if (group.text) {
+      let text = '';
+
+      if (group.text.length > 1) {
+        for (const [idx, e] of group.text.entries()) {
+          const document = e.data().document();
+          text += `Document ${idx + 1}\n${(await document.data().asBuffer()).toString('utf-8')}\n\n`;
+        }
+      } else {
+        const document = group.text[0].data().document();
+        text = (await document.data().asBuffer()).toString('utf-8');
+      }
+
+      messages[0].content.push({ type: 'text', text });
+    }
+
+    // Image documents are added as separate messages.
+    if (group.image) {
+      for (const e of group.image) {
+        const document = e.data().document();
+        const type = document.mimeType();
+
+        messages[0].content.push({
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: type,
+            data: (await document.data().asBuffer()).toString('base64')
+          }
+        });
+      }
+    }
+
+    return (messages);
+  }
+
+  /**
+   * Constructs the body to pass to the Bedrock API.
+   * @param event the cloud event associated with the
+   * input document(s).
+   * @returns the body to pass to the Bedrock API.
+   */
+  private async getBody(event: CloudEvent) {
+    return ({
+      anthropic_version: 'bedrock-2023-05-31',
+      system: await event.resolve(PROMPT),
+      messages: await this.getMessages(event),
+      ...MODEL_PARAMETERS
+    });
   }
 
   /**
@@ -85,10 +185,7 @@ class Lambda implements LambdaInterface {
    */
   private async transform(event: CloudEvent): Promise<Buffer> {
     const response = await bedrock.invokeModel({
-      body: JSON.stringify({
-        ...MODEL_PARAMETERS,
-        prompt: await this.getPrompt(event)
-      }),
+      body: JSON.stringify(await this.getBody(event)),
       modelId: TEXT_MODEL.name,
       accept: 'application/json',
       contentType: 'application/json'
@@ -96,7 +193,7 @@ class Lambda implements LambdaInterface {
 
     // Parse the response into a buffer.
     return (Buffer.from(
-      JSON.parse(response.body.transformToString()).completion
+      JSON.parse(response.body.transformToString()).content[0].text
     ));
   }
 
@@ -108,28 +205,21 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
-    const key = `${event.data().chainId()}/anthropic.${document.etag()}.txt`;
+    const key = `${event.data().chainId()}/${TEXT_MODEL.name}.${document.etag()}.txt`;
 
     // Transform the document.
     const value = await this.transform(event);
 
     // Write the generated text to S3.
-    const res = await s3.send(new PutObjectCommand({
-      Bucket: PROCESSED_FILES_BUCKET,
-      Key: key,
-      Body: value,
-      ContentType: 'text/plain'
-    }));
-
-    // Update the event.
-    document.props.url = new S3DocumentDescriptor.Builder()
-      .withBucket(PROCESSED_FILES_BUCKET)
-      .withKey(key)
-      .build()
-      .asUri();
-    document.props.type = 'text/plain';
-    document.props.size = value.byteLength;
-    document.props.etag = res.ETag?.replace(/"/g, '');
+    event.data().props.document = await Document.create({
+      url: new S3DocumentDescriptor.Builder()
+        .withBucket(PROCESSED_FILES_BUCKET)
+        .withKey(key)
+        .build()
+        .asUri(),
+      type: 'text/plain',
+      data: value
+    });
 
     return (event);
   }

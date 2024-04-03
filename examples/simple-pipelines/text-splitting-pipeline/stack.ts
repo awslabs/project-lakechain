@@ -26,6 +26,7 @@ import { CharacterTextSplitter } from '@project-lakechain/character-text-splitte
 import { RecursiveCharacterTextSplitter } from '@project-lakechain/recursive-character-text-splitter';
 import { TilingTextSplitter } from '@project-lakechain/tiling-text-splitter';
 import { SentenceTextSplitter } from '@project-lakechain/sentence-text-splitter';
+import { RegexpTextSplitter } from '@project-lakechain/regexp-text-splitter';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**
@@ -129,6 +130,17 @@ export class TextSplittingStack extends cdk.Stack {
       .withMaxBytesLength(4000)
       .build();
 
+    // Creates the regexp text splitter, which uses
+    // a string or regular expression to split the text into
+    // paragraphs.
+    const regexpTextSplitter = new RegexpTextSplitter.Builder()
+      .withScope(this)
+      .withIdentifier('RegexpTextSplitter')
+      .withCacheStorage(cache)
+      .withSource(trigger)
+      .withSeparator('\n\n')
+      .build();
+
     // Write the results to the destination bucket.
     new S3StorageConnector.Builder()
       .withScope(this)
@@ -139,7 +151,8 @@ export class TextSplittingStack extends cdk.Stack {
         characterTextSplitter,
         recursiveTextSplitter,
         tilingTextSplitter,
-        sentenceTextSplitter
+        sentenceTextSplitter,
+        regexpTextSplitter
       ])
       .build();
 

@@ -7,10 +7,10 @@
 ```mermaid
 flowchart LR
   Input([Recordings]) -.-> Trigger[S3 Trigger]
-  Trigger --> Transcribe[Transcribe Audio Processor]
-  Transcribe --> Anthropic[Anthropic Text Processor]
-  Transcribe --> S3[S3 Storage Connector]
-  Anthropic --> S3[S3 Storage Connector]
+  Trigger -. Audio .-> Transcribe[Transcribe Audio Processor]
+  Transcribe -. VTT .-> Anthropic[Anthropic Text Processor]
+  Transcribe -. VTT .-> S3[S3 Storage Connector]
+  Anthropic -. Text .-> S3[S3 Storage Connector]
   S3 -.-> Bucket[S3 Bucket]
 ```
 

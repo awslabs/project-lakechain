@@ -1,19 +1,15 @@
 FROM node:lts-alpine
 
 # Install Build Dependencies for the docker image. 
-RUN apk add --no-cache --virtual .gyp \
-  python3 \
-  make \
-  g++ \
+RUN apk add --no-cache --virtual \
+  bash \
   ffmpeg
 
-# copy the application files
+# Copy the application files
 COPY app .
 
 # Install application dependencies
 RUN npm install
 
-COPY run.sh run.sh
-RUN ["chmod", "+x", "run.sh"]
-
-ENTRYPOINT [ "/bin/bash", "run.sh" ]
+# Start the application
+ENTRYPOINT ["node", "index.js"]

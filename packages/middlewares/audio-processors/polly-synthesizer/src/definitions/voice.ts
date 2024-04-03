@@ -16,10 +16,12 @@
 
 /**
  * The supported voices by Amazon Polly.
+ * @see https://docs.aws.amazon.com/polly/latest/dg/voicelist.html
  */
 export type PollyVoice = 'Isabelle' |
   'Kevin' |
   'Filiz' |
+  'Burcu' |
   'Elin' |
   'Astrid' |
   'Tatyana' |
@@ -102,6 +104,7 @@ export type PollyVoice = 'Isabelle' |
   'Niamh' |
   'Arthur' |
   'Daniel' |
+  'Danielle' |
   'Liam' |
   'Pedro' |
   'Sergio' |
@@ -109,4 +112,5 @@ export type PollyVoice = 'Isabelle' |
   'Remi' |
   'Adriano' |
   'Thiago' |
-  'Zayd';
+  'Zayd' |
+  'Gregory';

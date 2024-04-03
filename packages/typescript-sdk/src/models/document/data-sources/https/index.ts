@@ -19,7 +19,7 @@ import path from 'path';
 import tmp from 'tmp';
 
 import { DataSource } from '../data-source.js';
-import { Readable, pipeline as pipe } from 'stream';
+import { Readable, Writable, pipeline as pipe } from 'stream';
 import { promisify } from 'util';
 import { FetchReadable } from './fetch-readable.js';
 
@@ -48,6 +48,13 @@ export class HttpsDataSource implements DataSource {
     }
 
     return (new FetchReadable(res.body));
+  }
+
+  /**
+   * @returns a writable stream to the data source.
+   */
+  asWriteStream(): Writable {
+    throw new Error('Writable streams are not supported for HTTPS data sources');
   }
 
   /**

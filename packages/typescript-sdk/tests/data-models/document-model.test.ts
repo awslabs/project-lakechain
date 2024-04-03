@@ -16,7 +16,10 @@
 
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
+import { mockClient } from 'aws-sdk-client-mock';
+import { S3Client, UploadPartCommand, CreateMultipartUploadCommand, CompleteMultipartUploadCommand } from '@aws-sdk/client-s3';
 import { Document } from '../../src/models/document/document.js';
+import { Readable } from 'stream';
 
 describe('Document Data Model', () => {
 
@@ -149,5 +152,35 @@ describe('Document Data Model', () => {
       assert.equal(filename.path(), test.path);
       assert.equal(filename.basename(), test.basename);
     });
+  });
+
+  it('should be able to create a new document using a buffer', async () => {
+    const s3Mock = mockClient(S3Client);
+    const buffer = Buffer.from('Hello');
+    const url    = 's3://test/foo.txt';
+
+    // S3 mocks.
+    s3Mock.on(CreateMultipartUploadCommand).resolves({
+      UploadId: '1'
+    });
+    s3Mock.on(UploadPartCommand).resolves({
+      ETag: 'test'
+    });
+    s3Mock.on(CompleteMultipartUploadCommand).resolves({
+      Location: url,
+      ETag: 'test'
+    });
+
+    // Create a new document.
+    const document = await Document.create({
+      url: url,
+      type: 'text/plain',
+      data: buffer
+    });
+
+    // Verify the document attributes.
+    assert.equal(document.url().toString(), url);
+    assert.equal(document.mimeType(), 'text/plain');
+    assert.equal(document.size(), buffer.length);
   });
 });

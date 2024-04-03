@@ -55,7 +55,7 @@ class Stack extends cdk.Stack {
       .withIdentifier('AnthropicTextProcessor')
       .withCacheStorage(cache)
       .withSource(trigger)
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_INSTANT_V1)
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
       .withPrompt(`
         Give a detailed summary of the text with the following constraints:
         - Write the summary in the same language as the original text.
@@ -63,12 +63,24 @@ class Stack extends cdk.Stack {
       `)
       .withModelParameters({
         temperature: 0.5,
-        max_tokens_to_sample: 4096
+        max_tokens: 4096
       })
       .build();
   }
 }
 ```
+
+> ℹ️ **Tip** - Note that the Claude v3 family of models is multi-modal, and supports both text and image documents as an input.
+
+<br>
+
+---
+
+### 🧩 Composite Events
+
+In addition to handling single documents, the Anthropic text processor also supports [composite events](/project-lakechain/general/events#-composite-events) as an input. This means that it can take multiple text and image documents and compile them into a single input for the model.
+
+This can come in handy in map-reduce pipelines where you use the [Reducer]() to combine multiple documents into a single input having a similar semantic, for example, multiple pages of a PDF document that you would like the model to summarize as a whole, while keeping the context between the pages.
 
 <br>
 
@@ -86,12 +98,12 @@ const anthropic = new AnthropicTextProcessor.Builder()
   .withIdentifier('AnthropicTextProcessor')
   .withCacheStorage(cache)
   .withSource(source)
-  .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V2_1) // 👈 Specify a model
+  .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET) // 👈 Model selection
   .withPrompt(prompt)
   .build();
 ```
 
-You can choose amongst the following models : `ANTHROPIC_CLAUDE_V1`, `ANTHROPIC_CLAUDE_V2`, `ANTHROPIC_CLAUDE_V2_1`, and `ANTHROPIC_CLAUDE_INSTANT_V1`.
+You can choose amongst the following models : `ANTHROPIC_CLAUDE_INSTANT_V1`, `ANTHROPIC_CLAUDE_V2`, `ANTHROPIC_CLAUDE_V2_1`, `ANTHROPIC_CLAUDE_V3_HAIKU`, `ANTHROPIC_CLAUDE_V3_SONNET`.
 
 <br>
 
@@ -112,7 +124,7 @@ const anthropic = new AnthropicTextProcessor.Builder()
   .withCacheStorage(cache)
   .withSource(source)
   .withRegion('eu-central-1') // 👈 Alternate region
-  .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V2_1)
+  .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
   .withPrompt(prompt)
   .build();
 ```
@@ -123,7 +135,14 @@ const anthropic = new AnthropicTextProcessor.Builder()
 
 ### ⚙️ Model Parameters
 
-You can forward specific parameters to text models using the `.withModelParameters` method. See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+You can forward specific parameters to the text models using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+Parameter   | Description | Min | Max | Default
+----------- | ----------- | --- | --- | -------
+temperature | Controls the randomness of the generated text. | 0 | 1 | N/A
+max_tokens  | The maximum number of tokens to generate. | 1 | 4096 | 4096
+top_p       | The cumulative probability of the top tokens to sample from. | 0 | 1 | N/A
+top_k       | The number of top tokens to sample from. | 1 | 100000000 | N/A
 
 <br>
 
@@ -145,16 +164,49 @@ This middleware is based on a Lambda compute running on an ARM64 architecture, a
 
 ##### Supported Inputs
 
-|  Mime Type  | Description |
-| ----------- | ----------- |
-| `text/plain` | UTF-8 text documents. |
-| `text/markdown` | Markdown documents. |
-| `text/csv` | CSV documents. |
-| `text/html` | HTML documents. |
-| `application/x-subrip` | SubRip subtitles. |
-| `text/vtt` | Web Video Text Tracks (WebVTT) subtitles. |
-| `application/json` | JSON documents. |
-| `application/json+scheduler` | Used by the `Scheduler` middleware. |
+The supported inputs depend on the selected model as the Claude v3 models are multi-modal and support text and images, while the Claude v2 model only support text. The following table lists the supported inputs for each model.
+
+| Model                        | Supported Inputs
+| ---------------------------- | ----------------
+| `ANTHROPIC_CLAUDE_INSTANT_V1` | Text
+| `ANTHROPIC_CLAUDE_V2`         | Text
+| `ANTHROPIC_CLAUDE_V2_1`       | Text
+| `ANTHROPIC_CLAUDE_V3_HAIKU`   | Text, Image
+| `ANTHROPIC_CLAUDE_V3_SONNET`  | Text, Image
+
+###### Text Inputs
+
+Below is a list of supported text inputs.
+
+|  Mime Type                   | Description
+| ---------------------------- | -----------
+| `text/plain`                 | UTF-8 text documents.
+| `text/markdown`              | Markdown documents.
+| `text/csv`                   | CSV documents.
+| `text/html`                  | HTML documents.
+| `application/x-subrip`       | SubRip subtitles.
+| `text/vtt`                   | Web Video Text Tracks (WebVTT) subtitles.
+| `application/json`           | JSON documents.
+| `application/xml`            | XML documents.
+
+###### Image Inputs
+
+Below is a list of supported image inputs.
+
+|  Mime Type                   | Description
+| ---------------------------- | -----------
+| `image/jpeg`                 | JPEG images.
+| `image/png`                  | PNG images.
+| `image/gif`                  | GIF images.
+| `image/webp`                 | WebP images.
+
+###### Composite Inputs
+
+The middleware also supports composite events as an input, which can be used to combine multiple text and image documents into a single input for the model.
+
+|  Mime Type                     | Description
+| ------------------------------ | -----------
+| `application/cloudevents+json` | Composite events emitted by the `Reducer`.
 
 ##### Supported Outputs
 
@@ -174,6 +226,6 @@ This middleware is based on a Lambda compute running on an ARM64 architecture, a
 
 ### 📖 Examples
 
-- [Text Generation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-generation-pipeline) - An example showcasing how to generate text using Amazon Bedrock models.
 - [Bedrock Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/bedrock-summarization-pipeline) - Builds a pipeline for text summarization using Amazon Bedrock.
 - [Audio Recording Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/audio-recording-summarization-pipeline) - Builds a pipeline for summarizing audio recordings using Amazon Transcribe and Amazon Bedrock.
+- [Video Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/video-summarization-pipeline) - Builds a pipeline for video summarization.

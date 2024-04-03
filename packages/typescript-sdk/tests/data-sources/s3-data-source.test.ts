@@ -132,7 +132,7 @@ describe('S3 Data Source', () => {
       })
     );
 
-    const dataSource = createDataSource(new URL('s3://bucket/key'));
+    const dataSource = createDataSource('s3://bucket/key');
     await assert.rejects(dataSource.asReadStream(), {
       name: 'NoSuchKey'
     });

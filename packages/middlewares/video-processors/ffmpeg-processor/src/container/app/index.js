@@ -16,19 +16,28 @@
 
 import fs from 'fs';
 import path from 'path';
+import xray from 'aws-xray-sdk';
+import http from 'http';
 
 import { randomUUID } from 'crypto';
-import { next } from '@project-lakechain/sdk/decorators';
+import { nextAsync } from '@project-lakechain/sdk/decorators';
 import { pollDocuments } from './message-provider.js';
 import { download } from './download.js';
-import { getDocument } from './get-document.js';
+import { createDocument } from './get-document.js';
 import { exec } from './ffmpeg/exec.js';
 
 /**
  * Environment variables.
  */
+const SERVICE_NAME = process.env.POWERTOOLS_SERVICE_NAME ?? 'ffmpeg-processor';
 const INPUT_QUEUE_URL = process.env.INPUT_QUEUE_URL;
 const CACHE_DIR = process.env.CACHE_DIR ?? '/tmp';
+
+/**
+ * X-Ray.
+ */
+xray.captureHTTPsGlobal(http);
+xray.capturePromise();
 
 /**
  * This function processes the documents created by FFMPEG
@@ -40,23 +49,23 @@ const CACHE_DIR = process.env.CACHE_DIR ?? '/tmp';
  * created the output files.
  */
 const makeEvents = async (events, outputDir) => {
-  const events = [];
-  const files  = fs.readdirSync(outputDir);
+  const array = [];
+  const files = fs.readdirSync(outputDir);
   
   for (const filename of files) {
     const file  = path.join(outputDir, filename);
     const event = events[0].clone();
     const data  = event.data();
 
-    // Update the event with the new document.
-    data.props.document = await getDocument(file, {
+    // Create a new document for the output file.
+    data.props.document = await createDocument(file, {
       chainId: data.chainId()
     });
     data.props.metadata = {};
-    events.push(event);
+    array.push(event);
   }
 
-  return (events);
+  return (array);
 };
 
 /**
@@ -70,7 +79,7 @@ const makeEvents = async (events, outputDir) => {
  * file system.
  * @param {*} events an array of input document events.
  */
-const processEvents = async (events) => {
+const processEvents = async (inputs) => {
   const partitionId = randomUUID();
   const partition   = path.join(CACHE_DIR, partitionId);
   const inputsDir   = path.join(partition, 'inputs');
@@ -80,20 +89,23 @@ const processEvents = async (events) => {
     // Create partition directories.
     [inputsDir, outputsDir].forEach((dir) => {
       if (!fs.existsSync(dir)) {
-        console.log(`Creating directory ${dir}`);
         fs.mkdirSync(dir, { recursive: true });
       }
     });
-        
+    
     // Download the input documents to the elastic file system.
-    await download(events, { directory: inputsDir });
+    await download(inputs, { directory: inputsDir });
 
     // Execute the FFMPEG processing within the output directory.
-    await exec(events, { cwd: outputsDir });
+    await exec(inputs, { cwd: outputsDir });
 
     // Process documents produced by FFMPEG.
-    const events = await makeEvents(events, outputsDir);
-    console.log(JSON.stringify(events, null, 2));
+    const outputs = await makeEvents(inputs, outputsDir);
+
+    // Forward the documents to the next middleware.
+    for (const output of outputs) {
+      await nextAsync(output);
+    }
   } finally {
     // Clean up the partition directory.
     fs.rmSync(partition, { recursive: true });
@@ -106,21 +118,20 @@ const processEvents = async (events) => {
  * until no more documents are available.
  */
 const handler = async () => {
+  const segment = new xray.Segment(SERVICE_NAME);
+
   while (true) {
-    try {
-      const message = await pollDocuments(INPUT_QUEUE_URL);
-      if (message) {
-        // Process the documents.
-        await processEvents(message.events);
-        // Remove the document from the queue.
-        await message.delete();
-      } else {
-        break;
-      }
-    } catch (err) {
-      console.error(err);
+    const message = await pollDocuments(INPUT_QUEUE_URL);
+    if (!message) {
+      // No more documents to process.
+      break;
     }
+    // Process the documents.
+    await processEvents(message.events);
+    // Remove the document from the queue.
+    await message.delete();
   }
+  segment.close();
 };
 
 /**

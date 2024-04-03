@@ -18,7 +18,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * finished.
  */
 export const exec = async (events, { cwd }) => {
-  const child = spawn('/Users/qarroumh/.nvm/versions/node/v20.3.1/bin/node', [
+  const child = spawn('node', [
     path.join(__dirname, 'process.js'),
     JSON.stringify(events)
   ], {
@@ -26,13 +26,8 @@ export const exec = async (events, { cwd }) => {
     cwd
   });
 
-  child.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  child.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
+  child.stdout.on('data', (data) => console.log(data?.toString ? data.toString() : data));
+  child.stderr.on('data', (data) => console.error(data?.toString ? data.toString() : data));
 
   // Wait for the process to exit.
   return new Promise((resolve, reject) => {

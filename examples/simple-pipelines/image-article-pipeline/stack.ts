@@ -120,8 +120,7 @@ export class ImageArticlePipeline extends cdk.Stack {
         trigger
       ])
       .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_INSTANT_V1)
-      // This is the prompt that will get applied on the document.
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
       .withPrompt(`
         Here is a text document. I want you to generate a one sentence
         prompt used to generate an image associated with this document.
@@ -130,7 +129,7 @@ export class ImageArticlePipeline extends cdk.Stack {
       `)
       .withModelParameters({
         temperature: 0.5,
-        max_tokens_to_sample: 512
+        max_tokens: 512
       })
       .build();
 

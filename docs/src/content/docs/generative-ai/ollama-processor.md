@@ -20,9 +20,9 @@ title: Ollama
 
 ---
 
-The Ollama processor makes it possible to run the large-language models and image models supported by [Ollama](https://ollama.com/) on AWS within a customer VPC.
+The Ollama processor makes it possible to run the open-source language and image models supported by [Ollama](https://ollama.com/) on AWS within a customer VPC.
 
-Using this middleware, customers can transform their text documents (e.g summarization, translation, topic modeling, etc.) as well as extract meaningful information from their image documents.
+Using this middleware, customers can transform their text documents, as well as extract meaningful information from their image documents, while keeping their data secure within the boundaries of their AWS account.
 
 > 💁 You can view the list of models supported by Ollama [here](https://ollama.com/library).
 
@@ -68,11 +68,11 @@ class Stack extends cdk.Stack {
       .withModel(OllamaModel.LLAMA2)
       .withPrompt('Give a detailed summary of the provided document.')
       .withInfrastructure(new InfrastructureDefinition.Builder()
-        .withMaxMemory(180_000)
-        .withGpus(8)
+        .withMaxMemory(15 * 1024)
+        .withGpus(1)
         .withInstanceType(ec2.InstanceType.of(
-          ec2.InstanceClass.G5,
-          ec2.InstanceSize.XLARGE48
+          ec2.InstanceClass.G4DN,
+          ec2.InstanceSize.XLARGE
         ))
         .build())
       .build());
@@ -110,9 +110,9 @@ const ollama = new OllamaProcessor.Builder()
 
 #### Escape Hatch
 
-The `OllamaModel` class provides a quick way to reference existing models, and select a specific tag. However, as Ollama adds new models, you may find yourself in a situation where such as model is not yet referenced by this middleware.
+The `OllamaModel` class provides a quick way to reference existing models, and select a specific tag. However, as Ollama adds new models, you may be in a situation where a model is not yet referenced by this middleware.
 
-To address this situation, you can manually specify a model definition pointing to the supported Ollama model you wish to run. You do so by specifying the name of the model in the ollama library, the tag you wish to use, and its input and output mime-type.
+To address this situation, you can manually specify a model definition pointing to the supported Ollama model you wish to run. You do so by specifying the name of the model in the ollama library, the tag you wish to use, and its input and output mime-types.
 
 > 💁 In the example below, we redefine the `llava` image model and its inputs and outputs.
 
@@ -131,6 +131,30 @@ const ollama = new OllamaProcessor.Builder()
   }))
   .withPrompt(prompt)
   .withInfrastructure(infrastructure)
+  .build();
+```
+
+<br />
+
+---
+
+### ↔️ Auto-Scaling
+
+The cluster of containers deployed by this middleware will auto-scale based on the number of documents that need to be processed. The cluster scales up to a maximum of 5 instances by default, and scales down to zero when there are no documents to process.
+
+> ℹ️ You can configure the maximum amount of instances that the cluster can auto-scale to by using the `withMaxInstances` method.
+
+```typescript
+const ollama = new OllamaProcessor.Builder()
+  .withScope(this)
+  .withIdentifier('OllamaProcessor')
+  .withCacheStorage(cache)
+  .withVpc(vpc)
+  .withSource(source)
+  .withModel(OllamaModel.LLAMA2)
+  .withPrompt(prompt)
+  .withInfrastructure(infrastructure)
+  .withMaxInstances(10) // 👈 Maximum amount of instances
   .build();
 ```
 
@@ -167,9 +191,9 @@ Below is a description of the fields associated with the infrastructure definiti
 
 | Field | Description |
 | ----- | ----------- |
-| `maxMemory` | The maximum RAM in MiB to allocate to the container. |
-| `gpus` | The number of GPUs to allocate to the container. |
-| `instanceType` | The EC2 instance type to use for running the container. |
+| maxMemory | The maximum RAM in MiB to allocate to the container. |
+| gpus | The number of GPUs to allocate to the container (only relevant for GPU instances). |
+| instanceType | The EC2 instance type to use for running the container. |
 
 <br>
 
@@ -177,7 +201,9 @@ Below is a description of the fields associated with the infrastructure definiti
 
 ### 🏗️ Architecture
 
-The Ollama processor can run on either CPU or GPU compute. It packages the Ollama server, and a small Python application running the inference, within a Docker container. To orchestrate deployments, this middleware deploys an ECS auto-scaled cluster of containers that consume documents from the middleware input queue. The cluster is deployed in the private subnet of the given VPC, and caches the models on an EFS storage to optimize cold-starts.
+The Ollama processor can run on either CPU or GPU compute. It packages the Ollama server, and a small Python application loading input documents and running the inference within a Docker container.
+
+To orchestrate deployments, this middleware deploys an ECS auto-scaled cluster of containers that consume documents from the middleware input queue. The cluster is deployed in the private subnet of the given VPC, and caches the models on an EFS storage to optimize cold-starts.
 
 > ℹ️ The average cold-start for the Ollama containers is around 3 minutes when no instances are running.
 

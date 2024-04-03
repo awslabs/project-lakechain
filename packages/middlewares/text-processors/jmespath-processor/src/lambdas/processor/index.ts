@@ -68,10 +68,10 @@ class Lambda implements LambdaInterface {
    * @returns the type of the object.
    */
   private getType(obj: any): string {
-    if (typeof obj === 'object') {
-      return ('application/json');
-    }
-    return ('text/plain');
+    return (typeof obj === 'object' ?
+      'application/json' :
+      'text/plain'
+    );
   }
 
   /**

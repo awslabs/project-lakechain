@@ -25,18 +25,18 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
     "@project-lakechain/bedrock-image-generators": "*",
-    "@project-lakechain/blip2-image-processor": "*",
+    "@project-lakechain/bedrock-text-processors": "*",
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.131.0",
+    "aws-cdk-lib": "^2.135.0",
     "constructs": "^10.3.0"
   }
 }

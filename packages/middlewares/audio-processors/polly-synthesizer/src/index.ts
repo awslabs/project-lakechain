@@ -357,10 +357,7 @@ export class PollySynthesizer extends Middleware {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
-        PROCESSED_FILES_BUCKET: this.storage.id(),
-        LANGUAGE_OVERRIDE: this.props.languageOverride ?? '',
-        MAPPING_TABLE: this.table.tableName,
-        VOICE_MAPPING: JSON.stringify(this.props.voiceMapping)
+        MAPPING_TABLE: this.table.tableName
       },
       bundling: {
         minify: true,

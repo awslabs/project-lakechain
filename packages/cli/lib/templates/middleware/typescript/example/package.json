@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.1",
+    "esbuild": "^0.20.2",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
@@ -26,7 +26,7 @@
     "@project-lakechain/s3-event-trigger": "^0.4.0",
     "simple-text-processor": "file:../",
     "@project-lakechain/s3-storage-connector": "^0.4.0",
-    "aws-cdk-lib": "2.131.0",
+    "aws-cdk-lib": "2.135.0",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }
