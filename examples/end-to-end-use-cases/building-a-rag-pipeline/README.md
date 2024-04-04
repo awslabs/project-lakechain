@@ -2,6 +2,13 @@
 
 > 👉 This example showcases how to build an end-to-end [Retrieval Augmented Generation (RAG)](https://docs.aws.amazon.com/sagemaker/latest/dg/jumpstart-foundation-models-customize-rag.html) on AWS using Project Lakechain and the different middlewares it makes available. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
+<br />
+<br />
+<p align="center">
+  <img width="100" src="../../../docs/src/assets/example-rag-pipeline.png" />
+</p>
+<br />
+
 ## :dna: Pipeline
 
 ```mermaid
