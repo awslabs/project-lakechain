@@ -37,10 +37,6 @@ By incorporating these retrieved document chunks into the LLMs prompt, RAG effec
 
 <br />
 
----
-
-<br />
-
 ## What does this example do ❓
 
 This example showcases how to build an end-to-end RAG pipeline using a composition of middlewares that interact with different AWS services such as Amazon Transcribe, Amazon Bedrock, or Amazon OpenSearch to enable the following use cases out of the box :
@@ -48,10 +44,6 @@ This example showcases how to build an end-to-end RAG pipeline using a compositi
 - **Text Indexing** - Convert at scale PDFs, HTML, Markdown, Docx, documents into text, automatically chunk them, create vector embeddings, and index the embeddings along with the chunks in an OpenSearch vector index using the modularity of middlewares.
 - **Audio Indexing** - Transcribe audio recordings into text and index the text in an OpenSearch vector index.
 - **Retrieval** - Retrieve relevant chunks of text from a corpus of documents with semantic search using the [RAG CLI](./cli/) we created in this example.
-
-<br />
-
----
 
 <br />
 
@@ -64,10 +56,6 @@ The following requirements are needed to deploy the infrastructure required to r
 - [Docker](https://docs.docker.com/get-docker/) is required to be running to build middlewares.
 - [Node.js](https://nodejs.org/en/download/) v18+ and NPM.
 - [Python](https://www.python.org/downloads/) v3.8+ and [Pip](https://pip.pypa.io/en/stable/installation/).
-
-<br />
-
----
 
 <br />
 
@@ -85,10 +73,6 @@ You can then deploy the example to your account (ensure your deployment machine 
 ```bash
 npm run deploy
 ```
-
-<br />
-
----
 
 <br />
 
@@ -112,12 +96,6 @@ Once you upload documents to that bucket, it can take up to 2 minutes for the pi
 </p>
 <br />
 
-<br />
-
----
-
-<br />
-
 ## 🏃 Access OpenSearch
 
 Before moving towards the retrieval step of interrogating an LLM using the RAG CLI, you need to ensure you have access to the OpenSearch domain from your test machine.
@@ -133,10 +111,6 @@ curl --head https://vpc-domain.eu-west-1.es.amazonaws.com
 ```
 
 If it works, you should get a `403` response in return to the request, as we're making an unauthenticated request to the OpenSearch domain.
-
-<br />
-
----
 
 <br />
 
@@ -170,12 +144,6 @@ The CLI will then prompt you for a question to ask to your documents using the A
 <p align="center">
   <img width="750" src="./assets/cli.png">
 </p>
-<br />
-
-<br />
-
----
-
 <br />
 
 ## 🧹 Clean up
