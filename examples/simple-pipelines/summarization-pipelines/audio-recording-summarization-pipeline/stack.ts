@@ -104,7 +104,7 @@ export class AudioRecordingSummarizationStack extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(transcribe)
       .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
       .withPrompt(`
         Give a very detailed summary of the VTT transcription file with the following constraints:
         - Write a verbose and very detailed summary of the transcription in plain text.

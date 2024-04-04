@@ -16,7 +16,7 @@ flowchart LR
 
 ## ❓ What is Happening
 
-In this pipeline, we demonstrate how to summarize audio recordings using Amazon Transcribe and the Anthropic Claude Instant model hosted on Amazon bedrock.
+In this pipeline, we demonstrate how to summarize audio recordings using Amazon Transcribe and the Anthropic [Claude v3 Sonnet](https://aws.amazon.com/fr/about-aws/whats-new/2024/03/anthropics-claude-3-sonnet-model-amazon-bedrock/) model hosted on Amazon bedrock.
 
 <p align="center">
   <img width="600" src="assets/result.png">
