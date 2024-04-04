@@ -1,5 +1,11 @@
 # 🎙️ Building a Generative Podcast
 
+<br />
+<p align="center">
+  <img width="120" src="../../../docs/src/assets/example-generative-podcast.png" />
+</p>
+<br />
+
 > 👉 This example showcases how to build an intelligent, multi-persona, generative AWS daily news podcast using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 ## :dna: Pipeline
@@ -30,10 +36,6 @@ flowchart LR
 ```
 
 ## 🌟 Example
-
-<p align="center" style="margin: 50px">
-  <img width="120" src="../../../docs/src/assets/example-generative-podcast.png" />
-</p>
 
 The below example showcases the result of a generative AWS News podcast generation discussing the AWS releases on the 15th of Match 2024. This example uses the Amazon Polly long-form synthesis as the text-to-speech engine.
 
