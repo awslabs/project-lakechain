@@ -28,7 +28,7 @@ To address those conundrums, and keep a good balance between simplicity and powe
 
 A funclet is a small function expression written in TypeScript that is passed to a middleware to customize its behavior using code. Think of them as lightweight user-defined callbacks that are executed at runtime in the Cloud to customize a behavior.
 
-While middlewares focus on alleviating the complexity of infrastructure definition, funclets focus on customizing the business logic that truely matters to customers.
+While middlewares focus on alleviating the complexity of infrastructure definition, funclets focus on customizing the business logic that truly matters to customers.
 
 <br />
 

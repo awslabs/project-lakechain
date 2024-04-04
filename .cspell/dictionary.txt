@@ -170,3 +170,10 @@ sqlcoder
 tinydolphin
 qwen
 starcoder
+cloudevents
+outter
+webvtt
+longform
+rembg
+awsx
+dolphincoder

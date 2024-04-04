@@ -36,7 +36,7 @@ Strategies defines under which conditions you want to reduce documents together.
 
 #### Chain Ids
 
-A `chainId` is a unique identifier part of [CloudEvents](/project-lakechain/general/events). It identifies a specific execution of a pipeline — sometimes refered to as a *chain*. This identifier remains stable for the entire lifecycle of a pipeline execution, across all middleware steps.
+A `chainId` is a unique identifier part of [CloudEvents](/project-lakechain/general/events). It identifies a specific execution of a pipeline — sometimes referred to as a *chain*. This identifier remains stable for the entire lifecycle of a pipeline execution, across all middleware steps.
 
 To illustrate this, let's picture a simple pipeline where we monitor videos uploaded to an S3 bucket. This pipeline creates subtitles for that video and then merges the subtitles back into the video. It might look like the following.
 
@@ -66,13 +66,13 @@ For example, if your time window is 10 minutes, and you add a jitter of 30 secon
 
 ##### Unmatched Events
 
-The time window strategy awaits for a time condition to be met. When the time window is reached, all aggregated documents are reduced. If documents with the same `chainId` are received after a reduce operation occured, they will be dismissed.
+The time window strategy awaits for a time condition to be met. When the time window is reached, all aggregated documents are reduced. If documents with the same `chainId` are received after a reduce operation occurred, they will be dismissed.
 
 ##### Usage
 
 To reduce events using the `TimeWindowStrategy`, you must import and instantiate the `Reducer` middleware as part of your pipeline.
 
-> 💁 Below is an example showcasing how to instanciate the reducer using the `TimeWindowStrategy` with a time window of 15 seconds and a jitter of 5 seconds.
+> 💁 Below is an example showcasing how to instantiate the reducer using the `TimeWindowStrategy` with a time window of 15 seconds and a jitter of 5 seconds.
 
 ```typescript
 import * as cdk from 'aws-cdk-lib';
@@ -115,7 +115,7 @@ As the reducer awaits for the static count condition to be met, it will aggregat
 
 To reduce events using the `StaticCounterStrategy`, you must import and instantiate the `Reducer` middleware as part of your pipeline.
 
-> 💁 Below is an example showcasing how to instanciate the reducer using the `StaticCounterStrategy` with a counter of 3.
+> 💁 Below is an example showcasing how to instantiate the reducer using the `StaticCounterStrategy` with a counter of 3.
 
 ```typescript
 import * as cdk from 'aws-cdk-lib';

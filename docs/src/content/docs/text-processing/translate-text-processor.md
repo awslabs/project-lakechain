@@ -20,7 +20,7 @@ title: Translate
 
 ---
 
-The Translate text processor makes it possible to translate documents from one language to a set of languages. at scale, using the [Amazon Translate](https://aws.amazon.com/translate/) service. It suports various document formats such as Text, HTML, Docx, PowerPoint, Excel, and Xliff.
+The Translate text processor makes it possible to translate documents from one language to a set of languages. at scale, using the [Amazon Translate](https://aws.amazon.com/translate/) service. It supports various document formats such as Text, HTML, Docx, PowerPoint, Excel, and Xliff.
 
 Using Amazon Translate, the input documents formatting and structure is preserved during the translation process, and the output documents are stored in the same format as the input documents.
 

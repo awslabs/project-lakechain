@@ -154,7 +154,7 @@ export class VideoSummarizationStack extends cdk.Stack {
         Here is a VTT transcription of a video. Follow carefully the instructions below.
         - You must output a valid JSON document and nothing else.
         - Do not say "Here is a JSON document" or any other text, only output JSON.
-        - Do not provide any additional information other than the JSON document, no premable or introduction.
+        - Do not provide any additional information other than the JSON document, no preamble or introduction.
         The structure of the JSON document should be as follow.
         {
           "genre": "The genre associated with the video (e.g comedy, drama, documentary, etc.)",

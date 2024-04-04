@@ -19,7 +19,6 @@ import { describe, it } from 'node:test';
 import { mockClient } from 'aws-sdk-client-mock';
 import { S3Client, UploadPartCommand, CreateMultipartUploadCommand, CompleteMultipartUploadCommand } from '@aws-sdk/client-s3';
 import { Document } from '../../src/models/document/document.js';
-import { Readable } from 'stream';
 
 describe('Document Data Model', () => {
 
