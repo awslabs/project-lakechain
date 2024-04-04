@@ -2,12 +2,6 @@
 
 > 👉 This example showcases how to build an intelligent, multi-persona, generative AWS daily news podcast using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
-## 🌟 Examples
-
-The below example showcases the result of a generative podcast generation for the 15th of Match 2024 using the Amazon Polly long-form synthesization engine.
-
-[podcast-15-03-2024.webm](https://github.com/awslabs/project-lakechain/assets/1384633/6a2629c2-823c-473c-9ef4-9a140d7dca9f)
-
 ## :dna: Pipeline
 
 ```mermaid
@@ -32,6 +26,12 @@ flowchart LR
   VoiceReducer -. Voices .-> FFMPEG[FFMPEG Processor]
   FFMPEG -. MP3 .-> S3[S3 Bucket]
 ```
+
+## 🌟 Example
+
+The below example showcases the result of a generative podcast generation for the 15th of Match 2024 using the Amazon Polly long-form synthesization engine.
+
+[podcast-15-03-2024.webm](https://github.com/awslabs/project-lakechain/assets/1384633/6a2629c2-823c-473c-9ef4-9a140d7dca9f)
 
 ## What does this example do ❓
 
