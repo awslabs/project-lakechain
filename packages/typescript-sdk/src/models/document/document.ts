@@ -159,52 +159,6 @@ export class Document {
   }
 
   /**
-   * Creates a new document instance and stores the document in the
-   * storage associated with the given URL.
-   * @param input an object describing the attributes of the document.
-   * @returns a new instance of a document.
-   */
-  static async create(input: {
-    url: URL | string,
-    type: string,
-    data: Buffer | Readable
-  }): Promise<Document> {
-    let size         = 0;
-    const dataSource = createDataSource(input.url);
-    const writable   = dataSource.asWriteStream({ ContentType: input.type });
-    const document   = new Document.Builder()
-      .withUrl(input.url)
-      .withType(input.type);
-
-    // Track the size of the data being written.
-    writable.on('data', (chunk) => size += chunk.length);
-
-    // Write the data to the data source.
-    if (input.data instanceof Buffer) {
-      writable.end(input.data);
-    } else if (input.data instanceof Readable) {
-      input.data.pipe(writable);
-    }
-
-    // Create a promise that resolves when the write is complete.
-    const promise = new Promise((resolve, reject) => {
-      writable.on('uploaded', (res: any) => {
-        if (res.ETag) {
-          document.withEtag(res.ETag.replace(/"/g, ''));
-        }
-        document.withSize(size);
-        resolve(document.build());
-      });
-      writable.on('error', (err) => {
-        console.error('Failed to write data to the data source.');
-        reject(err);
-      });
-    });
-
-    return (promise as Promise<Document>);
-  }
-
-  /**
    * @returns A unique, opaque, identifier that can be
    * considered unique for identifying the document.
    * @note The underlying implementation can change,
@@ -294,6 +248,56 @@ export class Document {
     }
 
     return (builder.build());
+  }
+
+  /**
+   * Creates a new document instance and stores the data associated with
+   * the new document in the storage associated with the given URL.
+   * @param input an object describing the attributes of the document.
+   * @returns a new instance of a document.
+   */
+  static async create(input: {
+    url: URL | string,
+    type: string,
+    data: Buffer | Readable
+  }): Promise<Document> {
+    let size         = 0;
+    const dataSource = createDataSource(input.url);
+    const writable   = dataSource.asWriteStream({ ContentType: input.type });
+
+    // Create a new document instance.
+    const document   = new Document.Builder()
+      .withUrl(input.url)
+      .withType(input.type);
+
+    // Track the size of the data being written.
+    writable.on('data', (chunk) => size += chunk.length);
+
+    // Write the data to the data source.
+    if (input.data instanceof Buffer) {
+      writable.end(input.data);
+    } else if (input.data instanceof Readable) {
+      input.data.pipe(writable);
+    }
+
+    const promise = new Promise((resolve, reject) => {
+      // Document upload is complete.
+      writable.on('uploaded', (res: any) => {
+        if (res.ETag) {
+          document.withEtag(res.ETag.replace(/"/g, ''));
+        }
+        document.withSize(size);
+        resolve(document.build());
+      });
+      
+      // Error handler.
+      writable.on('error', (err) => {
+        console.error('Failed to write data to the data source.');
+        reject(err);
+      });
+    });
+
+    return (promise as Promise<Document>);
   }
 
   /**

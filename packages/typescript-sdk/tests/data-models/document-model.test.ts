@@ -17,8 +17,18 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import { mockClient } from 'aws-sdk-client-mock';
-import { S3Client, UploadPartCommand, CreateMultipartUploadCommand, CompleteMultipartUploadCommand } from '@aws-sdk/client-s3';
 import { Document } from '../../src/models/document/document.js';
+
+import {
+  S3Client,
+  UploadPartCommand,
+  CreateMultipartUploadCommand,
+} from '@aws-sdk/client-s3';
+
+/**
+ * Mock AWS region.
+ */
+process.env.AWS_REGION = 'us-east-1';
 
 describe('Document Data Model', () => {
 
@@ -153,6 +163,9 @@ describe('Document Data Model', () => {
     });
   });
 
+  /**
+   * Document creation using the `Document.create` API with a buffer.
+   */
   it('should be able to create a new document using a buffer', async () => {
     const s3Mock = mockClient(S3Client);
     const buffer = Buffer.from('Hello');
@@ -163,10 +176,6 @@ describe('Document Data Model', () => {
       UploadId: '1'
     });
     s3Mock.on(UploadPartCommand).resolves({
-      ETag: 'test'
-    });
-    s3Mock.on(CompleteMultipartUploadCommand).resolves({
-      Location: url,
       ETag: 'test'
     });
 
