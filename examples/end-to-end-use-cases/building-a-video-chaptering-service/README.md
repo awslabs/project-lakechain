@@ -31,6 +31,8 @@ This example showcases how to automatically chapter videos using their transcrip
 </p>
 <br />
 
+The sequence of processing steps in the pipeline goes as follows.
+
 1. The pipeline is triggered by a video upload to a source S3 bucket.
 2. The FFMPEG Processor extracts the audio from the video.
 3. The audio is transcribed into text using the Transcribe Audio Processor.
