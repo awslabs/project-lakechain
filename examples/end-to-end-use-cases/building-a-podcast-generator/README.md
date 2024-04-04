@@ -8,17 +8,19 @@
 flowchart LR
   Timer([Every 24 Hours]) -.-> Trigger[Scheduler Event Trigger]
   Trigger -. RSS Feed .-> RSS[Syndication Feed Processor]
-  RSS -. HTML Article .-> Condition{Published today?}
+  RSS -. HTML Articles .-> Condition{Published today?}
+  RSS -. HTML Articles .-> Condition{Published today?}
+  RSS -. HTML Articles .-> Condition{Published today?}
   Condition -- Yes --> Newspaper3k[Newspaper3k Parser]
 
-  Newspaper3k -. Articles .-> Reducer[Reducer]
-  Newspaper3k -. Articles .-> Reducer[Reducer]
-  Newspaper3k -. Articles .-> Reducer[Reducer]
-  Reducer -. Articles .-> Anthropic[Anthropic Text Processor]
+  Newspaper3k -. Text Articles .-> Reducer[Reducer]
+  Newspaper3k -. Text Articles .-> Reducer[Reducer]
+  Newspaper3k -. Text Articles .-> Reducer[Reducer]
+  Reducer -. Aggregated Articles .-> Anthropic[Anthropic Text Processor]
 
   Anthropic -. Podcast Script .-> Transform[Transform]
-  Transform --> HostSynthesizer[Polly Host Synthesizer]
-  Transform --> GuestSynthesizer[Polly Guest Synthesizer]
+  Transform -. Host Scripts .-> HostSynthesizer[Polly Host Synthesizer]
+  Transform -. Guest Scripts .-> GuestSynthesizer[Polly Guest Synthesizer]
 
   HostSynthesizer --> VoiceReducer[Reducer]
   GuestSynthesizer --> VoiceReducer
@@ -29,7 +31,7 @@ flowchart LR
 
 ## 🌟 Example
 
-The below example showcases the result of a generative podcast generation for the 15th of Match 2024 using the Amazon Polly long-form synthesis engine.
+The below example showcases the result of a generative AWS News podcast generation discussing the AWS releases on the 15th of Match 2024. This example uses the Amazon Polly long-form synthesis as the text-to-speech engine.
 
 [podcast-15-03-2024.webm](https://github.com/awslabs/project-lakechain/assets/1384633/6a2629c2-823c-473c-9ef4-9a140d7dca9f)
 
