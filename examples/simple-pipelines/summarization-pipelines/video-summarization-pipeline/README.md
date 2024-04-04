@@ -19,9 +19,11 @@ flowchart LR
 
 In this pipeline, we demonstrate how to summarize and extract metadata from videos using Amazon Transcribe and the Anthropic [Claude v3 Sonnet](https://aws.amazon.com/fr/about-aws/whats-new/2024/03/anthropics-claude-3-sonnet-model-amazon-bedrock/) model hosted on Amazon bedrock.
 
+> 💁 The pipeline takes an input video from the pipeline source bucket and outputs a structured JSON document with metadata describing the video.
+
 <br />
 <p align="center">
-  <img width="600" src="assets/result.png">
+  <img width="750" src="assets/diagram.png">
 </p>
 <br />
 
