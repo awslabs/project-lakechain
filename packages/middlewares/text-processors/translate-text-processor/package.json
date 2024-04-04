@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/translate-text-processor",
   "description": "Translates text documents asynchronously using Amazon Translate.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -35,18 +35,18 @@
     "@aws-sdk/client-translate": "^3.540.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.0.0",
+    "@types/lodash": "^4.17.0",
     "@types/node": "^20.2.1",
     "esbuild": "^0.20.2",
-    "rimraf": "^5.0.5",
-    "@types/lodash": "^4.17.0"
+    "rimraf": "^5.0.5"
   },
   "dependencies": {
     "@aws-lambda-powertools/batch": "^1.18.1",
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.4.0",
-    "@project-lakechain/sdk": "^0.4.0",
+    "@project-lakechain/core": "^0.5.0",
+    "@project-lakechain/sdk": "^0.5.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

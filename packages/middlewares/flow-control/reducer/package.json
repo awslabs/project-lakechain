@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/reducer",
   "description": "A middleware allowing to reduce multiple events into a single event.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -30,11 +30,11 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-sqs": "^3.540.0",
-    "@aws-sdk/client-sns": "^3.540.0",
     "@aws-sdk/client-dynamodb": "^3.540.0",
-    "@aws-sdk/client-scheduler": "^3.540.0",
     "@aws-sdk/client-s3": "^3.540.0",
+    "@aws-sdk/client-scheduler": "^3.540.0",
+    "@aws-sdk/client-sns": "^3.540.0",
+    "@aws-sdk/client-sqs": "^3.540.0",
     "@types/aws-lambda": "^8.10.136",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.3",
@@ -47,8 +47,8 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.4.0",
-    "@project-lakechain/sdk": "^0.4.0",
+    "@project-lakechain/core": "^0.5.0",
+    "@project-lakechain/sdk": "^0.5.0",
     "serialize-javascript": "^6.0.2"
   },
   "peerDependencies": {

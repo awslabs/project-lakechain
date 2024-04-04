@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/audio-metadata-extractor",
   "description": "A middleware extracting metadata from audio documents.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -34,8 +34,8 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.4.0",
-    "@project-lakechain/sdk": "^0.4.0",
+    "@project-lakechain/core": "^0.5.0",
+    "@project-lakechain/sdk": "^0.5.0",
     "lodash": "^4.17.21",
     "music-metadata": "^7.14.0"
   },

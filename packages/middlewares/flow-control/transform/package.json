@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/transform",
   "description": "A middleware allowing to transform documents on-the-fly.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -44,8 +44,8 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.4.0",
-    "@project-lakechain/sdk": "^0.4.0",
+    "@project-lakechain/core": "^0.5.0",
+    "@project-lakechain/sdk": "^0.5.0",
     "serialize-javascript": "^6.0.2"
   },
   "peerDependencies": {
