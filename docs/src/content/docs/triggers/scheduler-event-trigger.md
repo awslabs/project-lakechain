@@ -178,4 +178,3 @@ The Scheduler trigger uses the [AWS EventBridge Scheduler](https://aws.amazon.co
 ### 📖 Examples
 
 - [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/article-curation-pipeline) - Builds a pipeline converting HTML articles into plain text.
-- [Text Generation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-generation-pipeline) - An example showcasing how to generate text with Bedrock models.
