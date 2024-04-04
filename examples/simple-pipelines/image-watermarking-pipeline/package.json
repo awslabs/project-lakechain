@@ -1,7 +1,7 @@
 {
   "name": "image-watermarking-pipeline",
   "description": "A pipeline showcasing how to watermark images.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "build": "tsc",

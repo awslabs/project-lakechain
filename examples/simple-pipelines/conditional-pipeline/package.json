@@ -1,7 +1,7 @@
 {
   "name": "conditional-pipeline",
   "description": "An example showcasing how to use conditional expressions in pipelines.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "build": "tsc",

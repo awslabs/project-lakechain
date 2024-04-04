@@ -1,7 +1,7 @@
 {
   "name": "bedrock-summarization-pipeline",
   "description": "Builds a pipeline for text summarization using Amazon Bedrock.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
