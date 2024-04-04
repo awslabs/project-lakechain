@@ -1,11 +1,11 @@
 {
-  "name": "building-a-video-subtitling-service",
+  "name": "building-a-video-subtitle-service",
   "description": "Builds a pipeline for automatic multi-lingual video subtitles generation.",
   "version": "0.5.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
-    "build-pkg": "npx lerna run build --scope=building-a-video-subtitling-service --include-dependencies",
+    "build-pkg": "npx lerna run build --scope=building-a-video-subtitle-service --include-dependencies",
     "clean": "npx rimraf dist/ cdk.out/ node_modules/",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",
