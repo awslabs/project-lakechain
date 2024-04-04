@@ -31,6 +31,10 @@ flowchart LR
 
 ## 🌟 Example
 
+<p align="center" style="margin: 50px">
+  <img width="120" src="../../../docs/src/assets/example-generative-podcast.png" />
+</p>
+
 The below example showcases the result of a generative AWS News podcast generation discussing the AWS releases on the 15th of Match 2024. This example uses the Amazon Polly long-form synthesis as the text-to-speech engine.
 
 [podcast-15-03-2024.webm](https://github.com/awslabs/project-lakechain/assets/1384633/6a2629c2-823c-473c-9ef4-9a140d7dca9f)
