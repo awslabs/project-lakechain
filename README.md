@@ -37,7 +37,7 @@ This project has been designed to help AWS customers build and scale different t
 
 <br /><br />
 <p align="center">
-  <img width="630" src="assets/code.png">
+  <img width="600" src="assets/code.png">
 </p>
 <br /><br />
 
