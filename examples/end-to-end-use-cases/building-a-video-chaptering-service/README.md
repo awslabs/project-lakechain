@@ -40,7 +40,7 @@ The sequence of processing steps in the pipeline goes as follows.
 5. The output of the Anthropic Text Processor is parsed to ensure that the chapters are correctly formatted as a JSON document.
 6. The reducer will reduce both the input video and the chapters into a single document.
 7. The FFMPEG Processor will then use the reduced document to generate multiple videos associated with each chapter.
-8. The generated videos are then uploaded to a destination S3 bucket along with the chapters.
+8. The generated videos are then uploaded to a destination S3 bucket along with the chapters JSON description.
 
 ## 📝 Requirements
 
