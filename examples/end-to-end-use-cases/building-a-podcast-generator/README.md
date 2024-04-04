@@ -4,7 +4,9 @@
 
 ## 🌟 Examples
 
-### Podcast (15-03-2024)
+The below example showcases the result of a generative podcast generation for the 15th of Match 2024 using the Amazon Polly long-form synthesization engine.
+
+[podcast-15-03-2024.webm](https://github.com/awslabs/project-lakechain/assets/1384633/6a2629c2-823c-473c-9ef4-9a140d7dca9f)
 
 ## :dna: Pipeline
 
