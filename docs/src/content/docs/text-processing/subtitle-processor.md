@@ -187,4 +187,4 @@ This middleware is based on a Lambda compute based on the ARM64 architecture, us
 
 ### 📖 Examples
 
-[Building a Video Subtitling Service](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-video-subtitling-service/) - An example showcasing how to build a video subtitling service using Project Lakechain.
+[Building a Video Subtitle Service](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-video-subtitle-service/) - An example showcasing how to build a video subtitle service using Project Lakechain.
