@@ -34,7 +34,7 @@ This example comes in two parts:
 
 At its core, the ingestion pipeline implemented in this example ingests documents from an S3 bucket and indexes them into OpenSearch. We also provide a small [Webserver](./server/) application as part of this repository that exposes a web interface to query the documents indexed by the pipeline.
 
-<br>
+<br />
 
 ## 📝 Requirements
 
@@ -45,7 +45,8 @@ The following requirements are needed to deploy the infrastructure required to r
 - [Docker](https://docs.docker.com/get-docker/) is required to be running to build middlewares.
 - [Node.js](https://nodejs.org/en/download/) v18+ and NPM.
 - [Python](https://www.python.org/downloads/) v3.8+ and [Pip](https://pip.pypa.io/en/stable/installation/).
-  <br>
+
+<br />
 
 ## 🚀 Deploy
 
@@ -62,7 +63,7 @@ You can then deploy the example to your account (ensure your deployment machine 
 npm run deploy
 ```
 
-<br>
+<br />
 
 ## 📥 Ingest Documents
 
@@ -82,6 +83,7 @@ Once you upload documents to that bucket, it can take up to 2 minutes for the pi
 <p align="center">
   <img width="800" src="assets/log-groups.png">
 </p>
+
 <br />
 
 ## :house: Running the Webserver
@@ -105,7 +107,8 @@ uvicorn main:app
 ```
 
 > 👉 This will start the web server on local port `8000`. Note that the web-server will download the CLIP model locally to be able to create embeddings for image search queries.
-> <br>
+
+<br />
 
 ## 🌐 Web Interface
 
@@ -155,7 +158,7 @@ _Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sea-and-boats).
 
 _Images credits from [Unsplash](https://unsplash.com/fr/s/photos/sports)._
 
-<br>
+<br />
 
 ## 🧹 Clean up
 
