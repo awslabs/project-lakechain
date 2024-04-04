@@ -23,6 +23,14 @@ flowchart LR
 
 This example showcases how to automatically chapter videos using their transcript and Generative AI on Amazon Bedrock.
 
+> 💁 The pipeline takes an input video from the pipeline source bucket and outputs a collection of chaptered videos and a JSON description of the generated chapters.
+
+<br />
+<p align="center">
+  <img width="650" src="./assets/diagram.png" />
+</p>
+<br />
+
 1. The pipeline is triggered by a video upload to a source S3 bucket.
 2. The FFMPEG Processor extracts the audio from the video.
 3. The audio is transcribed into text using the Transcribe Audio Processor.
