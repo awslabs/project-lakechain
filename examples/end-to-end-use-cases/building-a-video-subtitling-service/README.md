@@ -1,6 +1,6 @@
-# 💬 Building a Video Subtitling Service
+# 💬 Building a Video Subtitle Service
 
-> 👉 This example showcases how to build a multi-lingual automatic video subtitling service using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
+> 👉 This example showcases how to build a multi-lingual automatic video subtitle service using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 ## :dna: Pipeline
 
@@ -23,13 +23,17 @@ flowchart LR
 
 ## What does this example do ❓
 
-This example showcases how to automatically create multi-lingual subtitles for input videos, and to embed multi-lingual subtitles into the original video automatically.
+This example showcases how to automatically create multi-lingual subtitles for input videos, and to embed them into the original video automatically.
 
 > 💁 The pipeline takes an input video from the pipeline source bucket and outputs a video embedding all the multi-lingual subtitles.
+
+<br />
 
 | Original Video | Japanese | English | Arabic
 | -------------- | -------- | ------- | ------
 | ![Original Video](./assets/original.png) | ![Japanese](./assets/japanese.png) | ![English](./assets/english.png) | ![Arabic](./assets/arabic.png)
+
+<br />
 
 The sequence of processing steps in the pipeline goes as follows.
 
@@ -55,7 +59,7 @@ The following requirements are needed to deploy the infrastructure required to r
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/end-to-end-use-cases/building-a-video-chaptering-service`](/examples/end-to-end-use-cases/building-a-video-chaptering-service) in the Project Lakechain repository and build the example and its dependencies.
+Head to the directory [`examples/end-to-end-use-cases/building-a-video-subtitle-service`](/examples/end-to-end-use-cases/building-a-video-subtitle-service) in the Project Lakechain repository and build the example and its dependencies.
 
 ```bash
 npm install
