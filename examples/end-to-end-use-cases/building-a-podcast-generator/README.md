@@ -1,6 +1,6 @@
 # 🎙️ Building a Generative Podcast
 
-> 👉 This example showcases how to build an intelligent, multi-person, AWS daily news podcast generator using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
+> 👉 This example showcases how to build an intelligent, multi-persona, generative AWS daily news podcast using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 ## 🌟 Examples
 
@@ -33,7 +33,7 @@ flowchart LR
 
 ## What does this example do ❓
 
-This example showcases how to build an intelligent, multi-person, generative podcast using Project Lakechain.
+This example showcases how to build an intelligent, multi-persona, generative podcast using Project Lakechain. Below is an explanation of the different steps implemented within the pipeline to generate podcasts automatically.
 
 1. The pipeline is triggered every 24 hours and fetches the latest news articles from the official [AWS RSS feed](https://aws.amazon.com/blogs/aws/feed/).
 2. It filters articles to only keep those that have been released today.
