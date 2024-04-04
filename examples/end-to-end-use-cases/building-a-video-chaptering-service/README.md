@@ -3,8 +3,9 @@
 > 👉 This example showcases how to build a video chaptering service using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 <br />
+<br />
 <p align="center">
-  <img width="100" src="../../../docs/src/assets/example-video-chaptering.png" />
+  <img width="120" src="../../../docs/src/assets/example-video-chaptering.png" />
 </p>
 <br />
 

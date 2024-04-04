@@ -2,6 +2,13 @@
 
 > 👉 This example showcases how to build a search engine multi-modal ingestion pipeline using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
+<br />
+<br />
+<p align="center">
+  <img width="100" src="../../../docs/src/assets/example-generative-podcast.png" />
+</p>
+<br />
+
 ## :dna: Pipeline
 
 ```mermaid

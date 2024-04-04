@@ -3,6 +3,7 @@
 > 👉 This example showcases how to build a multi-lingual automatic video subtitle service using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 <br />
+<br />
 <p align="center">
   <img width="100" src="../../../docs/src/assets/example-video-subtitle-service.png" />
 </p>

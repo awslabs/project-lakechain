@@ -3,6 +3,7 @@
 > 👉 This example showcases how to build an intelligent, multi-persona, generative AWS daily news podcast using Project Lakechain. _Please note that this is only an example of what can be built using Project Lakechain, and not a production-ready application._
 
 <br />
+<br />
 <p align="center">
   <img width="100" src="../../../docs/src/assets/example-generative-podcast.png" />
 </p>
