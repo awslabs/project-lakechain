@@ -16,10 +16,10 @@
 - 🤖 **Composable** — Composable API to express document processing pipelines using middlewares.
 - ☁️ **Scalable** — Scales out-of-the box. Process millions of documents, scale to zero automatically when done.
 - ⚡ **Cost Efficient** — Uses cost-optimized architectures to reduce costs and drive a pay-as-you-go model.
-- 🚀 **Ready to use** — **40+** built-in middlewares for common document processing tasks, ready to be deployed.
+- 🚀 **Ready to use** — **60+** built-in middlewares for common document processing tasks, ready to be deployed.
 - 🦎 **GPU and CPU Support** — Use the right compute type to balance between performance and cost.
 - 📦 **Bring Your Own** — Create your own transform middlewares to process documents and extend Lakechain.
-- 📙 **Ready Made Examples** - Quickstart your journey by leveraging [40+ examples](./examples/) we've built for you.
+- 📙 **Ready Made Examples** - Quickstart your journey by leveraging [50+ examples](./examples/) we've built for you.
 
 ## 🚀 Getting Started
 

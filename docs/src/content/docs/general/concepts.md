@@ -36,7 +36,7 @@ We can declare a pipeline that will *map* our audio file to both middlewares, an
 
 As showcased in the previous section, middlewares are the building blocks for pipelines. We like to think of pipelines as *distributed pipes* that you would typically use within your terminal, and middlewares as the commands you pipe the output of, to the input of the next one, each command doing only one thing, but doing it well!
 
-> ℹ️ The Lakechain project comes with 40+ built-in middlewares for common document processing use-cases that you can assemble in your own pipelines.
+> ℹ️ The Lakechain project comes with 60+ built-in middlewares for common document processing use-cases that you can assemble in your own pipelines.
 
 ### I/O Types
 
