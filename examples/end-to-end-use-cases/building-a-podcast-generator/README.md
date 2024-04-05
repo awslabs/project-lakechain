@@ -5,7 +5,7 @@
 <br />
 <br />
 <p align="center">
-  <img width="100" src="../../../docs/src/assets/example-generative-podcast.png" />
+  <img width="120" src="../../../docs/src/assets/example-generative-podcast.png" />
 </p>
 <br />
 
