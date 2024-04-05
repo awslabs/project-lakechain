@@ -116,6 +116,16 @@ This middleware will intelligently determines the right job type to use for each
 
 ---
 
+### ℹ️ Limits
+
+Using Amazon Translate as a backbone, the Translate middleware can translate between [70+ different languages](https://docs.aws.amazon.com/translate/latest/dg/what-is-languages.html). Please note though that Amazon Translate supports specific language-to-language translation pairs (e.g English to French).
+
+As such, it is possible that not all combinations of languages are supported given the original language of the document. In such a case, an exception will be raised within the pipeline at runtime and the execution for that specific document will fail.
+
+<br>
+
+---
+
 ### 🏗️ Architecture
 
 The processing flow implemented by this middleware depends on whether synchronous or asynchronous jobs are used to translate documents.

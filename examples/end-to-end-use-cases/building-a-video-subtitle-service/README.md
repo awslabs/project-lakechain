@@ -54,6 +54,12 @@ The sequence of processing steps in the pipeline goes as follows.
 8. The FFMPEG Processor will then use the reduced document to embed the subtitles into the original video.
 9. The video with the embedded subtitles is uploaded to a destination S3 bucket.
 
+## ℹ️ Limits
+
+Using Amazon Translate as a backbone, the Translate middleware can translate between 70+ different languages. However, Amazon Translate supports specific language-to-language translation pairs.
+
+As such, it is possible that not all combinations of languages are supported given the original language of the video. In such a case, an exception will be raised within the pipeline at runtime and the execution for that specific video will fail.
+
 ## 📝 Requirements
 
 The following requirements are needed to deploy the infrastructure required to run this pipeline:
