@@ -36,7 +36,7 @@
     "@project-lakechain/sharp-image-transform": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.135.0",
+    "aws-cdk-lib": "^2.136.1",
     "constructs": "^10.3.0"
   }
 }

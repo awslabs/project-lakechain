@@ -20,7 +20,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "20.11.19",
     "esbuild": "^0.20.2",
-    "aws-cdk": "2.135.0",
+    "aws-cdk": "2.136.1",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
@@ -31,7 +31,7 @@
     "@project-lakechain/s3-event-trigger": "^0.5.0",
     "@project-lakechain/pdf-text-converter": "^0.5.0",
     "@project-lakechain/s3-storage-connector": "^0.5.0",
-    "aws-cdk-lib": "2.135.0",
+    "aws-cdk-lib": "2.136.1",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

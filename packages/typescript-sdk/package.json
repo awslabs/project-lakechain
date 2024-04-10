@@ -61,9 +61,9 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@aws-sdk/client-s3": "^3.540.0",
-    "@aws-sdk/client-sns": "^3.540.0",
-    "@aws-sdk/lib-storage": "^3.540.0",
+    "@aws-sdk/client-s3": "^3.552.0",
+    "@aws-sdk/client-sns": "^3.552.0",
+    "@aws-sdk/lib-storage": "^3.552.0",
     "@aws-sdk/util-stream-node": "^3.374.0",
     "class-transformer": "^0.5.1",
     "lodash": "^4.17.21",
@@ -77,7 +77,7 @@
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.8.10",
     "@types/uuid": "^9.0.8",
-    "aws-sdk-client-mock": "^3.0.1",
-    "tsx": "^4.7.0"
+    "aws-sdk-client-mock": "^3.1.0",
+    "tsx": "^4.7.2"
   }
 }

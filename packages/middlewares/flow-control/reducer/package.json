@@ -30,14 +30,14 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.540.0",
-    "@aws-sdk/client-s3": "^3.540.0",
-    "@aws-sdk/client-scheduler": "^3.540.0",
-    "@aws-sdk/client-sns": "^3.540.0",
-    "@aws-sdk/client-sqs": "^3.540.0",
-    "@types/aws-lambda": "^8.10.136",
+    "@aws-sdk/client-dynamodb": "^3.552.0",
+    "@aws-sdk/client-s3": "^3.552.0",
+    "@aws-sdk/client-scheduler": "^3.552.0",
+    "@aws-sdk/client-sns": "^3.552.0",
+    "@aws-sdk/client-sqs": "^3.552.0",
+    "@types/aws-lambda": "^8.10.137",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.3",
+    "@types/node": "^20.12.7",
     "@types/serialize-javascript": "^5.0.4",
     "esbuild": "^0.20.2",
     "rimraf": "^5.0.5"
@@ -52,7 +52,7 @@
     "serialize-javascript": "^6.0.2"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.135.0",
+    "aws-cdk-lib": "^2.136.1",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
