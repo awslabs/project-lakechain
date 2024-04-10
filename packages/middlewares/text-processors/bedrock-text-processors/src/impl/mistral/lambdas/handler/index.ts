@@ -66,7 +66,7 @@ class Lambda implements LambdaInterface {
     const document = event.data().document();
     const prompt = (await event.resolve(PROMPT)).toString('utf-8');
     const content = (await document.data().asBuffer()).toString('utf-8');
-    return (`${content}\n\n${prompt}`);
+    return (`<s>[INST]${prompt}\n\n${content}[/INST]</s>`);
   }
 
   /**
@@ -75,13 +75,10 @@ class Lambda implements LambdaInterface {
    * @returns a promise to a buffer containing the transformed document.
    */
   private async transform(event: CloudEvent): Promise<Buffer> {
-    // Generate the text using the given parameters.
     const response = await bedrock.invokeModel({
       body: JSON.stringify({
-        textGenerationConfig: {
-          ...MODEL_PARAMETERS
-        },
-        inputText: await this.getPrompt(event)
+        ...MODEL_PARAMETERS,
+        prompt: await this.getPrompt(event)
       }),
       modelId: MODEL_ID,
       accept: 'application/json',
@@ -90,7 +87,7 @@ class Lambda implements LambdaInterface {
 
     // Parse the response into a buffer.
     return (Buffer.from(
-      JSON.parse(response.body.transformToString()).results[0].outputText
+      JSON.parse(response.body.transformToString()).outputs[0].text.trim()
     ));
   }
 
@@ -102,7 +99,7 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
-    const key = `${event.data().chainId()}/amazon.${document.etag()}.txt`;
+    const key = `${event.data().chainId()}/${MODEL_ID}.${document.etag()}.txt`;
 
     // Transform the document.
     const value = await this.transform(event);

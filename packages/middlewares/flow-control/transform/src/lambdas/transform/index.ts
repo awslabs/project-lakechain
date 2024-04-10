@@ -101,14 +101,22 @@ class Lambda implements LambdaInterface {
     const results = await evaluate(events);
 
     if (originalEvent.data().document().mimeType() === 'application/cloudevents+json') {
-      await nextAsync(
-        await this.aggregate(results, originalEvent)
-      );
+      if (Array.isArray(results)) {
+        await nextAsync(
+          await this.aggregate(results, originalEvent)
+        );
+      } else {
+        await nextAsync(results);
+      }
     } else {
       // If the event is not aggregated, we publish the results produced
       // by the transform expression to the next middlewares.
-      for (const event of results) {
-        await nextAsync(event);
+      if (Array.isArray(results)) {
+        for (const event of results) {
+          await nextAsync(event);
+        }
+      } else {
+        await nextAsync(results);
       }
     }
   }

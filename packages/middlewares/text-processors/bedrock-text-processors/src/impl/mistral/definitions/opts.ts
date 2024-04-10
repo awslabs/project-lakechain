@@ -16,7 +16,7 @@
 
 import * as dsl from '@project-lakechain/core/dsl';
 import { z } from 'zod';
-import { AnthropicTextModel } from './model';
+import { MistralTextModel } from './model';
 import { TextProcessorPropsSchema } from '../../shared/opts';
 
 /**
@@ -25,13 +25,7 @@ import { TextProcessorPropsSchema } from '../../shared/opts';
 export const ModelParametersSchema = z.object({
 
   /**
-   * Large language models use probability to construct the words in a sequence.
-   * For any given sequence, there is a probability distribution of options for
-   * the next word in the sequence.
-   * When you set the temperature closer to zero, the model tends to select the
-   * higher-probability words.
-   * When you set the temperature further away from zero,
-   * the model may select a lower-probability word.
+   * Controls the randomness of predictions made by the model.
    * @min 0
    * @max 1
    */
@@ -42,22 +36,19 @@ export const ModelParametersSchema = z.object({
     .optional(),
 
   /**
-   * Specifies the number of token choices the model uses to generate the next token.
+   * Controls the number of most-likely candidates that the model considers for the next token.
    * @min 0
-   * @max 100_000_000
+   * @max 200
    */
   top_k: z
     .number()
     .min(0)
-    .max(100_000_000)
+    .max(200)
     .optional(),
 
   /**
-   * Top P defines a cut off based on the sum of probabilities of the potential choices.
-   * If you set Top P below 1.0, the model considers the most probable options and
-   * ignores less probable ones.
-   * Top P is similar to Top K, but instead of capping the number of choices,
-   * it caps choices based on the sum of their probabilities.
+   * Controls the diversity of text that the model generates by setting the percentage of
+   * most-likely candidates that the model considers for the next token. 
    * @min 0
    * @max 1
    */
@@ -70,12 +61,12 @@ export const ModelParametersSchema = z.object({
   /**
    * Specifies the maximum number of tokens to use in the generated response.
    * @min 0
-   * @max 4096
+   * @max 8192
    */
   max_tokens: z
     .number()
     .min(1)
-    .max(4096)
+    .max(8192)
 
 }).passthrough();
 
@@ -83,14 +74,14 @@ export const ModelParametersSchema = z.object({
 export type ModelParameters = z.infer<typeof ModelParametersSchema>;
 
 /**
- * Anthropic text processor properties schema.
+ * Mistral text processor properties schema.
  */
-export const AnthropicTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
+export const MistralTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
 
   /**
    * The text model to use.
    */
-  model: z.instanceof(AnthropicTextModel),
+  model: z.instanceof(MistralTextModel),
 
   /**
    * The parameters to pass to the text model.
@@ -109,5 +100,5 @@ export const AnthropicTextProcessorPropsSchema = TextProcessorPropsSchema.extend
   >>()
 });
 
-// The type of the `AnthropicTextProcessorProps` schema.
-export type AnthropicTextProcessorProps = z.infer<typeof AnthropicTextProcessorPropsSchema>;
+// The type of the `MistralTextProcessorProps` schema.
+export type MistralTextProcessorProps = z.infer<typeof MistralTextProcessorPropsSchema>;

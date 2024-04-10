@@ -23,7 +23,6 @@ import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 
 import {
-  AnthropicTextModel,
   BASE_IMAGE_INPUTS,
   BASE_TEXT_INPUTS
 } from '../../definitions/model';
@@ -36,10 +35,10 @@ import {
 /**
  * Environment variables.
  */
-const TEXT_MODEL = JSON.parse(process.env.TEXT_MODEL as string) as AnthropicTextModel;
-const PROMPT = JSON.parse(process.env.PROMPT as string);
+const MODEL_ID         = process.env.MODEL_ID;
+const SYSTEM_PROMPT    = JSON.parse(process.env.PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
-const PROCESSED_FILES_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
+const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The Bedrock runtime.
@@ -172,7 +171,7 @@ class Lambda implements LambdaInterface {
   private async getBody(event: CloudEvent) {
     return ({
       anthropic_version: 'bedrock-2023-05-31',
-      system: await event.resolve(PROMPT),
+      system: (await event.resolve(SYSTEM_PROMPT)).toString('utf-8'),
       messages: await this.getMessages(event),
       ...MODEL_PARAMETERS
     });
@@ -186,7 +185,7 @@ class Lambda implements LambdaInterface {
   private async transform(event: CloudEvent): Promise<Buffer> {
     const response = await bedrock.invokeModel({
       body: JSON.stringify(await this.getBody(event)),
-      modelId: TEXT_MODEL.name,
+      modelId: MODEL_ID,
       accept: 'application/json',
       contentType: 'application/json'
     });
@@ -205,7 +204,7 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
-    const key = `${event.data().chainId()}/${TEXT_MODEL.name}.${document.etag()}.txt`;
+    const key = `${event.data().chainId()}/${MODEL_ID}.${document.etag()}.txt`;
 
     // Transform the document.
     const value = await this.transform(event);
@@ -213,7 +212,7 @@ class Lambda implements LambdaInterface {
     // Write the generated text to S3.
     event.data().props.document = await Document.create({
       url: new S3DocumentDescriptor.Builder()
-        .withBucket(PROCESSED_FILES_BUCKET)
+        .withBucket(TARGET_BUCKET)
         .withKey(key)
         .build()
         .asUri(),

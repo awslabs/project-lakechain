@@ -73,7 +73,10 @@ class PandocTextConverterBuilder extends MiddlewareBuilder {
    */
   public withConversions(...ops: Array<PandocConversionOps>) {
     for (const op of ops) {
-      this.providerProps.mapping![op.from] = op.to;
+      this.providerProps.mapping![op.from] = {
+        to: op.to,
+        options: op.options
+      };
     }
     return (this);
   }

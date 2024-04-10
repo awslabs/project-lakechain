@@ -1,4 +1,4 @@
-FROM pandoc/latex:latest-ubuntu
+FROM pandoc/latex:3.1.1-ubuntu
 
 # Install Python.
 RUN apt-get update && \

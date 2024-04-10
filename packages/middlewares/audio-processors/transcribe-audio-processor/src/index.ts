@@ -365,7 +365,7 @@ export class TranscribeAudioProcessor extends Middleware {
    */
   supportedOutputTypes(): string[] {
     return ([
-      'application/json+amazon-transcribe',
+      'application/json',
       'application/x-subrip',
       'text/vtt'
     ]);

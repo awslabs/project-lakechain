@@ -21,6 +21,7 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sources from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as node from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 
 import { Construct } from 'constructs';
@@ -184,6 +185,23 @@ export class AI21TextProcessor extends Middleware {
     });
 
     ///////////////////////////////////////////
+    //////////    Prompt Handler      /////////
+    ///////////////////////////////////////////
+
+    // If the given prompt is a static value, and it is bigger than a certain
+    // threshold, we upload the prompt to the internal storage and reference it
+    // in the lambda environment.
+    if (this.props.prompt.subject.type === 'value'
+      && this.props.prompt.subject.value.length > 3072) {
+      // Upload the prompt as a document in the internal storage.
+      new s3deploy.BucketDeployment(this, 'Prompt', {
+        sources: [s3deploy.Source.data('prompt.txt', this.props.prompt.subject.value)],
+        destinationBucket: this.storage.getBucket()
+      });
+      this.props.prompt = r.reference(r.url(`s3://${this.storage.getBucket().bucketName}/prompt.txt`));
+    }
+
+    ///////////////////////////////////////////
     //////    Middleware Event Handler     ////
     ///////////////////////////////////////////
 
@@ -206,7 +224,7 @@ export class AI21TextProcessor extends Middleware {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
-        TEXT_MODEL: JSON.stringify(this.props.model),
+        MODEL_ID: this.props.model.name,
         PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,

@@ -136,6 +136,9 @@ export default defineConfig({
 					label: 'Llama2',
 					link: '/generative-ai/llama2-text-processor'
 				}, {
+					label: 'Mistral',
+					link: '/generative-ai/mistral-text-processor'
+				}, {
 					label: 'Titan',
 					link: '/generative-ai/titan-text-processor'
 				}, {

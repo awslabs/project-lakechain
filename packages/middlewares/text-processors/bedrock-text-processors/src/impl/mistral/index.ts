@@ -29,13 +29,13 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
-import { TitanTextModel } from './definitions/model';
+import { MistralTextModel } from './definitions/model';
 
 import {
-  TitanTextProcessorProps,
-  TitanTextProcessorPropsSchema,
+  MistralTextProcessorProps,
+  MistralTextProcessorPropsSchema,
   ModelParameters
-} from './definitions/opts.js';
+} from './definitions/opts';
 import {
   Middleware,
   MiddlewareBuilder,
@@ -47,8 +47,8 @@ import {
  * The service description.
  */
 const description: ServiceDescription = {
-  name: 'amazon-text-processor',
-  description: 'Generative text processing using Amazon Titan models on Amazon Bedrock.',
+  name: 'mistral-text-processor',
+  description: 'Generative text processing using Mistral models on Amazon Bedrock.',
   version: '0.4.0',
   attrs: {}
 };
@@ -57,7 +57,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.minutes(5);
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(3);
 
 /**
  * The execution runtime for used compute.
@@ -67,20 +67,20 @@ const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
 /**
  * The default memory size to allocate for the compute.
  */
-const DEFAULT_MEMORY_SIZE = 128;
+const DEFAULT_MEMORY_SIZE = 256;
 
 /**
- * The builder for the `TitanTextProcessor` service.
+ * The builder for the `MistralTextProcessor` service.
  */
-class TitanTextProcessorBuilder extends MiddlewareBuilder {
-  private middlewareProps: Partial<TitanTextProcessorProps> = {};
+class MistralTextProcessorBuilder extends MiddlewareBuilder {
+  private middlewareProps: Partial<MistralTextProcessorProps> = {};
 
   /**
-   * Sets the Titan model to use for generating text.
-   * @param model the Titan text model to use.
+   * Sets the Mistral model to use for generating text.
+   * @param model the Mistral text model to use.
    * @returns the current builder instance.
    */
-  public withModel(model: TitanTextModel) {
+  public withModel(model: MistralTextModel) {
     this.middlewareProps.model = model;
     return (this);
   }
@@ -127,14 +127,14 @@ class TitanTextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
-   * @returns a new instance of the `TitanTextProcessor`
+   * @returns a new instance of the `MistralTextProcessor`
    * service constructed with the given parameters.
    */
-  public build(): TitanTextProcessor {
-    return (new TitanTextProcessor(
+  public build(): MistralTextProcessor {
+    return (new MistralTextProcessor(
       this.scope,
       this.identifier, {
-        ...this.middlewareProps as TitanTextProcessorProps,
+        ...this.middlewareProps as MistralTextProcessorProps,
         ...this.props
       }
     ));
@@ -142,10 +142,10 @@ class TitanTextProcessorBuilder extends MiddlewareBuilder {
 }
 
 /**
- * A service providing text generation using Titan models
+ * A service providing text generation using Mistral models
  * on Amazon Bedrock.
  */
-export class TitanTextProcessor extends Middleware {
+export class MistralTextProcessor extends Middleware {
 
   /**
    * The storage containing processed files.
@@ -158,14 +158,14 @@ export class TitanTextProcessor extends Middleware {
   public eventProcessor: lambda.IFunction;
 
   /**
-   * The builder for the `TitanTextProcessor` service.
+   * The builder for the `MistralTextProcessor` service.
    */
-  static Builder = TitanTextProcessorBuilder;
+  static Builder = MistralTextProcessorBuilder;
 
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, private props: TitanTextProcessorProps) {
+  constructor(scope: Construct, id: string, private props: MistralTextProcessorProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
@@ -174,7 +174,7 @@ export class TitanTextProcessor extends Middleware {
     });
 
     // Validate the properties.
-    this.props = this.parse(TitanTextProcessorPropsSchema, props);
+    this.props = this.parse(MistralTextProcessorPropsSchema, props);
 
     ///////////////////////////////////////////
     ////////    Processing Storage      ///////
@@ -206,7 +206,7 @@ export class TitanTextProcessor extends Middleware {
     ///////////////////////////////////////////
 
     this.eventProcessor = new node.NodejsFunction(this, 'Compute', {
-      description: 'Generates text using Amazon Titan models on Amazon Bedrock.',
+      description: 'Generates text using Mistral models on Amazon Bedrock.',
       entry: path.resolve(__dirname, 'lambdas', 'handler', 'index.js'),
       vpc: this.props.vpc,
       memorySize: this.props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
@@ -264,7 +264,7 @@ export class TitanTextProcessor extends Middleware {
 
     // Grant the compute type permissions to
     // write to the post-processing storage.
-    this.storage.grantWrite(this.grantPrincipal);
+    this.storage.grantReadWrite(this.grantPrincipal);
 
     // Grant the compute type permissions to
     // publish to the SNS topic.
@@ -286,17 +286,7 @@ export class TitanTextProcessor extends Middleware {
    * type by this middleware.
    */
   supportedInputTypes(): string[] {
-    return ([
-      'text/plain',
-      'text/markdown',
-      'text/csv',
-      'text/html',
-      'application/x-subrip',
-      'text/vtt',
-      'application/json',
-      'application/xml',
-      'application/json+scheduler'
-    ]);
+    return (this.props.model.inputs);
   }
 
   /**
@@ -304,9 +294,7 @@ export class TitanTextProcessor extends Middleware {
    * type by the data producer.
    */
   supportedOutputTypes(): string[] {
-    return ([
-      'text/plain'
-    ]);
+    return (this.props.model.outputs);
   }
 
   /**
@@ -334,4 +322,4 @@ export class TitanTextProcessor extends Middleware {
   }
 }
 
-export { TitanTextModel } from './definitions/model';
+export { MistralTextModel } from './definitions/model';

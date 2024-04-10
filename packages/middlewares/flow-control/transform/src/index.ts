@@ -197,6 +197,7 @@ export class Transform extends Middleware {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
+        LAKECHAIN_CACHE_STORAGE: props.cacheStorage.id(),
         TRANSFORM_EXPRESSION_TYPE: props.expression instanceof lambda.Function ?
           'lambda' :
           'expression',

@@ -15,6 +15,7 @@ const TRANSFORM_EXPRESSION_TYPE = process.env.TRANSFORM_EXPRESSION_TYPE;
 const TRANSFORM_EXPRESSION_SYMBOL = process.env.TRANSFORM_EXPRESSION_SYMBOL;
 const TRANSFORM_EXPRESSION = process.env.TRANSFORM_EXPRESSION;
 const STORAGE_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
+const LAKECHAIN_CACHE_STORAGE = process.env.LAKECHAIN_CACHE_STORAGE as string;
 
 /**
  * The lambda client.
@@ -58,7 +59,7 @@ const evaluateLambda = async (event: sdk.CloudEvent[]): Promise<sdk.CloudEvent[]
  * @returns a promise to an array of output events.
  * @throws an error if the conditional expression is invalid.
  */
-const evaluateExpression = async (events: sdk.CloudEvent[], opts?: RunningCodeOptions): Promise<sdk.CloudEvent[]> => {
+const evaluateExpression = async (events: sdk.CloudEvent[], opts?: RunningCodeOptions): Promise<sdk.CloudEvent[] | sdk.CloudEvent> => {
   const context = createContext({
     console,
     require,
@@ -69,7 +70,8 @@ const evaluateExpression = async (events: sdk.CloudEvent[], opts?: RunningCodeOp
     events,
     sdk,
     env: {
-      STORAGE_BUCKET
+      STORAGE_BUCKET,
+      LAKECHAIN_CACHE_STORAGE
     }
   });
 
@@ -83,15 +85,7 @@ const evaluateExpression = async (events: sdk.CloudEvent[], opts?: RunningCodeOp
     throw new Error('Invalid transform expression, a promise was expected.');
   }
 
-  // Wait for the result of the expression.
-  const results = await res;
-
-  // If the result is not an array, we throw an error.
-  if (!Array.isArray(results)) {
-    throw new Error('Invalid transform expression, an output array was expected.');
-  }
-
-  return (results);
+  return (res);
 };
 
 /**
@@ -99,7 +93,7 @@ const evaluateExpression = async (events: sdk.CloudEvent[], opts?: RunningCodeOp
  * @param events the events to process.
  * @returns a promise to an array of output events.
  */
-export const evaluate = (events: sdk.CloudEvent[]): Promise<sdk.CloudEvent[]> => {
+export const evaluate = (events: sdk.CloudEvent[]): Promise<sdk.CloudEvent[] | sdk.CloudEvent> => {
   if (TRANSFORM_EXPRESSION_TYPE === 'lambda') {
     return (evaluateLambda(events));
   } else {

@@ -57,7 +57,7 @@ export const ModelParametersSchema = z.object({
    */
   maxTokens: z
     .number()
-    .min(0)
+    .min(1)
     .max(8191)
     .optional(),
 

@@ -1,5 +1,6 @@
 import os
 import json
+from typing import List
 
 # Holds a map between the input format and output formats
 # that we need to convert.
@@ -264,7 +265,7 @@ pandoc_output_format_to_mime_type = {
 def mime_type_to_input_format(mime_type: str) -> str:
     """
     Converts the given MIME type to its Pandoc input format equivalent.
-    :param mime_type: The MIME type to convert.
+    :param mime_type: The MIME type to translate into a Pandoc input format.
     :return: The Pandoc input format equivalent.
     :raises ValueError: If the given MIME type is not supported.
     """
@@ -273,13 +274,25 @@ def mime_type_to_input_format(mime_type: str) -> str:
     return mime_type_to_pandoc_input_format[mime_type]
 
 
-def get_outputs(input: str) -> list[str]:
+def input_format_to_output_formats(input: str) -> List[dict]:
     """
-    :param input: the Pandoc input type.
+    :param input: a Pandoc input type.
     :return: a list of Pandoc output formats to which the input
     document should be converted.
     """
-    values = CONVERSION_MAPPING.get(input)
-    if not values:
+    source = CONVERSION_MAPPING.get(input)
+    if not source or 'to' not in source:
         return [{ 'name': 'plain', 'mime_type': 'text/plain', 'ext': 'txt' }]
-    return list(map(lambda x: pandoc_output_format_to_mime_type[x], values))
+    return list(map(lambda x: pandoc_output_format_to_mime_type[x], source['to']))
+
+
+def get_options_for_input(input: str) -> dict:
+    """
+    :param input: the input format.
+    :param output: the output format.
+    :return: the options to pass to the Pandoc converter.
+    """
+    values = CONVERSION_MAPPING.get(input)
+    if not values or 'options' not in values:
+        return []
+    return values['options']

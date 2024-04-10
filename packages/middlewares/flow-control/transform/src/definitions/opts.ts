@@ -8,6 +8,7 @@ import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
  */
 export type Environment = {
   STORAGE_BUCKET: string;
+  LAKECHAIN_CACHE_STORAGE: string;
 };
 
 /**
@@ -26,7 +27,7 @@ export type TransformExpression = (
   events: sdk.CloudEvent[],
   sdk: Sdk,
   environment: Environment
-) => Promise<sdk.CloudEvent[]>;
+) => Promise<sdk.CloudEvent[] | sdk.CloudEvent>;
 
 /**
  * The middleware properties.

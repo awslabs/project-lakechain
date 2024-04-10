@@ -38,6 +38,9 @@ export type IValueSubject = {
   value: any
 };
 
+/**
+ * Type of a pointer subject.
+ */
 export type IPointerSubject = {
   type: 'pointer',
   pointer: string

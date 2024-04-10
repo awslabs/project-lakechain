@@ -38,3 +38,8 @@ export {
   Llama2TextProcessor,
   Llama2TextModel
 } from './impl/meta';
+
+export {
+  MistralTextProcessor,
+  MistralTextModel
+} from './impl/mistral';

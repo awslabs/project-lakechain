@@ -28,7 +28,8 @@ from aws_lambda_powertools.utilities.data_classes.sqs_event import SQSRecord
 from publish import publish_event
 from mime_types import (
   mime_type_to_input_format,
-  get_outputs
+  input_format_to_output_formats,
+  get_options_for_input
 )
 
 from aws_lambda_powertools.utilities.batch import (
@@ -65,7 +66,8 @@ def process_document(
     event: dict,
     content: bytes,
     src_type: str,
-    output_type: dict
+    output_type: dict,
+    options: list = []
 ) -> dict:
     """
     Converts the document associated with the given cloud event
@@ -90,10 +92,7 @@ def process_document(
             source=content,
             to=output_type['name'],
             format=src_type,
-            extra_args=[
-                '--standalone',
-                '--pdf-engine=xelatex'
-            ],
+            extra_args=options,
             outputfile=output_file.name
         )
 
@@ -108,15 +107,11 @@ def process_document(
         )
 
         # Set the new document in the event.
-        event |= {
-            'data': event['data'] | {
-                'document': { 
-                    'url': f"s3://{TARGET_BUCKET}/{output_key}",
-                    'type': output_type['mime_type'],
-                    'size': sys.getsizeof(data),
-                    'etag': upload_result['ETag'].replace('"', '')
-                }
-            }
+        event['data']['document'] = {
+            'url': f"s3://{TARGET_BUCKET}/{output_key}",
+            'type': output_type['mime_type'],
+            'size': sys.getsizeof(data),
+            'etag': upload_result['ETag'].replace('"', '')
         }
 
     return event
@@ -130,20 +125,21 @@ def record_handler(record: SQSRecord, _: Optional[LambdaContext] = None):
     """
     event    = json.loads(record.body)
     document = event['data']['document']
+    content  = load_document(document['url'])
 
-    # Load the document in memory.
-    content = load_document(document['url'])
-
-    # The document source format.
+    # Determine the document source format.
     source = mime_type_to_input_format(document['type'])
 
-    # The document output formats.
-    outputs = get_outputs(source)
+    # Determine the document output formats.
+    outputs = input_format_to_output_formats(source)
+
+    # Get the Pandoc options to use.
+    options = get_options_for_input(source)
 
     # Convert the document to each output format.
     for output in outputs:
         publish_event(
-            process_document(event, content, source, output)
+            process_document(event, content, source, output, options)
         )
     
     return True

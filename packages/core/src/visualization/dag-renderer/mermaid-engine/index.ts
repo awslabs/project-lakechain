@@ -101,15 +101,15 @@ export class MermaidRenderer implements IRenderingEngine {
   }
 
   /**
-   * @param consumer the consumer to get the supported
-   * input types for.
+   * @param middleware the consumer to get the supported
+   * output types for.
    * @returns an array of supported input types for
    * the given consumer.
    */
-  private formatSupportedTypes(consumer: Middleware, maxTypes = 3) {
-    const length = consumer.supportedInputTypes().length;
-    let types    = consumer
-      .supportedInputTypes()
+  private formatOutputTypes(middleware: Middleware, maxTypes = 3) {
+    const length = middleware.supportedOutputTypes().length;
+    let types    = middleware
+      .supportedOutputTypes()
       .slice(0, maxTypes)
       .reduce((acc, type) => {
         if (type.length > 50) {
@@ -132,7 +132,6 @@ export class MermaidRenderer implements IRenderingEngine {
    * @returns a string representing the mermaid document.
    */
   private getDefinition(middlewares: Middleware[]): string {
-    // Build a template for the Mermaid definition.
     const tpl = template(createTemplate({
       ...this.props
     }));
@@ -144,8 +143,10 @@ export class MermaidRenderer implements IRenderingEngine {
       const consumers = middleware.getConsumers();
 
       for (const consumer of consumers) {
-        const supportedTypes = this.formatSupportedTypes(consumer);
-        connections.push(` ${name}-- ${supportedTypes} --> ${consumer.name()}\n`);
+        const outputTypes = this.formatOutputTypes(middleware);
+        const producerId  = `${middleware.node.addr}[${name}]`;
+        const consumerId  = `${consumer.node.addr}[${consumer.name()}]`;
+        connections.push(` ${producerId} -- ${outputTypes} --> ${consumerId}\n`);
       }
     }
 

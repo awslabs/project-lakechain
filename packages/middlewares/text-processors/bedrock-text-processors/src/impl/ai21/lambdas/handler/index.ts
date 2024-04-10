@@ -17,12 +17,10 @@
 import { SQSEvent, Context, SQSRecord } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
-import { CloudEvent } from '@project-lakechain/sdk/models';
+import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { AI21TextModel } from '../../definitions/model';
 
 import {
   BatchProcessor,
@@ -33,25 +31,16 @@ import {
 /**
  * Environment variables.
  */
-const TEXT_MODEL = JSON.parse(process.env.TEXT_MODEL as string) as AI21TextModel;
-const DOCUMENT = JSON.parse(process.env.DOCUMENT as string);
-const PROMPT = JSON.parse(process.env.PROMPT as string);
-const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
-const PROCESSED_FILES_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
+const MODEL_ID         = process.env.MODEL_ID;
+const PROMPT           = JSON.parse(process.env.PROMPT as string);
+const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
+const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The Bedrock runtime.
  */
 const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
   region: process.env.BEDROCK_REGION || process.env.AWS_REGION,
-  maxAttempts: 5
-}));
-
-/**
- * The S3 client.
- */
-const s3 = tracer.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
   maxAttempts: 5
 }));
 
@@ -75,7 +64,10 @@ class Lambda implements LambdaInterface {
    * @returns the prompt to use for generating text.
    */
   private async getPrompt(event: CloudEvent) {
-    return (`${await event.resolve(DOCUMENT)}\n\n${await event.resolve(PROMPT)}`);
+    const document = event.data().document();
+    const prompt = (await event.resolve(PROMPT)).toString('utf-8');
+    const content = (await document.data().asBuffer()).toString('utf-8');
+    return (`${content}\n\n${prompt}`);
   }
 
   /**
@@ -90,7 +82,7 @@ class Lambda implements LambdaInterface {
         ...MODEL_PARAMETERS,
         prompt: await this.getPrompt(event)
       }),
-      modelId: TEXT_MODEL.name,
+      modelId: MODEL_ID,
       accept: 'application/json',
       contentType: 'application/json'
     });
@@ -115,22 +107,15 @@ class Lambda implements LambdaInterface {
     const value = await this.transform(event);
 
     // Write the generated text to S3.
-    const res = await s3.send(new PutObjectCommand({
-      Bucket: PROCESSED_FILES_BUCKET,
-      Key: key,
-      Body: value,
-      ContentType: 'text/plain'
-    }));
-
-    // Update the event.
-    document.props.url = new S3DocumentDescriptor.Builder()
-      .withBucket(PROCESSED_FILES_BUCKET)
-      .withKey(key)
-      .build()
-      .asUri();
-    document.props.type = 'text/plain';
-    document.props.size = value.byteLength;
-    document.props.etag = res.ETag?.replace(/"/g, '');
+    event.data().props.document = await Document.create({
+      url: new S3DocumentDescriptor.Builder()
+        .withBucket(TARGET_BUCKET)
+        .withKey(key)
+        .build()
+        .asUri(),
+      type: 'text/plain',
+      data: value
+    });
 
     return (event);
   }
