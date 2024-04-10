@@ -70,8 +70,8 @@ def process_document(
     options: list = []
 ) -> dict:
     """
-    Converts the document associated with the given cloud event
-    to the given format(s) and publishes the result(s) to the
+    Converts the document associated with the given event
+    to the given output format(s), and publishes the result(s) to the
     next middlewares.
     :param event: the received cloud event.
     :param content: the document content.
