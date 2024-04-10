@@ -33,7 +33,7 @@
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
     "@project-lakechain/tar-inflate-processor": "*",
-    "@project-lakechain/zip-inflate-processor": "*"
+    "@project-lakechain/zip-processor": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.136.1",
