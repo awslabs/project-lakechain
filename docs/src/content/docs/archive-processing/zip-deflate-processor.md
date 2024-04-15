@@ -20,18 +20,15 @@ title: Zip
 
 ---
 
-The Zip deflate processor makes it easy to package multiple documents in a pipeline, into a single compressed Zip archive. This makes it possible to package the result of the processing of specific documents into a single archive ready to be stored, or shared with another system.
+The Zip deflate processor makes it easy to package multiple documents into a single compressed Zip archive. This makes it possible to package the result of the processing of specific documents into a single archive ready to be stored, or shared with another system.
 
 ---
 
 ### 🗄️ Deflating Archives
 
-To use this middleware, you import it in your CDK stack and connect it to a data source that provides documents, such as the [S3 Trigger](/project-lakechain/triggers/s3-event-trigger).
-
-> ℹ️ The below example shows how to create a pipeline that deflates each uploaded document into a single Zip archive.
+To use this middleware, you import it in your CDK stack and connect it to a data source that provides documents.
 
 ```typescript
-import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { ZipDeflateProcessor } from '@project-lakechain/zip-processor';
 import { CacheStorage } from '@project-lakechain/core';
 
@@ -43,20 +40,12 @@ class Stack extends cdk.Stack {
     // The cache storage.
     const cache = new CacheStorage(this, 'Cache');
 
-    // Create the S3 event trigger.
-    const trigger = new S3EventTrigger.Builder()
-      .withScope(this)
-      .withIdentifier('Trigger')
-      .withCacheStorage(cache)
-      .withBucket(bucket)
-      .build();
-
     // Create the Zip deflate processor.
     const zipProcessor = new ZipDeflateProcessor.Builder()
       .withScope(this)
       .withIdentifier('ZipProcessor')
       .withCacheStorage(cache)
-      .withSource(trigger)
+      .withSource(source)
       .build();
   }
 }

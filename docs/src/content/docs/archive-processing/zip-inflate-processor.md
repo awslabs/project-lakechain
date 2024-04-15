@@ -20,7 +20,7 @@ title: Unzip
 
 ---
 
-The Zip inflate processor makes it possible to extract the content of Zip archives and publish each file within them to other middlewares in a pipeline. This makes it possible for customers to process documents stored within Zip archives in a Lakechain pipeline.
+The Zip inflate processor makes it possible to extract the content of Zip archives and map each file within them to other middlewares in a pipeline. This makes it possible for customers to process documents stored within Zip archives in a Lakechain pipeline.
 
 ---
 

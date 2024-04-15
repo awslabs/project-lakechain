@@ -9,8 +9,8 @@ title: TAR Inflate
   0.5.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
-  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/tar-inflate-processor">
-    @project-lakechain/tar-inflate-processor
+  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/tar-processor">
+    @project-lakechain/tar-processor
   </a>
 </span>
 <span class="language-icon">
