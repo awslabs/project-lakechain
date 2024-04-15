@@ -109,4 +109,4 @@ The TAR inflate processor uses AWS Lambda as a compute for inflating tarballs. T
 
 ### 📖 Examples
 
-- [Inflate Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/inflate-pipeline) - An example showcasing how to inflate archives.
+- [Inflate Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/archive-processing-pipelines/inflate-pipeline) - An example showcasing how to inflate archives.

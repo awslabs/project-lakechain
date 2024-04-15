@@ -24,7 +24,7 @@ import { Image } from 'astro:assets';
 import originalImage from '../../../assets/rembg-original-image.jpg';
 import processedImage from '../../../assets/rembg-processed-image.png';
 
-The `RemBg` image processor packages the [RemBg](https://rembg.io/) algorithm and suite of machine-learning models on AWS for easy background removal on images. This middleware is a good fit when processing images that have a foreground entity you would like to extract from the background.
+The `RemBg` image processor packages the [RemBg](https://github.com/danielgatis/rembg) algorithm and suite of machine-learning models on AWS for easy background removal on images. This middleware is a good fit when processing images that have a foreground entity you would like to extract from the background.
 
 The algorithm is implemented as different steps which produce a list of binary masks representing the foreground objects in the image, which are then post-processed and combined to create a final cutout image.
 
