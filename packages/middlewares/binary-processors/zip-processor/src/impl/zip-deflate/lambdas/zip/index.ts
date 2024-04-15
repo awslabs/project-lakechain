@@ -35,6 +35,7 @@ import {
  * Environment variables.
  */
 const TARGET_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
+const COMPRESSION_LEVEL = parseInt(process.env.COMPRESSION_LEVEL as string) ?? 9;
 
 /**
  * The async batch processor processes the received
@@ -59,17 +60,20 @@ class Lambda implements LambdaInterface {
     result: CompleteMultipartUploadCommandOutput,
     size: number
   ): Promise<CloudEvent> {
+    const uri = new S3DocumentDescriptor({
+      bucket: result.Bucket!,
+      key: result.Key!
+    }).asUri();
+
+    // Create the new document referencing the archive.
     const document = new Document.Builder()
-      .withUrl(new S3DocumentDescriptor({
-          bucket: result.Bucket!,
-          key: result.Key!
-        }).asUri()
-      )
+      .withUrl(uri)
       .withEtag(result.ETag!.replace(/"/g, ''))
       .withSize(size)
       .withType('application/zip')
       .build();
 
+    // Create the new CloudEvent forwarded to the next middlewares.
     return (Promise.resolve(new CloudEvent.Builder()
       .withId(randomUUID())
       .withType(Type.DOCUMENT_CREATED)
@@ -114,12 +118,12 @@ class Lambda implements LambdaInterface {
    * @returns a promise which resolves when the
    * unzip process is complete.
    */
-  private async unzip(events: CloudEvent[], destBucket: string) {
-    const outputKey = `${randomUUID}/archive.zip`;
+  private async zip(events: CloudEvent[], destBucket: string) {
+    const outputKey = `${randomUUID()}/archive.zip`;
 
     // Create a new archiver instance.
     const archive = archiver('zip', {
-      zlib: { level: 9 }
+      zlib: { level: COMPRESSION_LEVEL }
     });
 
     // Create a write stream to the destination bucket.
@@ -135,9 +139,11 @@ class Lambda implements LambdaInterface {
     // Append each document read stream to the archive.
     for (const event of events) {
       const document = event.data().document();
+      const etag = document.etag();
+      const name = `${event.data().chainId()}/${etag}-${document.filename().basename()}`;
       archive.append(
         await document.data().asReadStream(),
-        { name: document.filename().basename() }
+        { name }
       );
     }
 
@@ -145,17 +151,18 @@ class Lambda implements LambdaInterface {
     await archive.finalize();
     const res = await promise;
     
+    // Forward the document to the next middlewares.
     return (this.onArchiveCreated(res, archive.pointer()));
   }
 
   /**
-   * Inflates the document associated with the record
+   * Deflates the document associated with the record
    * in the target S3 bucket.
    * @param record the SQS record associated with
    * the document to inflate.
    */
   async recordHandler(record: SQSRecord): Promise<any> {
-    return (this.unzip(
+    return (this.zip(
       await this.resolveEvents(CloudEvent.from(JSON.parse(record.body))),
       TARGET_BUCKET
     ));

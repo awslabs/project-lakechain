@@ -30,13 +30,14 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/image-layer-processor": "*",
-    "@project-lakechain/rekognition-image-processor": "*",
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/s3-event-trigger": "^0.5.0",
+    "@project-lakechain/rekognition-image-processor": "^0.5.0",
+    "@project-lakechain/image-layer-processor": "^0.5.0",
+    "@project-lakechain/s3-storage-connector": "^0.5.0",
+    "@project-lakechain/zip-processor": "^0.5.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.136.1",
+    "aws-cdk-lib": "^2.137.0",
     "constructs": "^10.3.0"
   }
 }

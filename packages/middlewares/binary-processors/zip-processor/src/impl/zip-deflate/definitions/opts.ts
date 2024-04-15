@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-declare module "streamz"
+import { z } from 'zod';
+import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
+
+/**
+ * The middleware properties.
+ */
+export const ZipDeflateProcessorPropsSchema = MiddlewarePropsSchema.extend({
+
+  /**
+   * The compression level to use when creating Zip archives.
+   * @default 9
+   */
+  compressionLevel: z
+    .number()
+    .optional()
+    .default(9)
+});
+
+// The type of the `ZipDeflateProcessorPropsSchema` schema.
+export type ZipDeflateProcessorProps = z.infer<typeof ZipDeflateProcessorPropsSchema>;

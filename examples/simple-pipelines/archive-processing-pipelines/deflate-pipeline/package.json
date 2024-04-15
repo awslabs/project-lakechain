@@ -1,0 +1,44 @@
+{
+  "name": "deflate-pipeline",
+  "description": "An example showcasing how to archive multiple documents.",
+  "version": "0.5.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=deflate-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.2",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/zip-processor": "*",
+    "@project-lakechain/tar-processor": "*",
+    "@project-lakechain/reducer": "*",
+    "@project-lakechain/sharp-image-transform": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.137.0",
+    "constructs": "^10.0.0"
+  }
+}

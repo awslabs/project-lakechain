@@ -158,7 +158,7 @@ export class StaticCounterStrategyConstruct extends Construct {
 
     // Plug the SQS queue into the deduplication function.
     this.deduplicationFn.addEventSource(new sources.SqsEventSource(queue, {
-      batchSize: 10,
+      batchSize: 1,
       maxBatchingWindow: props.batchingWindow
     }));
 

@@ -1,5 +1,5 @@
 ---
-title: Zip Inflate
+title: Unzip
 ---
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -9,8 +9,8 @@ title: Zip Inflate
   0.5.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
-  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/zip-inflate-processor">
-    @project-lakechain/zip-inflate-processor
+  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/zip-processor">
+    @project-lakechain/zip-processor
   </a>
 </span>
 <span class="language-icon">
@@ -32,7 +32,7 @@ To use this middleware, you import it in your CDK stack and connect it to a data
 
 ```typescript
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { ZipInflateProcessor } from '@project-lakechain/zip-inflate-processor';
+import { ZipInflateProcessor } from '@project-lakechain/zip-processor';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
@@ -108,4 +108,4 @@ The Zip inflate processor uses AWS Lambda as a compute for inflating archives. T
 
 ### 📖 Examples
 
-- [Inflate Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/inflate-pipeline) - An example showcasing how to inflate archives.
+- [Inflate Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/archive-processing-pipelines/inflate-pipeline) - An example showcasing how to inflate archives.

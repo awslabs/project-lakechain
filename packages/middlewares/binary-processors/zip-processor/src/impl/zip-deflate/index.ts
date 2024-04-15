@@ -27,11 +27,11 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
+import { ZipDeflateProcessorProps, ZipDeflateProcessorPropsSchema } from './definitions/opts';
 
 import {
   Middleware,
   MiddlewareBuilder,
-  MiddlewareProps,
   LAMBDA_INSIGHTS_VERSION,
   NAMESPACE
 } from '@project-lakechain/core/middleware';
@@ -41,7 +41,7 @@ import {
  */
 const description: ServiceDescription = {
   name: 'zip-deflate-processor',
-  description: 'Zips input documents into a Zip archive .',
+  description: 'Archives input documents into a Zip archive.',
   version: '0.4.0',
   attrs: {}
 };
@@ -66,6 +66,19 @@ const DEFAULT_MEMORY_SIZE = 512;
  * The builder for the `ZipDeflateProcessor` middleware.
  */
 class ZipDeflateProcessorBuilder extends MiddlewareBuilder {
+  private providerProps: Partial<ZipDeflateProcessorProps> = {};
+  
+  /**
+   * Sets the compression level to use when creating
+   * Zip archives.
+   * @param level the compression level.
+   * @returns the builder instance.
+   * @default 9
+   */
+  public withCompressionLevel(level: number): this {
+    this.providerProps.compressionLevel = level;
+    return (this);
+  }
 
   /**
    * @returns a new instance of the `ZipDeflateProcessor`
@@ -75,6 +88,7 @@ class ZipDeflateProcessorBuilder extends MiddlewareBuilder {
     return (new ZipDeflateProcessor(
       this.scope,
       this.identifier, {
+        ...this.providerProps as ZipDeflateProcessorProps,
         ...this.props
       }
     ));
@@ -105,13 +119,16 @@ export class ZipDeflateProcessor extends Middleware {
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, props: MiddlewareProps) {
+  constructor(scope: Construct, id: string, private props: ZipDeflateProcessorProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
         3 * PROCESSING_TIMEOUT.toSeconds()
       )
     });
+
+    // Validate the properties.
+    this.props = this.parse(ZipDeflateProcessorPropsSchema, props);
 
     ///////////////////////////////////////////
     ////////    Processing Storage      ///////
@@ -143,7 +160,8 @@ export class ZipDeflateProcessor extends Middleware {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         PROCESSED_FILES_BUCKET: this.storage.id(),
-        SNS_TARGET_TOPIC: this.eventBus.topicArn
+        SNS_TARGET_TOPIC: this.eventBus.topicArn,
+        COMPRESSION_LEVEL: this.props.compressionLevel?.toString()
       },
       bundling: {
         minify: true,
@@ -191,7 +209,7 @@ export class ZipDeflateProcessor extends Middleware {
    */
   supportedInputTypes(): string[] {
     return ([
-      'application/cloudevents+json'
+      '*/*'
     ]);
   }
 

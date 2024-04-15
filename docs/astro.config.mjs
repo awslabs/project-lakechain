@@ -274,10 +274,13 @@ export default defineConfig({
 			}, {
 				label: 'Archive Processing',
 				items: [{
-					label: 'Tar Inflate',
+					label: 'Untar',
 					link: '/archive-processing/tar-inflate-processor'
 				}, {
-					label: 'Zip Inflate',
+					label: 'Zip',
+					link: '/archive-processing/zip-deflate-processor'
+				}, {
+					label: 'Unzip',
 					link: '/archive-processing/zip-inflate-processor'
 				}]
 			}]

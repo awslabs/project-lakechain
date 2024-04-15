@@ -20,7 +20,7 @@ title: TAR Inflate
 
 ---
 
-The TAR inflate processor makes it possible to extract, on-the-fly, the content of TAR archives and publish each file within them to other middlewares in a pipeline. This makes it possible for customers to process documents within TAR and TAR Gzipped archives in a Lakechain pipeline.
+The TAR inflate processor makes it possible to extract, on-the-fly, the content of TAR archives and map each file within them to other middlewares in a pipeline. This makes it possible for customers to process documents within TAR and TAR Gzipped archives in a Lakechain pipeline.
 
 ---
 

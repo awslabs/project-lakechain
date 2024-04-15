@@ -45,7 +45,7 @@
     "@opensearch-project/opensearch": "^2.6.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.136.1",
+    "aws-cdk-lib": "^2.137.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
