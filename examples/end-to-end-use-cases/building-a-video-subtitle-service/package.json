@@ -1,7 +1,7 @@
 {
   "name": "building-a-video-subtitle-service",
   "description": "Builds a pipeline for automatic multi-lingual video subtitles generation.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

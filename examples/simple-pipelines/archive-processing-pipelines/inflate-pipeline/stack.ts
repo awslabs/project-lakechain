@@ -23,7 +23,7 @@ import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { ZipInflateProcessor } from '@project-lakechain/zip-processor';
-import { TarInflateProcessor } from '@project-lakechain/tar-inflate-processor';
+import { TarInflateProcessor } from '@project-lakechain/tar-processor';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**

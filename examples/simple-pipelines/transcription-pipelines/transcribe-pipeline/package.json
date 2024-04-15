@@ -1,7 +1,7 @@
 {
   "name": "transcribe-pipeline",
   "description": "Builds a pipeline for transcribing audio documents using Amazon Transcribe.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

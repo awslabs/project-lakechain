@@ -1,7 +1,7 @@
 {
   "name": "sentence-transformers-pipeline",
   "description": "An example showcasing how to create embeddings using Sentence Transformers.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

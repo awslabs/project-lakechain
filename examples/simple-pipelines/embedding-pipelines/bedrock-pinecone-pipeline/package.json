@@ -1,7 +1,7 @@
 {
   "name": "bedrock-pinecone-pipeline",
   "description": "An example showcasing an embedding pipeline using Amazon Bedrock and Pinecone.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

@@ -1,7 +1,7 @@
 {
   "name": "image-outpainting-pipeline",
   "description": "An example showcasing how to perform image outpainting using Amazon Titan.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "tsc",

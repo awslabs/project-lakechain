@@ -1,7 +1,7 @@
 {
   "name": "deflate-pipeline",
   "description": "An example showcasing how to archive multiple documents.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

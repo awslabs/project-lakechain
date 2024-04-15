@@ -1,7 +1,7 @@
 {
   "name": "article-curation",
   "description": "Builds a pipeline converting HTML articles into plain text.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

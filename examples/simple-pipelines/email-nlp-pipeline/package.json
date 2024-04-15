@@ -1,7 +1,7 @@
 {
   "name": "email-nlp-pipeline",
   "description": "An example showcasing how to analyze e-mails.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "tsc",

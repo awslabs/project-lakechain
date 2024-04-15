@@ -1,7 +1,7 @@
 {
   "name": "building-a-video-chaptering-service",
   "description": "Builds a pipeline for automatic video chaptering generation.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

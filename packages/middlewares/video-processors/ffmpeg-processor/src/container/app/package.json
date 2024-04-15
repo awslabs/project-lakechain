@@ -1,7 +1,7 @@
 {
   "name": "ffmpeg-processor",
   "description": "Processes media documents using FFMPEG.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "main": "index.js",
   "type": "module",
   "scripts": {

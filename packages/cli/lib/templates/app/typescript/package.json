@@ -1,7 +1,7 @@
 {
   "name": "sample-pipeline",
   "description": "A sample Lakechain TypeScript project.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "bin": {
     "test": "bin/test.js"
   },
@@ -27,10 +27,10 @@
     "typescript": "~5.3.3"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.5.0",
-    "@project-lakechain/s3-event-trigger": "^0.5.0",
-    "@project-lakechain/pdf-text-converter": "^0.5.0",
-    "@project-lakechain/s3-storage-connector": "^0.5.0",
+    "@project-lakechain/core": "^0.7.0",
+    "@project-lakechain/s3-event-trigger": "^0.7.0",
+    "@project-lakechain/pdf-text-converter": "^0.7.0",
+    "@project-lakechain/s3-storage-connector": "^0.7.0",
     "aws-cdk-lib": "2.137.0",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"

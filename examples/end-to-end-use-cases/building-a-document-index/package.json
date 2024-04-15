@@ -1,7 +1,7 @@
 {
   "name": "building-a-document-index",
   "description": "End-to-end document metadata extraction with OpenSearch.",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
