@@ -1,6 +1,6 @@
 {
   "name": "@project-lakechain/sdk",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "An SDK providing helpers to create Lakechain middlewares in TypeScript.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

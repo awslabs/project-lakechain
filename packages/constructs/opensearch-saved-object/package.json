@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/opensearch-saved-object",
   "description": "Uploads a saved object to OpenSearch using AWS CDK.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
