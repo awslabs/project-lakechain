@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/pandoc-text-converter",
   "description": "Converts text-oriented documents into plain text using pandoc.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -38,7 +38,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.5.0"
+    "@project-lakechain/core": "^0.6.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.137.0",

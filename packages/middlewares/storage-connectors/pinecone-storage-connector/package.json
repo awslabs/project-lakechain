@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/pinecone-storage-connector",
   "description": "A data store connector for Pinecone.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -45,8 +45,8 @@
     "@aws-lambda-powertools/parameters": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
     "@pinecone-database/pinecone": "^2.2.0",
-    "@project-lakechain/core": "^0.5.0",
-    "@project-lakechain/sdk": "^0.5.0"
+    "@project-lakechain/core": "^0.6.0",
+    "@project-lakechain/sdk": "^0.6.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.137.0",

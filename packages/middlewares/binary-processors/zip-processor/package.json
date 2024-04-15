@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/zip-processor",
   "description": "Inflates and deflates Zip documents from a source to a destination bucket.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -33,11 +33,11 @@
     "@aws-sdk/client-s3": "^3.554.0",
     "@aws-sdk/client-sns": "^3.554.0",
     "@aws-sdk/lib-storage": "^3.554.0",
+    "@types/archiver": "^6.0.2",
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
     "@types/unzipper": "^0.10.9",
-    "@types/archiver": "^6.0.2",
     "esbuild": "^0.20.2",
     "rimraf": "^5.0.5"
   },
@@ -46,11 +46,11 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.5.0",
-    "@project-lakechain/sdk": "^0.5.0",
+    "@project-lakechain/core": "^0.6.0",
+    "@project-lakechain/sdk": "^0.6.0",
+    "archiver": "^7.0.1",
     "streamz": "^1.8.12",
-    "unzipper": "^0.10.14",
-    "archiver": "^7.0.1"
+    "unzipper": "^0.10.14"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.137.0",
