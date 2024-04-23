@@ -16,7 +16,7 @@
 
 import * as dsl from '@project-lakechain/core/dsl';
 import { z } from 'zod';
-import { Llama2TextModel } from './model';
+import { LlamaModel } from './model';
 import { TextProcessorPropsSchema } from '../../shared/opts';
 
 /**
@@ -68,14 +68,14 @@ export const ModelParametersSchema = z.object({
 export type ModelParameters = z.infer<typeof ModelParametersSchema>;
 
 /**
- * Llama2 text processor properties schema.
+ * Llama text processor properties schema.
  */
-export const Llama2TextProcessorPropsSchema = TextProcessorPropsSchema.extend({
+export const LlamaTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
 
   /**
    * The text model to use.
    */
-  model: z.instanceof(Llama2TextModel),
+  model: z.instanceof(LlamaModel),
 
   /**
    * The parameters to pass to the text model.
@@ -85,6 +85,13 @@ export const Llama2TextProcessorPropsSchema = TextProcessorPropsSchema.extend({
     .default({}),
 
   /**
+   * The system prompt to use for generating text.
+   */
+  systemPrompt: z
+    .string()
+    .optional(),
+
+  /**
    * The prompt to use for generating text.
    */
   prompt: z.custom<dsl.IReference<
@@ -92,5 +99,5 @@ export const Llama2TextProcessorPropsSchema = TextProcessorPropsSchema.extend({
   >>()
 });
 
-// The type of the `Llama2TextProcessorProps` schema.
-export type Llama2TextProcessorProps = z.infer<typeof Llama2TextProcessorPropsSchema>;
+// The type of the `LlamaTextProcessorProps` schema.
+export type LlamaTextProcessorProps = z.infer<typeof LlamaTextProcessorPropsSchema>;

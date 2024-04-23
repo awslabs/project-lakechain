@@ -32,7 +32,8 @@ import {
  * Environment variables.
  */
 const MODEL_ID         = process.env.MODEL_ID;
-const PROMPT           = JSON.parse(process.env.PROMPT as string);
+const SYSTEM_PROMPT    = process.env.SYSTEM_PROMPT;
+const USER_PROMPT      = JSON.parse(process.env.PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
 const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
@@ -60,13 +61,49 @@ class Lambda implements LambdaInterface {
 
   /**
    * @param event the cloud event to use to resolve the prompt.
+   * @returns the prompt to use for generating text for Llama3.
+   */
+  private async getPromptv3(event: CloudEvent) {
+    let text = '<|begin_of_text|>';
+    const document = event.data().document();
+    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
+    const content = (await document.data().asBuffer()).toString('utf-8');
+
+    // Add the system prompt.
+    if (SYSTEM_PROMPT) {
+      text += `<|start_header_id|>system<|end_header_id|>\n${SYSTEM_PROMPT}<|eot_id|>`;
+    }
+    // Add the user prompt.
+    text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n${content}<|eot_id|>`;
+    // Add the assistant.
+    text += `<|start_header_id|>assistant<|end_header_id|>`;
+
+    return (text);
+  }
+
+  /**
+   * @param event the cloud event to use to resolve the prompt.
+   * @returns the prompt to use for generating text for Llama2.
+   */
+  private async getPromptv2(event: CloudEvent) {
+    const document = event.data().document();
+    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
+    const content = (await document.data().asBuffer()).toString('utf-8');
+    return (`[INST]${prompt}\n\n${content}[/INST]`);
+  }
+
+  /**
+   * @param event the cloud event to use to resolve the prompt.
    * @returns the prompt to use for generating text.
    */
   private async getPrompt(event: CloudEvent) {
-    const document = event.data().document();
-    const prompt = (await event.resolve(PROMPT)).toString('utf-8');
-    const content = (await document.data().asBuffer()).toString('utf-8');
-    return (`[INST]${prompt}[/INST]\n\n${content}`);
+    if (MODEL_ID?.startsWith('meta.llama2')) {
+      return (this.getPromptv2(event));
+    } else if (MODEL_ID?.startsWith('meta.llama3')) {
+      return (this.getPromptv3(event));
+    } else {
+      throw new Error(`Unsupported model ID: ${MODEL_ID}`);
+    }
   }
 
   /**
@@ -99,7 +136,7 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
-    const key = `${event.data().chainId()}/meta.${document.etag()}.txt`;
+    const key = `${event.data().chainId()}/${MODEL_ID}.${document.etag()}.txt`;
 
     // Transform the document.
     const value = await this.transform(event);

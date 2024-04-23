@@ -29,11 +29,11 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
-import { Llama2TextModel } from './definitions/model';
+import { LlamaModel } from './definitions/model';
 
 import {
-  Llama2TextProcessorProps,
-  Llama2TextProcessorPropsSchema,
+  LlamaTextProcessorProps,
+  LlamaTextProcessorPropsSchema,
   ModelParameters
 } from './definitions/opts.js';
 import {
@@ -47,8 +47,8 @@ import {
  * The service description.
  */
 const description: ServiceDescription = {
-  name: 'llama2-text-processor',
-  description: 'Generative text processing using Llama2 models on Amazon Bedrock.',
+  name: 'llama-text-processor',
+  description: 'Generative text processing using Llama models on Amazon Bedrock.',
   version: '0.4.0',
   attrs: {}
 };
@@ -70,17 +70,17 @@ const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
 const DEFAULT_MEMORY_SIZE = 128;
 
 /**
- * The builder for the `Llama2TextProcessor` service.
+ * The builder for the `LlamaTextProcessor` service.
  */
-class Llama2TextProcessorBuilder extends MiddlewareBuilder {
-  private middlewareProps: Partial<Llama2TextProcessorProps> = {};
+class LlamaTextProcessorBuilder extends MiddlewareBuilder {
+  private middlewareProps: Partial<LlamaTextProcessorProps> = {};
 
   /**
-   * Sets the Llama2 model to use for generating text.
-   * @param model the Llama2 text model to use.
+   * Sets the Llama model to use for generating text.
+   * @param model the Llama text model to use.
    * @returns the current builder instance.
    */
-  public withModel(model: Llama2TextModel) {
+  public withModel(model: LlamaModel) {
     this.middlewareProps.model = model;
     return (this);
   }
@@ -93,6 +93,16 @@ class Llama2TextProcessorBuilder extends MiddlewareBuilder {
    */
   public withModelParameters(parameters: ModelParameters) {
     this.middlewareProps.modelParameters = parameters;
+    return (this);
+  }
+
+  /**
+   * Sets the system prompt to use for generating text.
+   * @param prompt the system prompt to use for generating text.
+   * @returns the current builder instance.
+   */
+  public withSystemPrompt(prompt: string) {
+    this.middlewareProps.systemPrompt = prompt;
     return (this);
   }
 
@@ -127,14 +137,14 @@ class Llama2TextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
-   * @returns a new instance of the `Llama2TextProcessor`
+   * @returns a new instance of the `LlamaTextProcessor`
    * service constructed with the given parameters.
    */
-  public build(): Llama2TextProcessor {
-    return (new Llama2TextProcessor(
+  public build(): LlamaTextProcessor {
+    return (new LlamaTextProcessor(
       this.scope,
       this.identifier, {
-        ...this.middlewareProps as Llama2TextProcessorProps,
+        ...this.middlewareProps as LlamaTextProcessorProps,
         ...this.props
       }
     ));
@@ -142,10 +152,10 @@ class Llama2TextProcessorBuilder extends MiddlewareBuilder {
 }
 
 /**
- * A service providing text generation using Llama2 models
+ * A service providing text generation using Llama models
  * on Amazon Bedrock.
  */
-export class Llama2TextProcessor extends Middleware {
+export class LlamaTextProcessor extends Middleware {
 
   /**
    * The storage containing processed files.
@@ -158,14 +168,14 @@ export class Llama2TextProcessor extends Middleware {
   public eventProcessor: lambda.IFunction;
 
   /**
-   * The builder for the `Llama2TextProcessor` service.
+   * The builder for the `LlamaTextProcessor` service.
    */
-  static Builder = Llama2TextProcessorBuilder;
+  static Builder = LlamaTextProcessorBuilder;
 
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, private props: Llama2TextProcessorProps) {
+  constructor(scope: Construct, id: string, private props: LlamaTextProcessorProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
@@ -174,7 +184,7 @@ export class Llama2TextProcessor extends Middleware {
     });
 
     // Validate the properties.
-    this.props = this.parse(Llama2TextProcessorPropsSchema, props);
+    this.props = this.parse(LlamaTextProcessorPropsSchema, props);
 
     ///////////////////////////////////////////
     ////////    Processing Storage      ///////
@@ -206,7 +216,7 @@ export class Llama2TextProcessor extends Middleware {
     ///////////////////////////////////////////
 
     this.eventProcessor = new node.NodejsFunction(this, 'Compute', {
-      description: 'Generates text using Llama2 models on Amazon Bedrock.',
+      description: 'Generates text using Llama models on Amazon Bedrock.',
       entry: path.resolve(__dirname, 'lambdas', 'handler', 'index.js'),
       vpc: this.props.vpc,
       memorySize: this.props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
@@ -225,6 +235,7 @@ export class Llama2TextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         MODEL_ID: this.props.model.name,
+        SYSTEM_PROMPT: this.props.systemPrompt ?? '',
         PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
@@ -334,4 +345,4 @@ export class Llama2TextProcessor extends Middleware {
   }
 }
 
-export { Llama2TextModel } from './definitions/model';
+export { LlamaModel } from './definitions/model';

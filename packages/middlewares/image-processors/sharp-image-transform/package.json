@@ -50,7 +50,7 @@
     "@project-lakechain/sdk": "^0.7.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.137.0",
+    "aws-cdk-lib": "^2.138.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

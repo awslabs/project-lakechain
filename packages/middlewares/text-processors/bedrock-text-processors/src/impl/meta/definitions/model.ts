@@ -15,9 +15,9 @@
  */
 
 /**
- * The Llama2 text model properties.
+ * The Llama model properties.
  */
-export interface Llama2TextModelProps {
+export interface LlamaModelProps {
 
   /**
    * The name of the model.
@@ -31,9 +31,9 @@ export interface Llama2TextModelProps {
 }
 
 /**
- * A helper to select the Llama text model to use.
+ * A helper to select the Llama model to use.
  */
-export class Llama2TextModel {
+export class LlamaModel {
 
   /**
    * The name of the model.
@@ -49,7 +49,7 @@ export class Llama2TextModel {
    * The Bedrock `meta.llama2-13b-chat-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static LLAMA2_13B_CHAT_V1 = new Llama2TextModel({
+  public static LLAMA2_13B_CHAT_V1 = new LlamaModel({
     name: 'meta.llama2-13b-chat-v1',
     maxTokens: 4096
   });
@@ -58,22 +58,40 @@ export class Llama2TextModel {
    * The Bedrock `meta.llama2-70b-chat-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static LLAMA2_70B_CHAT_V1 = new Llama2TextModel({
+  public static LLAMA2_70B_CHAT_V1 = new LlamaModel({
     name: 'meta.llama2-70b-chat-v1',
     maxTokens: 4096
   });
 
   /**
-   * Create a new instance of the `LlamaTextModel`
+   * The Bedrock `meta.llama3-8b-instruct-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static LLAMA3_8B_INSTRUCT_V1 = new LlamaModel({
+    name: 'meta.llama3-8b-instruct-v1:0',
+    maxTokens: 8192
+  });
+
+  /**
+   * The Bedrock `meta.llama3-70b-instruct-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static LLAMA3_70B_INSTRUCT_V1 = new LlamaModel({
+    name: 'meta.llama3-70b-instruct-v1:0',
+    maxTokens: 8192
+  });
+
+  /**
+   * Create a new instance of the `LlamaModel`
    * by name.
    * @param props the properties of the model.
-   * @returns a new instance of the `LlamaTextModel`.
+   * @returns a new instance of the `LlamaModel`.
    */
-  public static of(props: Llama2TextModelProps) {
-    return (new Llama2TextModel(props));
+  public static of(props: LlamaModelProps) {
+    return (new LlamaModel(props));
   }
 
-  constructor(props: Llama2TextModelProps) {
+  constructor(props: LlamaModelProps) {
     this.name = props.name;
     this.maxTokens = props.maxTokens;
   }

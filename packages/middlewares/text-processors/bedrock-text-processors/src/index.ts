@@ -35,8 +35,8 @@ export {
 } from './impl/cohere';
 
 export {
-  Llama2TextProcessor,
-  Llama2TextModel
+  LlamaTextProcessor,
+  LlamaModel
 } from './impl/meta';
 
 export {
