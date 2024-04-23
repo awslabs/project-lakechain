@@ -12,10 +12,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import io
 import datetime
-from pdfminer.pdfdocument import PDFDocument
+import pdfplumber
+
 from time import mktime, strptime
-import logging
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfinterp import resolve1
+from parsing import create_document
 
 def to_date(date_str: str) -> datetime.datetime | None:
   """
@@ -32,17 +36,20 @@ def to_date(date_str: str) -> datetime.datetime | None:
     return None
 
 
-def get_document_metadata(doc: PDFDocument, pages = 1) -> dict:
+def get_document_metadata(doc: PDFDocument | bytes) -> dict:
   """
   Returns the metadata of the given PDF document.
   :param doc: The PDF document.
   :return: The metadata of the given PDF document.
   """
+  if isinstance(doc, bytes):
+    doc = create_document(doc)
+
   metadata = {
     'properties': {
       'kind': 'text',
       'attrs': {
-        'pages': pages
+        'pages': resolve1(doc.catalog['Pages'])['Count']
       }
     }
   }
@@ -96,5 +103,67 @@ def get_document_metadata(doc: PDFDocument, pages = 1) -> dict:
             metadata['updatedAt'] = date.isoformat()
         except:
           pass
+
+  return metadata
+
+
+def get_layout_from_document(data: bytes) -> dict:
+  """
+  Returns the layout metadata of the given PDF document.
+  :param data: The content of the PDF document.
+  :return: The metadata of the given PDF document.
+  """
+  metadata = {
+    'properties': {
+      'kind': 'text',
+      'attrs': {
+        'layout': {
+          'table_count': 0,
+          'image_count': 0
+        }
+      }
+    }
+  }
+
+  with pdfplumber.open(io.BytesIO(data)) as pdf:
+    layout = metadata['properties']['attrs']['layout']
+    for page in pdf.pages:
+      if page.find_tables():
+        tables = page.extract_tables()
+        layout['tableCount'] += len(tables)
+      if page.images:
+        layout['imageCount'] += len(page.images)
+
+  return metadata
+
+
+def get_layout_from_page(data: bytes, page_number: int) -> dict:
+  """
+  Returns the layout metadata of the given PDF page.
+  :param data: The content of the PDF document.
+  :return: The metadata of the given PDF document.
+  """
+  metadata = {
+    'properties': {
+      'kind': 'text',
+      'attrs': {
+        'layout': {
+          'tableCount': 0,
+          'imageCount': 0
+        }
+      }
+    }
+  }
+
+  with pdfplumber.open(io.BytesIO(data)) as pdf:
+    layout = metadata['properties']['attrs']['layout']
+    if page_number < 1 or page_number > len(pdf.pages):
+      raise ValueError(f'Invalid page number: {page_number}')
+    page = pdf.pages[page_number - 1]
+    if page.find_tables():
+      tables = page.extract_tables()
+      layout['tableCount'] += len(tables)
+    if page.images:
+      layout['imageCount'] += len(page.images)
 
   return metadata

@@ -3,3 +3,6 @@ aws_lambda_powertools==2.30.2
 aws-xray-sdk==2.12.1
 pypandoc==1.12
 pdfminer.six==20231228
+pdf2image==1.17.0
+pdfplumber==0.11.0
+pypdf==4.2.0

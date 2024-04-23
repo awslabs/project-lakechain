@@ -20,13 +20,11 @@ title: PDF
 
 ---
 
-The PDF text converter makes it possible to turn PDF documents into plain text documents. This can be helpful when extracting the text substance of PDF documents to analyze them, create vector embeddings, or use them as input to other NLP models.
-
-> 💁 At this time, only text is extracted from PDF documents and other attributes such as images are not extracted.
+The PDF processor makes it possible to handle PDF documents, and convert them into different formats. This can be helpful when extracting the text substance of PDF documents to analyze them, create vector embeddings, or use them as input to other NLP models.
 
 ---
 
-### 🖨️ Converting PDFs
+### 🖨️ Converting to Text
 
 To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline.
 
@@ -58,6 +56,117 @@ class Stack extends cdk.Stack {
       .build());
   }
 }
+```
+
+<br>
+
+---
+
+#### Converting Documents
+
+The PDF processor makes it possible to specify a specific task to be performed to the middleware. By default, as seen in the previous example, the PDF processor converts the entire document to plain text. However, you can specify a task to convert the document to a different format. Below is a table describing the supported output types for document level.
+
+| Output Type | Description |
+| ----------- | ----------- |
+| `text` | Convert the entire document to text. |
+| `image` | Convert the entire document as a JPEG image. |
+
+> 💁 In the below example, we convert an entire PDF document as a stitched image containing all pages of the document.
+
+```typescript
+import { PdfTextConverter, ExtractDocumentTask } from '@project-lakechain/pdf-text-converter';
+
+const pdf = new PdfTextConverter.Builder()
+  .withScope(this)
+  .withIdentifier('PdfTextConverter')
+  .withCacheStorage(cache)
+  .withSource(source)
+  .withTask(new ExtractDocumentTask.Builder()
+    .withOutputType('image') 
+    .build()
+  )
+  .build();
+```
+
+<br>
+
+---
+
+#### Layout Detection
+
+The `ExtractDocumentTask` supports layout detection to detect the number of tables and images present across the entire PDF document, these information are added as metadata to the output documents. To enable layout extraction, you use the `withLayoutExtraction` method.
+
+```typescript
+import { PdfTextConverter, ExtractDocumentTask } from '@project-lakechain/pdf-text-converter';
+
+const pdf = new PdfTextConverter.Builder()
+  .withScope(this)
+  .withIdentifier('PdfTextConverter')
+  .withCacheStorage(cache)
+  .withSource(trigger)
+  .withTask(new ExtractDocumentTask.Builder()
+    .withOutputType('text')
+    .withLayoutExtraction(true) // 👈 Enable layout extraction
+    .build()
+  )
+  .build();
+```
+
+<br>
+
+---
+
+### 📄 Extracting Pages
+
+In addition to being able to process an entire PDF document, the PDF processor can act on the *page* level, rather than on the entire document.
+
+> 💁 In the below example we configure the PDF processor to extract each pages from the PDF document as a separate document, and forward each of them to the next middlewares in the pipeline.
+
+```typescript
+import { PdfTextConverter, ExtractPagesTask } from '@project-lakechain/pdf-text-converter';
+
+const pdf = new PdfTextConverter.Builder()
+  .withScope(this)
+  .withIdentifier('PdfTextConverter')
+  .withCacheStorage(cache)
+  .withSource(trigger)
+  .withTask(new ExtractPagesTask.Builder()
+    .withOutputType('pdf') 
+    .build()
+  )
+  .build();
+```
+
+By using the `ExtractPagesTask`, you can act on a page level and request the middleware to convert each pages to different formats. Below is a table describing the supported output types for each pages.
+
+| Output Type | Description |
+| ----------- | ----------- |
+| `pdf` | Convert each page to a PDF document. |
+| `text` | Convert each page to a plain text document. |
+| `image` | Convert each page as a JPEG image. |
+
+<br>
+
+---
+
+#### Layout Detection
+
+The `ExtractPagesTask` supports layout detection to detect the number of tables and images present in each page, these information are added as metadata to the output documents. To enable layout extraction, you use the `withLayoutExtraction` method.
+
+```typescript
+import { PdfTextConverter, ExtractPagesTask } from '@project-lakechain/pdf-text-converter';
+
+const pdf = new PdfTextConverter.Builder()
+  .withScope(this)
+  .withIdentifier('PdfTextConverter')
+  .withCacheStorage(cache)
+  .withSource(trigger)
+  .withTask(new ExtractPagesTask.Builder()
+    .withOutputType('pdf')
+    .withLayoutExtraction(true) // 👈 Enable layout extraction
+    .build()
+  )
+  .build();
 ```
 
 <br>
@@ -102,7 +211,9 @@ This middleware is based on a Lambda compute running the `pdfminer.six` library 
 
 |  Mime Type  | Description |
 | ----------- | ----------- |
-| `text/plain` | Plain text documents. |
+| `text/plain` | Plain text if output type is `text`. |
+| `image/jpeg` | JPEG images if output type is `image`. |
+| `application/pdf` | PDF documents if output type is `pdf`. |
 
 ##### Supported Compute Types
 
@@ -117,3 +228,4 @@ This middleware is based on a Lambda compute running the `pdfminer.six` library 
 ### 📖 Examples
 
 - [Building a RAG Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-rag-pipeline/) - End-to-end RAG pipeline using Amazon Bedrock and Amazon OpenSearch.
+- [PDF Vision Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/pdf-vision-pipeline) - A pipeline transcribing PDF documents to text using a vision model.

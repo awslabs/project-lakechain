@@ -15,10 +15,30 @@
  */
 
 import { z } from 'zod';
+import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
+import {
+  ExtractPagesTask,
+  ExtractDocumentTask
+} from './tasks';
 
-export const StatsSchema = z.object({
-  words: z.number().optional(),
-  sentences: z.number().optional()
+/**
+ * The middleware properties schema.
+ */
+export const PdfProcessorPropsSchema = MiddlewarePropsSchema.extend({
+
+  /**
+   * The task to perform.
+   * @default extracts the entire document as text.
+   */
+  task: z.union([
+    z.custom<ExtractPagesTask>(),
+    z.custom<ExtractDocumentTask>()
+  ])
+  .default(new ExtractDocumentTask.Builder()
+    .withOutputType('text')
+    .build()
+  )
 });
 
-export type Stats = z.infer<typeof StatsSchema>;
+// The type of the `PdfProcessorProps` schema.
+export type PdfProcessorProps = z.infer<typeof PdfProcessorPropsSchema>;

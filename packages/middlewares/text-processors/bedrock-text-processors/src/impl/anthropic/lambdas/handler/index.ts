@@ -36,7 +36,8 @@ import {
  * Environment variables.
  */
 const MODEL_ID         = process.env.MODEL_ID;
-const SYSTEM_PROMPT    = JSON.parse(process.env.PROMPT as string);
+const SYSTEM_PROMPT    = process.env.SYSTEM_PROMPT;
+const USER_PROMPT      = JSON.parse(process.env.PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
 const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
@@ -103,7 +104,10 @@ class Lambda implements LambdaInterface {
    * @returns an array of messages to use for generating text.
    */
   private async getMessages(event: CloudEvent) {
-    const messages = [{ role: 'user', content: [] as any[] }];
+    const prompt   = (await event.resolve(USER_PROMPT)).toString('utf-8');
+    const messages = [{ role: 'user', content: [
+      { type: 'text', text: prompt }
+    ] as any[] }];
 
     // Get the input documents.
     const events = (await this
@@ -171,7 +175,7 @@ class Lambda implements LambdaInterface {
   private async getBody(event: CloudEvent) {
     return ({
       anthropic_version: 'bedrock-2023-05-31',
-      system: (await event.resolve(SYSTEM_PROMPT)).toString('utf-8'),
+      system: SYSTEM_PROMPT,
       messages: await this.getMessages(event),
       ...MODEL_PARAMETERS
     });

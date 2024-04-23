@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-export * from './chunk';
-export * from './encoding';
-export * from './entities';
-export * from './layout';
-export * from './pii';
-export * from './pos';
-export * from './sentiment';
-export * from './text-stats';
+import { z } from 'zod';
+
+export const LayoutSchema = z.object({
+  tableCount: z.number().optional(),
+  imageCount: z.number().optional()
+});
+
+export type Layout = z.infer<typeof LayoutSchema>;

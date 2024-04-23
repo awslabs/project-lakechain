@@ -60,7 +60,8 @@ const DataEnvelopeSchema = z.object({
    * by the middlewares in the chain.
    */
   metadata: DocumentMetadataSchema
-    .describe('An object containing additional metadata about the document.'),
+    .describe('An object containing additional metadata about the document.')
+    .default({}),
 
   /**
    * The call stack keeping track of the

@@ -26,11 +26,15 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
+import { PdfProcessorProps, PdfProcessorPropsSchema } from './definitions/opts';
 
+import {
+  ExtractPagesTask,
+  ExtractDocumentTask
+} from './definitions/tasks';
 import {
   Middleware,
   MiddlewareBuilder,
-  MiddlewareProps,
   LAMBDA_INSIGHTS_VERSION,
   NAMESPACE
 } from '@project-lakechain/core/middleware';
@@ -40,7 +44,7 @@ import {
  */
 const description: ServiceDescription = {
   name: 'pdf-text-converter',
-  description: 'Converts PDF documents into plain text.',
+  description: 'Converts PDF documents into different formats.',
   version: '0.4.0',
   attrs: {}
 };
@@ -49,7 +53,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.minutes(5);
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(10);
 
 /**
  * The default memory size to allocate for the compute.
@@ -60,6 +64,18 @@ const DEFAULT_MEMORY_SIZE = 512;
  * Builder for the `PdfTextConverter` service.
  */
 class PdfTextConverterBuilder extends MiddlewareBuilder {
+  private providerProps: Partial<PdfProcessorProps> = {};
+
+  /**
+   * Specifies the task to perform.
+   * @param task an instance of the task to perform.
+   * @returns the builder instance.
+   * @default extracts the entire document as text.
+   */
+  public withTask(task: ExtractPagesTask | ExtractDocumentTask) {
+    this.providerProps.task = task;
+    return (this);
+  }
 
   /**
    * @returns a new instance of the `PdfTextConverter`
@@ -69,6 +85,7 @@ class PdfTextConverterBuilder extends MiddlewareBuilder {
     return (new PdfTextConverter(
       this.scope,
       this.identifier, {
+        ...this.providerProps as PdfProcessorProps,
         ...this.props
       }
     ));
@@ -76,7 +93,7 @@ class PdfTextConverterBuilder extends MiddlewareBuilder {
 }
 
 /**
- * Converts PDF documents into plain text.
+ * Converts PDF documents into different formats.
  */
 export class PdfTextConverter extends Middleware {
 
@@ -98,13 +115,16 @@ export class PdfTextConverter extends Middleware {
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, props: MiddlewareProps) {
+  constructor(scope: Construct, id: string, private props: PdfProcessorProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
-        6 * PROCESSING_TIMEOUT.toSeconds()
+        3 * PROCESSING_TIMEOUT.toSeconds()
       )
     });
+
+    // Validate the properties.
+    this.props = this.parse(PdfProcessorPropsSchema, props);
 
     ///////////////////////////////////////////
     ////////    Processing Storage      ///////
@@ -117,20 +137,20 @@ export class PdfTextConverter extends Middleware {
     ///////////////////////////////////////////
     ///////    Processing Function      ///////
     ///////////////////////////////////////////
-
+    
     this.eventProcessor = new lambda.DockerImageFunction(this, 'TextConverter', {
-      description: 'Middleware converting PDF documents into plain text.',
+      description: 'Middleware converting PDF documents into different formats.',
       code: lambda.DockerImageCode.fromImageAsset(
-        path.resolve(__dirname, 'lambdas', 'text-converter')
+        path.resolve(__dirname, 'lambdas', 'processor')
       ),
-      vpc: props.vpc,
-      memorySize: props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
+      vpc: this.props.vpc,
+      memorySize: this.props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
       timeout: PROCESSING_TIMEOUT,
       architecture: lambda.Architecture.X86_64,
       tracing: lambda.Tracing.ACTIVE,
-      environmentEncryption: props.kmsKey,
+      environmentEncryption: this.props.kmsKey,
       logGroup: this.logGroup,
-      insightsVersion: props.cloudWatchInsights ?
+      insightsVersion: this.props.cloudWatchInsights ?
         LAMBDA_INSIGHTS_VERSION :
         undefined,
       environment: {
@@ -138,6 +158,7 @@ export class PdfTextConverter extends Middleware {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
+        TASK: JSON.stringify(this.props.task)
       }
     });
 
@@ -148,7 +169,7 @@ export class PdfTextConverter extends Middleware {
 
     // Plug the SQS queue into the lambda function.
     this.eventProcessor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
-      batchSize: props.batchSize ?? 2,
+      batchSize: this.props.batchSize ?? 1,
       reportBatchItemFailures: true
     }));
 
@@ -182,9 +203,17 @@ export class PdfTextConverter extends Middleware {
    * type by the data producer.
    */
   supportedOutputTypes(): string[] {
-    return ([
-      'text/plain'
-    ]);
+    const task = this.props.task;
+    
+    if (task.props.outputType === 'text') {
+      return (['text/plain']);
+    } else if (task.props.outputType === 'image') {
+      return (['image/jpeg']);
+    } else if (task.props.outputType === 'pdf') {
+      return (['application/pdf'])
+    } else {
+      throw new Error(`Invalid output type ${task.props.outputType}`);
+    }
   }
 
   /**
@@ -211,3 +240,5 @@ export class PdfTextConverter extends Middleware {
     );
   }
 }
+
+export { ExtractPagesTask, ExtractDocumentTask } from './definitions/tasks';

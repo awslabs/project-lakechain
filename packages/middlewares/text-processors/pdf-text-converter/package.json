@@ -1,6 +1,6 @@
 {
   "name": "@project-lakechain/pdf-text-converter",
-  "description": "Converts PDF documents into plain text.",
+  "description": "Converts PDF documents into different formats.",
   "version": "0.7.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

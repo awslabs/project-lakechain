@@ -24,6 +24,7 @@ import { ChunkSchema } from './attributes/chunk.js';
 import { PointerBuilder } from '../../../../pointer';
 import { VectorEmbeddingSchema } from '../attributes/vector-embedding.js';
 import { EncodingSchema } from './attributes/encoding.js';
+import { LayoutSchema } from './attributes/layout.js';
 
 /**
  * Represents additional metadata associated with
@@ -48,11 +49,34 @@ export const TextMetadataSchema = z.object({
     .optional(),
 
   /**
+   * The page number associated with the text document.
+   */
+  page: z
+    .number()
+    .describe('The page number associated with the text document.')
+    .optional(),
+
+  /**
    * The number of chapters in the text document.
    */
   chapters: z
     .number()
     .describe('The number of chapters in the text document.')
+    .optional(),
+
+  /**
+   * The chapter number associated with the text document.
+   */
+  chapter: z
+    .number()
+    .describe('The chapter number associated with the text document.')
+    .optional(),
+
+  /**
+   * Describes the layout of the document.
+   */
+  layout: LayoutSchema
+    .describe('Describes the layout of the document.')
     .optional(),
 
   /**

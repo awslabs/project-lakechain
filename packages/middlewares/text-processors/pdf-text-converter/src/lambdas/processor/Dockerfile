@@ -9,7 +9,10 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
   yum install -y \
       wget \
       tar \
-      gzip && \
+      gzip \
+      poppler-utils \
+      python-poppler \
+      gcc && \
   yum clean all && \
   rm -rf /var/cache/yum
 

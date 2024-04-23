@@ -131,6 +131,7 @@ class Lambda implements LambdaInterface {
         const results = await dynamoDb.send(new QueryCommand({
           TableName: TABLE_NAME,
           KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :prefix)',
+          ConsistentRead: true,
           ExpressionAttributeNames: {
             '#pk': 'pk',
             '#sk': 'sk'

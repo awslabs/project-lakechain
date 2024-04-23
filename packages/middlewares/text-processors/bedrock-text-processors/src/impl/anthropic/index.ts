@@ -97,6 +97,16 @@ class AnthropicTextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
+   * Sets the system prompt to use for generating text.
+   * @param prompt the system prompt to use for generating text.
+   * @returns the current builder instance.
+   */
+  public withSystemPrompt(prompt: string) {
+    this.middlewareProps.systemPrompt = prompt;
+    return (this);
+  }
+
+  /**
    * Sets the prompt to use for generating text.
    * @param prompt the prompt to use for generating text.
    * @returns the current builder instance.
@@ -225,6 +235,7 @@ export class AnthropicTextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         MODEL_ID: this.props.model.name,
+        SYSTEM_PROMPT: this.props.systemPrompt ?? '',
         PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,

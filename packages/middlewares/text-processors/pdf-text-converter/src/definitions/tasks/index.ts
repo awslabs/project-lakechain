@@ -14,11 +14,5 @@
  * limitations under the License.
  */
 
-export * from './chunk';
-export * from './encoding';
-export * from './entities';
-export * from './layout';
-export * from './pii';
-export * from './pos';
-export * from './sentiment';
-export * from './text-stats';
+export * from './extract-document-task';
+export * from './extract-pages-task';
