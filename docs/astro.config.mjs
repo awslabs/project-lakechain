@@ -133,8 +133,8 @@ export default defineConfig({
 					label: 'Cohere',
 					link: '/generative-ai/cohere-text-processor'
 				}, {
-					label: 'Llama2',
-					link: '/generative-ai/llama2-text-processor'
+					label: 'Llama',
+					link: '/generative-ai/llama-text-processor'
 				}, {
 					label: 'Mistral',
 					link: '/generative-ai/mistral-text-processor'
