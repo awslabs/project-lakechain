@@ -40,7 +40,7 @@ export const audioExtraction = async (events: CloudEvent[], ffmpeg: Ffmpeg, util
  */
 export const shorten = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) => {
   const video = events.find((event) => event.data().document().mimeType() === 'video/mp4');
-  const short = events.find((event) => event.data().document().mimeType() === 'application/json');
+  const short = events.find((event) => event.data().document().mimeType() === 'text/plain');
   let chain   = ffmpeg();
 
   /**

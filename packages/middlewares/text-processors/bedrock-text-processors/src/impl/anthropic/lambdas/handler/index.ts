@@ -39,7 +39,7 @@ const MODEL_ID          = process.env.MODEL_ID;
 const SYSTEM_PROMPT     = process.env.SYSTEM_PROMPT;
 const USER_PROMPT       = JSON.parse(process.env.PROMPT as string);
 const ASSISTANT_PREFILL = process.env.ASSISTANT_PREFILL as string;
-const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
+const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string);
 const TARGET_BUCKET     = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**

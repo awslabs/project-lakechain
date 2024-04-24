@@ -30,8 +30,6 @@ import { TranscribeAudioProcessor } from '@project-lakechain/transcribe-audio-pr
 import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 import { FfmpegProcessor } from '@project-lakechain/ffmpeg-processor';
-import { Transform } from '@project-lakechain/transform';
-import { parseExpression } from './funclets/transform';
 
 import {
   audioExtraction,
@@ -135,20 +133,11 @@ export class VideoChapteringStack extends cdk.Stack {
       .withRegion('us-east-1')
       .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
       .withPrompt(prompt)
+      .withAssistantPrefill('[')
       .withModelParameters({
-        temperature: 0.2,
+        temperature: 0.3,
         max_tokens: 4096
       })
-      .build();
-
-    // Parses the output of the LLM to ensure that the
-    // JSON output is valid.
-    const parseOutput = new Transform.Builder()
-      .withScope(this)
-      .withIdentifier('ParseTransform')
-      .withCacheStorage(cache)
-      .withSource(chapterCreator)
-      .withTransformExpression(parseExpression)
       .build();
 
     // The reducer middleware will aggregate the input video
@@ -159,7 +148,7 @@ export class VideoChapteringStack extends cdk.Stack {
       .withCacheStorage(cache)
       .withSources([
         trigger,
-        parseOutput
+        chapterCreator
       ])
       .withReducerStrategy(new StaticCounterStrategy.Builder()
         .withEventCount(2)
@@ -185,7 +174,7 @@ export class VideoChapteringStack extends cdk.Stack {
       .withCacheStorage(cache)
       .withDestinationBucket(destination)
       .withSources([
-        parseOutput,
+        chapterCreator,
         ffmpeg
       ])
       .build();

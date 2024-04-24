@@ -33,7 +33,6 @@
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/transcribe-audio-processor": "*",
     "@project-lakechain/reducer": "*",
-    "@project-lakechain/transform": "*",
     "@project-lakechain/ffmpeg-processor": "*",
     "@project-lakechain/bedrock-text-processors": "*",
     "@project-lakechain/s3-storage-connector": "*"
