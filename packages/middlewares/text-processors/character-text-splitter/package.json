@@ -45,11 +45,11 @@
     "@aws-lambda-powertools/tracer": "^1.18.1",
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
-    "langchain": "^0.1.35",
+    "langchain": "^0.1.36",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.138.0",
+    "aws-cdk-lib": "^2.139.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

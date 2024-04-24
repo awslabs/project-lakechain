@@ -50,7 +50,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.138.0",
+    "aws-cdk-lib": "^2.139.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

@@ -23,7 +23,7 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "langchain": "^0.1.35",
+    "langchain": "^0.1.36",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

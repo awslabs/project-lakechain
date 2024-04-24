@@ -35,7 +35,7 @@
     "@types/is-html": "^2.0.2",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "cdk-nag": "^2.28.97",
+    "cdk-nag": "^2.28.98",
     "esbuild": "^0.20.2",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.2"
@@ -52,7 +52,7 @@
     "file-type": "^19.0.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.138.0",
+    "aws-cdk-lib": "^2.139.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

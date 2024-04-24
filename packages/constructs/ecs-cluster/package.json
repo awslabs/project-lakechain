@@ -44,7 +44,7 @@
     "@types/aws-lambda": "^8.10.137",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
-    "cdk-nag": "^2.28.97",
+    "cdk-nag": "^2.28.98",
     "esbuild": "^0.20.2",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
@@ -52,7 +52,7 @@
     "ts-jest": "^29.1.2"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.138.0",
+    "aws-cdk-lib": "^2.139.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
