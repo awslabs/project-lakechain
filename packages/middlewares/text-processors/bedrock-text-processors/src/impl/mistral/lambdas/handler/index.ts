@@ -31,10 +31,12 @@ import {
 /**
  * Environment variables.
  */
-const MODEL_ID         = process.env.MODEL_ID;
-const PROMPT           = JSON.parse(process.env.PROMPT as string);
-const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
-const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
+const MODEL_ID          = process.env.MODEL_ID;
+const SYSTEM_PROMPT     = process.env.SYSTEM_PROMPT;
+const USER_PROMPT       = JSON.parse(process.env.PROMPT as string);
+const ASSISTANT_PREFILL = process.env.ASSISTANT_PREFILL as string;
+const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string);
+const TARGET_BUCKET     = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The Bedrock runtime.
@@ -63,10 +65,30 @@ class Lambda implements LambdaInterface {
    * @returns the prompt to use for generating text.
    */
   private async getPrompt(event: CloudEvent) {
+    let text = '<s>[INST]';
     const document = event.data().document();
-    const prompt = (await event.resolve(PROMPT)).toString('utf-8');
+    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
     const content = (await document.data().asBuffer()).toString('utf-8');
-    return (`<s>[INST]${prompt}\n\n${content}[/INST]</s>`);
+
+    // Add the system prompt.
+    if (SYSTEM_PROMPT) {
+      text += `${SYSTEM_PROMPT} `;
+    }
+
+    // Add the user prompt and content.
+    text += `${prompt}\n\n${content}[/INST] `;
+
+    // Add the assistant prefill.
+    if (ASSISTANT_PREFILL) {
+      text += `${ASSISTANT_PREFILL}`;
+    }
+
+    // Add closing tag.
+    text += '</s>';
+
+    console.log(text);
+
+    return (text);
   }
 
   /**
@@ -86,9 +108,20 @@ class Lambda implements LambdaInterface {
     });
 
     // Parse the response into a buffer.
-    return (Buffer.from(
+    let buffer = Buffer.from(
       JSON.parse(response.body.transformToString()).outputs[0].text.trim()
-    ));
+    );
+
+    // If an assistant prefill has been passed to the model, we
+    // prepend it to the generated text.
+    if (ASSISTANT_PREFILL) {
+      buffer = Buffer.concat([
+        Buffer.from(ASSISTANT_PREFILL),
+        buffer
+      ]);
+    }
+
+    return (buffer);
   }
 
   /**

@@ -93,11 +93,26 @@ export const MistralTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
     }),
 
   /**
+   * The system prompt to use for generating text.
+   */
+  systemPrompt: z
+    .string()
+    .optional(),
+
+  /**
    * The prompt to use for generating text.
    */
   prompt: z.custom<dsl.IReference<
     dsl.IReferenceSubject
-  >>()
+  >>(),
+
+  /**
+   * The assistant prefill to use for generating text.
+   */
+  assistantPrefill: z
+    .string()
+    .optional()
+    .default('')
 });
 
 // The type of the `MistralTextProcessorProps` schema.

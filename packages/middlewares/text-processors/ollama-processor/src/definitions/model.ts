@@ -75,7 +75,17 @@ export class OllamaModel {
    * The `llama2` model.
    * @see https://ollama.com/library/llama2
    */
-  public static LLAMA2 = new OllamaModel('llama2', {
+  public static LLAMA_2 = new OllamaModel('llama2', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `llama3` model.
+   * @see https://ollama.com/library/llama3
+   */
+  public static LLAMA_3 = new OllamaModel('llama3', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -128,7 +138,7 @@ export class OllamaModel {
    * The `codellama` model.
    * @see https://ollama.com/library/codellama
    */
-  public static CODELLAMA = new OllamaModel('codellama', {
+  public static CODE_LLAMA = new OllamaModel('codellama', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -185,6 +195,16 @@ export class OllamaModel {
   });
 
   /**
+   * The `phi3` model.
+   * @see https://ollama.com/library/phi3
+   */
+  public static PHI_3 = new OllamaModel('phi3', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `deepseek-coder` model.
    * @see https://ollama.com/library/deepseek-coder
    */
@@ -228,7 +248,7 @@ export class OllamaModel {
    * The `openhermes` model.
    * @see https://ollama.com/library/openhermes
    */
-  public static OPENHERMES = new OllamaModel('openhermes', {
+  public static OPEN_HERMES = new OllamaModel('openhermes', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -238,7 +258,7 @@ export class OllamaModel {
    * The `wizardcoder` model.
    * @see https://ollama.com/library/wizardcoder
    */
-  public static WIZARDCODER = new OllamaModel('wizardcoder', {
+  public static WIZARD_CODER = new OllamaModel('wizardcoder', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -268,7 +288,7 @@ export class OllamaModel {
    * The `tinyllama` model.
    * @see https://ollama.com/library/tinyllama
    */
-  public static TINYLLAMA = new OllamaModel('tinyllama', {
+  public static TINY_LLAMA = new OllamaModel('tinyllama', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -298,7 +318,7 @@ export class OllamaModel {
    * The `orca2` model.
    * @see https://ollama.com/library/orca2
    */
-  public static ORCA2 = new OllamaModel('orca2', {
+  public static ORCA_2 = new OllamaModel('orca2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -378,7 +398,7 @@ export class OllamaModel {
    * The `starcoder2` model.
    * @see https://ollama.com/library/starcoder2
    */
-  public static STARCODER2 = new OllamaModel('starcoder2', {
+  public static STARCODER_2 = new OllamaModel('starcoder2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -388,7 +408,7 @@ export class OllamaModel {
    * The `medllama2` model.
    * @see https://ollama.com/library/medllama2
    */
-  public static MEDLLAMA2 = new OllamaModel('medllama2', {
+  public static MEDLLAMA_2 = new OllamaModel('medllama2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -408,7 +428,7 @@ export class OllamaModel {
    * The `everythinglm` model.
    * @see https://ollama.com/library/everythinglm
    */
-  public static EVERYTHINGLM = new OllamaModel('everythinglm', {
+  public static EVERYTHING_LM = new OllamaModel('everythinglm', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -418,7 +438,7 @@ export class OllamaModel {
    * The `bakllava` model.
    * @see https://ollama.com/library/bakllava
    */
-  public static BAKLLAVA = new OllamaModel('bakllava', {
+  public static BAK_LLAVA = new OllamaModel('bakllava', {
     tag: 'latest',
     inputs: [
       'text/plain',
@@ -461,7 +481,7 @@ export class OllamaModel {
    * The `sqlcoder` model.
    * @see https://ollama.com/library/sqlcoder
    */
-  public static SQLCODER = new OllamaModel('sqlcoder', {
+  public static SQL_CODER = new OllamaModel('sqlcoder', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -471,7 +491,7 @@ export class OllamaModel {
    * The `tinydolphin` model.
    * @see https://ollama.com/library/tinydolphin
    */
-  public static TINYDOLPHIN = new OllamaModel('tinydolphin', {
+  public static TINY_DOLPHIN = new OllamaModel('tinydolphin', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -481,7 +501,7 @@ export class OllamaModel {
    * The `dolphincoder` model.
    * @see https://ollama.com/library/dolphincoder
    */
-  public static DOLPHINCODER = new OllamaModel('dolphincoder', {
+  public static DOLPHIN_CODER = new OllamaModel('dolphincoder', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -531,7 +551,7 @@ export class OllamaModel {
    * The `stablelm2` model.
    * @see https://ollama.com/library/stablelm2
    */
-  public static STABLELM2 = new OllamaModel('stablelm2', {
+  public static STABLE_LM_2 = new OllamaModel('stablelm2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -551,7 +571,7 @@ export class OllamaModel {
    * The `codebooga` model.
    * @see https://ollama.com/library/codebooga
    */
-  public static CODEBOOGA = new OllamaModel('codebooga', {
+  public static CODE_BOOGA = new OllamaModel('codebooga', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -561,7 +581,7 @@ export class OllamaModel {
    * The `nexusraven` model.
    * @see https://ollama.com/library/nexusraven
    */
-  public static NEXUSRAVEN = new OllamaModel('nexusraven', {
+  public static NEXUS_RAVEN = new OllamaModel('nexusraven', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -571,7 +591,7 @@ export class OllamaModel {
    * The `mistrallite` model.
    * @see https://ollama.com/library/mistrallite
    */
-  public static MISTRALLITE = new OllamaModel('mistrallite', {
+  public static MISTRAL_LITE = new OllamaModel('mistrallite', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -611,7 +631,7 @@ export class OllamaModel {
    * The `megadolphin` model.
    * @see https://ollama.com/library/megadolphin
    */
-  public static MEGADOLPHIN = new OllamaModel('megadolphin', {
+  public static MEGA_DOLPHIN = new OllamaModel('megadolphin', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -621,7 +641,17 @@ export class OllamaModel {
    * The `wizardlm` model.
    * @see https://ollama.com/library/wizardlm
    */
-  public static WIZARDLM = new OllamaModel('wizardlm', {
+  public static WIZARD_LM = new OllamaModel('wizardlm', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `wizardlm2` model.
+   * @see https://ollama.com/library/wizardlm2
+   */
+  public static WIZARD_LM_2 = new OllamaModel('wizardlm2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -642,6 +672,36 @@ export class OllamaModel {
    * @see https://ollama.com/library/duckdb-nsql
    */
   public static DUCKDB_NSQL = new OllamaModel('duckdb-nsql', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `command-r` model.
+   * @see https://ollama.com/library/command-r
+   */
+  public static COMMAND_R = new OllamaModel('command-r', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `command-r-plus` model.
+   * @see https://ollama.com/library/command-r-plus
+   */
+  public static COMMAND_R_PLUS = new OllamaModel('command-r-plus', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `dbrx` model.
+   * @see https://ollama.com/library/dbrx
+   */
+  public static DBRX = new OllamaModel('dbrx', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']

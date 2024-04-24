@@ -74,6 +74,7 @@ class Lambda implements LambdaInterface {
     if (SYSTEM_PROMPT) {
       text += `<|start_header_id|>system<|end_header_id|>\n${SYSTEM_PROMPT}<|eot_id|>`;
     }
+    
     // Add the user prompt and content.
     text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n${content}<|eot_id|>`;
     

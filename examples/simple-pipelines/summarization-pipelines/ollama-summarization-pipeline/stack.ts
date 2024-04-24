@@ -128,7 +128,7 @@ export class OllamaSummarizationStack extends cdk.Stack {
         pandocConverter,
         trigger
       ])
-      .withModel(OllamaModel.LLAMA2)
+      .withModel(OllamaModel.LLAMA_3)
       .withPrompt(`Provide a detailed summary of the document`)
       .withInfrastructure(new InfrastructureDefinition.Builder()
         .withMaxMemory(15 * 1024)

@@ -97,6 +97,16 @@ class MistralTextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
+   * Sets the system prompt to use for generating text.
+   * @param prompt the system prompt to use for generating text.
+   * @returns the current builder instance.
+   */
+  public withSystemPrompt(prompt: string) {
+    this.middlewareProps.systemPrompt = prompt;
+    return (this);
+  }
+
+  /**
    * Sets the prompt to use for generating text.
    * @param prompt the prompt to use for generating text.
    * @returns the current builder instance.
@@ -111,6 +121,17 @@ class MistralTextProcessorBuilder extends MiddlewareBuilder {
     }
 
     this.middlewareProps.prompt = reference;
+    return (this);
+  }
+
+  /**
+   * Sets the assistant prefill to use for generating text.
+   * @param prefill the assistant prefill to use for generating text.
+   * @returns the current builder instance.
+   * @default ''
+   */
+  public withAssistantPrefill(prefill: string) {
+    this.middlewareProps.assistantPrefill = prefill;
     return (this);
   }
 
@@ -225,7 +246,9 @@ export class MistralTextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         MODEL_ID: this.props.model.name,
+        SYSTEM_PROMPT: this.props.systemPrompt ?? '',
         PROMPT: JSON.stringify(this.props.prompt),
+        ASSISTANT_PREFILL: this.props.assistantPrefill,
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
         OVERFLOW_STRATEGY: this.props.overflowStrategy
