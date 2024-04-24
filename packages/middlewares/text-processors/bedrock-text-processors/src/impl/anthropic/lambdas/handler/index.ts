@@ -35,11 +35,12 @@ import {
 /**
  * Environment variables.
  */
-const MODEL_ID         = process.env.MODEL_ID;
-const SYSTEM_PROMPT    = process.env.SYSTEM_PROMPT;
-const USER_PROMPT      = JSON.parse(process.env.PROMPT as string);
-const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
-const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
+const MODEL_ID          = process.env.MODEL_ID;
+const SYSTEM_PROMPT     = process.env.SYSTEM_PROMPT;
+const USER_PROMPT       = JSON.parse(process.env.PROMPT as string);
+const ASSISTANT_PREFILL = process.env.ASSISTANT_PREFILL as string;
+const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string) as Record<string, any>;
+const TARGET_BUCKET     = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The Bedrock runtime.
@@ -163,6 +164,13 @@ class Lambda implements LambdaInterface {
       }
     }
 
+    // Add the assistant prefill.
+    if (ASSISTANT_PREFILL) {
+      messages.push({ role: 'assistant', content: [
+        { type: 'text', text: ASSISTANT_PREFILL }
+      ] as any[] });
+    }
+
     return (messages);
   }
 
@@ -195,9 +203,20 @@ class Lambda implements LambdaInterface {
     });
 
     // Parse the response into a buffer.
-    return (Buffer.from(
+    let buffer = Buffer.from(
       JSON.parse(response.body.transformToString()).content[0].text
-    ));
+    );
+
+    // If an assistant prefill has been passed to the model, we
+    // prepend it to the generated text.
+    if (ASSISTANT_PREFILL) {
+      buffer = Buffer.concat([
+        Buffer.from(ASSISTANT_PREFILL),
+        buffer
+      ]);
+    }
+
+    return (buffer);
   }
 
   /**

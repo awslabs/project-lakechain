@@ -73,7 +73,7 @@ class Lambda implements LambdaInterface {
     if (SYSTEM_PROMPT) {
       text += `<|start_header_id|>system<|end_header_id|>\n${SYSTEM_PROMPT}<|eot_id|>`;
     }
-    // Add the user prompt.
+    // Add the user prompt and content.
     text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n${content}<|eot_id|>`;
     // Add the assistant.
     text += `<|start_header_id|>assistant<|end_header_id|>`;
@@ -86,10 +86,19 @@ class Lambda implements LambdaInterface {
    * @returns the prompt to use for generating text for Llama2.
    */
   private async getPromptv2(event: CloudEvent) {
+    let text = '[INST]';
     const document = event.data().document();
     const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
     const content = (await document.data().asBuffer()).toString('utf-8');
-    return (`[INST]${prompt}\n\n${content}[/INST]`);
+
+    // Add the system prompt.
+    if (SYSTEM_PROMPT) {
+      text += `<<SYS>>${SYSTEM_PROMPT}<<SYS>>`;
+    }
+    // Add the user prompt and content.
+    text += (`\n${prompt}\n\n${content}[/INST]`);
+    
+    return (text);
   }
 
   /**

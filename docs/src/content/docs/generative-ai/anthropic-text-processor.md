@@ -76,16 +76,6 @@ class Stack extends cdk.Stack {
 
 ---
 
-### 🧩 Composite Events
-
-In addition to handling single documents, the Anthropic text processor also supports [composite events](/project-lakechain/general/events#-composite-events) as an input. This means that it can take multiple text and image documents and compile them into a single input for the model.
-
-This can come in handy in map-reduce pipelines where you use the [Reducer]() to combine multiple documents into a single input having a similar semantic, for example, multiple pages of a PDF document that you would like the model to summarize as a whole, while keeping the context between the pages.
-
-<br>
-
----
-
 ### 🤖 Model Selection
 
 You can select the specific Anthropic model to use with this middleware using the `.withModel` API.
@@ -103,7 +93,16 @@ const anthropic = new AnthropicTextProcessor.Builder()
   .build();
 ```
 
-You can choose amongst the following models : `ANTHROPIC_CLAUDE_INSTANT_V1`, `ANTHROPIC_CLAUDE_V2`, `ANTHROPIC_CLAUDE_V2_1`, `ANTHROPIC_CLAUDE_V3_HAIKU`, `ANTHROPIC_CLAUDE_V3_SONNET`.
+You can choose amongst the following models (see the [Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html) for more information).
+
+Model Name | Model identifier
+---------- | -----------
+ANTHROPIC_CLAUDE_INSTANT_V1 | `anthropic.claude-instant-v1`
+ANTHROPIC_CLAUDE_V2 | `anthropic.claude-v2`
+ANTHROPIC_CLAUDE_V2_1 | `anthropic.claude-v2:1`
+ANTHROPIC_CLAUDE_V3_HAIKU | `anthropic.claude-3-haiku-20240307-v1:0`
+ANTHROPIC_CLAUDE_V3_SONNET | `anthropic.claude-3-sonnet-20240229-v1:0`
+ANTHROPIC_CLAUDE_V3_OPUS | `anthropic.claude-3-opus-20240229-v1:0`
 
 <br>
 
@@ -148,6 +147,50 @@ top_k       | The number of top tokens to sample from. | 1 | 100000000 | N/A
 
 ---
 
+### 💬 Prompts
+
+The Anthropic text processor exposes an interface allowing users to specify prompts to the underlying model. A prompt is a piece of text that guides the model on how to generate the output. Using this middleware you can define 3 types of prompts to the Anthropic model.
+
+<br />
+
+Type | Method | Optional | Description |
+---- | ------ | --------- | ----------- |
+User prompt | .withPrompt | No | The user prompt is text that provides instructions to the model. |
+System prompt | .withSystemPrompt | Yes | The system prompt is text that provides context to the model. |
+Assistant Prefill | .withAssistantPrefill | Yes | The assistant prefill is text that directly guides the model on how to further complete its output. |
+
+<br />
+
+> 💁 The below example demonstrates how to use both a user prompt and an assistant prefill to guide the model into outputting valid JSON.
+
+```typescript
+import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
+
+const anthropic = new AnthropicTextProcessor.Builder()
+  .withScope(this)
+  .withIdentifier('AnthropicTextProcessor')
+  .withCacheStorage(cache)
+  .withSource(source)
+  .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
+  .withPrompt('Extract metadata from the document as a JSON document.')
+  .withAssistantPrefill('{')
+  .build();
+```
+
+<br>
+
+---
+
+### 🧩 Composite Events
+
+In addition to handling single documents, the Anthropic text processor also supports [composite events](/project-lakechain/general/events#-composite-events) as an input. This means that it can take multiple text and image documents and compile them into a single input for the model.
+
+This can come in handy in map-reduce pipelines where you use the [Reducer]() to combine multiple documents into a single input having a similar semantic, for example, multiple pages of a PDF document that you would like the model to summarize as a whole, while keeping the context between the pages.
+
+<br>
+
+---
+
 ### 🏗️ Architecture
 
 This middleware is based on a Lambda compute running on an ARM64 architecture, and integrate with Amazon Bedrock to generate text based on the given prompt and input documents.
@@ -173,6 +216,7 @@ The supported inputs depend on the selected model as the Claude v3 models are mu
 | `ANTHROPIC_CLAUDE_V2_1`       | Text
 | `ANTHROPIC_CLAUDE_V3_HAIKU`   | Text, Image
 | `ANTHROPIC_CLAUDE_V3_SONNET`  | Text, Image
+| `ANTHROPIC_CLAUDE_V3_OPUS`    | Text, Image
 
 ###### Text Inputs
 

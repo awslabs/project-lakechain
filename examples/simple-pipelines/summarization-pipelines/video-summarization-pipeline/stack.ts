@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+import fs from 'fs';
+import path from 'path';
+
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
@@ -33,6 +36,11 @@ import {
   FfmpegUtils,
   Ffmpeg
 } from '@project-lakechain/ffmpeg-processor';
+
+/**
+ * This is the prompt passed to the model to summarize videos.
+ */
+const prompt = fs.readFileSync(path.join(__dirname, 'prompt.txt'), 'utf-8');
 
 /**
  * This intent is a function that will get executed in the cloud
@@ -121,67 +129,55 @@ export class VideoSummarizationStack extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // The FFMPEG processor extracts the audio from the video.
-    const ffmpeg = new FfmpegProcessor.Builder()
-      .withScope(this)
-      .withIdentifier('FfmpegProcessor')
-      .withCacheStorage(cache)
-      .withVpc(vpc)
-      .withSource(trigger)
-      .withIntent(intent)
-      .build();
-
-    // We are using the `TranscribeAudioProcessor` component to transcribe
-    // audio into a VTT file.
-    const transcribe = new TranscribeAudioProcessor.Builder()
-      .withScope(this)
-      .withIdentifier('TranscribeTextProcessor')
-      .withCacheStorage(cache)
-      .withSource(ffmpeg)
-      .withOutputFormats('vtt')
-      .build();
-
-    // We are using the `AnthropicTextProcessor` component to summarize
-    // the input text.
-    const textSummarizer = new AnthropicTextProcessor.Builder()
-      .withScope(this)
-      .withIdentifier('AnthropicTextProcessor')
-      .withCacheStorage(cache)
-      .withSource(transcribe)
-      .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
-      .withPrompt(`
-        Here is a VTT transcription of a video. Follow carefully the instructions below.
-        - You must output a valid JSON document and nothing else.
-        - Do not say "Here is a JSON document" or any other text, only output JSON.
-        - Do not provide any additional information other than the JSON document, no preamble or introduction.
-        The structure of the JSON document should be as follow.
-        {
-          "genre": "The genre associated with the video (e.g comedy, drama, documentary, etc.)",
-          "title": "Provide a meaningful title for the video.",
-          "rating": "The rating of the video (e.g PG, R, G, NC-17)",
-          "summary": "An summary of the video.",
-          "long_summary": "A longer, more exhaustive, more detailed, summary of the video.",
-          "topics: ["A list of topics discussed in the video."]
-        }
-      `)
-      .withModelParameters({
-        temperature: 0.5,
-        max_tokens: 4096
-      })
-      .build();
-
-    // Write the results to the destination bucket.
-    new S3StorageConnector.Builder()
-      .withScope(this)
-      .withIdentifier('S3StorageConnector')
-      .withCacheStorage(cache)
-      .withDestinationBucket(destination)
-      .withSources([
-        transcribe,
-        textSummarizer
-      ])
-      .build();
+    trigger
+      // The FFMPEG processor extracts the audio from the video.
+      .pipe(
+        new FfmpegProcessor.Builder()
+          .withScope(this)
+          .withIdentifier('FfmpegProcessor')
+          .withCacheStorage(cache)
+          .withVpc(vpc)
+          .withIntent(intent)
+          .build()
+      )
+      // We are using the `TranscribeAudioProcessor` component to transcribe
+      // audio into a VTT file.
+      .pipe(
+        new TranscribeAudioProcessor.Builder()
+          .withScope(this)
+          .withIdentifier('TranscribeTextProcessor')
+          .withCacheStorage(cache)
+          .withOutputFormats('vtt')
+          .build()
+      )
+      // We are using the `AnthropicTextProcessor` component to summarize
+      // the input text.
+      // The assistant prefill allows to guide the model in generating
+      // a JSON document with no preamble.
+      .pipe(
+        new AnthropicTextProcessor.Builder()
+          .withScope(this)
+          .withIdentifier('AnthropicTextProcessor')
+          .withCacheStorage(cache)
+          .withRegion('us-east-1')
+          .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
+          .withPrompt(prompt)
+          .withAssistantPrefill('{')
+          .withModelParameters({
+            temperature: 0.5,
+            max_tokens: 4096
+          })
+          .build()
+      )
+      // Write the results to the destination bucket.
+      .pipe(
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('S3StorageConnector')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
+      );
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {

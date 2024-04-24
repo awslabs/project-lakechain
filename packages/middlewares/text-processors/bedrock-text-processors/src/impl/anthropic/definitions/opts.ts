@@ -113,7 +113,15 @@ export const AnthropicTextProcessorPropsSchema = TextProcessorPropsSchema.extend
    */
   prompt: z.custom<dsl.IReference<
     dsl.IReferenceSubject
-  >>()
+  >>(),
+
+  /**
+   * The assistant prefill to use for generating text.
+   */
+  assistantPrefill: z
+    .string()
+    .optional()
+    .default('')
 });
 
 // The type of the `AnthropicTextProcessorProps` schema.
