@@ -31,11 +31,12 @@ import {
 /**
  * Environment variables.
  */
-const MODEL_ID         = process.env.MODEL_ID;
-const SYSTEM_PROMPT    = process.env.SYSTEM_PROMPT;
-const USER_PROMPT      = JSON.parse(process.env.PROMPT as string);
-const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
-const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
+const MODEL_ID          = process.env.MODEL_ID;
+const SYSTEM_PROMPT     = process.env.SYSTEM_PROMPT;
+const USER_PROMPT       = JSON.parse(process.env.PROMPT as string);
+const ASSISTANT_PREFILL = process.env.ASSISTANT_PREFILL as string;
+const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string);
+const TARGET_BUCKET     = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The Bedrock runtime.
@@ -75,8 +76,14 @@ class Lambda implements LambdaInterface {
     }
     // Add the user prompt and content.
     text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n${content}<|eot_id|>`;
+    
     // Add the assistant.
     text += `<|start_header_id|>assistant<|end_header_id|>`;
+
+    // Add the assistant prefill.
+    if (ASSISTANT_PREFILL) {
+      text += `\n${ASSISTANT_PREFILL}`;
+    }
 
     return (text);
   }
@@ -95,8 +102,14 @@ class Lambda implements LambdaInterface {
     if (SYSTEM_PROMPT) {
       text += `<<SYS>>${SYSTEM_PROMPT}<<SYS>>`;
     }
+
     // Add the user prompt and content.
     text += (`\n${prompt}\n\n${content}[/INST]`);
+
+    // Add the assistant prefill.
+    if (ASSISTANT_PREFILL) {
+      text += `\n${ASSISTANT_PREFILL}`;
+    }
     
     return (text);
   }
@@ -132,9 +145,20 @@ class Lambda implements LambdaInterface {
     });
 
     // Parse the response into a buffer.
-    return (Buffer.from(
+    let buffer = Buffer.from(
       JSON.parse(response.body.transformToString()).generation
-    ));
+    );
+
+    // If an assistant prefill has been passed to the model, we
+    // prepend it to the generated text.
+    if (ASSISTANT_PREFILL) {
+      buffer = Buffer.concat([
+        Buffer.from(ASSISTANT_PREFILL),
+        buffer
+      ]);
+    }
+
+    return (buffer);
   }
 
   /**

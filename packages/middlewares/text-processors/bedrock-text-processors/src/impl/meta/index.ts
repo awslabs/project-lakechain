@@ -125,6 +125,17 @@ class LlamaTextProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
+   * Sets the assistant prefill to use for generating text.
+   * @param prefill the assistant prefill to use for generating text.
+   * @returns the current builder instance.
+   * @default ''
+   */
+  public withAssistantPrefill(prefill: string) {
+    this.middlewareProps.assistantPrefill = prefill;
+    return (this);
+  }
+  
+  /**
    * Sets the AWS region in which the model
    * will be invoked.
    * @param region the AWS region in which the model
@@ -237,6 +248,7 @@ export class LlamaTextProcessor extends Middleware {
         MODEL_ID: this.props.model.name,
         SYSTEM_PROMPT: this.props.systemPrompt ?? '',
         PROMPT: JSON.stringify(this.props.prompt),
+        ASSISTANT_PREFILL: this.props.assistantPrefill,
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
         OVERFLOW_STRATEGY: this.props.overflowStrategy
