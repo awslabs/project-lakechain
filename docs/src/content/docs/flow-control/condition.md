@@ -223,4 +223,4 @@ The `Condition` middleware is built on top of AWS Lambda. It uses an internal V8
 
 ### 📖 Examples
 
-- [Conditional Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/conditional-pipeline) - An example showcasing how to use conditional expressions in pipelines.
+- [Conditional Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/flow-control-pipelines/conditional-pipeline) - An example showcasing how to use conditional expressions in pipelines.

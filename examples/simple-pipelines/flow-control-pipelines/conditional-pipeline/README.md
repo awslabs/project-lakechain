@@ -18,7 +18,7 @@ The `Condition` middleware allows pipeline developers to express complex conditi
 
 In this example, we use a closure expression to check if the incoming document is a JSON file, and that the JSON structure is correct. If it is, we store the document in S3, otherwise we discard it.
 
-We've placed 2 documents that you can use as an example in your pipelines to play with conditions :
+We've placed 2 documents that you can use as an example in your pipelines to experiment with conditions :
 
 - [matching-doc.json](./assets/matching-doc.json) - A JSON document that matches the condition.
 - [non-matching-doc.json](./assets/non-matching-doc.json) - A JSON document that does not match the condition.
@@ -35,7 +35,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/simple-pipelines/conditional-pipeline`](/examples/simple-pipelines/conditional-pipeline) in the repository and run the following commands to build the example:
+Head to the directory [`examples/simple-pipelines/flow-control-pipelines/conditional-pipeline`](/examples/simple-pipelines/flow-control-pipelines/conditional-pipeline) in the repository and run the following commands to build the example:
 
 ```bash
 npm install

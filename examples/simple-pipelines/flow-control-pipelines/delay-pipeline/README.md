@@ -30,7 +30,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/simple-pipelines/delay-pipeline`](/examples/simple-pipelines/delay-pipeline) in the repository and run the following commands to build the example:
+Head to the directory [`examples/simple-pipelines/flow-control-pipelines/delay-pipeline`](/examples/simple-pipelines/flow-control-pipelines/delay-pipeline) in the repository and run the following commands to build the example:
 
 ```bash
 npm install

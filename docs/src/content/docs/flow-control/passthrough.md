@@ -101,3 +101,7 @@ The Passthrough middleware executes within a Lambda compute, consumes input even
 | Type  | Description |
 | ----- | ----------- |
 | `CPU` | This middleware is based on a Lambda architecture. |
+
+### 📖 Examples
+
+- [Delay Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/flow-control-pipelines/delay-pipeline) - An example showcasing how to delay a pipeline execution.

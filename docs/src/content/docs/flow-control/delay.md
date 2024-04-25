@@ -119,4 +119,4 @@ The Delay middleware uses [AWS Step Functions](https://aws.amazon.com/step-funct
 
 ### 📖 Examples
 
-- [Delay Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/delay-pipeline) - An example showcasing how to delay a pipeline execution.
+- [Delay Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/flow-control-pipelines/delay-pipeline) - An example showcasing how to delay a pipeline execution.
