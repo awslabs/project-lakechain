@@ -18,7 +18,7 @@ title: Mistral
 </span>
 <span class="language-icon" style="margin-right: 10px">
   <a target="_blank" href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-mistral.html">
-    <img src="/src/assets/icon-mistral.svg" width="34" style="border-radius: 50%" />
+    <img src="/project-lakechain/src/assets/icon-mistral.svg" width="34" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>

@@ -18,7 +18,7 @@ title: Ollama
 </span>
 <span class="language-icon" style="margin-right: 12px">
   <a target="_blank" href="https://ollama.ai">
-    <img src="/src/assets/icon-ollama.png" width="24" style="border-radius: 50%" />
+    <img src="/project-lakechain/src/assets/icon-ollama.png" width="24" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>

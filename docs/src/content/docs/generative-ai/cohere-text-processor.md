@@ -18,7 +18,7 @@ title: Cohere
 </span>
 <span class="language-icon" style="margin-right: 10px">
   <a target="_blank" href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-cohere.html">
-    <img src="/src/assets/icon-cohere.svg" width="31" style="border-radius: 50%" />
+    <img src="/project-lakechain/src/assets/icon-cohere.svg" width="31" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>
