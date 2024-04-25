@@ -43,8 +43,6 @@ Each *Cloud Event* is a JSON versioned document flowing through a pipeline execu
 }
 ```
 
-> 💁 There are several elements to this JSON document that we will cover step-by-step.
-
 <br>
 
 ---
@@ -219,9 +217,9 @@ Middlewares are responsible for serializing values into pointers, and resolve ba
 
 ## 🧩 Composite Events
 
-Composite events in Lakechain represent a paradigm shift from processing singular, discrete events to managing a collection of related documents as a single, cohesive unit. These events are particularly useful in workflows where the relationships between documents are just as important as the documents themselves.
+Composite events in Lakechain represent a paradigm shift from processing singular, discrete events to managing a collection of related documents as a single, cohesive unit. These events are particularly useful in workflows where the relationship between documents are just as important as the documents themselves.
 
-This grouping allows multiple documents sharing a common context to be processed together, maintaining their semantic relationships throughout the pipeline.
+This grouping allows multiple documents sharing a common context to be processed together, maintaining their semantic relationship throughout the pipeline.
 
 <br>
 
@@ -245,6 +243,6 @@ The only middleware capable of producing composite events is the [Reducer](/proj
 
 Lakechain defines a specific document mime-type for composite events. This event has the same structure as any cloud event, with the following specificities.
 
-- It has the `application/cloudevents+json` mime-type.
-- The content of the document is a JSON array of Cloud Events.
-- It can contain any number of events.
+1. It has the `application/cloudevents+json` mime-type.
+2. The content of the document is a JSON array of Cloud Events.
+3. It can contain any number of events.
