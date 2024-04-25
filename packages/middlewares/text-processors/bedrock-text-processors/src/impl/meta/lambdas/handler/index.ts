@@ -101,7 +101,7 @@ class Lambda implements LambdaInterface {
 
     // Add the system prompt.
     if (SYSTEM_PROMPT) {
-      text += `<<SYS>>${SYSTEM_PROMPT}<<SYS>>`;
+      text += `<<SYS>>${SYSTEM_PROMPT}<</SYS>>`;
     }
 
     // Add the user prompt and content.
