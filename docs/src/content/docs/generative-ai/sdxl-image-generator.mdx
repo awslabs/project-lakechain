@@ -6,6 +6,7 @@ import { Image } from 'astro:assets';
 import maskImage from '../../../assets/sdxl-mask-image.png';
 import originalImage from '../../../assets/sdxl-inpainting-original-image.png';
 import inpaintedImage from '../../../assets/sdxl-inpainting-inpainted-image.png';
+import icon from '../../../assets/icon-stability.svg';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
   Unstable API
@@ -23,7 +24,7 @@ import inpaintedImage from '../../../assets/sdxl-inpainting-inpainted-image.png'
 </span>
 <span class="language-icon" style="margin-right: 10px">
   <a target="_blank" href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-stability-diffusion.html">
-    <img src="/project-lakechain/src/assets/icon-stability.svg" width="31" style="border-radius: 50%" />
+    <Image width="31" src={icon} alt="Icon" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>

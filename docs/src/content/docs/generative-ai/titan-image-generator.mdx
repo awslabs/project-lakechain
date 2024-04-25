@@ -2,6 +2,13 @@
 title: Titan Images
 ---
 
+import { Image } from 'astro:assets';
+import originalInpaintImage from '../../../assets/titan-inpainting-original-image.png';
+import inpaintedImage from '../../../assets/titan-inpainting-inpainted-image.png';
+import originalOutpaintImage from '../../../assets/titan-outpainting-original-image.png';
+import outpaintedImage from '../../../assets/titan-outpainting-outpainted-image.png';
+import icon from '../../../assets/icon-amazon.svg';
+
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
   Unstable API
 </span>
@@ -18,18 +25,12 @@ title: Titan Images
 </span>
 <span class="language-icon" style="margin-right: 10px">
   <a target="_blank" href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan.html">
-    <img src="/project-lakechain/src/assets/icon-amazon.svg" width="31" style="border-radius: 50%" />
+    <Image width="31" src={icon} alt="Icon" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>
 
 ---
-
-import { Image } from 'astro:assets';
-import originalInpaintImage from '../../../assets/titan-inpainting-original-image.png';
-import inpaintedImage from '../../../assets/titan-inpainting-inpainted-image.png';
-import originalOutpaintImage from '../../../assets/titan-outpainting-original-image.png';
-import outpaintedImage from '../../../assets/titan-outpainting-outpainted-image.png';
 
 The Bedrock image generators package enables developers to use image generation models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html), and create images at scale within their pipelines. The Amazon Titan image generator is part of this package and makes it possible to generate images from text, realize image inpainting and outpainting, as well as image-to-image variation.
 
