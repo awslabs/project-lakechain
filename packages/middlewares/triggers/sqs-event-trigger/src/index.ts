@@ -35,7 +35,7 @@ import { SqsEventTriggerProps, SqsEventTriggerPropsSchema } from './definitions/
 const description: ServiceDescription = {
   name: 'sqs-event-trigger',
   description: 'An event-based data source for Amazon SQS.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

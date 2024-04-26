@@ -1,0 +1,4 @@
+boto3==1.34.34
+aws_lambda_powertools==2.33.0
+aws-xray-sdk==2.12.1
+trafilatura==1.8.1

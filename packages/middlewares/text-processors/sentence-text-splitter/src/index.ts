@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'sentence-text-splitter',
   description: 'Transforms text into chunks of tokens using a sentence text splitter.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

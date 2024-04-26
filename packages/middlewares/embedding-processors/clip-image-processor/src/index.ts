@@ -37,7 +37,7 @@ import { ClipModel } from './definitions/model';
 const description: ServiceDescription = {
   name: 'clip-image-processor',
   description: 'A document processor generating embeddings for images using the OpenAI Clip model.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'subtitle-processor',
   description: 'Parses subtitle documents into text and structured data.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'amazon-text-processor',
   description: 'Generative text processing using Amazon Titan models on Amazon Bedrock.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

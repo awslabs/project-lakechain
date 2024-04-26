@@ -32,7 +32,7 @@ import {
 const description: ServiceDescription = {
   name: 'sqs-storage-connector',
   description: 'Stores documents and their metadata in an SQS queue.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

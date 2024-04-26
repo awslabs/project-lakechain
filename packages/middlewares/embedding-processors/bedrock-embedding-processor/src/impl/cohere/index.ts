@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'cohere-embedding-processor',
   description: 'Creates embeddings from documents using Cohere models.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

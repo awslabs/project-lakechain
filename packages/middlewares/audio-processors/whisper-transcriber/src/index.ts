@@ -42,7 +42,7 @@ import { getCpuConfiguration, getGpuConfiguration } from './definitions/infrastr
 const description: ServiceDescription = {
   name: 'whisper-transcriber',
   description: 'An audio document transcription middleware based on OpenAI Whisper.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

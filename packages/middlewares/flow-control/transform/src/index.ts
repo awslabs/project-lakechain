@@ -48,7 +48,7 @@ import {
 const description: ServiceDescription = {
   name: 'transform',
   description: 'A middleware allowing to transform documents on-the-fly.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

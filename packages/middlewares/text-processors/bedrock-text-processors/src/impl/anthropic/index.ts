@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'anthropic-text-processor',
   description: 'Generative text processing using Anthropic models on Amazon Bedrock.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

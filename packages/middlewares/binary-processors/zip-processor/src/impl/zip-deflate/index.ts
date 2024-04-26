@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'zip-deflate-processor',
   description: 'Archives input documents into a Zip archive.',
-  version: '0.4.0',
+  version: '0.7.0',
   attrs: {}
 };
 

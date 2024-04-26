@@ -20,19 +20,19 @@ import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sources from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as node from 'aws-cdk-lib/aws-lambda-nodejs';
 
 import { Construct } from 'constructs';
 import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
-import { RecursiveCharacterTextSplitterProps, RecursiveCharacterTextSplitterPropsSchema } from './definitions/opts';
 
 import {
+  LAMBDA_INSIGHTS_VERSION,
   Middleware,
   MiddlewareBuilder,
-  LAMBDA_INSIGHTS_VERSION,
+  MiddlewareProps,
+  MiddlewarePropsSchema,
   NAMESPACE
 } from '@project-lakechain/core/middleware';
 
@@ -40,8 +40,8 @@ import {
  * The service description.
  */
 const description: ServiceDescription = {
-  name: 'recursive-character-text-splitter',
-  description: 'Transforms text into chunks of tokens using Langchain\'s recursive character text splitter.',
+  name: 'trafilatura',
+  description: 'Converts HTML documents into plain text and extracts their metadata using Trafilatura.',
   version: '0.7.0',
   attrs: {}
 };
@@ -50,89 +50,38 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT    = cdk.Duration.minutes(1);
-
-/**
- * The execution runtime for used compute.
- */
-const EXECUTION_RUNTIME     = lambda.Runtime.NODEJS_18_X;
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(1);
 
 /**
  * The default memory size to allocate for the compute.
  */
-const DEFAULT_MEMORY_SIZE   = 256;
+const DEFAULT_MEMORY_SIZE = 256;
 
 /**
- * The default chunk size.
+ * Builder for the `TrafilaturaParser` service.
  */
-const DEFAULT_CHUNK_SIZE    = 4000;
-
-/**
- * The default chunk overlap.
- */
-const DEFAULT_CHUNK_OVERLAP = 200;
-
-/**
- * The default separators for text splitting.
- */
-const DEFAULT_SEPARATORS    = ['\n\n', '\n', ' ', ''];
-
-/**
- * The builder class for the `RecursiveCharacterTextSplitter` service.
- */
-class RecursiveCharacterTextSplitterBuilder extends MiddlewareBuilder {
-  private providerProps: Partial<RecursiveCharacterTextSplitterProps> = {};
+class TrafilaturaParserBuilder extends MiddlewareBuilder {
 
   /**
-   * Sets the chunk size.
-   * @param chunkSize the chunk size to assign.
-   */
-  public withChunkSize(chunkSize: number) {
-    this.providerProps.chunkSize = chunkSize;
-    return (this);
-  }
-
-  /**
-   * Sets the chunk overlap.
-   * @param chunkOverlap the chunk overlap to assign.
-   */
-  public withChunkOverlap(chunkOverlap: number) {
-    this.providerProps.chunkOverlap = chunkOverlap;
-    return (this);
-  }
-
-  /**
-   * Sets the separators to use between chunks.
-   * @param separators the separators to use.
-   * @returns the builder itself.
-   * @default ["\n\n", "\n", " ", ""]
-   */
-  public withSeparators(separators: string[]) {
-    this.providerProps.separators = separators;
-    return (this);
-  }
-
-  /**
-   * @returns a new instance of the `RecursiveCharacterTextSplitter`
+   * @returns a new instance of the `TrafilaturaParser`
    * service constructed with the given parameters.
    */
-  public build(): RecursiveCharacterTextSplitter {
-    return (new RecursiveCharacterTextSplitter(
+  public build(): TrafilaturaParser {
+    return (new TrafilaturaParser(
       this.scope,
       this.identifier, {
-        ...this.providerProps as RecursiveCharacterTextSplitterProps,
         ...this.props
-      }
-    ));
+    }));
   }
 }
 
 /**
- * A service allowing to split text corpora into
- * chunks of text.
+ * Converts HTML documents into plain text and
+ * extracts their metadata. This middleware uses
+ * the Trafilatura package to parse HTML documents.
  */
-export class RecursiveCharacterTextSplitter extends Middleware {
-
+export class TrafilaturaParser extends Middleware {
+  
   /**
    * The storage containing processed files.
    */
@@ -141,29 +90,29 @@ export class RecursiveCharacterTextSplitter extends Middleware {
   /**
    * The data processor lambda function.
    */
-  public processor: lambda.IFunction;
+  public eventProcessor: lambda.IFunction;
 
   /**
-   * The builder for the `RecursiveCharacterTextSplitter` service.
+   * The builder for the `TrafilaturaParser` service.
    */
-  static Builder = RecursiveCharacterTextSplitterBuilder;
+  static Builder = TrafilaturaParserBuilder;
 
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, props: RecursiveCharacterTextSplitterProps) {
+  constructor(scope: Construct, id: string, props: MiddlewareProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
-        6 * PROCESSING_TIMEOUT.toSeconds()
+        3 * PROCESSING_TIMEOUT.toSeconds()
       )
     });
 
     // Validate the properties.
-    props = this.parse(RecursiveCharacterTextSplitterPropsSchema, props);
+    props = this.parse(MiddlewarePropsSchema, props);
 
     ///////////////////////////////////////////
-    /////////    Processing Storage      //////
+    ////////    Processing Storage      ///////
     ///////////////////////////////////////////
 
     this.storage = new CacheStorage(this, 'Storage', {
@@ -171,17 +120,18 @@ export class RecursiveCharacterTextSplitter extends Middleware {
     });
 
     ///////////////////////////////////////////
-    //////    Middleware Event Handler     ////
+    ///////    Processing Function      ///////
     ///////////////////////////////////////////
 
-    this.processor = new node.NodejsFunction(this, 'Compute', {
-      description: 'Middleware splitting text documents in chunks.',
-      entry: path.resolve(__dirname, 'lambdas', 'text-splitter', 'index.js'),
+    this.eventProcessor = new lambda.DockerImageFunction(this, 'TextConverter', {
+      description: 'A function that converts HTML documents into plain text and extracts their metadata.',
+      code: lambda.DockerImageCode.fromImageAsset(
+        path.resolve(__dirname, 'lambdas', 'parser')
+      ),
       vpc: props.vpc,
       memorySize: props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
       timeout: PROCESSING_TIMEOUT,
-      runtime: EXECUTION_RUNTIME,
-      architecture: lambda.Architecture.ARM_64,
+      architecture: lambda.Architecture.X86_64,
       tracing: lambda.Tracing.ACTIVE,
       environmentEncryption: props.kmsKey,
       logGroup: this.logGroup,
@@ -193,33 +143,25 @@ export class RecursiveCharacterTextSplitter extends Middleware {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
-        SEPARATORS: JSON.stringify(props.separators ?? DEFAULT_SEPARATORS),
-        CHUNK_SIZE: `${props.chunkSize ?? DEFAULT_CHUNK_SIZE}`,
-        CHUNK_OVERLAP: `${props.chunkOverlap ?? DEFAULT_CHUNK_OVERLAP}`
-      },
-      bundling: {
-        minify: true,
-        externalModules: [
-          '@aws-sdk/client-s3',
-          '@aws-sdk/client-sns'
-        ]
+        CACHE_DIR: '/tmp'
       }
     });
 
     // Allows this construct to act as a `IGrantable`
     // for other middlewares to grant the processing
     // lambda permissions to access their resources.
-    this.grantPrincipal = this.processor.grantPrincipal;
+    this.grantPrincipal = this.eventProcessor.grantPrincipal;
 
     // Plug the SQS queue into the lambda function.
-    this.processor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
-      batchSize: props.batchSize ?? 5,
+    this.eventProcessor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
+      batchSize: props.batchSize ?? 10,
+      maxBatchingWindow: props.batchingWindow,
       reportBatchItemFailures: true
     }));
 
     // Function permissions.
-    this.storage.grantReadWrite(this.processor);
-    this.eventBus.grantPublish(this.processor);
+    this.storage.grantWrite(this.eventProcessor);
+    this.eventBus.grantPublish(this.eventProcessor);
 
     super.bind();
   }
@@ -238,7 +180,7 @@ export class RecursiveCharacterTextSplitter extends Middleware {
    */
   supportedInputTypes(): string[] {
     return ([
-      'text/plain'
+      'text/html'
     ]);
   }
 
