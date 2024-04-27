@@ -184,6 +184,9 @@ export default defineConfig({
 					label: 'Newspaper3k',
 					link: '/text-processing/newspaper3k'
 				}, {
+					label: 'Trafilatura',
+					link: '/text-processing/trafilatura'
+				}, {
 					label: 'Email',
 					link: '/text-processing/email-text-processor'
 				}, {

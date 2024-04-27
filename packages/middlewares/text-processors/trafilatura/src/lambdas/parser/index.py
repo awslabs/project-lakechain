@@ -102,15 +102,13 @@ def parse_document(url: str) -> dict:
   :param url: The URL of the document to parse.
   :return:    The parsed document.
   """
-  content = fetch_url(url)
-  result = extract(
-    content,
+  return json.loads(extract(
+    fetch_url(url),
     output_format="json",
     include_table=True,
     include_comments=False,
     include_images=False
-  )
-  return json.loads(result)
+  ))
 
 
 def process_document(event: dict) -> dict:
@@ -152,8 +150,6 @@ def process_document(event: dict) -> dict:
   
   # Enrich the event with the extracted metadata.
   merge(data['metadata'], get_metadata(result))
-
-  print(get_metadata(result))
   
   return event
 

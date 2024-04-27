@@ -1,5 +1,5 @@
 ---
-title: Newspaper3k
+title: Trafilatura
 ---
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -9,8 +9,8 @@ title: Newspaper3k
   0.7.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
-  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/newspaper3k">
-    @project-lakechain/newspaper3k
+  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/trafilatura">
+    @project-lakechain/trafilatura
   </a>
 </span>
 <span class="language-icon">
@@ -20,7 +20,7 @@ title: Newspaper3k
 
 ---
 
-The Newspaper3k middleware is based on the [Newspaper3k](https://newspaper.readthedocs.io/en/latest/) library which provides an NLP model that is optimized for HTML article text extraction. It provides capability to analyze and extract the substance of HTML documents on the Web and use that text as an input to other middlewares in your pipeline.
+The Trafilatura middleware is based on the [Trafilatura](https://github.com/adbar/trafilatura) library which provides one of the most accurate rule-based engine for HTML article text extraction. It provides capability to analyze and extract the substance of HTML documents on the Web and use that text as an input to other middlewares in your pipeline.
 
 ---
 
@@ -29,7 +29,7 @@ The Newspaper3k middleware is based on the [Newspaper3k](https://newspaper.readt
 To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline.
 
 ```typescript
-import { Newspaper3kParser } from '@project-lakechain/newspaper3k';
+import { TrafilaturaParser } from '@project-lakechain/trafilatura';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
@@ -37,10 +37,10 @@ class Stack extends cdk.Stack {
     // The cache storage.
     const cache = new CacheStorage(this, 'Cache');
     
-    // The newspaper3k parser.
-    const newspaper3k = new Newspaper3kParser.Builder()
+    // The trafilatura parser.
+    const trafilatura = new TrafilaturaParser.Builder()
       .withScope(this)
-      .withIdentifier('Newspaper3k')
+      .withIdentifier('Trafilatura')
       .withCacheStorage(cache)
       .withSource(source) // 👈 Specify a data source
       .build();
@@ -54,9 +54,9 @@ class Stack extends cdk.Stack {
 
 ### 🏗️ Architecture
 
-This middleware is based on a Lambda compute running the Newspaper3k library packaged as a Docker container.
+This middleware is based on a Lambda compute running the Trafilatura library packaged as a Docker container.
 
-![Newspaper3k Architecture](../../../assets/newspaper3k-parser-architecture.png)
+![Trafilatura Architecture](../../../assets/trafilatura-parser-architecture.png)
 
 <br>
 
