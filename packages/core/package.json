@@ -48,7 +48,7 @@
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/lodash": "^4.17.0",
+    "@types/lodash": "^4.17.1",
     "@types/node": "^20.8.10",
     "@types/semver": "^7.5.8",
     "@types/tmp": "^0.2.6",
@@ -56,19 +56,19 @@
     "rimraf": "^5.0.5"
   },
   "dependencies": {
-    "@mermaid-js/mermaid-cli": "^10.7.0",
-    "aws-cdk-lib": "^2.139.0",
+    "@mermaid-js/mermaid-cli": "^10.9.0",
+    "aws-cdk-lib": "^2.140.0",
     "constructs": "^10.3.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
-    "semver": "^7.6.0",
+    "semver": "^7.6.1",
     "table": "^6.8.2",
     "tmp": "^0.2.3",
-    "zod": "^3.23.3",
+    "zod": "^3.23.7",
     "zod-error": "^1.5.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.139.0",
+    "aws-cdk-lib": "^2.140.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
