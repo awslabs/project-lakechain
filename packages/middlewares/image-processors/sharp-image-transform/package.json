@@ -35,8 +35,8 @@
     "@aws-sdk/client-sns": "^3.354.0",
     "@types/aws-lambda": "^8.10.119",
     "@types/jest": "^29.0.0",
+    "@types/lodash": "^4.17.0",
     "@types/node": "^20.2.1",
-    "esbuild": "^0.20.2",
     "rimraf": "^5.0.5",
     "sharp": "^0.33.3"
   },
@@ -45,9 +45,12 @@
     "@aws-lambda-powertools/logger": "^1.18.1",
     "@aws-lambda-powertools/metrics": "^1.18.1",
     "@aws-lambda-powertools/tracer": "^1.18.1",
-    "@project-lakechain/core": "^0.7.0",
-    "@project-lakechain/layers": "^0.7.0",
-    "@project-lakechain/sdk": "^0.7.0"
+    "@project-lakechain/core": "*",
+    "@project-lakechain/layers": "*",
+    "@project-lakechain/sdk": "*",
+    "esbuild": "^0.20.2",
+    "serialize-javascript": "^6.0.2",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.139.0",

@@ -100,7 +100,7 @@ export class PodcastGeneratorStack extends cdk.Stack {
         scheduler.ScheduleExpression.rate(cdk.Duration.days(1))
       )
       .withDocuments([
-        'https://aws.amazon.com/blogs/aws/feed/'
+        'https://www.bfmtv.com/rss/news-24-7/'
       ])
       .build();
 

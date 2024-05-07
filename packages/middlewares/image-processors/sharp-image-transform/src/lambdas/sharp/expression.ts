@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
+import sharp from 'sharp';
 import { CloudEvent } from '@project-lakechain/sdk/models';
+import { Result } from './result';
 
 /**
  * @param value the value to check.
@@ -71,10 +73,64 @@ const deepResolve = async (value: any): Promise<any> => {
  * @returns the operations to apply to the image.
  */
 export const getOpts = async (event: CloudEvent) => {
-  const ops = JSON.parse(process.env.SHARP_OPS ?? '[]', reviver(event));
+  const ops = JSON.parse(process.env.INTENT ?? '[]', reviver(event));
 
   if (!Array.isArray(ops) || !ops.length) {
     throw new Error('No operations to apply.');
   }
   return (await deepResolve(ops));
+};
+
+/**
+ * Processes the given event and applies the Sharp operations
+ * to the image associated with the event.
+ * @param event the cloud event to process.
+ */
+export async function* processExpression(event: CloudEvent): AsyncGenerator<Result, void, any> {
+  const document = event.data().document();
+
+  // De-serialize the Sharp operations to apply.
+  const ops = await getOpts(event);
+
+  // Create a sharp pipeline using the image buffer.
+  let pipeline = sharp(await document.data().asBuffer()) as any;
+
+  // The output type and extension are set to the type
+  // and extension of the input document.
+  let outputType = document.mimeType();
+  let outputExt  = document.filename().extension();
+
+  // We apply the operations to the pipeline.
+  for (const op of ops) {
+    pipeline = pipeline[op.method](...op.args);
+    // If the operation transforms the output type of the image, we
+    // capture the new output type and extension.
+    if (op.outputType) {
+      outputType = op.outputType.mimeType;
+      outputExt = op.outputType.extension;
+    }
+  }
+
+  // The image buffer.
+  const buffer = await pipeline.toBuffer();
+
+  // The new image metadata.
+  const metadata = await pipeline.metadata();
+
+  yield {
+    buffer,
+    type: outputType,
+    ext: outputExt,
+    metadata: {
+      properties: {
+        kind: 'image',
+        attrs: {
+          dimensions: {
+            width: metadata.width,
+            height: metadata.height
+          }
+        }
+      }
+    }
+  };
 };

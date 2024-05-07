@@ -14,9 +14,44 @@
  * limitations under the License.
  */
 
+import sharp from 'sharp';
 import { z } from 'zod';
 import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
 import { SharpOperations } from '.';
+import { CloudEvent } from '@project-lakechain/sdk';
+
+declare function Sharp(options?: sharp.SharpOptions): sharp.Sharp;
+declare function Sharp(
+  input?:
+      | Buffer
+      | ArrayBuffer
+      | Uint8Array
+      | Uint8ClampedArray
+      | Int8Array
+      | Uint16Array
+      | Int16Array
+      | Uint32Array
+      | Int32Array
+      | Float32Array
+      | Float64Array
+      | string,
+  options?: sharp.SharpOptions,
+): sharp.Sharp;
+
+export type SharpFunction = typeof Sharp;
+
+export type SharpObject = sharp.Sharp;
+
+/**
+ * A function expression that executes the Sharp funclet evaluation.
+ * @param event the cloud event to process.
+ * @param sharp the sharp instance to apply the transformations to.
+ * @returns a promise resolving to a boolean value.
+ */
+export type IntentExpression = (
+  event: CloudEvent,
+  sharp: SharpFunction
+) => AsyncGenerator<any, void, sharp.Sharp>;
 
 /**
  * The properties for the Sharp image transform middleware.
@@ -26,11 +61,18 @@ export const SharpImageTransformSchema = MiddlewarePropsSchema.extend({
   /**
    * The transformations to perform on the image.
    */
-  sharpTransforms: z.custom<SharpOperations>((value) => {
-    return (value instanceof SharpOperations);
-  }, {
-    message: 'A transform expression is required by the Sharp middleware.'
-  })
+  sharpTransforms: z.union([
+    z.custom<SharpOperations>((value) => {
+      return (value instanceof SharpOperations);
+    }, {
+      message: 'A transform expression is required by the Sharp middleware.'
+    }),
+    z.custom<IntentExpression>((value) => {
+      return (typeof value === 'function');
+    }, {
+      message: 'A transform expression is required by the Sharp middleware.'
+    })
+  ])
 });
 
 // Properties type for the `SharpImageTransform` middleware.

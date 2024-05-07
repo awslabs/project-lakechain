@@ -15,12 +15,15 @@
  */
 
 import path from 'path';
+import serialize from 'serialize-javascript';
+import sharp from 'sharp';
 
 import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sources from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as node from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as esbuild from 'esbuild';
 
 import { Construct } from 'constructs';
 import { ServiceDescription } from '@project-lakechain/core/service';
@@ -29,7 +32,7 @@ import { SharpLayer } from '@project-lakechain/layers/sharp';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
 import { SharpOperations } from './definitions';
-import { SharpImageTransformProps, SharpImageTransformSchema } from './definitions/opts';
+import { IntentExpression, SharpImageTransformProps, SharpImageTransformSchema } from './definitions/opts';
 
 import {
   Middleware,
@@ -47,6 +50,12 @@ const description: ServiceDescription = {
   version: '0.7.0',
   attrs: {}
 };
+
+/**
+ * The name of the callable expression to invoke
+ * the user-provided intent.
+ */
+const INTENT_SYMBOL = '__callable';
 
 /**
  * The maximum time the processing lambda
@@ -73,7 +82,7 @@ class SharpImageTransformBuilder extends MiddlewareBuilder {
   /**
    * @param sharpTransforms the sharp transforms to apply.
    */
-  public withSharpTransforms(sharpTransforms: SharpOperations) {
+  public withSharpTransforms(sharpTransforms: SharpOperations | IntentExpression) {
     this.providerProps.sharpTransforms = sharpTransforms;
     return (this);
   }
@@ -128,10 +137,23 @@ export class SharpImageTransform extends Middleware {
     // Validate the properties.
     this.props = this.parse(SharpImageTransformSchema, props);
 
-    // Verify whether the transforms are valid.
-    const ops = this.props.sharpTransforms.getOps();
-    if (!ops.length) {
-      throw new Error('At least one Sharp transform must be specified.');
+    ///////////////////////////////////////////
+    ///////    Transform Expression      //////
+    ///////////////////////////////////////////
+
+    let type = 'expression';
+    let expression = null;
+
+    if (this.props.sharpTransforms instanceof SharpOperations) {
+      // Verify whether the transforms are valid.
+      const ops = this.props.sharpTransforms.getOps();
+      if (!ops.length) {
+        throw new Error('At least one Sharp transform must be specified.');
+      }
+      expression = JSON.stringify(ops);
+    } else {
+      expression = this.serializeFn(this.props.sharpTransforms);
+      type = 'funclet';
     }
 
     ///////////////////////////////////////////
@@ -165,7 +187,11 @@ export class SharpImageTransform extends Middleware {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
-        SHARP_OPS: JSON.stringify(ops)
+        OPS_TYPE: type,
+        INTENT: type === 'expression' ?
+          JSON.stringify(expression) :
+          expression,
+        INTENT_SYMBOL
       },
       layers: [
         SharpLayer.arm64(this, 'SharpLayer')
@@ -196,6 +222,22 @@ export class SharpImageTransform extends Middleware {
     this.storage.grantWrite(this.eventProcessor);
 
     super.bind();
+  }
+
+  /**
+   * A helper used to serialize the user-provided intent into a string.
+   * This function also uses `esbuild` to validate the syntax of the
+   * provided function and minify it.
+   * @param fn the function to serialize.
+   * @param opts the esbuild transform options.
+   * @returns the serialized function.
+   */
+  private serializeFn(fn: IntentExpression, opts?: esbuild.TransformOptions): string {
+    const res = esbuild.transformSync(`const ${INTENT_SYMBOL} = ${serialize(fn)}\n`, {
+      minify: true,
+      ...opts
+    });
+    return (res.code);
   }
 
   /**
@@ -257,3 +299,5 @@ export class SharpImageTransform extends Middleware {
 }
 
 export { sharp } from './definitions/index';
+export { CloudEvent } from '@project-lakechain/sdk';
+export { SharpFunction, SharpObject } from './definitions/opts';

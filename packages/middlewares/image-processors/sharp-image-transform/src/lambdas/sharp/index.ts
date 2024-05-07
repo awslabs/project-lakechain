@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-import sharp from 'sharp';
+import merge from 'lodash/merge';
 
+import { randomUUID } from 'crypto';
 import { SQSEvent, SQSRecord, Context, SQSBatchResponse } from 'aws-lambda';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
-import { CloudEvent } from '@project-lakechain/sdk/models';
-import { next } from '@project-lakechain/sdk/decorators';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getOpts } from './ops';
+import { CloudEvent, Document } from '@project-lakechain/sdk/models';
+import { nextAsync } from '@project-lakechain/sdk/decorators';
+import { processExpression } from './expression';
+import { processFunclet } from './funclet';
 import {
   BatchProcessor,
   EventType,
   processPartialResponse
 } from '@aws-lambda-powertools/batch';
-
-/**
- * The S3 client.
- */
-const s3 = tracer.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
-  maxAttempts: 5
-}));
 
 /**
  * Environment variables.
@@ -61,51 +54,31 @@ class Lambda implements LambdaInterface {
    * @note the next decorator will automatically forward the
    * returned cloud event to the next middlewares
    */
-  @next()
   async processEvent(event: CloudEvent): Promise<CloudEvent> {
-    const document = event.data().document();
+    const results = process.env.OPS_TYPE === 'expression' ?
+      processExpression(event) :
+      processFunclet(event);
 
-    // De-serialize the Sharp operations to apply.
-    const ops = await getOpts(event);
+    // For each yielded image, we create a new document.
+    for await (const result of results) {
+      const key = `${event.data().chainId()}/${randomUUID()}.${result.ext}`;
 
-    // Create a sharp pipeline using the image buffer.
-    let pipeline = sharp(await document.data().asBuffer()) as any;
+      // Create a new document with the processed image.
+      const newDocument = await Document.create({
+        url: new URL(`s3://${PROCESSED_FILES_BUCKET}/${key}`),
+        data: result.buffer,
+        type: result.type
+      });
 
-    // The output type and extension are set to the type
-    // and extension of the input document.
-    let outputType = document.mimeType();
-    let outputExt  = document.filename().extension();
+      // We update the event with the new document.
+      event.data().props.document = newDocument;
 
-    // We apply the operations to the pipeline.
-    for (const op of ops) {
-      pipeline = pipeline[op.method](...op.args);
-      // If the operation transforms the output type of the image, we
-      // capture the new output type and extension.
-      if (op.outputType) {
-        outputType = op.outputType.mimeType;
-        outputExt = op.outputType.extension;
-      }
+      // We set the image metadata as the document metadata.
+      merge(event.data().props.metadata, result.metadata);
+
+      // Forward the event to the next middlewares.
+      await nextAsync(event);
     }
-
-    // The output buffer containing the processed image.
-    const buffer = await pipeline.toBuffer();
-
-    // We upload the processed document to the processed
-    // documents bucket.
-    const key = `${event.data().chainId()}/${document.filename().name()}.${outputExt}`;
-    const res = await s3.send(new PutObjectCommand({
-      Bucket: PROCESSED_FILES_BUCKET,
-      Key: key,
-      Body: buffer,
-      ContentType: outputType
-    }));
-
-    // We update the document metadata with the new
-    // document URL.
-    document.props.url = new URL(`s3://${PROCESSED_FILES_BUCKET}/${key}`);
-    document.props.type = outputType;
-    document.props.size = buffer.byteLength;
-    document.props.etag = res.ETag?.replace(/"/g, '');
 
     return (event);
   }

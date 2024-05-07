@@ -31,9 +31,9 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@project-lakechain/core": "^0.7.0",
-    "@project-lakechain/ecs-cluster": "^0.7.0",
-    "@project-lakechain/sdk": "^0.7.0",
+    "@project-lakechain/core": "*",
+    "@project-lakechain/ecs-cluster": "*",
+    "@project-lakechain/sdk": "*",
     "esbuild": "^0.20.2",
     "fluent-ffmpeg": "^2.1.2",
     "serialize-javascript": "^6.0.2"
