@@ -104,7 +104,7 @@ export class BedrockEmbeddingPipeline extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(textSplitter)
       // You can optionally specify the embedding model to use.
-      .withModel(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V1)
+      .withModel(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V2)
       // You can also use a region that supports Amazon Bedrock.
       .withRegion('us-east-1')
       .build();
@@ -127,7 +127,7 @@ export class BedrockEmbeddingPipeline extends cdk.Stack {
         .withKnnEngine('nmslib')
         .withSpaceType('l2')
         // The dimensions of Amazon Titan embeddings.
-        .withDimensions(1536)
+        .withDimensions(1024)
         .withParameters({ 'ef_construction': 512, 'm': 16 })
         .build()
       )

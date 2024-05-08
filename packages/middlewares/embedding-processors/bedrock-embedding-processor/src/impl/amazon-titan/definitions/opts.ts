@@ -29,7 +29,7 @@ export const BedrockEmbeddingPropsSchema = MiddlewarePropsSchema.extend({
   model: z
     .custom<TitanEmbeddingModel>()
     .optional()
-    .default(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V1),
+    .default(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V2),
 
   /**
    * The AWS region in which the model will

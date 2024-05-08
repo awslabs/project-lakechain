@@ -286,17 +286,7 @@ export class CohereTextProcessor extends Middleware {
    * type by this middleware.
    */
   supportedInputTypes(): string[] {
-    return ([
-      'text/plain',
-      'text/markdown',
-      'text/csv',
-      'text/html',
-      'application/x-subrip',
-      'text/vtt',
-      'application/json',
-      'application/xml',
-      'application/json+scheduler'
-    ]);
+    return (this.props.model.inputs);
   }
 
   /**
@@ -304,9 +294,7 @@ export class CohereTextProcessor extends Middleware {
    * type by the data producer.
    */
   supportedOutputTypes(): string[] {
-    return ([
-      'text/plain'
-    ]);
+    return (this.props.model.outputs);
   }
 
   /**

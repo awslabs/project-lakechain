@@ -32,7 +32,7 @@ import {
  * Environment variables.
  */
 const MODEL_ID         = process.env.MODEL_ID;
-const PROMPT           = JSON.parse(process.env.PROMPT as string);
+const USER_PROMPT      = JSON.parse(process.env.PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
 const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
@@ -65,9 +65,28 @@ class Lambda implements LambdaInterface {
    */
   private async getPrompt(event: CloudEvent) {
     const document = event.data().document();
-    const prompt = (await event.resolve(PROMPT)).toString('utf-8');
+    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
     const content = (await document.data().asBuffer()).toString('utf-8');
     return (`${content}\n\n${prompt}`);
+  }
+
+  /**
+   * @param event the CloudEvent to process.
+   * @returns the body to pass to the Bedrock API in the appropriate
+   * format given the model.
+   */
+  private async getBody(event: CloudEvent) {
+    if (MODEL_ID?.includes('command-r')) {
+      return (JSON.stringify({
+        ...MODEL_PARAMETERS,
+        message: await this.getPrompt(event)
+      }));
+    } else {
+      return (JSON.stringify({
+        ...MODEL_PARAMETERS,
+        prompt: await this.getPrompt(event)
+      }));
+    }
   }
 
   /**
@@ -77,19 +96,22 @@ class Lambda implements LambdaInterface {
    */
   private async transform(event: CloudEvent): Promise<Buffer> {
     const response = await bedrock.invokeModel({
-      body: JSON.stringify({
-        ...MODEL_PARAMETERS,
-        prompt: await this.getPrompt(event)
-      }),
+      body: await this.getBody(event),
       modelId: MODEL_ID,
       accept: 'application/json',
       contentType: 'application/json'
     });
 
     // Parse the response into a buffer.
-    return (Buffer.from(
-      JSON.parse(response.body.transformToString()).generations[0].text
-    ));
+    if (MODEL_ID?.includes('command-r')) {
+      return (Buffer.from(
+        JSON.parse(response.body.transformToString()).text
+      ));
+    } else {
+      return (Buffer.from(
+        JSON.parse(response.body.transformToString()).generations[0].text
+      ));
+    }
   }
 
   /**

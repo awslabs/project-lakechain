@@ -70,14 +70,6 @@ export const ModelParametersSchema = z.object({
     .number()
     .min(1)
     .max(4096)
-    .optional(),
-
-  /**
-   * Specifies how and if the token likelihoods are returned with the response.
-   * You can specify the following options.
-   */
-  return_likelihoods: z
-    .custom<ReturnLikelihoods>()
     .optional()
 
 }).passthrough();
@@ -100,7 +92,9 @@ export const CohereTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
    * @default {}
    */
   modelParameters: ModelParametersSchema
-    .default({}),
+    .default({
+      max_tokens: 4096
+    }),
 
   /**
    * The prompt to use for generating text.
