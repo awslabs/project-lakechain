@@ -298,4 +298,4 @@ export class SharpImageTransform extends Middleware {
 
 export { sharp } from './definitions/index';
 export { CloudEvent } from '@project-lakechain/sdk';
-export { SharpFunction, SharpObject } from './definitions/opts';
+export { SharpFunction } from './definitions/opts';
