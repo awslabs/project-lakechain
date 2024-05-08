@@ -21,7 +21,7 @@ import icon from '../../../assets/icon-sharp.svg';
 </span>
 <span class="language-icon" style="margin-right: 10px">
   <a target="_blank" href="https://sharp.pixelplumbing.com/">
-    <Image width="31" src={icon} alt="Icon" style="border-radius: 50%" />
+    <Image width="30" src={icon} alt="Icon" style="border-radius: 50%" />
   </a>
 </span>
 <div style="margin-top: 26px"></div>
@@ -55,10 +55,9 @@ class Stack extends cdk.Stack {
       .withScope(this)
       .withIdentifier('Transform')
       .withCacheStorage(cache)
-      .withSource(source) // 👈 Specify a data source
+      .withSource(source)
       .withSharpTransforms(
-        sharp()
-          .resize(200, 200)
+        sharp().resize(200, 200) // 👈 Specify a transform
       )
       .build();
   }
@@ -73,7 +72,7 @@ class Stack extends cdk.Stack {
 
 The Sharp API transform actions can be chained to apply multiple transforms to an image.
 
-> ℹ️ The below example resizes input images to a width of 500px, applies a grayscale filter, flips the image, and converts it to PNG if it's not already.
+> ℹ️ The below example resizes input images to a width of 500px, applies a grayscale filter, flips the image, and converts it to PNG.
 
 ```typescript
 const transform = new SharpImageTransform.Builder()
@@ -135,13 +134,11 @@ bucket.grantRead(transform);
 
 ### 👾 Using Funclets
 
-While static transforms are convenient and allow developers to describe transforms using the Sharp native expressive API, there are use-cases that require developers to apply transforms in a more dynamic way, or generate multiple transforms based on the input image. This level of flexibility can be achieved by using [Funclets](/project-lakechain/guides/funclets) instead of static transformations.
+While static transforms are convenient and allow developers to describe transforms using the Sharp expressive API, there are use-cases that require developers to apply transforms in a more dynamic way, or generate multiple transforms based on the input image. This level of flexibility can be achieved by using [Funclets](/project-lakechain/guides/funclets) instead of static transformations.
 
 > ℹ️ Funclets allow you to specify a TypeScript function evaluated at runtime for each image in the cloud, and allows you to express in code the transformations you want to apply to the image.
 
-Below is an example of how to specify a funclet that resizes input images to multiple sizes.
-
-<br />
+Below is an example of how to specify a funclet that resizes input images to multiple sizes using TypeScript.
 
 ```typescript
 import { SharpImageTransform, SharpFunction, CloudEvent } from '@project-lakechain/sharp-image-transform';
@@ -153,13 +150,11 @@ const imageResize = new SharpImageTransform.Builder()
   .withCacheStorage(cache)
   .withSource(trigger)
   .withSharpTransforms(async function*(event: CloudEvent, sharp: SharpFunction) {
-    const sizes = [100, 200, 300];
-
     // Load the image in memory.
     const buffer = await event.data().document().data().asBuffer();
 
     // Resize the image to the specified sizes.
-    for (const size of sizes) {
+    for (const size of [100, 200, 300]) {
       yield sharp(buffer).resize(size).png();
     }
   })
@@ -167,6 +162,20 @@ const imageResize = new SharpImageTransform.Builder()
 ```
 
 <br />
+
+---
+
+#### Inner Workings
+
+The `.withSharpTransforms` method accepts a user-provided TypeScript [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*)
+that can yield any number of Sharp transforms to apply to the image.
+Each yielded Sharp transform will be automatically be passed to the next middlewares in the pipeline.
+
+> ℹ️ The generator function signature is as follows.
+
+```typescript
+type SharpFunction = async function*(event: CloudEvent, sharp: SharpFunction): AsyncGenerator<SharpFunction, void, void>;
+```
 
 <br />
 
