@@ -8,8 +8,10 @@
 flowchart LR
   Input([Input Bucket]) -.-> S3[S3 Trigger]
   S3 -. Image .-> Rekognition[Rekognition Image Processor]
-  Rekognition -. Image + Metadata .-> Image[Image Layer Processor]
-  Image -. Modified Image .-> S3Storage[S3 Storage Connector]
+  Rekognition -. Image + Metadata .-> Sharp[Sharp Image Transform]
+  Sharp -. Extracted face .-> S3Storage[S3 Storage Connector]
+  Sharp -. Extracted face .-> S3Storage[S3 Storage Connector]
+  Sharp -. Extracted face .-> S3Storage[S3 Storage Connector]
   S3Storage -.-> Output[Output Bucket]
 ```
 

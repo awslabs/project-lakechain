@@ -45,7 +45,7 @@ const funclet = async function*(event: CloudEvent, sharp: SharpFunction) {
     // using the face bounding box.
     for (const face of faces ?? []) {
       const { width, height, top, left } = face.boundingBox();
-      yield sharp(buffer).extract({
+      yield pipeline.extract({
         left: Math.floor(left * dimensions.width!),
         top: Math.floor(top * dimensions.height!),
         width: Math.floor(width * dimensions.width!),
