@@ -20,7 +20,7 @@ title: S3 Trigger
 
 ---
 
-The S3 trigger starts processing pipelines based on S3 object events. Specifically, it monitors the creation, modification and deletion of objects in monitored bucket(s).
+The S3 trigger starts processing pipelines based on [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) object events. Specifically, it monitors the creation, modification and deletion of objects in monitored bucket(s).
 
 ---
 

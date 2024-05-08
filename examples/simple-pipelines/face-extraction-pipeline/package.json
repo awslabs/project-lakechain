@@ -1,6 +1,6 @@
 {
   "name": "face-extraction-pipeline",
-  "description": "An example showcasing how to extract faces detected in images using Project Lakechain.",
+  "description": "An example showcasing how to extract faces detected in images.",
   "version": "0.7.0",
   "private": true,
   "scripts": {

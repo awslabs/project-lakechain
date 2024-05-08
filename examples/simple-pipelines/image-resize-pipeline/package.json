@@ -1,6 +1,6 @@
 {
   "name": "image-resize-pipeline",
-  "description": "A pipeline showcasing how to transform images.",
+  "description": "A pipeline showcasing how to resize images to multiple sizes.",
   "version": "0.7.0",
   "private": true,
   "scripts": {

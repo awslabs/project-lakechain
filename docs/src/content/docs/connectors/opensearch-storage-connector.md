@@ -20,7 +20,7 @@ title: OpenSearch
 
 ---
 
-The OpenSearch storage connector enables developers to automatically push [CloudEvents](/project-lakechain/general/events) to an [OpenSearch](https://opensearch.org/) domain, and index documents at scale within their pipelines. This connector uses [AWS Firehose](https://aws.amazon.com/firehose/) to buffer events and store them in batch to OpenSearch using a serverless architecture.
+The OpenSearch storage connector enables developers to automatically push [CloudEvents](/project-lakechain/general/events) to an [Amazon OpenSearch](https://opensearch.org/) domain, and index documents at scale within their pipelines. This connector uses [AWS Firehose](https://aws.amazon.com/firehose/) to buffer events and store them in batch to OpenSearch using a serverless architecture.
 
 ---
 

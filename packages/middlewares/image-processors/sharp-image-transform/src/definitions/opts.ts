@@ -38,9 +38,10 @@ declare function Sharp(
   options?: sharp.SharpOptions,
 ): sharp.Sharp;
 
+/**
+ * The type associated with the Sharp function.
+ */
 export type SharpFunction = typeof Sharp;
-
-export type SharpObject = sharp.Sharp;
 
 /**
  * A function expression that executes the Sharp funclet evaluation.
@@ -51,7 +52,7 @@ export type SharpObject = sharp.Sharp;
 export type IntentExpression = (
   event: CloudEvent,
   sharp: SharpFunction
-) => AsyncGenerator<any, void, sharp.Sharp>;
+) => AsyncGenerator<sharp.Sharp, void, any>;
 
 /**
  * The properties for the Sharp image transform middleware.

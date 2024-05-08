@@ -20,7 +20,7 @@ title: SQS Trigger
 
 ---
 
-The SQS trigger starts new pipeline executions using SQS queue(s) as a data source. This can be especially useful when you want to start a pipeline execution based on an event emitted by a third-party system.
+The SQS trigger starts new pipeline executions using [Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) queue(s) as a data source. This can be especially useful when you want to start a pipeline execution based on an event emitted by a third-party system.
 
 > 💁 The events consumed by the SQS event trigger from the source queue(s) must be valid [CloudEvents](/project-lakechain/general/events), otherwise they will be dismissed.
 

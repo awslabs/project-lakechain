@@ -188,9 +188,7 @@ export class SharpImageTransform extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         OPS_TYPE: type,
-        INTENT: type === 'expression' ?
-          JSON.stringify(expression) :
-          expression,
+        INTENT: expression,
         INTENT_SYMBOL
       },
       layers: [
