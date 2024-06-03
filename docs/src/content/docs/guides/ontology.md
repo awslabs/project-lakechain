@@ -17,4 +17,4 @@ A document is described as part of the [CloudEvent](/project-lakechain/general/e
 
 ![Document Events](../../../assets/document-ontology.png)
 
-This ontology makes it simple to describe a document and its semantic relationships and is used by several middlewares such as the [Semantic Ontology Extractor]() to express documents and store them in a graph database.
+This ontology makes it simple to describe a document and its semantic relationships and is used by several middlewares such as the Semantic Ontology Extractor to express documents and store them in a graph database.
