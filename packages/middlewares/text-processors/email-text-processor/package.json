@@ -37,7 +37,7 @@
     "@types/mailparser": "^3.4.4",
     "@types/node": "^20.8.10",
     "esbuild": "^0.20.2",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.7"
   },
   "dependencies": {
     "@aws-lambda-powertools/batch": "^1.18.1",
@@ -51,7 +51,7 @@
     "mailparser": "^3.7.1"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.140.0",
+    "aws-cdk-lib": "^2.143.1",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

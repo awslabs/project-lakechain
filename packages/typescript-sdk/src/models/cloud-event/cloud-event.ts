@@ -20,6 +20,8 @@ import { DataEnvelope } from './data-envelope';
 import { EventType } from './event-type';
 import { ReferenceResolver } from '../../references/';
 import { IReference } from '../../references/types';
+import { GraphResolver } from '../../ontology/graph-resolver';
+import { DirectedGraph } from 'graphology';
 
 /**
  * The current specification version
@@ -246,6 +248,16 @@ export class CloudEvent {
   }
 
   /**
+   * Allows to resolve a reference against the current
+   * cloud event.
+   * @param reference the reference to resolve.
+   * @returns the value associated with the given reference.
+   */
+  resolve(reference: IReference<any>): Promise<any> {
+    return (new ReferenceResolver(this).resolve(reference));
+  }
+
+  /**
    * Describes how the document should be serialized.
    * @returns an object with the properties associated
    * with the JSON representation of the event.
@@ -261,12 +273,10 @@ export class CloudEvent {
   }
 
   /**
-   * Allows to resolve a reference against the current
-   * cloud event.
-   * @param reference the reference to resolve.
-   * @returns the value associated with the given reference.
+   * @returns a promise to a directed graph representation
+   * of the ontology extracted from the cloud event.
    */
-  resolve(reference: IReference<any>): Promise<any> {
-    return (new ReferenceResolver(this).resolve(reference));
+  asGraph(): Promise<DirectedGraph> {
+    return (new GraphResolver(this).resolve());
   }
 }

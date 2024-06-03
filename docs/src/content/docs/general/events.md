@@ -7,7 +7,7 @@ Project Lakechain makes a distinction between the raw *data* that composes a doc
 
 > We call this description a **Cloud Event**, simply because its format is modeled after the [CloudEvents](https://cloudevents.io/) specification.
 
-![Document Events](../../../assets//document-events.png)
+![Document Events](../../../assets/document-events.png)
 
 <br>
 
@@ -162,6 +162,8 @@ Name             | Description | Format
 **description**  | A meaningful description of the document. | String
 **keywords**     | An array of prominent keywords associated with the document. | Array
 **rating**       | A rating between 1 and 5 representing the quality of the document. | Number
+**language**     | The language of the document in ISO 639-1 format. | String
+**ontology**     | The ontology of the document in the form of a graph. | DirectedGraph
 **properties**   | A discriminated union of metadata specific to the type of document. | Object
 
 <br>

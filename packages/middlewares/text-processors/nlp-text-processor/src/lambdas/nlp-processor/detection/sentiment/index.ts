@@ -16,7 +16,7 @@
 
 import truncate from 'truncate-utf8-bytes';
 import { tracer } from '@project-lakechain/sdk/powertools';
-import { TextMetadata, Sentiment } from '@project-lakechain/sdk/models/document/metadata';
+import { TextMetadata, Sentiment, DocumentMetadata } from '@project-lakechain/sdk/models/document/metadata';
 import {
   ComprehendClient,
   DetectSentimentCommand,
@@ -37,20 +37,23 @@ const comprehend = tracer.captureAWSv3Client(new ComprehendClient({
  * longer than 5KB of UTF-8 characters, it will be truncated,
  * and the result will be based on the truncated text.
  * @param text the text to analyze.
- * @param attrs the metadata attributes to update.
+ * @param metadata the document metadata.
  * @param args the arguments associated with the operation.
  * @returns the updated metadata.
  */
 export const detectSentiment = async (
   text: string,
-  attrs: TextMetadata
-): Promise<TextMetadata> => {
+  metadata: DocumentMetadata
+): Promise<DocumentMetadata> => {
   try {
     // Detect the sentiment using Amazon Comprehend.
     const res = await comprehend.send(new DetectSentimentCommand({
       Text: truncate(text, 4_000),
-      LanguageCode: attrs.language as LanguageCode
+      LanguageCode: metadata.language as LanguageCode
     }));
+
+    // The attributes to update in the metadata.
+    const attrs = metadata.properties?.attrs as TextMetadata;
 
     // If the result matches the confidence threshold, we
     // update the metadata.
@@ -65,8 +68,8 @@ export const detectSentiment = async (
         attrs.sentiment = Sentiment.MIXED;
       }
     }
-    return (attrs);
+    return (metadata);
   } catch (err) {
-    return (attrs);
+    return (metadata);
   }
 };

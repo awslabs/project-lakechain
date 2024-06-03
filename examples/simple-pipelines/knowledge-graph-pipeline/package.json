@@ -1,0 +1,44 @@
+{
+  "name": "knowledge-graph-pipeline",
+  "description": "Builds a pipeline for semantic ontology extraction from documents.",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=knowledge-graph-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.20.2",
+    "ts-jest": "^29.0.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/semantic-ontology-extractor": "*",
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/pdf-text-converter": "*",
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/neo4j-storage-connector": "*",
+    "@project-lakechain/sharp-image-transform": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.143.1",
+    "constructs": "^10.3.0"
+  }
+}

@@ -16,7 +16,7 @@
 
 import truncate from 'truncate-utf8-bytes';
 import { tracer } from '@project-lakechain/sdk/powertools';
-import { TextMetadata } from '@project-lakechain/sdk/models/document/metadata';
+import { DocumentMetadata } from '@project-lakechain/sdk/models/document/metadata';
 import {
   ComprehendClient,
   DetectDominantLanguageCommand
@@ -34,18 +34,18 @@ const comprehend = tracer.captureAWSv3Client(new ComprehendClient({
  * Attempts to detect the language of the given text
  * using Amazon Comprehend.
  * @param text the text to analyze.
- * @param attrs the metadata attributes to update.
+ * @param metadata the document metadata.
  * @returns the updated metadata.
  */
 export const detectLanguage = async (
   text: string,
-  attrs: TextMetadata,
+  metadata: DocumentMetadata,
   language?: string
-): Promise<TextMetadata> => {
+): Promise<DocumentMetadata> => {
   // If the language is specified, we use it.
   if (language) {
-    attrs.language = language;
-    return (attrs);
+    metadata.language = language;
+    return (metadata);
   }
 
   try {
@@ -59,11 +59,11 @@ export const detectLanguage = async (
     if (res.Languages && res.Languages.length > 0) {
       const languages = res.Languages.sort((a, b) => b.Score! - a.Score!);
       if (languages[0]?.LanguageCode) {
-        attrs.language = languages[0].LanguageCode;
+        metadata.language = languages[0].LanguageCode;
       }
     }
-    return (attrs);
+    return (metadata);
   } catch (err) {
-    return (attrs);
+    return (metadata);
   }
 };

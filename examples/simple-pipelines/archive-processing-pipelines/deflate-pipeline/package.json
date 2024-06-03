@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/node": "^20.8.10",
     "esbuild": "^0.20.2",
-    "rimraf": "^5.0.5",
+    "rimraf": "^5.0.7",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
@@ -38,7 +38,7 @@
     "@project-lakechain/sharp-image-transform": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.140.0",
+    "aws-cdk-lib": "^2.143.1",
     "constructs": "^10.0.0"
   }
 }

@@ -15,7 +15,7 @@
  */
 
 import { tracer } from '@project-lakechain/sdk/powertools';
-import { TextMetadata, Entity } from '@project-lakechain/sdk/models/document/metadata';
+import { TextMetadata, Entity, DocumentMetadata } from '@project-lakechain/sdk/models/document/metadata';
 import { CacheStorage } from '@project-lakechain/sdk/cache';
 import {
   ComprehendClient,
@@ -47,25 +47,26 @@ const cacheStorage = new CacheStorage();
  * using Amazon Comprehend. The entities will be made
  * available in the document metadata.
  * @param doc the document to analyze.
- * @param attrs the metadata attributes to update.
+ * @param metadata the document metadata.
  * @param args the arguments associated with the operation.
  * @returns the updated metadata.
  * @example ORGANIZATION, PERSON, LOCATION, DATE, QUANTITY, TITLE, OTHER
  */
 export const detectEntities = async (
   text: string,
-  attrs: TextMetadata,
+  metadata: DocumentMetadata,
   opts: any
-): Promise<TextMetadata> => {
+): Promise<DocumentMetadata> => {
   const entities: Entity[] = [];
   const confidence = opts.minConfidence ?? DEFAULT_CONFIDENCE;
   const filter = opts.filter ?? [];
+  const attrs = metadata.properties?.attrs as TextMetadata;
 
   try {
     // Detect the entities using Amazon Comprehend.
     const res = await comprehend.send(new DetectEntitiesCommand({
       Text: text,
-      LanguageCode: attrs.language as LanguageCode
+      LanguageCode: metadata.language as LanguageCode
     }));
 
     // If the result matches the confidence threshold, we

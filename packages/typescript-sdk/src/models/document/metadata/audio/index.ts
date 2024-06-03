@@ -64,14 +64,6 @@ export const AudioMetadataSchema = z.object({
     .optional(),
 
   /**
-   * The language of the audio track.
-   */
-  language: z
-    .string()
-    .describe('The language of the audio track.')
-    .optional(),
-
-  /**
    * Whether the audio track is lossless.
    */
   lossless: z

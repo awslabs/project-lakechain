@@ -16,23 +16,12 @@ import os
 import json
 import random
 
-from functools import reduce
 from typing import Union
 
 # Environment variables.
 BARK_VOICES       = json.loads(open('app/voices.json', 'r').read())
 VOICE_MAPPING     = json.loads(os.getenv('VOICE_MAPPING', '{}'))
 LANGUAGE_OVERRIDE = os.getenv('LANGUAGE_OVERRIDE', None)
-
-def deep_get(dictionary, keys, default=None):
-  """
-  :param dictionary: The dictionary to search.
-  :param keys: The keys to search for.
-  :param default: The default value to return if the key is not found.
-  :return: The value of the key, or the default value if the key is not found.
-  """
-  return reduce(lambda d, key: d.get(key, default) if isinstance(d, dict) else default, keys.split("."), dictionary)
-
 
 def get_language(event: dict) -> str:
   """
@@ -48,8 +37,8 @@ def get_language(event: dict) -> str:
     return LANGUAGE_OVERRIDE
   
   # If there is a language in the metadata properties, we use it.
-  if bool(deep_get(metadata, 'properties.attrs.language')):
-    return deep_get(metadata, 'properties.attrs.language')
+  if 'language' in metadata:
+    return metadata['language']
   
   return 'en'
 

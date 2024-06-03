@@ -83,11 +83,8 @@ export const getSourceLanguage = (event: CloudEvent): string | undefined => {
 
   // Otherwise, we try to infer the language of the source
   // document from its metadata.
-  if (metadata.properties?.kind === 'text') {
-    const sourceLanguage = metadata.properties.attrs.language;
-    if (sourceLanguage) {
-      return (sourceLanguage);
-    }
+  if (metadata.language) {
+    return (metadata.language);
   }
 
   return (undefined);

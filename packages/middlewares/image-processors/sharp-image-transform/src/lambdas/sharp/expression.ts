@@ -52,10 +52,10 @@ const reviver = (event: CloudEvent) => (key: string, value: any) => {
 const deepResolve = async (value: any): Promise<any> => {
   if (value instanceof Promise) {
     // If it's a promise, await it
-    return await value;
+    return value;
   } else if (Array.isArray(value)) {
     // If it's an array, recursively resolve each element
-    return await Promise.all(value.map(deepResolve));
+    return Promise.all(value.map(deepResolve));
   } else if (isObject(value)) {
     // If it's an object, recursively resolve each property
     const entries: any = await Promise.all(
@@ -72,13 +72,13 @@ const deepResolve = async (value: any): Promise<any> => {
  * @param event the event to process.
  * @returns the operations to apply to the image.
  */
-export const getOpts = async (event: CloudEvent) => {
+export const getOpts = (event: CloudEvent) => {
   const ops = JSON.parse(process.env.INTENT ?? '[]', reviver(event));
 
   if (!Array.isArray(ops) || !ops.length) {
     throw new Error('No operations to apply.');
   }
-  return (await deepResolve(ops));
+  return (deepResolve(ops));
 };
 
 /**

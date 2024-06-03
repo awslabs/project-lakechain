@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/node": "^20.8.10",
     "esbuild": "^0.20.2",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
@@ -35,7 +35,7 @@
     "@project-lakechain/s3-event-trigger": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.140.0",
+    "aws-cdk-lib": "^2.143.1",
     "constructs": "^10.3.0"
   }
 }

@@ -64,14 +64,11 @@ class Lambda implements LambdaInterface {
       const key = `${event.data().chainId()}/${randomUUID()}.${result.ext}`;
 
       // Create a new document with the processed image.
-      const newDocument = await Document.create({
+      event.data().props.document = await Document.create({
         url: new URL(`s3://${PROCESSED_FILES_BUCKET}/${key}`),
         data: result.buffer,
         type: result.type
       });
-
-      // We update the event with the new document.
-      event.data().props.document = newDocument;
 
       // We set the image metadata as the document metadata.
       merge(event.data().props.metadata, result.metadata);

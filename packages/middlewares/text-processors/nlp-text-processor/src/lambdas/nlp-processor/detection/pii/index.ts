@@ -15,7 +15,7 @@
  */
 
 import { tracer } from '@project-lakechain/sdk/powertools';
-import { TextMetadata, Pii } from '@project-lakechain/sdk/models/document/metadata';
+import { TextMetadata, Pii, DocumentMetadata } from '@project-lakechain/sdk/models/document/metadata';
 import { CacheStorage } from '@project-lakechain/sdk/cache';
 import {
   ComprehendClient,
@@ -48,25 +48,26 @@ const cacheStorage = new CacheStorage();
  * The entities will be made available in the document
  * metadata.
  * @param doc the document to analyze.
- * @param attrs the metadata attributes to update.
+ * @param metadata the document metadata.
  * @param args the arguments associated with the operation.
  * @returns the updated metadata.
  * @example BANK_ACCOUNT_NUMBER, PIN, EMAIL, ADDRESS, NAME, PHONE, etc.
  */
 export const detectPiiEntities = async (
   text: string,
-  attrs: TextMetadata,
+  metadata: DocumentMetadata,
   opts: any
-): Promise<TextMetadata> => {
+): Promise<DocumentMetadata> => {
   const piis: Pii[] = [];
   const confidence = opts.minConfidence ?? DEFAULT_CONFIDENCE;
   const filter = opts.filter ?? [];
+  const attrs = metadata.properties?.attrs as TextMetadata;
 
   try {
     // Detect the entities using Amazon Comprehend.
     const res = await comprehend.send(new DetectPiiEntitiesCommand({
       Text: text,
-      LanguageCode: attrs.language as LanguageCode
+      LanguageCode: metadata.language as LanguageCode
     }));
 
     // If the result matches the confidence threshold, we
@@ -88,8 +89,8 @@ export const detectPiiEntities = async (
     // Store the result into a pointer in the cache,
     // that other middlewares will be able to consume.
     attrs.pii = await cacheStorage.put('piis', piis);
-    return (attrs);
+    return (metadata);
   } catch (err) {
-    return (attrs);
+    return (metadata);
   }
 };

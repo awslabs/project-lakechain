@@ -83,7 +83,7 @@ export const nlp = async (document: Document, ops: Operation[]): Promise<any> =>
         await detectSentiment(text, metadata.properties.attrs);
         break;
       case 'entities':
-        await detectEntities(text, metadata.properties.attrs, opts);
+        await detectEntities(text, metadata, opts);
         break;
       case 'pii':
         await detectPiiEntities(text, metadata.properties.attrs, opts);

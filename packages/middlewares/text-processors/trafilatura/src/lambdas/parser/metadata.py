@@ -40,7 +40,7 @@ def get_metadata(result: dict) -> dict:
       
     # Language from the HTML document.
     if bool(result.get('language')):
-      metadata['properties']['attrs']['language'] = result['language']
+      metadata['language'] = result['language']
   
   except Exception as e:
     print(e)

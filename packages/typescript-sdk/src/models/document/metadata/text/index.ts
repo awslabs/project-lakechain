@@ -33,14 +33,6 @@ import { LayoutSchema } from './attributes/layout.js';
 export const TextMetadataSchema = z.object({
 
   /**
-   * The language of the text document.
-   */
-  language: z
-    .string()
-    .describe('The language of the text document.')
-    .optional(),
-
-  /**
    * The number of pages in the text document.
    */
   pages: z

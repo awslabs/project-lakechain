@@ -15,7 +15,7 @@
  */
 
 import { tracer } from '@project-lakechain/sdk/powertools';
-import { TextMetadata, PartOfSpeech } from '@project-lakechain/sdk/models/document/metadata';
+import { TextMetadata, PartOfSpeech, DocumentMetadata } from '@project-lakechain/sdk/models/document/metadata';
 import { CacheStorage } from '@project-lakechain/sdk/cache';
 import {
   ComprehendClient,
@@ -47,25 +47,26 @@ const cacheStorage = new CacheStorage();
  * given text using Amazon Comprehend. The tags will
  * be made available in the document metadata.
  * @param doc the document to analyze.
- * @param attrs the metadata attributes to update.
+ * @param metadata the document metadata.
  * @param args the arguments associated with the operation.
  * @returns the updated metadata.
  * @example ADJ, ADP, ADV, AUX, CONJ, etc.
  */
 export const detectPos = async (
   text: string,
-  attrs: TextMetadata,
+  metadata: DocumentMetadata,
   opts: any
 ): Promise<TextMetadata> => {
   const pos: PartOfSpeech[] = [];
   const confidence = opts.minConfidence ?? DEFAULT_CONFIDENCE;
   const filter = opts.filter ?? [];
+  const attrs = metadata.properties?.attrs as TextMetadata;
 
   try {
     // Detect the Part-of-Speech tags using Amazon Comprehend.
     const res = await comprehend.send(new DetectSyntaxCommand({
       Text: text,
-      LanguageCode: attrs.language as SyntaxLanguageCode
+      LanguageCode: metadata.language as SyntaxLanguageCode
     }));
 
     // If the result matches the confidence threshold, we

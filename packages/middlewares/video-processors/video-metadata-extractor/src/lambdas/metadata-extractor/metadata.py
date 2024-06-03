@@ -60,7 +60,7 @@ def parse_audio_track(track, metadata: dict):
   if isinstance(track.sampling_rate, int):
     audio['sampleRate'] = track.sampling_rate
   if isinstance(track.language, str):
-    audio['language'] = track.language
+    metadata['language'] = track.language
   if isinstance(track.compression_mode, str):
     if track.compression_mode == 'Lossy':
       audio['lossless'] = False

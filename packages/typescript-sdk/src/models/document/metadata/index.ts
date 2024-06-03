@@ -20,6 +20,8 @@ import { TextMetadataSchema } from './text/index.js';
 import { VideoMetadataSchema } from './video/index.js';
 import { AudioMetadataSchema } from './audio/index.js';
 import { PublisherSchema } from './attributes/publisher.js';
+import { DirectedGraph } from 'graphology';
+import { PointerBuilder } from '../../../pointer/index.js';
 
 /**
  * Represents additional metadata associated with a `Document`.
@@ -111,6 +113,16 @@ export const DocumentMetadataSchema = z.object({
     .optional(),
 
   /**
+   * An array of topics associated with the document.
+   * These topics can be used to categorize the document
+   * and provide additional context.
+   */
+  topics: z
+    .array(z.string())
+    .describe('An array of topics associated with the document.')
+    .optional(),
+
+  /**
    * A rating between 1 and 5 representing the
    * quality of the document.
    */
@@ -122,6 +134,29 @@ export const DocumentMetadataSchema = z.object({
     .optional(),
 
   /**
+   * The language of the document defined as a
+   * 2-letter language code (ISO 639-1).
+   */
+  language: z
+    .string()
+    .describe('The language of the document.')
+    .optional(),
+
+  /**
+   * A graph of semantic entities associated with the document.
+   */
+  ontology: z
+    .string()
+    .url()
+    .describe('A graph of semantic entities associated with the document.')
+    .transform((url) => {
+      return (new PointerBuilder<DirectedGraph>()
+        .withUri(url)
+        .withClassType(DirectedGraph)
+        .build());
+    }).optional(),
+
+  /**
    * Custom metadata associated with the entire document.
    * This is a free form object that can contain any
    * custom metadata.
@@ -129,6 +164,7 @@ export const DocumentMetadataSchema = z.object({
   custom: z
     .record(z.any())
     .describe('Custom metadata associated with the document.')
+    .default({})
     .optional(),
 
   /**

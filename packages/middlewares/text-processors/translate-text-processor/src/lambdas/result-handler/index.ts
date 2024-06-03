@@ -125,11 +125,10 @@ class Lambda implements LambdaInterface {
 
       // Update the metadata.
       merge(clone.data().props.metadata, {
+        language: metadata.targetLanguageCode,
         properties: {
           kind: 'text',
-          attrs: {
-            language: metadata.targetLanguageCode
-          }
+          attrs: {}
         }
       });
 

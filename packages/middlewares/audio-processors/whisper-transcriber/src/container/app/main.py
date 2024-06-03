@@ -109,11 +109,10 @@ def process_event(event: dict):
     # Update the metadata with the language of the transcript.
     if language:
       merge(event['data']['metadata'], {
+        'language': language,
         'properties': {
           'kind': 'text',
-          'attrs': {
-            'language': language
-          }
+          'attrs': {}
         }
       })
     

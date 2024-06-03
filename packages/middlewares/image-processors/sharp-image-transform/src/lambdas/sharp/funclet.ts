@@ -84,7 +84,7 @@ export async function* processFunclet(event: CloudEvent): AsyncGenerator<Result,
   // extract its metadata.
   for await (const transform of results) {
     const buffer = await transform.toBuffer();
-    const image = await sharp(buffer).metadata();
+    const image = await transform.metadata();
 
     // Adding image dimensions to the document metadata.
     if (image.width && image.height) {

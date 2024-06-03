@@ -51,6 +51,6 @@ def get_metadata(article: Article) -> dict:
     
   # Language from the HTML document.
   if bool(article.meta_lang):
-    metadata['properties']['attrs']['language'] = article.meta_lang
+    metadata['language'] = article.meta_lang
   
   return metadata

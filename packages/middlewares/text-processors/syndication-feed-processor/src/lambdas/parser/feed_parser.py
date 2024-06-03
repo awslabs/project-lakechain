@@ -111,11 +111,10 @@ def get_feed_item_metadata(
     'updatedAt': item.updated,
     'authors': get_authors(item),
     'keywords': [tag.term for tag in item.get('tags', [])],
+    'language': language,
     'properties': {
       'kind': 'text',
-      'attrs': {
-        'language': language
-      }
+      'attrs': {}
     }
   }
 

@@ -67,6 +67,9 @@ export default defineConfig({
 					label: 'Funclets',
 					link: '/guides/funclets'
 				}, {
+					label: 'Ontology',
+					link: '/guides/ontology'
+				}, {
 					label: 'Tags',
 					link: '/guides/tagging'
 				}, {

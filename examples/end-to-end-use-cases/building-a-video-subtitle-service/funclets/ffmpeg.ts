@@ -80,7 +80,7 @@ export const merge = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegU
       const metadata = subtitle.data().metadata();
 
       if (metadata.properties?.kind === 'text') {
-        const language = mapping[metadata.properties.attrs.language as string];
+        const language = mapping[metadata.language as string];
 
         if (language) {
           chain = chain

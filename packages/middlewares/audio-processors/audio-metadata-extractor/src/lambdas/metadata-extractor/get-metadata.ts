@@ -124,7 +124,7 @@ export const getMetadata = async (audio: Buffer): Promise<DocumentMetadata> => {
 
     // Language.
     if (data.common.language) {
-      metadata.properties.attrs.language = data.common.language;
+      metadata.language = data.common.language;
     }
   } catch (err) {
     logger.error(err as any);

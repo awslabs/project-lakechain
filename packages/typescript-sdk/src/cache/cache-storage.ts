@@ -125,7 +125,7 @@ export class CacheStorage {
     }
 
     // The path where the serialized data will be stored.
-    const path = `${this.props.serviceName}/${this.hash(key, data)}`;
+    const path = `${this.props.serviceName}/${this.hash(key, serialized)}`;
 
     // Create an S3 URI pointing to the location
     // of the serialized data.
