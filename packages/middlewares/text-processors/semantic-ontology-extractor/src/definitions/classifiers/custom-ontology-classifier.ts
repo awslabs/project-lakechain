@@ -37,7 +37,7 @@ to build a knowledge graph.
  */
 const USER_PROMPT = `
 Analyze the provided documents step-by-step and extract the semantic ontology from the documents in the form of
-nodes and edges described into a stuctured JSON document.
+nodes and edges described into a structured JSON document.
 Ensure the generated JSON is valid, and no strings are broken across multiple lines or in the middle with a special character.
 Below is the schema of the structured JSON that you must output, use this example to format your output:
 

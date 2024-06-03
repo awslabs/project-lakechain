@@ -31,12 +31,12 @@ const NEO4J_URI: string = process.env.NEO4J_URI as string;
  * AWS Secrets Manager.
  */
 export const createClient = async (maxAge = 180): Promise<Driver> => {
-  const creds = JSON.parse(
+  const credentials = JSON.parse(
     await getSecret(SECRET_NAME, { maxAge }) as string
   );
 
   return (driver(
     NEO4J_URI,
-    auth.basic(creds.USERNAME, creds.PASSWORD)
+    auth.basic(credentials.USERNAME, credentials.PASSWORD)
   ));
 };
