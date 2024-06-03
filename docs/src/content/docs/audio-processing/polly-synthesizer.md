@@ -93,7 +93,7 @@ const synthesizer = new PollySynthesizer.Builder()
 
 By default, the Polly synthesizer will randomly select a compatible voice associated with the input language of a document. You can however explicitly specify a list of voices that you would like to associate with each language to better control which voice gets used during the synthesis process.
 
-In Amazon Polly, you can choose between [neural voices](https://docs.aws.amazon.com/polly/latest/dg/ntts-voices-main.html) and standard voices. Neural voices can produce even higher quality voices than standard voices, and produce the most natural and human-like text-to-speech voices possible.
+In Amazon Polly, you can choose between [neural voices](https://docs.aws.amazon.com/polly/latest/dg/neural-voices.html) and standard voices. Neural voices can produce even higher quality voices than standard voices, and produce the most natural and human-like text-to-speech voices possible.
 
 > 💁 Not all voices support the neural engine. You can find the list of supported voices for each language [here](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html). The Polly synthesizer middleware validates the voice mappings you specify at deployment time to ensure they are correct.
 
