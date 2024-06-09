@@ -48,7 +48,7 @@
     "@project-lakechain/core": "*",
     "@project-lakechain/layers": "*",
     "@project-lakechain/sdk": "*",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.4",
     "serialize-javascript": "^6.0.2",
     "lodash": "^4.17.21"
   },

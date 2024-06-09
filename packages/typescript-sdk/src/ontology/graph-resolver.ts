@@ -55,7 +55,7 @@ export class GraphResolver {
     const { properties: _1, custom: _2, type, ...rest } = this.event.data().metadata();
 
     // Add the current document to the graph.
-    graph.addNode(document.id(), {
+    graph.mergeNode(document.id(), {
       type: 'Document',
       attrs: {
         ...document.toJSON(),
@@ -81,7 +81,7 @@ export class GraphResolver {
     // the source document, we create a connection
     // between them.
     if (source.id() !== document.id()) {
-      graph.addNode(source.id(), {
+      graph.mergeNode(source.id(), {
         type: 'Document',
         attrs: {
           ...source.toJSON(),
@@ -89,8 +89,11 @@ export class GraphResolver {
         }
       });
 
-      graph.addEdge(document.id(), source.id(), {
-        type: 'HAS_SOURCE'
+      graph.mergeEdge(document.id(), source.id(), {
+        type: 'HAS_SOURCE',
+        attrs: {
+          description: 'The document has a source document.'
+        }
       });
     }
 
@@ -108,7 +111,7 @@ export class GraphResolver {
     const metadata = this.event.data().metadata();
 
     if (metadata.language) {
-      graph.addNode(metadata.language, {
+      graph.mergeNode(metadata.language, {
         type: 'Language',
         attrs: {
           name: metadata.language
@@ -116,8 +119,11 @@ export class GraphResolver {
       });
 
       // Connect the document to the language.
-      graph.addEdge(document.id(), metadata.language, {
-        type: 'IS_IN_LANGUAGE'
+      graph.mergeEdge(document.id(), metadata.language, {
+        type: 'IS_IN_LANGUAGE',
+        attrs: {
+          description: 'The document is in the given language.'
+        }
       });
     }
 
@@ -136,7 +142,7 @@ export class GraphResolver {
 
     if (metadata.topics) {
       metadata.topics.forEach(topic => {
-        graph.addNode(topic, {
+        graph.mergeNode(topic, {
           type: 'Topic',
           attrs: {
             name: topic
@@ -144,8 +150,11 @@ export class GraphResolver {
         });
 
         // Connect the document to the topic.
-        graph.addEdge(document.id(), topic, {
-          type: 'IS_LINKED_TO'
+        graph.mergeEdge(document.id(), topic, {
+          type: 'IS_LINKED_TO',
+          attrs: {
+            description: 'The document is linked to the given topic.'
+          }
         });
       });
     }
@@ -164,7 +173,7 @@ export class GraphResolver {
     const metadata = this.event.data().metadata();
 
     if (metadata.publisher?.name) {
-      graph.addNode(metadata.publisher.name, {
+      graph.mergeNode(metadata.publisher.name, {
         type: 'Publisher',
         attrs: {
           ...metadata.publisher
@@ -172,8 +181,11 @@ export class GraphResolver {
       });
 
       // Connect the document to the publisher.
-      graph.addEdge(document.id(), metadata.publisher, {
-        type: 'PUBLISHED_BY'
+      graph.mergeEdge(document.id(), metadata.publisher, {
+        type: 'PUBLISHED_BY',
+        attrs: {
+          description: 'The document is published by the given publisher.'
+        }
       });
     }
 
@@ -192,7 +204,7 @@ export class GraphResolver {
 
     if (metadata.authors) {
       metadata.authors.forEach(author => {
-        graph.addNode(author, {
+        graph.mergeNode(author, {
           type: 'Author',
           attrs: {
             name: author
@@ -200,8 +212,11 @@ export class GraphResolver {
         });
 
         // Connect the document to the author.
-        graph.addEdge(document.id(), author, {
-          type: 'AUTHORED_BY'
+        graph.mergeEdge(document.id(), author, {
+          type: 'AUTHORED_BY',
+          attrs: {
+            description: 'The document is authored by the given author.'
+          }
         });
       });
     }
@@ -220,7 +235,7 @@ export class GraphResolver {
     const metadata = this.event.data().metadata();
 
     if (metadata.type) {
-      graph.addNode(metadata.type, {
+      graph.mergeNode(metadata.type, {
         type: 'Class',
         attrs: {
           name: metadata.type
@@ -228,8 +243,11 @@ export class GraphResolver {
       });
 
       // Connect the document to the type.
-      graph.addEdge(document.id(), metadata.type, {
-        type: 'IS_OF_CLASS'
+      graph.mergeEdge(document.id(), metadata.type, {
+        type: 'IS_OF_CLASS',
+        attrs: {
+          description: 'The document is of the given class.'
+        }
       });
     }
 
@@ -247,7 +265,7 @@ export class GraphResolver {
     const metadata = this.event.data().metadata();
 
     if (metadata.properties?.kind) {
-      graph.addNode(metadata.properties.kind, {
+      graph.mergeNode(metadata.properties.kind, {
         type: 'Kind',
         attrs: {
           name: metadata.properties.kind
@@ -255,8 +273,11 @@ export class GraphResolver {
       });
 
       // Connect the document to the kind.
-      graph.addEdge(document.id(), metadata.properties.kind, {
-        type: 'IS_OF_KIND'
+      graph.mergeEdge(document.id(), metadata.properties.kind, {
+        type: 'IS_OF_KIND',
+        attrs: {
+          description: 'The document is of the given kind.'
+        }
       });
     }
 
@@ -275,10 +296,6 @@ export class GraphResolver {
 
     if (pointer) {
       const ontology = await pointer.resolve();
-
-      // If the `custom` attribute is not present in the metadata,
-      // we create it.
-      metadata.custom = metadata.custom || {};
       
       // Merge the ontology nodes with the graph.
       ontology.nodes().forEach(node => {
@@ -290,8 +307,11 @@ export class GraphResolver {
         // If the node is a head, it means it is connected
         // to the document.
         if (attrs.attrs?.isHead) {
-          graph.addEdge(document.id(), node, {
-            type: 'HAS_ONTOLOGY'
+          graph.mergeEdge(document.id(), node, {
+            type: 'HAS_ONTOLOGY',
+            attrs: {
+              description: 'The document is connected to the custom ontology.'
+            }
           });
         }
       });

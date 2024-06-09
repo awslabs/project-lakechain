@@ -56,11 +56,10 @@ export const detectPos = async (
   text: string,
   metadata: DocumentMetadata,
   opts: any
-): Promise<TextMetadata> => {
+): Promise<DocumentMetadata> => {
   const pos: PartOfSpeech[] = [];
   const confidence = opts.minConfidence ?? DEFAULT_CONFIDENCE;
   const filter = opts.filter ?? [];
-  const attrs = metadata.properties?.attrs as TextMetadata;
 
   try {
     // Detect the Part-of-Speech tags using Amazon Comprehend.
@@ -68,6 +67,14 @@ export const detectPos = async (
       Text: text,
       LanguageCode: metadata.language as SyntaxLanguageCode
     }));
+
+    // If the metadata does not have properties, we initialize them.
+    if (!metadata.properties) {
+      metadata.properties = { kind: 'text', attrs: {} };
+    }
+
+    // The attributes to update in the metadata.
+    const attrs = metadata.properties.attrs as TextMetadata;
 
     // If the result matches the confidence threshold, we
     // update the metadata.
@@ -89,9 +96,14 @@ export const detectPos = async (
     // Store the result into a pointer in the cache,
     // that other middlewares will be able to consume.
     attrs.pos = await cacheStorage.put('pos', pos);
-    return (attrs);
+
+    // Store the number of detected part-of-speech text in the statistics.
+    attrs.stats = attrs.stats || {};
+    attrs.stats.pos = pos.length;
+
+    return (metadata);
   } catch (err) {
     console.error(err);
-    return (attrs);
+    return (metadata);
   }
 };

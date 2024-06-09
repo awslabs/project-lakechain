@@ -174,6 +174,9 @@ export default defineConfig({
 				}, {
 					label: 'Firehose',
 					link: '/connectors/firehose-storage-connector'
+				}, {
+					label: 'Neo4j',
+					link: '/connectors/neo4j-storage-connector'
 				}]
 			}, {
 				label: 'Text Processing',

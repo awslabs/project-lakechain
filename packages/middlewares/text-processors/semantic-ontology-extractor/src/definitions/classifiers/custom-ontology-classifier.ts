@@ -59,7 +59,12 @@ Below is the schema of the structured JSON that you must output, use this exampl
       "source": "The node source identifier",
       "target": "The node target identifier",
       "type": "The type of the edge",
-      "description": "The description of the edge"
+      "description": "The description of the edge",
+      "props": [{
+        "name": "Name of the property",
+        "description": "Description of the property",
+        "value": "Value of the property extracted from the document"
+      }]
     }]
   }
 </json>
@@ -328,10 +333,6 @@ export class CustomOntologyClassifier {
     const cache = new CacheStorage();
     let graph: DirectedGraph;
 
-    // If the `custom` attribute is not present in the metadata,
-    // we create it.
-    metadata.custom = metadata.custom ?? {};
-
     // If the graph does not exist, we create it.
     if (metadata.ontology) {
       graph = await metadata.ontology.resolve();
@@ -371,20 +372,26 @@ export class CustomOntologyClassifier {
             edge.target = id;
           }
         }
-        
-        // Add the nodes and their attributes to the custom
-        // attribute of the document metadata.
-        metadata.custom[node.type] = props.attrs;
       }
     }
 
     // Add the edges to the graph.
     for (const edge of json.edges) {
       if (graph.hasNode(edge.source) && graph.hasNode(edge.target)) {
-        graph.addEdge(edge.source, edge.target, {
+        const props: Record<string, any> = {
           type: edge.type,
-          description: edge.description
-        });
+          attrs: {
+            description: edge.description
+          }
+        };
+
+        // Add the properties to the edge.
+        (edge.props ?? [])
+          .filter((prop: any) => prop.name && prop.value)
+          .forEach((prop: any) => props.attrs[prop.name] = prop.value);
+        
+        // Add the edge to the graph.
+        graph.addEdge(edge.source, edge.target, props);
       }
     }
 

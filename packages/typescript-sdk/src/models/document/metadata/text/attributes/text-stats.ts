@@ -16,9 +16,35 @@
 
 import { z } from 'zod';
 
+/**
+ * Statistics about a text document.
+ */
 export const StatsSchema = z.object({
+
+  /**
+   * The number of words in the document.
+   */
   words: z.number().optional(),
-  sentences: z.number().optional()
+
+  /**
+   * The number of sentences in the document.
+   */
+  sentences: z.number().optional(),
+
+  /**
+   * The number of detected PIIs in the document.
+   */
+  piis: z.number().optional(),
+
+  /**
+   * The number of detected entities in the document.
+   */
+  entities: z.number().optional(),
+
+  /**
+   * The number of detected parts of speech in the document.
+   */
+  pos: z.number().optional()
 });
 
 export type Stats = z.infer<typeof StatsSchema>;

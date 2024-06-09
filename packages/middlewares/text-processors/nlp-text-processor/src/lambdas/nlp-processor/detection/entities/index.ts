@@ -88,6 +88,11 @@ export const detectEntities = async (
     // Store the result into a pointer in the cache,
     // that other middlewares will be able to consume.
     attrs.entities = await cacheStorage.put('entities', entities);
+
+    // Store the number of detected entities in the statistics.
+    attrs.stats = attrs.stats || {};
+    attrs.stats.entities = entities.length;
+
     return (attrs);
   } catch (err) {
     return (attrs);

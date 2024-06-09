@@ -17,6 +17,27 @@
 import { z } from 'zod';
 
 /**
+ * Schema for an edge property.
+ */
+export const EdgePropsSchema = z.object({
+  
+  /**
+   * The name of the property.
+   */
+  name: z.string(),
+
+  /**
+   * A description of the property.
+   */
+  description: z.string(),
+
+  /**
+   * The type of the property.
+   */
+  type: z.string()
+});
+
+/**
  * Schema for an edge.
  */
 export const EdgeSchema = z.object({
@@ -39,7 +60,14 @@ export const EdgeSchema = z.object({
   /**
    * A description of the edge.
    */
-  description: z.string()
+  description: z.string(),
+
+  /**
+   * The properties of the edge.
+   */
+  props: z
+    .array(EdgePropsSchema)
+    .optional()
 });
 
 export type Edge = z.infer<typeof EdgeSchema>;

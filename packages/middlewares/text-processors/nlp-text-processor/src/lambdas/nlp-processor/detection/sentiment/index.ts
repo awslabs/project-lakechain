@@ -52,8 +52,13 @@ export const detectSentiment = async (
       LanguageCode: metadata.language as LanguageCode
     }));
 
+    // If the metadata does not have properties, we initialize them.
+    if (!metadata.properties) {
+      metadata.properties = { kind: 'text', attrs: {} };
+    }
+    
     // The attributes to update in the metadata.
-    const attrs = metadata.properties?.attrs as TextMetadata;
+    const attrs = metadata.properties.attrs as TextMetadata;
 
     // If the result matches the confidence threshold, we
     // update the metadata.

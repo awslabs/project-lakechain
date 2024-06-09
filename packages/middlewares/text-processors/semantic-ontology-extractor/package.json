@@ -36,7 +36,7 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.4",
     "rimraf": "^5.0.7",
     "graphology": "0.25.4",
     "zod-error": "^1.5.0"

@@ -61,7 +61,6 @@ export const detectPiiEntities = async (
   const piis: Pii[] = [];
   const confidence = opts.minConfidence ?? DEFAULT_CONFIDENCE;
   const filter = opts.filter ?? [];
-  const attrs = metadata.properties?.attrs as TextMetadata;
 
   try {
     // Detect the entities using Amazon Comprehend.
@@ -69,6 +68,14 @@ export const detectPiiEntities = async (
       Text: text,
       LanguageCode: metadata.language as LanguageCode
     }));
+
+    // If the metadata does not have properties, we initialize them.
+    if (!metadata.properties) {
+      metadata.properties = { kind: 'text', attrs: {} };
+    }
+
+    // The attributes to update in the metadata.
+    const attrs = metadata.properties.attrs as TextMetadata;
 
     // If the result matches the confidence threshold, we
     // update the metadata.
@@ -89,6 +96,11 @@ export const detectPiiEntities = async (
     // Store the result into a pointer in the cache,
     // that other middlewares will be able to consume.
     attrs.pii = await cacheStorage.put('piis', piis);
+    
+    // Store the number of detected PIIs in the statistics.
+    attrs.stats = attrs.stats || {};
+    attrs.stats.piis = piis.length;
+
     return (metadata);
   } catch (err) {
     return (metadata);

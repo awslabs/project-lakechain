@@ -38,7 +38,7 @@
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.2.1",
     "@types/truncate-utf8-bytes": "^1.0.2",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.4",
     "rimraf": "^5.0.7"
   },
   "dependencies": {
@@ -50,8 +50,8 @@
     "@project-lakechain/sdk": "^0.7.0",
     "lodash": "^4.17.21",
     "truncate-utf8-bytes": "^1.0.2",
-    "wink-eng-lite-web-model": "1.5.2",
-    "wink-nlp": "1.14.3"
+    "wink-eng-lite-web-model": "1.8.0",
+    "wink-nlp": "2.3.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.143.1",

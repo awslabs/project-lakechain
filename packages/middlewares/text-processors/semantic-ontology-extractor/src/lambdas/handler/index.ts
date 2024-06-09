@@ -99,7 +99,6 @@ class Lambda implements LambdaInterface {
     
     // Update the cloud event with the new ontology.
     for (const result of results) {
-      console.log(JSON.stringify(result.data, null, 2));
       await classifier.update(result.data, result.prompt, event);
     }
 

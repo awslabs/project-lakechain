@@ -20,7 +20,7 @@ title: NLP
 
 ---
 
-The NLP text processor middleware uses [Amazon Comprehend](https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html) to provide natural language processing (NLP) capabilities to your pipeline. It provides capability to analyze and extract the substance of text documents and use that text as an input to other middlewares in your pipeline. For example, running sentiment analysis, part-of-speech tagging, and named entity recognition on your text documents.
+The NLP text processor middleware uses [Amazon Comprehend](https://docs.aws.amazon.com/comprehend/latest/dg/what-is.html) to provide natural language processing capabilities to your pipelines. It allows you to analyze and extract the substance of text documents and use that as an input to other middlewares in your pipeline. For example, running sentiment analysis, PII detection, part-of-speech tagging, and named entity recognition on your text documents.
 
 ---
 
@@ -174,29 +174,9 @@ const nlpProcessor = new NlpTextProcessor.Builder()
 
 ---
 
-#### Sentence Tokenization
-
-To tokenize sentences from text documents, you can use the `sentences` intent action. This will reference the tokenized sentences in the document metadata.
-
-```typescript
-const nlpProcessor = new NlpTextProcessor.Builder()
-  .withScope(this)
-  .withIdentifier('TextProcessor')
-  .withCacheStorage(cache)
-  .withSource(source)
-  .withIntent(
-    l.nlp().sentences() // 👈 Intent
-  )
-  .build();
-```
-
-<br>
-
----
-
 #### Statistics
 
-To extract other statistics from text documents, such as the count of the number of sentences and words in the document, you can use the `statistics` intent action.
+To extract other statistics from text documents, such as the count of the number of sentences and words in the document, you can use the `stats` intent action.
 
 ```typescript
 const nlpProcessor = new NlpTextProcessor.Builder()
@@ -205,7 +185,7 @@ const nlpProcessor = new NlpTextProcessor.Builder()
   .withCacheStorage(cache)
   .withSource(source)
   .withIntent(
-    l.nlp().statistics() // 👈 Intent
+    l.nlp().stats() // 👈 Intent
   )
   .build();
 ```

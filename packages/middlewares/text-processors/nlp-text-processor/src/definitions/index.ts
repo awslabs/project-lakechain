@@ -69,18 +69,6 @@ export class NlpOperations implements Intent {
   }
 
   /**
-   * Specifies that sentence detection should be performed,
-   * and will yield a list of sentences from the processed
-   * text document. The list of sentences will be made available
-   * in the document metadata.
-   * @returns the current instance.
-   */
-  sentences(): NlpOperations {
-    this.ops.set('sentences', { args: [], priority: 0 });
-    return (this);
-  }
-
-  /**
    * Specifies that reading time detection should be performed.
    * @returns the current instance.
    */

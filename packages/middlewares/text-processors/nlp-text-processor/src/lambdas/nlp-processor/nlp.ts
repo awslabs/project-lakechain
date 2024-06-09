@@ -77,25 +77,25 @@ export const nlp = async (document: Document, ops: Operation[]): Promise<any> =>
     const opts: any = op.args[0] ?? {};
     switch (op.op) {
       case 'language':
-        await detectLanguage(text, metadata.properties.attrs, opts.language);
+        await detectLanguage(text, metadata, opts.language);
         break;
       case 'sentiment':
-        await detectSentiment(text, metadata.properties.attrs);
+        await detectSentiment(text, metadata);
         break;
       case 'entities':
         await detectEntities(text, metadata, opts);
         break;
       case 'pii':
-        await detectPiiEntities(text, metadata.properties.attrs, opts);
+        await detectPiiEntities(text, metadata, opts);
         break;
       case 'pos':
-        await detectPos(text, metadata.properties.attrs, opts);
+        await detectPos(text, metadata, opts);
         break;
       case 'readingTime':
         metadata.properties.attrs.readingTime = getReadingTime(doc, opts.wpm);
         break;
       case 'stats':
-        metadata.properties.attrs.stats = getStats(doc);
+        getStats(metadata, doc);
         break;
       default:
         throw new Error(`Unsupported operation: ${op.op}`);

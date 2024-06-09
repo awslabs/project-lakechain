@@ -33,13 +33,15 @@ import {
   SemanticOntologyExtractorPropsSchema
 } from './definitions/opts';
 import {
+  CustomOntologyClassifier,
+  DefaultOntologyClassifier
+} from './definitions/classifiers';
+import {
   Middleware,
   MiddlewareBuilder,
   LAMBDA_INSIGHTS_VERSION,
   NAMESPACE
 } from '@project-lakechain/core/middleware';
-import { CustomOntologyClassifier, DefaultOntologyClassifier, OntologyClassifier } from './definitions/classifiers';
-import { Default } from 'aws-cdk-lib/region-info';
 
 /**
  * The service description.
@@ -144,6 +146,12 @@ export class SemanticOntologyExtractor extends Middleware {
 
     // Validate the properties.
     this.props = this.parse(SemanticOntologyExtractorPropsSchema, props);
+
+    ///////////////////////////////////////////
+    /////////  Classifier Handler      ////////
+    ///////////////////////////////////////////
+
+    
 
     ///////////////////////////////////////////
     //////    Middleware Event Handler     ////

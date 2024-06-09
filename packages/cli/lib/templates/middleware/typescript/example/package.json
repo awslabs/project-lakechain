@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.4",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"

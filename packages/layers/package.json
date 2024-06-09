@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.13",
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.4",
     "npkill": "^0.12.1",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2"

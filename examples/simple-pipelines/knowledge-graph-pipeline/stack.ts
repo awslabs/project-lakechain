@@ -25,7 +25,7 @@ import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
-import { SemanticOntologyExtractor } from '@project-lakechain/semantic-ontology-extractor';
+import { SemanticOntologyExtractor, CustomOntologyClassifier } from '@project-lakechain/semantic-ontology-extractor';
 import { SharpImageTransform, sharp } from '@project-lakechain/sharp-image-transform';
 import { Neo4jStorageConnector } from '@project-lakechain/neo4j-storage-connector';
 
@@ -96,15 +96,6 @@ export class KnowledgeGraphPipeline extends cdk.Stack {
       enforceSSL: true
     });
 
-    // The destination bucket.
-    const destination = new s3.Bucket(this, 'Destination', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      autoDeleteObjects: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      enforceSSL: true
-    });
-
     // The cache storage.
     const cache = new CacheStorage(this, 'Cache', {});
 
@@ -168,7 +159,7 @@ export class KnowledgeGraphPipeline extends cdk.Stack {
     // Write the results to the Neo4j database.
     new Neo4jStorageConnector.Builder()
       .withScope(this)
-      .withIdentifier('S3StorageConnector')
+      .withIdentifier('Neo4jStorageConnector')
       .withCacheStorage(cache)
       .withSource(extractor)
       .withUri(process.env.NEO4J_URI as string)
@@ -179,12 +170,6 @@ export class KnowledgeGraphPipeline extends cdk.Stack {
     new cdk.CfnOutput(this, 'SourceBucketName', {
       description: 'The name of the source bucket.',
       value: source.bucketName
-    });
-
-    // Display the destination bucket information in the console.
-    new cdk.CfnOutput(this, 'DestinationBucketName', {
-      description: 'The name of the destination bucket.',
-      value: destination.bucketName
     });
   }
 }
