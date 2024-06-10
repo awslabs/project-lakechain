@@ -37,7 +37,7 @@
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
     "lodash": "^4.17.21",
-    "music-metadata": "^7.14.0"
+    "music-metadata": "^8.3.0"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.587.0",
@@ -45,7 +45,7 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.21.5",
     "rimraf": "^5.0.7"
   },
   "peerDependencies": {

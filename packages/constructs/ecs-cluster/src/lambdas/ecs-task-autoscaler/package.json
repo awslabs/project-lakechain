@@ -29,8 +29,8 @@
     "@aws-sdk/client-ecs": "^3.587.0",
     "@aws-sdk/client-sqs": "^3.587.0",
     "@types/aws-lambda": "^8.10.119",
-    "aws-sdk-client-mock": "^3.1.0",
-    "esbuild": "^0.21.4",
+    "aws-sdk-client-mock": "^4.0.1",
+    "esbuild": "^0.21.5",
     "eslint": "^8.57.0",
     "tsx": "^4.7.2"
   }

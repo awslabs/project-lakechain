@@ -35,7 +35,7 @@
     "@types/jest": "^29.5.7",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.21.5",
     "rimraf": "^5.0.7",
     "sharp": "^0.33.4"
   },
