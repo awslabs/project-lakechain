@@ -16,7 +16,6 @@
 
 import path from 'path';
 import serialize from 'serialize-javascript';
-import sharp from 'sharp';
 
 import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';

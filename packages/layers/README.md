@@ -19,6 +19,7 @@ It currently supports the following layers :
 - [**`Mediainfo`**](./src/mediainfo) - Allows to package the [MediaInfo](https://mediaarea.net/en/MediaInfo) library as a Lambda Layer.
 - [**`Powertools`**](./src/powertools) - Allows to use the [AWS Lambda Powertools](https://docs.powertools.aws.dev/) for TypeScript and Python as an AWS Lambda Layer.
 - [**`Sharp`**](./src/sharp) - Allows to package the [Sharp](https://sharp.pixelplumbing.com/) library as a Lambda Layer.
+- [**`LanceDB`**](./src/lancedb) - Allows to package the [LanceDB](https://lancedb.github.io/lancedb/) library as a Lambda Layer.
 
 ## Usage
 
@@ -78,6 +79,23 @@ class MyStack extends Stack {
 
     // X64 architecture.
     const layer = SharpLayer.arm64(this, 'Layer');
+  }
+}
+```
+
+### LanceDB
+
+Below is an example of how to use the LanceDB layer within a construct.
+
+```typescript
+import { LanceDbLayer } from '@project-lakechain/layers/lancedb';
+
+class MyStack extends Stack {
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
+
+    // ARM64 architecture.
+    const layer = LanceDbLayer.arm64(this, 'Layer');
   }
 }
 ```

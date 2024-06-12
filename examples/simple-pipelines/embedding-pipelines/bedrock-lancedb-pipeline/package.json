@@ -1,0 +1,42 @@
+{
+  "name": "bedrock-lancedb-pipeline",
+  "description": "An example showcasing an embedding pipeline using Amazon Bedrock and LanceDB.",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=bedrock-lancedb-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx cdk synth",
+    "deploy": "npx cdk deploy",
+    "hotswap": "npx cdk deploy --hotswap",
+    "destroy": "npx cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "^0.21.5",
+    "rimraf": "^5.0.7",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/bedrock-embedding-processors": "*",
+    "@project-lakechain/lancedb-storage-connector": "*",
+    "@project-lakechain/recursive-character-text-splitter": "*",
+    "@project-lakechain/s3-event-trigger": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.143.1",
+    "constructs": "^10.3.0"
+  }
+}

@@ -23,33 +23,33 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { ClipImageProcessor } from '@project-lakechain/clip-image-processor';
-import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
+import { RecursiveCharacterTextSplitter } from '@project-lakechain/recursive-character-text-splitter';
+import { TitanEmbeddingProcessor } from '@project-lakechain/bedrock-embedding-processors';
+import { LanceDbStorageConnector, EfsStorage } from '@project-lakechain/lancedb-storage-connector';
 
 /**
- * An example stack showcasing how to use Project Lakechain
- * to create embeddings for images using the CLIP model.
+ * An example stack showcasing how to use Amazon Bedrock embeddings
+ * and LanceDB for storing embeddings.
  * The pipeline looks as follows:
  *
  *
- * ┌────────────┐   ┌────────────────┐   ┌─────────────┐
- * │  S3 Input  ├──►│ CLIP Processor ├──►│  S3 Output  │
- * └────────────┘   └────────────────┘   └─────────────┘
+ * ┌──────┐   ┌───────────────┐   ┌────────────────────┐   ┌───────────┐
+ * │  S3  ├──►│ Text Splitter ├──►│ Bedrock Embeddings │──►|  LanceDB  │
+ * └──────┘   └───────────────┘   └────────────────────┘   └───────────┘
  *
- * @see https://github.com/openai/CLIP
  */
-export class ClipEmbeddingsPipeline extends cdk.Stack {
+export class BedrockLanceDbPipeline extends cdk.Stack {
 
   /**
    * Stack constructor.
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline creating embeddings for images using CLIP.',
+      description: 'An embedding storage pipeline using Amazon Bedrock and LanceDB.',
       ...env
     });
 
-    // The VPC required by sentence transformers models.
+    // The VPC required by the EFS storage.
     const vpc = this.createVpc('Vpc');
 
     ///////////////////////////////////////////
@@ -65,61 +65,60 @@ export class ClipEmbeddingsPipeline extends cdk.Stack {
       enforceSSL: true
     });
 
-    // The destination bucket where the embeddings are stored.
-    const destination = new s3.Bucket(this, 'Destination', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      autoDeleteObjects: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      enforceSSL: true
-    });
-
     // The cache storage.
-    const cache = new CacheStorage(this, 'Cache', {});
+    const cache = new CacheStorage(this, 'CacheStorage', {});
 
     ///////////////////////////////////////////
     ///////     Lakechain Pipeline      ///////
     ///////////////////////////////////////////
 
     // Monitor a bucket for uploaded objects.
-    const ingestion = new S3EventTrigger.Builder()
+    const trigger = new S3EventTrigger.Builder()
       .withScope(this)
       .withIdentifier('Trigger')
       .withCacheStorage(cache)
       .withBucket(source)
       .build();
 
-    // Creates embeddings for images using the OpenAI
-    // CLIP model, running on a GPU instance by default.
-    // @see the `withComputeType` method to change the
-    // compute type to CPU.
-    const clip = new ClipImageProcessor.Builder()
+    // We use the `RecursiveCharacterTextSplitter` to split
+    // input text into smaller chunks. This is required to ensure
+    // that the generated embeddings are relevant.
+    const textSplitter = new RecursiveCharacterTextSplitter.Builder()
       .withScope(this)
-      .withIdentifier('ClipProcessor')
+      .withIdentifier('RecursiveCharacterTextSplitter')
       .withCacheStorage(cache)
-      .withVpc(vpc)
-      .withSource(ingestion)
+      .withSource(trigger)
+      .withChunkSize(4096)
       .build();
 
-    // Write the results to the destination bucket.
-    new S3StorageConnector.Builder()
+    // Creates embeddings for text chunks using Amazon Titan.
+    const embeddingProcessor = new TitanEmbeddingProcessor.Builder()
       .withScope(this)
-      .withIdentifier('S3StorageConnector')
+      .withIdentifier('BedrockEmbeddingProcessor')
       .withCacheStorage(cache)
-      .withDestinationBucket(destination)
-      .withSource(clip)
+      .withSource(textSplitter)
+      .withRegion('us-east-1')
+      .build();
+
+    // Store the embeddings in LanceDB.
+    new LanceDbStorageConnector.Builder()
+      .withScope(this)
+      .withIdentifier('LanceDbStorageConnector')
+      .withCacheStorage(cache)
+      .withSource(embeddingProcessor)
+      .withVectorSize(1024)
+      .withStorageProvider(new EfsStorage.Builder()
+        .withScope(this)
+        .withIdentifier('EfsStorage')
+        .withVpc(vpc)
+        .build()
+      )
       .build();
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {
       description: 'The name of the source bucket.',
       value: source.bucketName
-    });
-
-    // Display the destination bucket information in the console.
-    new cdk.CfnOutput(this, 'DestinationBucketName', {
-      description: 'The name of the destination bucket.',
-      value: destination.bucketName
     });
   }
 
@@ -163,7 +162,7 @@ const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_DEFAULT_ACCOU
 const region  = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
 
 // Deploy the stack.
-new ClipEmbeddingsPipeline(app, 'ClipEmbeddingsPipeline', {
+new BedrockLanceDbPipeline(app, 'BedrockLanceDbPipeline', {
   env: {
     account,
     region

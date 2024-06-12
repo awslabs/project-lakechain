@@ -1,6 +1,6 @@
 {
-  "name": "@project-lakechain/layers",
-  "description": "Lambda layer library used by Project Lakechain.",
+  "name": "@project-lakechain/lancedb-storage-connector",
+  "description": "A data store connector for LanceDB.",
   "version": "0.7.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,13 +9,6 @@
   ],
   "publishConfig": {
     "access": "public"
-  },
-  "exports": {
-    ".": "./dist/index.js",
-    "./mediainfo": "./dist/mediainfo/index.js",
-    "./powertools": "./dist/powertools/index.js",
-    "./sharp": "./dist/sharp/index.js",
-    "./lancedb": "./dist/lancedb/index.js"
   },
   "scripts": {
     "build": "npx tsc",
@@ -37,15 +30,24 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.13",
+    "@aws-sdk/client-s3": "^3.587.0",
+    "@aws-sdk/client-secrets-manager": "^3.587.0",
+    "@types/aws-lambda": "^8.10.126",
+    "@types/jest": "^29.5.7",
+    "@types/node": "^20.8.10",
     "esbuild": "^0.21.5",
-    "npkill": "^0.12.1",
-    "rimraf": "^5.0.7",
-    "ts-node": "^10.9.2"
+    "rimraf": "^5.0.7"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.7.0"
+    "@aws-lambda-powertools/batch": "^1.18.1",
+    "@aws-lambda-powertools/logger": "^1.18.1",
+    "@aws-lambda-powertools/metrics": "^1.18.1",
+    "@aws-lambda-powertools/parameters": "^1.18.1",
+    "@aws-lambda-powertools/tracer": "^1.18.1",
+    "@project-lakechain/core": "*",
+    "@project-lakechain/layers": "*",
+    "@project-lakechain/sdk": "*",
+    "vectordb": "^0.5.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.143.1",
@@ -54,15 +56,5 @@
   "lint-staged": {
     "*.{ts, json}": "npx eslint",
     "*.{js,json,md}": "npx prettier --check"
-  },
-  "keywords": [
-    "aws",
-    "cdk",
-    "lakechain",
-    "lambda",
-    "layer",
-    "mediainfo",
-    "sharp",
-    "powertools"
-  ]
+  }
 }
