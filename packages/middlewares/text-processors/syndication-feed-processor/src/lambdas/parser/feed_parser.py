@@ -14,6 +14,8 @@
 
 import feedparser
 import hashlib
+
+from typing import List
 from bs4 import BeautifulSoup
 
 def get_language_code(input_code: str) -> str:
@@ -83,7 +85,7 @@ def get_feed_item_hash(item: feedparser.util.FeedParserDict) -> str or None:
     str: The ID of the feed item, or None if no ID is found.
   """
   if 'id' in item:
-    return hashlib.sha1(
+    return hashlib.sha256(
       item.id.encode(),
       usedforsecurity=False
     ).hexdigest()  
@@ -141,7 +143,7 @@ def on_feed_item(
   }
 
 
-def parse_feed(url: str) -> list[dict]:
+def parse_feed(url: str) -> List[dict]:
   """
   Parses the given feed URL and processes each post in the feed.
 
