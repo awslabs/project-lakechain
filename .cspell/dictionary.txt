@@ -182,3 +182,5 @@ booga
 dbrx
 trafilatura
 ddthh
+vectordb
+lancedb
