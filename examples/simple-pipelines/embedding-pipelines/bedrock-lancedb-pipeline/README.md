@@ -9,7 +9,7 @@ flowchart LR
   Input([Input Bucket]) -.-> S3[S3 Trigger]
   S3 --> TextSplitter[Text Splitter]
   TextSplitter --> Bedrock[Bedrock Embedding Processor]
-  Bedrock --> Pinecone[Pinecone Vector Storage]
+  Bedrock --> LanceDB[LanceDB Storage]
 ```
 
 ## 📝 Requirements
@@ -17,7 +17,6 @@ flowchart LR
 The following requirements are needed to deploy the infrastructure associated with this pipeline:
 
 - You need access to a development AWS account.
-- You also need a Pinecone API key.
 - [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) is required to deploy the infrastructure.
 - [Docker](https://docs.docker.com/get-docker/) is required to be running to build middlewares.
 - [Node.js](https://nodejs.org/en/download/) v18+ and NPM.
