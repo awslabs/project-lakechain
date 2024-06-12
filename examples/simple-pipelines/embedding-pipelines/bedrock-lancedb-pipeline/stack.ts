@@ -19,6 +19,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as efs from 'aws-cdk-lib/aws-efs';
 
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
@@ -65,6 +66,17 @@ export class BedrockLanceDbPipeline extends cdk.Stack {
       enforceSSL: true
     });
 
+    // The EFS file system used to store the embeddings.
+    const fileSystem = new efs.FileSystem(this, 'FileSystem', {
+      vpc,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      throughputMode: efs.ThroughputMode.ELASTIC,
+      encrypted: true,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_ISOLATED
+      }
+    });
+    
     // The cache storage.
     const cache = new CacheStorage(this, 'CacheStorage', {});
 
@@ -110,6 +122,7 @@ export class BedrockLanceDbPipeline extends cdk.Stack {
       .withStorageProvider(new EfsStorage.Builder()
         .withScope(this)
         .withIdentifier('EfsStorage')
+        .withFileSystem(fileSystem)
         .withVpc(vpc)
         .build()
       )

@@ -16,7 +16,6 @@
 
 import path from 'path';
 
-import * as cdk from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as efs from 'aws-cdk-lib/aws-efs';
 import * as iam from 'aws-cdk-lib/aws-iam';
@@ -34,6 +33,18 @@ const EfsStoragePropsSchema = z.object({
    * A unique identifier for the storage.
    */
   id: z.literal('EFS_STORAGE'),
+
+  /**
+   * The EFS file system.
+   */
+  efs: z.custom<efs.IFileSystem>((efs) => {
+    if (!efs) {
+      throw new Error('An EFS file system is required for EFS storage.');
+    }
+    return (efs);
+  }, {
+    message: 'An EFS file system is required for EFS storage.'
+  }),
 
   /**
    * The VPC in which the EFS storage should be deployed.
@@ -99,6 +110,16 @@ export class EfsStorageBuilder {
   }
 
   /**
+   * Sets the EFS file system.
+   * @param fileSystem the EFS file system.
+   * @returns a reference to the builder.
+   */
+  public withFileSystem(fileSystem: efs.IFileSystem): EfsStorageBuilder {
+    this.props.efs = fileSystem;
+    return (this);
+  }
+
+  /**
    * Sets the VPC in which the EFS storage should be deployed.
    * @param vpc the VPC in which the EFS storage should be deployed.
    * @returns a reference to the builder.
@@ -160,20 +181,13 @@ export class EfsStorage extends Construct implements LanceDbStorage {
   constructor(scope: Construct, resourceId: string, public props: EfsStorageProps) {
     super(scope, resourceId);
     
-    // Create the file system.
-    this.fileSystem = new efs.FileSystem(this, 'FileSystem', {
-      vpc: this.props.vpc,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      throughputMode: efs.ThroughputMode.ELASTIC,
-      encrypted: true,
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED
-      }
-    });
+    // Set the file system.
+    this.fileSystem = props.efs;
 
     // Create the access point.
     this.accessPoint = new efs.AccessPoint(this, 'AccessPoint', {
       fileSystem: this.fileSystem,
+      path: '/lancedb',
       createAcl: {
         ownerGid: '1000',
         ownerUid: '1000',
@@ -191,6 +205,13 @@ export class EfsStorage extends Construct implements LanceDbStorage {
    */
   public id(): string {
     return (this.props.id);
+  }
+
+  /**
+   * @returns the file system.
+   */
+  public efs(): efs.IFileSystem {
+    return (this.fileSystem);
   }
 
   /**

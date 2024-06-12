@@ -34,12 +34,17 @@ const S3StoragePropsSchema = z.object({
   id: z.literal('S3_STORAGE'),
 
   /**
-   * An optional user provided bucket to use
-   * as a storage.
+   * A user provided bucket to use as a storage.
    */
   bucket: z
-    .custom<s3.IBucket>()
-    .optional(),
+    .custom<s3.IBucket>((bucket) => {
+      if (!bucket) {
+        throw new Error('A bucket is required for S3 storage.');
+      }
+      return (bucket);
+    }, {
+      message: 'A bucket is required for S3 storage.'
+    }),
 
   /**
    * The path to the LanceDB dataset in the bucket.
@@ -138,7 +143,7 @@ export class S3Storage extends Construct implements LanceDbStorage {
   /**
    * The S3 bucket.
    */
-  public bucket: s3.IBucket;
+  public bucketStorage: s3.IBucket;
 
   /**
    * The DynamoDB table.
@@ -154,14 +159,8 @@ export class S3Storage extends Construct implements LanceDbStorage {
   constructor(scope: Construct, resourceId: string, public props: S3StorageProps) {
     super(scope, resourceId);
 
-    // Create the S3 bucket.
-    this.bucket = props.bucket ?? new s3.Bucket(this, 'Bucket', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      autoDeleteObjects: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      enforceSSL: true
-    });
+    // Set the bucket.
+    this.bucketStorage = props.bucket;
 
     // Create the DynamoDB table.
     this.table = new dynamodb.Table(this, 'Table', {
@@ -186,6 +185,13 @@ export class S3Storage extends Construct implements LanceDbStorage {
   }
 
   /**
+   * @returns the storage bucket.
+   */
+  public bucket(): s3.IBucket {
+    return (this.bucketStorage);
+  }
+
+  /**
    * @returns the storage path.
    */
   public path(): string {
@@ -196,7 +202,7 @@ export class S3Storage extends Construct implements LanceDbStorage {
    * @returns the storage URI.
    */
   public uri(): string {
-    return (`s3+ddb://${this.bucket.bucketName}/${this.path()}?ddbTableName=${this.table.tableName}`);
+    return (`s3+ddb://${this.bucketStorage.bucketName}/${this.path()}?ddbTableName=${this.table.tableName}`);
   }
 
   /**
@@ -207,7 +213,7 @@ export class S3Storage extends Construct implements LanceDbStorage {
     // Allow the processor to read and write to the DynamoDB table.
     this.table.grantReadWriteData(grantee);
     // Allow the processor to read and write to the S3 bucket.
-    this.bucket.grantReadWrite(grantee);
+    this.bucketStorage.grantReadWrite(grantee);
   }
 
   /**

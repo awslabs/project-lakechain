@@ -12,6 +12,10 @@ flowchart LR
   Bedrock --> LanceDB[LanceDB Storage]
 ```
 
+In this pipeline we are generating embeddings for text documents and leveraging the EFS storage provider with the LanceDB connector to store embeddings. The use of EFS makes it a good balance between cost and latency provided for storage and retrieval of documents based on their vector embeddings.
+
+> 💁 It is also possible to use the S3 storage provider with the LanceDB connector to store embeddings on S3 for an even lower cost, but at a much higher latency.
+
 ## 📝 Requirements
 
 The following requirements are needed to deploy the infrastructure associated with this pipeline:
