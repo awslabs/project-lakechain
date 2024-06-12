@@ -52,7 +52,7 @@ const EfsStoragePropsSchema = z.object({
    */
   path: z
     .string()
-    .default('')
+    .default('lancedb/')
 });
 
 // The type of the `EfsStorageProps` schema.
@@ -174,7 +174,6 @@ export class EfsStorage extends Construct implements LanceDbStorage {
     // Create the access point.
     this.accessPoint = new efs.AccessPoint(this, 'AccessPoint', {
       fileSystem: this.fileSystem,
-      path: '/lancedb',
       createAcl: {
         ownerGid: '1000',
         ownerUid: '1000',
