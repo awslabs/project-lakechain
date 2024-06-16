@@ -1,6 +1,6 @@
 # 💾 Bedrock + LanceDB Pipeline
 
-> In this example, we showcase how to create vector embeddings for text documents using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within a [LanceDB](https://www.pinecone.io/) embedded database that you can query using your own applications.
+> In this example, we showcase how to create vector embeddings for text documents (Plain Text, PDF, Office Documents) using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within a [LanceDB](https://www.pinecone.io/) embedded database that you can query using your own applications.
 
 ## :dna: Pipeline
 
@@ -8,11 +8,15 @@
 flowchart LR
   Input([Input Bucket]) -.-> S3[S3 Trigger]
   S3 --> TextSplitter[Text Splitter]
+  S3 --> PDF[PDF Text Converter]
+  S3 --> Pandoc[Pandoc Text Converter]
+  PDF --> TextSplitter
+  Pandoc --> TextSplitter
   TextSplitter --> Bedrock[Bedrock Embedding Processor]
   Bedrock --> LanceDB[LanceDB Storage]
 ```
 
-In this pipeline we are generating embeddings for text documents and leveraging the EFS storage provider with the LanceDB connector to store embeddings. The use of EFS makes it a good balance between cost and latency provided for storage and retrieval of documents based on their vector embeddings.
+In this pipeline we are generating embeddings for text documents, including plain text files, PDFs, or Microsoft Office documents, and leverage the EFS storage provider with the LanceDB connector to store those generated embeddings into an embedded LanceDB database. The use of EFS makes it a good balance between cost and latency provided for storage and retrieval of documents based on their vector embeddings.
 
 > 💁 It is also possible to use the S3 storage provider with the LanceDB connector to store embeddings on S3 for an even lower cost, but at a much higher latency.
 

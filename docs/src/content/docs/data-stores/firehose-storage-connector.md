@@ -1,5 +1,5 @@
 ---
-title: SQS Connector
+title: Firehose Connector
 ---
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -9,8 +9,8 @@ title: SQS Connector
   0.7.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
-  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/sqs-storage-connector">
-    @project-lakechain/sqs-storage-connector
+  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/firehose-storage-connector">
+    @project-lakechain/firehose-storage-connector
   </a>
 </span>
 <span class="language-icon">
@@ -20,18 +20,20 @@ title: SQS Connector
 
 ---
 
-The SQS storage connector makes it possible to capture the result of one or multiple middlewares in a pipeline and store their results in a user-defined SQS queue. This connector allows to nicely decouple the processing of your documents with third-party applications that can consume processed documents from a queue.
+The Firehose storage connector makes it possible to forward [CloudEvents](/project-lakechain/general/events) emitted by one or multiple middlewares in a pipeline to a user-defined Kinesis Firehose delivery stream. This connector allows to nicely decouple the processing of your documents with third-party applications that can consume processed documents from a delivery stream.
 
-> 💁 This connector only forwards the [CloudEvents](/project-lakechain/general/events) emitted by middlewares to the SQS queue, and not the documents themselves.
+> 💁 This connector only forwards the CloudEvents emitted by middlewares to the delivery stream, and not the documents themselves.
+
+<br />
 
 ---
 
-### 🕒 Enqueue Documents
+### ⏳ Buffering Documents
 
-To use the SQS storage connector, you import it in your CDK stack, and connect it to a data source providing documents.
+To use the Firehose storage connector, you import it in your CDK stack, and connect it to a data source providing documents.
 
 ```typescript
-import { SQSStorageConnector } from '@project-lakechain/sqs-storage-connector';
+import { FirehoseStorageConnector } from '@project-lakechain/firehose-storage-connector';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
@@ -39,16 +41,16 @@ class Stack extends cdk.Stack {
     // The cache storage.
     const cache = new CacheStorage(this, 'Cache');
 
-    // The destination queue.
-    const queue = // ...
+    // The destination delivery stream.
+    const stream = // ...
 
-    // Create the SQS storage connector.
-    const connector = new SQSStorageConnector.Builder()
+    // Create the Firehose storage connector.
+    const connector = new FirehoseStorageConnector.Builder()
       .withScope(this)
-      .withIdentifier('SQSStorageConnector')
+      .withIdentifier('FirehoseStorageConnector')
       .withCacheStorage(cache)
       .withSource(source) // 👈 Specify a data source
-      .withDestinationQueue(queue)
+      .withDestinationStream(stream)
       .build();
   }
 }
@@ -60,9 +62,9 @@ class Stack extends cdk.Stack {
 
 ### 🏗️ Architecture
 
-This middleware makes use of the native integration between the SNS output topics of source middlewares with SQS to forward messages to a destination queue, without relying on any additional compute resources.
+This middleware makes use of the native integration between the SNS output topics of source middlewares with Kinesis Firehose to forward messages to a delivery stream, without relying on any additional compute resources.
 
-![SQS Storage Connector Architecture](../../../assets/sqs-storage-connector-architecture.png)
+![Firehose Storage Connector Architecture](../../../assets/firehose-storage-connector-architecture.png)
 
 <br>
 
@@ -78,9 +80,13 @@ This middleware makes use of the native integration between the SNS output topic
 | ----------- | ----------- |
 | `*/*` | This middleware supports any type of documents. |
 
+---
+
 ##### Supported Outputs
 
 *This middleware does not emit any output.*
+
+---
 
 ##### Supported Compute Types
 

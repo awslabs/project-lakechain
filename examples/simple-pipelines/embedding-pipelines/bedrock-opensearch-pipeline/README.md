@@ -1,6 +1,6 @@
 # 🤖 Bedrock OpenSearch Pipeline
 
-> In this example, we showcase how to create vector embeddings for text documents using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within an Amazon OpenSearch index automatically that you can query using your own applications.
+> In this example, we showcase how to create vector embeddings for text documents (Plain Text, PDF, Office Documents) using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within an Amazon OpenSearch index automatically that you can query using your own applications.
 
 ## :dna: Pipeline
 
@@ -8,6 +8,10 @@
 flowchart LR
   Input([Input Bucket]) -.-> S3[S3 Trigger]
   S3 --> TextSplitter[Text Splitter]
+  S3 --> PDF[PDF Text Converter]
+  S3 --> Pandoc[Pandoc Text Converter]
+  PDF --> TextSplitter
+  Pandoc --> TextSplitter
   TextSplitter --> Bedrock[Bedrock Embedding Processor]
   Bedrock --> OpenSearch[OpenSearch Vector Storage]
 ```

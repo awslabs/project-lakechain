@@ -30,6 +30,8 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/pdf-text-converter": "*",
     "@project-lakechain/bedrock-embedding-processors": "*",
     "@project-lakechain/lancedb-storage-connector": "*",
     "@project-lakechain/recursive-character-text-splitter": "*",

@@ -47,11 +47,11 @@ export const LanceDbStorageConnectorPropsSchema = MiddlewarePropsSchema.extend({
   /**
    * Whether to include the text associated with the
    * embeddings in LanceDB.
-   * @default true
+   * @default false
    */
   includeText: z
     .boolean()
-    .default(true)
+    .default(false)
 });
 
 // The type of the LanceDbStorageConnectorProps schema.

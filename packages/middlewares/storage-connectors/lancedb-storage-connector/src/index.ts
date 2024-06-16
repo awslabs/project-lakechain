@@ -105,6 +105,7 @@ class LanceDbStorageConnectorBuilder extends MiddlewareBuilder {
    * with the embeddings in LanceDB.
    * @param includeText whether to include the text
    * associated with the embeddings in LanceDB.
+   * @default false
    * @returns the builder instance.
    */
   public withIncludeText(includeText: boolean) {

@@ -26,6 +26,8 @@ import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { RecursiveCharacterTextSplitter } from '@project-lakechain/recursive-character-text-splitter';
 import { OpenSearchVectorStorageConnector, OpenSearchVectorIndexDefinition } from '@project-lakechain/opensearch-vector-storage-connector';
 import { TitanEmbeddingProcessor, TitanEmbeddingModel } from '@project-lakechain/bedrock-embedding-processors';
+import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
+import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
 import { OpenSearchDomain } from '@project-lakechain/opensearch-domain';
 
 /**
@@ -33,10 +35,13 @@ import { OpenSearchDomain } from '@project-lakechain/opensearch-domain';
  * and OpenSearch for storing embeddings.
  * The pipeline looks as follows:
  *
- *
- * ┌──────┐   ┌───────────────┐   ┌────────────────────┐   ┌──────────────┐
- * │  S3  ├──►│ Text Splitter ├──►│ Bedrock Embeddings │──►|  OpenSearch  │
- * └──────┘   └───────────────┘   └────────────────────┘   └──────────────┘
+ *                   ┌──────────────────────┐
+ *    ┌─────────────►│  PDF Text Converter  ├──────────┐
+ *    │              └──────────────────────┘          |
+ *    |                                                ▼
+ * ┌──────────────┐   ┌────────────────────┐   ┌───────────────┐   ┌───────────┐   ┌──────────────┐
+ * │   S3 Input   ├──►│  Pandoc Converter  ├──►│ Text Splitter ├──►│  Bedrock  ├──►|  OpenSearch  │
+ * └──────────────┘   └────────────────────┘   └───────────────┘   └───────────┘   └──────────────┘
  *
  */
 export class BedrockEmbeddingPipeline extends cdk.Stack {
@@ -86,6 +91,22 @@ export class BedrockEmbeddingPipeline extends cdk.Stack {
       .withBucket(source)
       .build();
 
+    // Convert PDF documents to text.
+    const pdfConverter = new PdfTextConverter.Builder()
+      .withScope(this)
+      .withIdentifier('PdfConverter')
+      .withCacheStorage(cache)
+      .withSource(trigger)
+      .build();
+
+    // Convert text-oriented documents (Docx, Markdown, HTML, etc) to text.
+    const pandocConverter = new PandocTextConverter.Builder()
+      .withScope(this)
+      .withIdentifier('PandocConverter')
+      .withCacheStorage(cache)
+      .withSource(trigger)
+      .build();
+
     // We use the `RecursiveCharacterTextSplitter` to split
     // input text into smaller chunks. This is required to ensure
     // that the generated embeddings are relevant.
@@ -93,7 +114,11 @@ export class BedrockEmbeddingPipeline extends cdk.Stack {
       .withScope(this)
       .withIdentifier('RecursiveCharacterTextSplitter')
       .withCacheStorage(cache)
-      .withSource(trigger)
+      .withSources([
+        pdfConverter,
+        pandocConverter,
+        trigger
+      ])
       .withChunkSize(4096)
       .build();
 

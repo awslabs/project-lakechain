@@ -155,28 +155,34 @@ export default defineConfig({
 					link: '/generative-ai/ollama-processor'
 				}]
 			}, {
-				label: 'Connectors',
+				label: 'Vector Stores',
 				items: [{
 					label: 'OpenSearch',
-					link: '/connectors/opensearch-storage-connector'
-				}, {
-					label: 'OpenSearch Vectors',
-					link: '/connectors/opensearch-vector-storage-connector'
+					link: '/vector-stores/opensearch-vector-storage-connector'
 				}, {
 					label: 'Pinecone',
-					link: '/connectors/pinecone-storage-connector'
+					link: '/vector-stores/pinecone-storage-connector'
+				}, {
+					label: 'LanceDB',
+					link: '/vector-stores/lancedb-storage-connector'
+				}]
+			}, {
+				label: 'Data Stores',
+				items: [{
+					label: 'OpenSearch',
+					link: '/data-stores/opensearch-storage-connector'
 				}, {
 					label: 'S3',
-					link: '/connectors/s3-storage-connector'
+					link: '/data-stores/s3-storage-connector'
 				}, {
 					label: 'SQS',
-					link: '/connectors/sqs-storage-connector'
+					link: '/data-stores/sqs-storage-connector'
 				}, {
 					label: 'Firehose',
-					link: '/connectors/firehose-storage-connector'
+					link: '/data-stores/firehose-storage-connector'
 				}, {
 					label: 'Neo4j',
-					link: '/connectors/neo4j-storage-connector'
+					link: '/data-stores/neo4j-storage-connector'
 				}]
 			}, {
 				label: 'Text Processing',
