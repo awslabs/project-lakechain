@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';

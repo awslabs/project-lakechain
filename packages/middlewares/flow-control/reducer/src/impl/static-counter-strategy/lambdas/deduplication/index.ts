@@ -15,7 +15,7 @@
  */
 
 import { randomUUID } from 'crypto';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';

@@ -15,7 +15,7 @@
  */
 
 import { randomUUID } from 'crypto';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { SchedulerClient, CreateScheduleCommand } from '@aws-sdk/client-scheduler';
 import { Context, DynamoDBRecord } from 'aws-lambda';

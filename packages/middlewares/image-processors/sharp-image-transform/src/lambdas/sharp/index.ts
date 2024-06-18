@@ -18,7 +18,7 @@ import merge from 'lodash/merge';
 
 import { randomUUID } from 'crypto';
 import { SQSEvent, SQSRecord, Context, SQSBatchResponse } from 'aws-lambda';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { nextAsync } from '@project-lakechain/sdk/decorators';

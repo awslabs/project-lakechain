@@ -20,7 +20,7 @@ import {
   AsyncHandler,
   LambdaInterface,
   SyncHandler,
-} from '@aws-lambda-powertools/commons';
+} from '@aws-lambda-powertools/commons/types';
 
 export type HandlerMethodDecorator = (
   target: LambdaInterface,

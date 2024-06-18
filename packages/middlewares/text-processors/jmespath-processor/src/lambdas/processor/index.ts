@@ -16,7 +16,7 @@
 
 import jmespath from 'jmespath';
 
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';

@@ -24,7 +24,7 @@ import { Parse, Entry } from 'unzipper';
 import { S3Stream, S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { SQSEvent, Context, SQSRecord, SQSBatchResponse } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { CompleteMultipartUploadCommandOutput } from '@aws-sdk/client-s3';
