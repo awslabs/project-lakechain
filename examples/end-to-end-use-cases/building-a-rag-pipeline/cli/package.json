@@ -24,7 +24,7 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.587.0",
     "@aws-sdk/credential-provider-node": "^3.587.0",
-    "@opensearch-project/opensearch": "^2.8.0",
+    "@opensearch-project/opensearch": "^2.10.0",
     "commander": "^12.0.0",
     "figlet": "^1.7.0",
     "ora": "^8.0.1",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.14.5",
     "@types/prompts": "^2.4.9",
     "rimraf": "^5.0.7",
     "typescript": "^5.3.3"

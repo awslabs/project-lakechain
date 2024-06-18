@@ -41,18 +41,18 @@
   "devDependencies": {
     "@aws-sdk/client-ecs": "^3.587.0",
     "@aws-sdk/client-sqs": "^3.587.0",
-    "@types/aws-lambda": "^8.10.138",
+    "@types/aws-lambda": "^8.10.140",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.13",
-    "cdk-nag": "^2.28.139",
+    "@types/node": "^20.14.5",
+    "cdk-nag": "^2.28.144",
     "esbuild": "^0.21.5",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "rimraf": "^5.0.7",
-    "ts-jest": "^29.1.4"
+    "ts-jest": "^29.1.5"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.143.1",
+    "aws-cdk-lib": "^2.146.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
