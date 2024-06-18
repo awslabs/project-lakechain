@@ -18,7 +18,6 @@ import { LambdaInterface } from '@aws-lambda-powertools/commons';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { SFNClient, StartExecutionCommand } from '@aws-sdk/client-sfn';
 import { CloudEvent } from '@project-lakechain/sdk/models';
-import { next } from '@project-lakechain/sdk/decorators';
 import {
   SQSEvent,
   SQSRecord,
