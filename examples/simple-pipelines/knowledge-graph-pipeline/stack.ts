@@ -25,7 +25,7 @@ import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
-import { SemanticOntologyExtractor, CustomOntologyClassifier } from '@project-lakechain/semantic-ontology-extractor';
+import { SemanticOntologyExtractor } from '@project-lakechain/semantic-ontology-extractor';
 import { SharpImageTransform, sharp } from '@project-lakechain/sharp-image-transform';
 import { Neo4jStorageConnector } from '@project-lakechain/neo4j-storage-connector';
 
