@@ -46,7 +46,7 @@
     "@aws-lambda-powertools/tracer": "^1.18.1",
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
-    "langchain": "^0.1.37",
+    "langchain": "^0.2.5",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
