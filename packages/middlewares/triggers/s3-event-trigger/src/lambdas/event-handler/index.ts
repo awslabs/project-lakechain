@@ -17,7 +17,7 @@
 import { randomUUID } from 'crypto';
 import { getDocument } from './get-document';
 import { ObjectNotFoundException, InvalidDocumentObjectException } from './exceptions';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { next } from '@project-lakechain/sdk/decorators';
 

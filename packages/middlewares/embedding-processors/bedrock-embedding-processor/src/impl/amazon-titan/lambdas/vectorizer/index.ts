@@ -18,7 +18,7 @@ import merge from 'lodash/merge';
 
 import { SQSEvent, Context, SQSRecord } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { CacheStorage } from '@project-lakechain/sdk/cache';

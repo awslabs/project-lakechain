@@ -17,7 +17,7 @@
 import path from 'path';
 
 import { Context, S3Event, S3EventRecord } from 'aws-lambda';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';

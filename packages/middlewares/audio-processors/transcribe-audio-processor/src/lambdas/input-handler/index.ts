@@ -15,7 +15,7 @@
  */
 
 import { SQSEvent, SQSRecord, Context, SQSBatchResponse } from 'aws-lambda';
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';

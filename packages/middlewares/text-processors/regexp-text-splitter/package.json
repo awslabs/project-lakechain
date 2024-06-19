@@ -39,10 +39,10 @@
     "rimraf": "^5.0.7"
   },
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^1.18.1",
-    "@aws-lambda-powertools/logger": "^1.18.1",
-    "@aws-lambda-powertools/metrics": "^1.18.1",
-    "@aws-lambda-powertools/tracer": "^1.18.1",
+    "@aws-lambda-powertools/batch": "^2.2.0",
+    "@aws-lambda-powertools/logger": "^2.2.0",
+    "@aws-lambda-powertools/metrics": "^2.2.0",
+    "@aws-lambda-powertools/tracer": "^2.2.0",
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
     "lodash": "^4.17.21"

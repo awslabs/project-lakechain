@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { LambdaInterface } from '@aws-lambda-powertools/commons';
+import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { SFNClient, StartExecutionCommand } from '@aws-sdk/client-sfn';
 import { CloudEvent } from '@project-lakechain/sdk/models';
