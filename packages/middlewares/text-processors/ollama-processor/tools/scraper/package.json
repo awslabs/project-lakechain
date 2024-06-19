@@ -29,14 +29,14 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.5",
     "esbuild": "^0.21.5",
     "rimraf": "^5.0.7"
   },
   "dependencies": {
-    "crawlee": "^3.8.1",
-    "playwright": "^1.41.2"
+    "crawlee": "^3.10.5",
+    "playwright": "^1.44.1"
   },
   "lint-staged": {
     "*.{ts, json}": "npx eslint",
