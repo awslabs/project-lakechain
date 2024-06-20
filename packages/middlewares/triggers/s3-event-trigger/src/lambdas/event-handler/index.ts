@@ -15,7 +15,7 @@
  */
 
 import { randomUUID } from 'crypto';
-import { getDocument } from './get-document';
+import { getDocument, getMetadata } from './get-document';
 import { ObjectNotFoundException, InvalidDocumentObjectException } from './exceptions';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
@@ -83,7 +83,7 @@ const unquote = (event: S3EventRecord): S3EventRecord => {
 class Lambda implements LambdaInterface {
 
   /**
-   * @param event the S3 event record.
+   * @param s3Event the S3 event record.
    * @note the `next` decorator will automatically forward the
    * returned cloud event to the next middlewares
    */
@@ -99,6 +99,13 @@ class Lambda implements LambdaInterface {
       eventType
     );
 
+    // Retrieve S3 Object metadata
+    const metadata = await getMetadata(
+      event.s3.bucket,
+      event.s3.object,
+      eventType
+    )
+
     // Construct the initial event that will be consumed
     // by the next middlewares.
     return (new CloudEvent.Builder()
@@ -107,7 +114,7 @@ class Lambda implements LambdaInterface {
         .withChainId(randomUUID())
         .withSourceDocument(document)
         .withDocument(document)
-        .withMetadata({})
+        .withMetadata(metadata)
         .build())
       .build());
   }

@@ -19,19 +19,11 @@ import mimeTypes from './mime-types.json';
 import { Readable } from 'stream';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { S3Bucket, S3Object } from './definitions/s3';
-import { Document, EventType } from '@project-lakechain/sdk/models';
+import { Document, DocumentMetadata, EventType } from '@project-lakechain/sdk/models';
 import { tracer } from '@project-lakechain/sdk/powertools';
 
-import {
-  S3Client,
-  GetObjectCommand,
-  NotFound,
-  NoSuchKey,
-} from '@aws-sdk/client-s3';
-import {
-  ObjectNotFoundException,
-  InvalidDocumentObjectException
-} from './exceptions/index.js';
+import { GetObjectCommand, HeadObjectCommand, NoSuchKey, NotFound, S3Client, } from '@aws-sdk/client-s3';
+import { InvalidDocumentObjectException, ObjectNotFoundException } from './exceptions';
 
 /**
  * The S3 client.
@@ -75,6 +67,34 @@ const createUrl = (bucket: S3Bucket, obj: S3Object): URL => {
     key: obj.key
   }).asUri());
 };
+
+/**
+ * @param bucket the bucket associated with the S3 object.
+ * @param obj the object information.
+ * @returns the metadata associated with the S3 object.
+ */
+const getObjectMetadata = async (
+    bucket: S3Bucket,
+    obj: S3Object
+): Promise<Record<string, string> | undefined> => {
+  try {
+    const res = await client.send(new HeadObjectCommand({
+      Bucket: bucket.name,
+      Key: obj.key
+    }));
+
+    return res.Metadata;
+
+  } catch (err) {
+    if (err instanceof NoSuchKey || err instanceof NotFound) {
+      // The S3 object no longer exists.
+      throw new ObjectNotFoundException(obj.key);
+    } else {
+      // we could not retrieve the Object metadata
+      return undefined;
+    }
+  }
+}
 
 /**
  * Compute the file type given the file content.
@@ -208,5 +228,28 @@ export const getDocument = async (
       return (onDeleted(bucket, obj));
     default:
       throw new Error(`Invalid event type: ${eventType}`);
+  }
+};
+
+/**
+ * @param bucket the bucket information.
+ * @param obj the object information.
+ * @param eventType whether the event is an object created or removed event.
+ * @returns a new document metadata instance with the user-defined object metadata.
+ */
+export const getMetadata = async (
+    bucket: S3Bucket,
+    obj: S3Object,
+    eventType: EventType
+): Promise<DocumentMetadata> => {
+  if (eventType == EventType.DOCUMENT_CREATED) {
+    const userDefinedMetadata = await getObjectMetadata(bucket, obj);
+    const metadata: DocumentMetadata = {};
+    if (userDefinedMetadata && Object.entries(userDefinedMetadata).length > 0) {
+      metadata.custom = userDefinedMetadata;
+    }
+    return metadata;
+  } else {
+    return {};
   }
 };
