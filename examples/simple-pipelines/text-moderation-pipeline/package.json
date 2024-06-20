@@ -1,6 +1,6 @@
 {
   "name": "text-moderation-pipeline",
-  "description": "An example showcasing how to translate documents using Amazon Translate.",
+  "description": "An example showcasing how to moderate text documents using Amazon Comprehend.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
@@ -24,21 +24,20 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^20.8.10",
-    "esbuild": "^0.20.2",
+    "@types/node": "^20.14.6",
+    "esbuild": "^0.21.5",
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-	"@project-lakechain/core": "*",
-	"@project-lakechain/condition": "*",
-	"@project-lakechain/sdk": "*",
+    "@project-lakechain/sdk": "*",
+    "@project-lakechain/condition": "*",
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
     "@project-lakechain/nlp-text-processor": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.143.1",
+    "aws-cdk-lib": "^2.146.0",
     "constructs": "^10.3.0"
   }
 }
