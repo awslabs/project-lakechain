@@ -21,12 +21,12 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 
 import { z } from 'zod';
 import { Construct } from 'constructs';
-import { LanceDbStorage } from '../storage';
+import { LanceDbStorageProvider } from '../storage';
 
 /**
  * Describes the schema for the S3 storage.
  */
-const S3StoragePropsSchema = z.object({
+const S3StorageProviderPropsSchema = z.object({
 
   /**
    * A unique identifier for the storage.
@@ -54,13 +54,13 @@ const S3StoragePropsSchema = z.object({
     .default('lancedb/')
 });
 
-// The type of the `S3StorageProps` schema.
-export type S3StorageProps = z.infer<typeof S3StoragePropsSchema>;
+// The type of the `S3StorageProviderProps` schema.
+export type S3StorageProviderProps = z.infer<typeof S3StorageProviderPropsSchema>;
 
 /**
  * The S3 storage builder.
  */
-export class S3StorageBuilder {
+export class S3StorageProviderBuilder {
 
   /**
    * The construct scope.
@@ -75,7 +75,7 @@ export class S3StorageBuilder {
   /**
    * The S3 storage properties.
    */
-  private props: Partial<S3StorageProps> = {
+  private props: Partial<S3StorageProviderProps> = {
     id: 'S3_STORAGE'
   };
 
@@ -83,7 +83,7 @@ export class S3StorageBuilder {
    * Sets the construct scope.
    * @param scope the construct scope.
    */
-  public withScope(scope: Construct): S3StorageBuilder {
+  public withScope(scope: Construct): S3StorageProviderBuilder {
     this.scope = scope;
     return (this);
   }
@@ -92,7 +92,7 @@ export class S3StorageBuilder {
    * Sets the construct identifier.
    * @param id the construct identifier.
    */
-  public withIdentifier(id: string): S3StorageBuilder {
+  public withIdentifier(id: string): S3StorageProviderBuilder {
     this.id = id;
     return (this);
   }
@@ -102,7 +102,7 @@ export class S3StorageBuilder {
    * @param path the path to the LanceDB dataset in the bucket.
    * @returns a reference to the builder.
    */
-  public withPath(path: string): S3StorageBuilder {
+  public withPath(path: string): S3StorageProviderBuilder {
     this.props.path = path;
     return (this);
   }
@@ -112,17 +112,17 @@ export class S3StorageBuilder {
    * @param bucket the bucket to use as a storage.
    * @returns a reference to the builder.
    */
-  public withBucket(bucket: s3.IBucket): S3StorageBuilder {
+  public withBucket(bucket: s3.IBucket): S3StorageProviderBuilder {
     this.props.bucket = bucket;
     return (this);
   }
 
   /**
    * Builds the S3 storage properties.
-   * @returns a new instance of the `S3Storage` class.
+   * @returns a new instance of the `S3StorageProvider` class.
    */
-  public build(): S3Storage {
-    return (S3Storage.from(
+  public build(): S3StorageProvider {
+    return (S3StorageProvider.from(
       this.scope,
       this.id,
       this.props
@@ -133,12 +133,12 @@ export class S3StorageBuilder {
 /**
  * The S3 storage.
  */
-export class S3Storage extends Construct implements LanceDbStorage {
+export class S3StorageProvider extends Construct implements LanceDbStorageProvider {
 
   /**
-   * The `S3Storage` Builder.
+   * The `S3StorageProvider` Builder.
    */
-  public static Builder = S3StorageBuilder;
+  public static Builder = S3StorageProviderBuilder;
 
   /**
    * The S3 bucket.
@@ -151,12 +151,12 @@ export class S3Storage extends Construct implements LanceDbStorage {
   public table: dynamodb.ITable;
 
   /**
-   * Creates a new instance of the `S3Storage` class.
+   * Creates a new instance of the `S3StorageProvider` class.
    * @param scope the construct scope.
    * @param resourceId the construct identifier.
    * @param props the task properties.
    */
-  constructor(scope: Construct, resourceId: string, public props: S3StorageProps) {
+  constructor(scope: Construct, resourceId: string, public props: S3StorageProviderProps) {
     super(scope, resourceId);
 
     // Set the bucket.
@@ -217,14 +217,14 @@ export class S3Storage extends Construct implements LanceDbStorage {
   }
 
   /**
-   * Creates a new instance of the `S3Storage` class.
+   * Creates a new instance of the `S3StorageProvider` class.
    * @param scope the construct scope.
    * @param id the construct identifier.
    * @param props the storage properties.
-   * @returns a new instance of the `S3Storage` class.
+   * @returns a new instance of the `S3StorageProvider` class.
    */
   public static from(scope: Construct, id: string, props: any) {
-    return (new S3Storage(scope, id, S3StoragePropsSchema.parse(props)));
+    return (new S3StorageProvider(scope, id, S3StorageProviderPropsSchema.parse(props)));
   }
 
   /**

@@ -22,12 +22,12 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 
 import { z } from 'zod';
 import { Construct } from 'constructs';
-import { LanceDbStorage } from '../storage';
+import { LanceDbStorageProvider } from '../storage';
 
 /**
  * Describes the schema for the EFS storage.
  */
-const EfsStoragePropsSchema = z.object({
+const EfsStorageProviderPropsSchema = z.object({
 
   /**
    * A unique identifier for the storage.
@@ -66,13 +66,13 @@ const EfsStoragePropsSchema = z.object({
     .default('lancedb/')
 });
 
-// The type of the `EfsStorageProps` schema.
-export type EfsStorageProps = z.infer<typeof EfsStoragePropsSchema>;
+// The type of the `EfsStorageProviderProps` schema.
+export type EfsStorageProviderProps = z.infer<typeof EfsStorageProviderPropsSchema>;
 
 /**
  * The EFS storage builder.
  */
-export class EfsStorageBuilder {
+export class EfsStorageProviderBuilder {
 
   /**
    * The construct scope.
@@ -87,7 +87,7 @@ export class EfsStorageBuilder {
   /**
    * The EFS storage properties.
    */
-  private props: Partial<EfsStorageProps> = {
+  private props: Partial<EfsStorageProviderProps> = {
     id: 'EFS_STORAGE'
   };
 
@@ -95,7 +95,7 @@ export class EfsStorageBuilder {
    * Sets the construct scope.
    * @param scope the construct scope.
    */
-  public withScope(scope: Construct): EfsStorageBuilder {
+  public withScope(scope: Construct): EfsStorageProviderBuilder {
     this.scope = scope;
     return (this);
   }
@@ -104,7 +104,7 @@ export class EfsStorageBuilder {
    * Sets the construct identifier.
    * @param id the construct identifier.
    */
-  public withIdentifier(id: string): EfsStorageBuilder {
+  public withIdentifier(id: string): EfsStorageProviderBuilder {
     this.id = id;
     return (this);
   }
@@ -114,7 +114,7 @@ export class EfsStorageBuilder {
    * @param fileSystem the EFS file system.
    * @returns a reference to the builder.
    */
-  public withFileSystem(fileSystem: efs.IFileSystem): EfsStorageBuilder {
+  public withFileSystem(fileSystem: efs.IFileSystem): EfsStorageProviderBuilder {
     this.props.efs = fileSystem;
     return (this);
   }
@@ -124,7 +124,7 @@ export class EfsStorageBuilder {
    * @param vpc the VPC in which the EFS storage should be deployed.
    * @returns a reference to the builder.
    */
-  public withVpc(vpc: ec2.IVpc): EfsStorageBuilder {
+  public withVpc(vpc: ec2.IVpc): EfsStorageProviderBuilder {
     this.props.vpc = vpc;
     return (this);
   }
@@ -134,17 +134,17 @@ export class EfsStorageBuilder {
    * @param path the path to the LanceDB dataset in the bucket.
    * @returns a reference to the builder.
    */
-  public withPath(path: string): EfsStorageBuilder {
+  public withPath(path: string): EfsStorageProviderBuilder {
     this.props.path = path;
     return (this);
   }
 
   /**
    * Builds the EFS storage properties.
-   * @returns a new instance of the `EfsStorage` class.
+   * @returns a new instance of the `EfsStorageProvider` class.
    */
-  public build(): EfsStorage {
-    return (EfsStorage.from(
+  public build(): EfsStorageProvider {
+    return (EfsStorageProvider.from(
       this.scope,
       this.id,
       this.props
@@ -153,14 +153,14 @@ export class EfsStorageBuilder {
 }
 
 /**
- * The EFS storage.
+ * The EFS storage provider.
  */
-export class EfsStorage extends Construct implements LanceDbStorage {
+export class EfsStorageProvider extends Construct implements LanceDbStorageProvider {
 
   /**
-   * The `EfsStorage` Builder.
+   * The `EfsStorageProvider` Builder.
    */
-  public static Builder = EfsStorageBuilder;
+  public static Builder = EfsStorageProviderBuilder;
 
   /**
    * The file system.
@@ -173,12 +173,12 @@ export class EfsStorage extends Construct implements LanceDbStorage {
   public accessPoint: efs.IAccessPoint;
 
   /**
-   * Creates a new instance of the `EfsStorage` class.
+   * Creates a new instance of the `EfsStorageProvider` class.
    * @param scope the construct scope.
    * @param resourceId the construct identifier.
    * @param props the task properties.
    */
-  constructor(scope: Construct, resourceId: string, public props: EfsStorageProps) {
+  constructor(scope: Construct, resourceId: string, public props: EfsStorageProviderProps) {
     super(scope, resourceId);
     
     // Set the file system.
@@ -244,14 +244,14 @@ export class EfsStorage extends Construct implements LanceDbStorage {
   }
 
   /**
-   * Creates a new instance of the `EfsStorage` class.
+   * Creates a new instance of the `EfsStorageProvider` class.
    * @param scope the construct scope.
    * @param id the construct identifier.
    * @param props the storage properties.
-   * @returns a new instance of the `EfsStorage` class.
+   * @returns a new instance of the `EfsStorageProvider` class.
    */
   public static from(scope: Construct, id: string, props: any) {
-    return (new EfsStorage(scope, id, EfsStoragePropsSchema.parse(props)));
+    return (new EfsStorageProvider(scope, id, EfsStorageProviderPropsSchema.parse(props)));
   }
 
   /**

@@ -30,7 +30,7 @@ import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { LanceDbStorageConnectorProps, LanceDbStorageConnectorPropsSchema } from './definitions/opts';
 import { LanceDbLayer } from '@project-lakechain/layers/lancedb';
-import { EfsStorage } from './definitions/storage';
+import { EfsStorageProvider } from './definitions/storage';
 import {
   Middleware,
   MiddlewareBuilder,
@@ -177,7 +177,7 @@ export class LanceDbStorageConnector extends Middleware {
     let accessPoint: efs.IAccessPoint | undefined;
     let vpc: ec2.IVpc | undefined;
     if (props.storageProvider.id() === 'EFS_STORAGE') {
-      const provider = props.storageProvider as EfsStorage;
+      const provider = props.storageProvider as EfsStorageProvider;
       accessPoint = provider.accessPoint;
       vpc = provider.vpc();
     }
@@ -300,4 +300,4 @@ export class LanceDbStorageConnector extends Middleware {
   }
 }
 
-export { S3Storage, EfsStorage } from './definitions/storage';
+export { S3StorageProvider, EfsStorageProvider } from './definitions/storage';

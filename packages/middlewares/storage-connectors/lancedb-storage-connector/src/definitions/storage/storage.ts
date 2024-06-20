@@ -17,12 +17,12 @@
 import * as iam from 'aws-cdk-lib/aws-iam';
 
 /**
- * Describes a `LanceDbStorage`.
+ * Describes a `LanceDbStorageProvider`.
  */
-export interface LanceDbStorage {
+export interface LanceDbStorageProvider {
 
   /**
-   * @returns a unique identifier for the storage.
+   * @returns a unique identifier for the storage provider.
    */
   id(): string;
 

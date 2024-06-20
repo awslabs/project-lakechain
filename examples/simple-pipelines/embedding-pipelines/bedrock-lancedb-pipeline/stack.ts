@@ -28,7 +28,7 @@ import { RecursiveCharacterTextSplitter } from '@project-lakechain/recursive-cha
 import { TitanEmbeddingProcessor } from '@project-lakechain/bedrock-embedding-processors';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
-import { LanceDbStorageConnector, EfsStorage } from '@project-lakechain/lancedb-storage-connector';
+import { LanceDbStorageConnector, EfsStorageProvider } from '@project-lakechain/lancedb-storage-connector';
 
 /**
  * An example stack showcasing how to use Amazon Bedrock embeddings
@@ -145,7 +145,7 @@ export class BedrockLanceDbPipeline extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(embeddingProcessor)
       .withVectorSize(1024)
-      .withStorageProvider(new EfsStorage.Builder()
+      .withStorageProvider(new EfsStorageProvider.Builder()
         .withScope(this)
         .withIdentifier('EfsStorage')
         .withFileSystem(fileSystem)

@@ -16,7 +16,7 @@
 
 import { z } from 'zod';
 import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
-import { S3Storage, EfsStorage } from './storage';
+import { S3StorageProvider, EfsStorageProvider } from './storage';
 
 /**
  * LanceDB Storage Connector properties schema.
@@ -27,8 +27,8 @@ export const LanceDbStorageConnectorPropsSchema = MiddlewarePropsSchema.extend({
    * The storage provider to use.
    */
   storageProvider: z.union([
-    z.custom<S3Storage>(),
-    z.custom<EfsStorage>()
+    z.custom<S3StorageProvider>(),
+    z.custom<EfsStorageProvider>()
   ]),
 
   /**

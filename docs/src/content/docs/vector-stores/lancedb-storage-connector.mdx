@@ -45,7 +45,7 @@ You also define a storage provider such as S3 or EFS that will serve as the stor
 > ℹ️ The below example showcases how to create a LanceDB connector leveraging the S3 storage provider.
 
 ```typescript
-import { LanceDbStorageConnector, S3Storage } from '@project-lakechain/lancedb-storage-connector';
+import { LanceDbStorageConnector, S3StorageProvider } from '@project-lakechain/lancedb-storage-connector';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
@@ -65,7 +65,7 @@ class Stack extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(source)
       .withVectorSize(1024)
-      .withStorageProvider(new S3Storage.Builder()
+      .withStorageProvider(new S3StorageProvider.Builder()
         .withScope(this)
         .withIdentifier('S3Storage')
         .withBucket(bucket)
@@ -99,7 +99,7 @@ const connector = new LanceDbStorageConnector.Builder()
   .withCacheStorage(cache)
   .withSource(source)
   .withVectorSize(1024)
-  .withStorageProvider(new S3Storage.Builder()
+  .withStorageProvider(new S3StorageProvider.Builder()
     .withScope(this)
     .withIdentifier('S3Storage')
     .withBucket(bucket) // 👈 Specify the S3 bucket
@@ -127,7 +127,7 @@ const connector = new LanceDbStorageConnector.Builder()
   .withCacheStorage(cache)
   .withSource(source)
   .withVectorSize(1024)
-  .withStorageProvider(new EfsStorage.Builder()
+  .withStorageProvider(new EfsStorageProvider.Builder()
     .withScope(this)
     .withIdentifier('EfsStorage')
     .withFileSystem(fileSystem) // 👈 Specify the EFS
