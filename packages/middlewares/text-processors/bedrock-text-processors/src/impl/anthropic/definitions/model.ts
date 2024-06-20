@@ -128,6 +128,20 @@ export class AnthropicTextModel {
   });
 
   /**
+   * The Bedrock `anthropic.claude-3-haiku-20240307-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static ANTHROPIC_CLAUDE_V3_HAIKU = new AnthropicTextModel({
+    name: 'anthropic.claude-3-haiku-20240307-v1:0',
+    inputs: [
+      ...AGGREGATE_EVENT_TYPES,
+      ...BASE_IMAGE_INPUTS,
+      ...BASE_TEXT_INPUTS
+    ],
+    outputs: ['text/plain']
+  });
+
+  /**
    * The Bedrock `anthropic.claude-3-sonnet-20240229-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
@@ -142,11 +156,11 @@ export class AnthropicTextModel {
   });
 
   /**
-   * The Bedrock `anthropic.claude-3-haiku-20240307-v1:0` model.
+   * The Bedrock `anthropic.claude-3-5-sonnet-20240620-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V3_HAIKU = new AnthropicTextModel({
-    name: 'anthropic.claude-3-haiku-20240307-v1:0',
+  public static ANTHROPIC_CLAUDE_V3_5_SONNET = new AnthropicTextModel({
+    name: 'anthropic.claude-3-5-sonnet-20240620-v1:0',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
       ...BASE_IMAGE_INPUTS,
