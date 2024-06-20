@@ -19,3 +19,4 @@ export * from './detected-text';
 export * from './image-stats';
 export * from './person';
 export * from './ppe';
+export * from './hashes';

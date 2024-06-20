@@ -17,7 +17,15 @@
 import { z } from 'zod';
 
 export const GeolocationSchema = z.object({
+
+  /**
+   * The latitude associated with a geolocation.
+   */
   latitude: z.number(),
+
+  /**
+   * The longitude associated with a geolocation.
+   */
   longitude: z.number()
 });
 

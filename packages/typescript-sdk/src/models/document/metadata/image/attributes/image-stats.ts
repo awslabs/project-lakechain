@@ -17,11 +17,46 @@
 import { z } from 'zod';
 
 export const ImageStatsSchema = z.object({
-  faces: z.number().optional(),
-  objects: z.number().optional(),
-  labels: z.number().optional(),
-  moderations: z.number().optional(),
-  text: z.number().optional()
+
+  /**
+   * The number of detected faces in the image.
+   */
+  faces: z
+    .number()
+    .describe('The number of detected faces in the image.')
+    .optional(),
+
+  /**
+   * The number of detected objects in the image.
+   */
+  objects: z
+    .number()
+    .describe('The number of detected objects in the image.')
+    .optional(),
+
+  /**
+   * The number of detected labels in the image.
+   */
+  labels: z
+    .number()
+    .describe('The number of detected labels in the image.')
+    .optional(),
+
+  /**
+   * The number of detected moderations in the image.
+   */
+  moderations: z
+    .number()
+    .describe('The number of detected moderations in the image.')
+    .optional(),
+
+  /**
+   * The number of detected texts in the image.
+   */
+  text: z
+    .number()
+    .describe('The number of detected texts in the image.')
+    .optional()
 });
 
 export type ImageStats = z.infer<typeof ImageStatsSchema>;

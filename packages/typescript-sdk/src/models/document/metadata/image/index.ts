@@ -24,6 +24,7 @@ import { DetectedObject } from './attributes/detected-object.js';
 import { DetectedText } from './attributes/detected-text.js';
 import { ImageStatsSchema } from './attributes/image-stats.js';
 import { PersonalProtectiveEquipmentSchema } from './attributes/ppe.js';
+import { HashesSchema } from './attributes/hashes.js';
 import { VectorEmbeddingSchema } from '../attributes/vector-embedding.js';
 import { PointerBuilder } from '../../../../pointer';
 
@@ -166,6 +167,21 @@ export const ImageMetadataSchema = z.object({
    */
   stats: ImageStatsSchema
     .describe('Statistics about the image.')
+    .optional(),
+
+  /**
+   * The laplacian variance of the image.
+   */
+  laplacianVariance: z
+    .number()
+    .describe('The laplacian variance of the image.')
+    .optional(),
+
+  /**
+   * Describes the hashes associated with the image.
+   */
+  hashes: HashesSchema
+    .describe('Describes the hashes associated with the image.')
     .optional(),
 
   /**
