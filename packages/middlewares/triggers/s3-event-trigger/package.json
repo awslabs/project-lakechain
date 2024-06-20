@@ -38,7 +38,7 @@
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
     "aws-sdk-client-mock": "^4.0.1",
-    "cdk-nag": "^2.28.144",
+    "cdk-nag": "^2.28.145",
     "esbuild": "^0.21.5",
     "rimraf": "^5.0.7",
     "ts-jest": "^29.1.5",
