@@ -107,7 +107,6 @@ export class LaplacianVariancePipeline extends cdk.Stack {
       .withSource(trigger)
       // Optionally specify the depth level.
       .withDepth(Depth.CV_64F)
-      .withKernelSize(3)
       .build();
   
     // Write the sharp images to the destination bucket.
