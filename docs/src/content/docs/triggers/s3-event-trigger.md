@@ -104,6 +104,8 @@ All those information cannot be inferred from the S3 event alone, and to efficie
 
 <br>
 
+The S3 event trigger middleware also converts S3 native metadata to Lakechain custom [Metadata](/project-lakechain/general/events/#-metadata), so you can add any information regarding the uploaded Object to the CloudEvent and then to the chain.
+
 ---
 
 ### 📤 Events
