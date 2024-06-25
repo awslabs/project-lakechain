@@ -114,7 +114,7 @@ export class LaplacianVariancePipeline extends cdk.Stack {
       .withScope(this)
       .withIdentifier('SharpStorageConnector')
       .withCacheStorage(cache)
-      .withSource(laplacian, when('data.metadata.properties.attrs.laplacianVariance').gte(THRESHOLD))
+      .withSource(laplacian, when('data.metadata.properties.attrs.variance').gte(THRESHOLD))
       .withDestinationBucket(sharp)
       .build();
 
@@ -123,7 +123,7 @@ export class LaplacianVariancePipeline extends cdk.Stack {
       .withScope(this)
       .withIdentifier('BlurryStorageConnector')
       .withCacheStorage(cache)
-      .withSource(laplacian, when('data.metadata.properties.attrs.laplacianVariance').lt(THRESHOLD))
+      .withSource(laplacian, when('data.metadata.properties.attrs.variance').lt(THRESHOLD))
       .withDestinationBucket(blurry)
       .build();
 
