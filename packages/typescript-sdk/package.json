@@ -77,9 +77,9 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/lodash": "^4.17.4",
     "@types/node": "^20.8.10",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "aws-sdk-client-mock": "^4.0.1",
-    "tsx": "^4.7.2",
+    "tsx": "^4.15.7",
     "graphology-types": "0.24.7"
   }
 }
