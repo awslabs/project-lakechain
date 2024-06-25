@@ -108,6 +108,9 @@ export default defineConfig({
 				}, {
 					label: 'Background Removal',
 					link: '/image-processing/rembg-image-processor'
+				}, {
+					label: 'Laplacian',
+					link: '/image-processing/laplacian-image-processor'
 				}]
 			}, {
 				label: 'Embeddings',

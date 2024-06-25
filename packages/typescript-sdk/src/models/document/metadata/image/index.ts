@@ -172,7 +172,7 @@ export const ImageMetadataSchema = z.object({
   /**
    * The laplacian variance of the image.
    */
-  laplacianVariance: z
+  variance: z
     .number()
     .describe('The laplacian variance of the image.')
     .optional(),

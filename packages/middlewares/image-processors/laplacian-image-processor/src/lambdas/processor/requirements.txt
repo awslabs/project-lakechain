@@ -1,0 +1,6 @@
+boto3
+aws_lambda_powertools
+aws-xray-sdk
+opencv-python-headless
+Pillow
+numpy
