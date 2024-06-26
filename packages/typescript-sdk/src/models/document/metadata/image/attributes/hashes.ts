@@ -74,6 +74,14 @@ export const HashesSchema = z.object({
   wavelet: z
     .string()
     .describe('The wavelet hash of the image.')
+    .optional(),
+
+  /**
+   * The color hash of the image.
+   */
+  color: z
+    .string()
+    .describe('The color hash of the image.')
     .optional()
 });
 

@@ -13,12 +13,13 @@
 #  limitations under the License.
 
 import os
+import io
 import json
 import boto3
-import cv2
-import numpy as np
+import imagehash
 
 from typing import Optional
+from PIL import Image
 from urllib.parse import urlparse, unquote
 from aws_lambda_powertools import Logger, Tracer
 from aws_lambda_powertools.utilities.data_classes import event_source, SQSEvent
@@ -35,8 +36,11 @@ from aws_lambda_powertools.utilities.batch import (
 # Environment variables.
 SERVICE_NAME           = os.getenv('POWERTOOLS_SERVICE_NAME')
 PROCESSED_FILES_BUCKET = os.getenv('PROCESSED_FILES_BUCKET')
-DEPTH                  = int(os.getenv('DEPTH', 6))
-KERNEL_SIZE            = int(os.getenv('KERNEL_SIZE', 3))
+AVERAGE_HASHING        = os.getenv('AVERAGE_HASHING', 'true') == 'true'
+PERCEPTUAL_HASHING     = os.getenv('PERCEPTUAL_HASHING', 'true') == 'true'
+DIFFERENCE_HASHING     = os.getenv('DIFFERENCE_HASHING', 'true') == 'true'
+WAVELET_HASHING        = os.getenv('WAVELET_HASHING', 'true') == 'true'
+COLOR_HASHING          = os.getenv('COLOR_HASHING', 'true') == 'true'
 
 # Runtime function attributes.
 logger     = Logger(service=SERVICE_NAME)
@@ -44,6 +48,14 @@ tracer     = Tracer(service=SERVICE_NAME)
 s3_client  = boto3.client('s3')
 sns_client = boto3.client('sns')
 processor  = BatchProcessor(event_type=EventType.SQS)
+
+try:
+	ANTIALIAS = Image.Resampling.LANCZOS
+except AttributeError:
+	# deprecated in pillow 10
+	# https://pillow.readthedocs.io/en/stable/deprecations.html
+	ANTIALIAS = Image.ANTIALIAS
+
 
 def merge(dct, merge_dct):
   """ Recursive dict merge. Inspired by :meth:``dict.update()``, instead of
@@ -73,27 +85,9 @@ def load_image(url) -> bytes:
   return response['Body'].read()
 
 
-def laplacian_variance(image, depth=cv2.CV_64F, ksize=3):
-  """
-  Compute the Laplacian variance of the image.
-  :param image: The input image.
-  :param depth: The desired depth of the Laplacian.
-  :param ksize: The kernel size of the Laplacian.
-  """
-  if image.ndim == 3:
-    gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-  else:
-    gray_image = image
-
-  # Remove the noise from the image.
-  denoised = cv2.GaussianBlur(gray_image, (3, 3), 0)
-
-  return cv2.Laplacian(denoised, depth, ksize=ksize).var()
-
-
 def process_document(event: dict) -> dict:
   """
-  Computes the Laplacian variance for the given document.
+  Computes the image hashes for the given document.
   :param event: the received cloud event.
   """
 
@@ -102,20 +96,45 @@ def process_document(event: dict) -> dict:
 
   # Decode the image in memory.
   buffer = load_image(url)
-  array  = cv2.imdecode(np.asarray(bytearray(buffer)), cv2.IMREAD_COLOR)
-
-  # Compute the Laplacian of the image.
-  variance = laplacian_variance(array, DEPTH, KERNEL_SIZE)
+  image  = Image.open(io.BytesIO(buffer))
+  
+  # Only resize if the image dimensions are greater than 1024x1024
+  max_size = (1024, 1024)
+  if image.size[0] > max_size[0] or image.size[1] > max_size[1]:
+    image.thumbnail(max_size, ANTIALIAS)
 
   # Update the document metadata.
   merge(event['data']['metadata'], {
     'properties': {
       'kind': 'image',
       'attrs': {
-        'variance': variance
+        'hashes': {}
       }
     }
   })
+
+  # Set the hashes object.
+  hashes = event['data']['metadata']['properties']['attrs']['hashes']
+
+  # Compute the average hashing of the image.
+  if AVERAGE_HASHING:
+    hashes['average'] = str(imagehash.average_hash(image))
+
+  # Compute the perceptual hashing of the image.
+  if PERCEPTUAL_HASHING:
+    hashes['perceptual'] = str(imagehash.phash(image))
+
+  # Compute the difference hashing of the image.
+  if DIFFERENCE_HASHING:
+    hashes['difference'] = str(imagehash.dhash(image))
+
+  # Compute the wavelet hashing of the image.
+  if WAVELET_HASHING:
+    hashes['wavelet'] = str(imagehash.whash(image))
+
+  # Compute the color hashing of the image.
+  if COLOR_HASHING:
+    hashes['color'] = str(imagehash.colorhash(image))
 
   return event
 

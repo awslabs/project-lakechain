@@ -1,9 +1,9 @@
 ---
-title: Laplacian
+title: Hashing
 ---
 
 import { Image } from 'astro:assets';
-import exampleImage from '../../../assets/laplacian-example.png';
+import exampleImage from '../../../assets/image-hashing-example.png';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
   Unstable API
@@ -12,8 +12,8 @@ import exampleImage from '../../../assets/laplacian-example.png';
   0.7.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
-  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/laplacian-image-processor">
-    @project-lakechain/laplacian-image-processor
+  <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/hashing-image-processor">
+    @project-lakechain/hashing-image-processor
   </a>
 </span>
 <span class="language-icon">
@@ -23,8 +23,11 @@ import exampleImage from '../../../assets/laplacian-example.png';
 
 ---
 
-The Laplacian image processor makes it possible to compute the Laplacian variance of images, and enrich the metadata of the document with the computed variance.
-This metric is useful for detecting edges in images, and is more generally used as a blur detection metric to identify the *blurriness* of an image.
+The hashing image processor makes it possible to enrich the metadata of images with hash values associated with the visual representation of an image.
+This middleware supports different hashing algorithms, including [average hashing](https://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html), [perceptual hashing](https://en.wikipedia.org/wiki/Perceptual_hashing), [difference hashing](https://github.com/Tom64b/dHash), [wavelet hashing](https://fullstackml.com/wavelet-image-hash-in-python-3504fdd282b5), and color hashing.
+
+Thoses hashing algorithm can be used to compare how different images are from a visual standpoint.
+They provide a more computationally efficient way to compare images, compared to vector embeddings which also take into account the semantic aspect of an image.
 
 <br />
 <p align="center">
@@ -32,6 +35,8 @@ This metric is useful for detecting edges in images, and is more generally used 
 </p>
 
 <p align="center" style="font-size: 14px">
+  <em>An example using average hashing.</em>
+  <br />
   <em>Credits <a href="https://unsplash.com/fr/photos/une-chaise-avec-un-magazine-dessus-6Y4wlHeiGhM#:~:text=Remerciez-,Branislav%20Rodman,-sur%20les%20r%C3%A9seaux">Branislav Rodman</a> on <a href="https://unsplash.com/fr/photos/une-chaise-avec-un-magazine-dessus-6Y4wlHeiGhM">Unsplash</a></em>
 </p>
 <br />
@@ -40,22 +45,22 @@ This metric is useful for detecting edges in images, and is more generally used 
 
 ---
 
-### 📷 Computing Variance
+### #️⃣ Computing Hashes
 
 To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline.
 
 ```typescript
-import { LaplacianImageProcessor } from '@project-lakechain/laplacian-image-processor';
+import { HashingImageProcessor } from '@project-lakechain/hashing-image-processor';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string) {
     const cache = new CacheStorage(this, 'Cache');
     
-    // Computes the Laplacian variance of images.
-    const laplacianProcessor = new LaplacianImageProcessor.Builder()
+    // Computes the different image hashes based on all supported algorithms.
+    const hashing = new HashingImageProcessor.Builder()
       .withScope(this)
-      .withIdentifier('LaplacianProcessor')
+      .withIdentifier('HashingImageProcessor')
       .withCacheStorage(cache)
       .withSource(source) // 👈 Specify a data source
       .build();
@@ -67,45 +72,26 @@ class Stack extends cdk.Stack {
 
 ---
 
-#### Depth Level
+#### Selecting Algorithms
 
-The Laplacian image processor can be configured to compute the Laplacian variance at different depth levels. This is useful when you want to compute the variance at different scales, and detect edges at different levels of granularity.
-See the [OpenCV data types](https://docs.opencv.org/4.x/d1/d1b/group__core__hal__interface.html) for more information on the available depth levels.
+You can explicitely select which hashing algorithm to enable or not when enriching the document metadata with the different types of image hashes.
 
-> 💁 The default value is set to `64F`.
+> 💁 By default, all hashing algorithms are enabled.
 
 ```typescript
-import { LaplacianImageProcessor, Depth } from '@project-lakechain/laplacian-image-processor';
+import { HashingImageProcessor } from '@project-lakechain/hashing-image-processor';
 
-const laplacianProcessor = new LaplacianImageProcessor.Builder()
+const hashing = new HashingImageProcessor.Builder()
   .withScope(this)
   .withIdentifier('LaplacianProcessor')
   .withCacheStorage(cache)
   .withSource(source)
-  .withDepth(Depth.CV_64F) // 👈 Optionally specify the depth level.
-  .build();
-```
-
-<br />
-
----
-
-#### Kernel Size
-
-The kernel size used in the Laplacian algorithm can be configured to compute the variance at different scales.
-The kernel size is used to compute the second derivative of the image, and is used to customize detection of edges in the image.
-
-> 💁 The default value is set to `3`.
-
-```typescript
-import { LaplacianImageProcessor } from '@project-lakechain/laplacian-image-processor';
-
-const laplacianProcessor = new LaplacianImageProcessor.Builder()
-  .withScope(this)
-  .withIdentifier('LaplacianProcessor')
-  .withCacheStorage(cache)
-  .withSource(source)
-  .withKernelSize(3) // 👈 Optionally specify the kernel size.
+  // Optionally specify which algorithms to use.
+  .withAverageHashing(true)
+  .withPerceptualHashing(true)
+  .withDifferenceHashing(false)
+  .withWaveletHashing(false)
+  .withColorHashing(false)
   .build();
 ```
 
@@ -115,12 +101,12 @@ const laplacianProcessor = new LaplacianImageProcessor.Builder()
 
 ### 📄 Output
 
-The Laplacian image processor does not modify or alter source images in any way. It instead enriches the metadata of their document by setting the `variance` field to the output of the captioning result.
+The Hashing image processor does not modify or alter source images in any way. It instead enriches the metadata of processed documents by setting the hash values associated with each of the enabled hashing algorithms.
 
 <details>
   <summary>💁 Click to expand example</summary>
   
-  > ℹ️ Below is an example of a [CloudEvent](/project-lakechain/general/events) emitted by the Laplacian image processor.
+  > ℹ️ Below is an example of a [CloudEvent](/project-lakechain/general/events) emitted by the Hashing image processor.
 
   ```json
   {
@@ -146,7 +132,13 @@ The Laplacian image processor does not modify or alter source images in any way.
           "properties": {
             "kind": "image",
             "attrs": {
-              "variance": 63.463
+              "hashes": {
+                "average": "00077ffbf2fefee0",
+                "perceptual": "f53a175d6848d9c4",
+                "difference": "1c4ccea3269084c8",
+                "wavelet": "000707d1f2fefee0",
+                "color": "06e00000040"
+              }
             }
           }
         },
@@ -163,9 +155,9 @@ The Laplacian image processor does not modify or alter source images in any way.
 
 ### 🏗️ Architecture
 
-This middleware runs within a Lambda compute, and packages OpenCV to compute the Laplacian variance of images.
+This middleware runs within a Lambda compute, and packages the [`imagehash`](https://github.com/JohannesBuchner/imagehash/tree/master) to compute the Laplacian variance of images.
 
-![Architecture](../../../assets/laplacian-image-processor-architecture.png)
+![Architecture](../../../assets/hashing-image-processor-architecture.png)
 
 <br />
 
@@ -205,4 +197,4 @@ This middleware runs within a Lambda compute, and packages OpenCV to compute the
 
 ### 📖 Examples
 
-- [Laplacian Variance Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/laplacian-variance-pipeline) - An example showcasing how to compute the Laplacian variance of images.
+- [Image Hashing Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-hashing-pipeline) - An example showcasing how to compute the hash of images.

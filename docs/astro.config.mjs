@@ -111,6 +111,9 @@ export default defineConfig({
 				}, {
 					label: 'Laplacian',
 					link: '/image-processing/laplacian-image-processor'
+				}, {
+					label: 'Hashing',
+					link: '/image-processing/hashing-image-processor'
 				}]
 			}, {
 				label: 'Embeddings',
