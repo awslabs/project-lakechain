@@ -1,6 +1,6 @@
 # 💾 Bedrock + LanceDB Pipeline
 
-> In this example, we showcase how to create vector embeddings for text documents (Plain Text, PDF, Office Documents) using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within a [LanceDB](https://www.pinecone.io/) embedded database that you can query using your own applications.
+> In this example, we showcase how to create vector embeddings for text documents (Plain Text, PDF, Office Documents) using the [Amazon Bedrock](https://aws.amazon.com/bedrock/) Titan embedding model. The embeddings are stored within a [LanceDB](https://lancedb.github.io/lancedb/) embedded database that you can query using your own applications.
 
 ## :dna: Pipeline
 
