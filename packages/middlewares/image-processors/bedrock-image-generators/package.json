@@ -30,9 +30,9 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.598.0",
-    "@aws-sdk/client-s3": "^3.598.0",
-    "@aws-sdk/client-sns": "^3.598.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.606.0",
+    "@aws-sdk/client-s3": "^3.606.0",
+    "@aws-sdk/client-sns": "^3.606.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
@@ -40,16 +40,16 @@
     "rimraf": "^5.0.7"
   },
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^2.2.0",
-    "@aws-lambda-powertools/logger": "^2.2.0",
-    "@aws-lambda-powertools/metrics": "^2.2.0",
-    "@aws-lambda-powertools/parameters": "^2.2.0",
-    "@aws-lambda-powertools/tracer": "^2.2.0",
+    "@aws-lambda-powertools/batch": "^2.3.0",
+    "@aws-lambda-powertools/logger": "^2.3.0",
+    "@aws-lambda-powertools/metrics": "^2.3.0",
+    "@aws-lambda-powertools/parameters": "^2.3.0",
+    "@aws-lambda-powertools/tracer": "^2.3.0",
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.147.1",
+    "aws-cdk-lib": "^2.147.2",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

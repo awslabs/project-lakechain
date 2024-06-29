@@ -43,7 +43,7 @@
     "@project-lakechain/ecs-cluster": "^0.7.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.147.1",
+    "aws-cdk-lib": "^2.147.2",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
