@@ -36,7 +36,8 @@
     "@project-lakechain/sharp-image-transform": "*",
     "@project-lakechain/reducer": "*",
     "@project-lakechain/transform": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/condition": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.147.1",
