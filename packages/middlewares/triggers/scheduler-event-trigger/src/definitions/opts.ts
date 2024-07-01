@@ -27,7 +27,7 @@ export const SchedulerEventTriggerPropsSchema = MiddlewarePropsSchema.extend({
    * The schedule expression that triggers the pipeline.
    */
   scheduleExpression: z.custom<scheduler.ScheduleExpression>((value) => {
-    return (value instanceof scheduler.ScheduleExpression);
+    return (!!value);
   }, {
     message: 'A schedule expression is expected by the scheduler event trigger.'
   }),

@@ -36,7 +36,7 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.21.5",
+    "esbuild": "0.21.5",
     "rimraf": "^5.0.7"
   },
   "dependencies": {

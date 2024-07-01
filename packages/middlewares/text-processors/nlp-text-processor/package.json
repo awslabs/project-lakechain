@@ -38,7 +38,7 @@
     "@types/lodash": "^4.17.6",
     "@types/node": "^20.2.1",
     "@types/truncate-utf8-bytes": "^1.0.2",
-    "esbuild": "^0.21.5",
+    "esbuild": "0.21.5",
     "rimraf": "^5.0.7"
   },
   "dependencies": {

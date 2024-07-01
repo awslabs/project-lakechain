@@ -45,7 +45,7 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/lodash": "^4.17.6",
     "@types/node": "^20.8.10",
-    "esbuild": "^0.21.5",
+    "esbuild": "0.21.5",
     "rimraf": "^5.0.7"
   },
   "peerDependencies": {
