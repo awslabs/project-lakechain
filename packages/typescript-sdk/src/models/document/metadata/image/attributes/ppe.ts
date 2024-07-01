@@ -27,14 +27,14 @@ export const PersonalProtectiveEquipmentSchema = z.object({
   personsWithoutRequiredEquipment: z.number(),
   personsIndeterminate: z.number(),
   persons: z
-  .string()
-  .url()
-  .transform((url) => {
-    return (new PointerBuilder<Array<Person>>()
-      .withUri(url)
-      .withClassType(Person)
-      .build());
-  }).optional(),
+    .string()
+    .url()
+    .transform((url) => {
+      return (new PointerBuilder<Array<Person>>()
+        .withUri(url)
+        .withClassType(Person)
+        .build());
+    }).optional()
 });
 
 export type PersonalProtectiveEquipment = z.infer<

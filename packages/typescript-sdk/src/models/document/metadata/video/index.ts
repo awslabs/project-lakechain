@@ -18,6 +18,8 @@ import { z } from 'zod';
 import { DimensionsSchema } from '../attributes/dimensions.js';
 import { AudioMetadataSchema } from '../audio/index.js';
 import { VectorEmbeddingSchema } from '../attributes/vector-embedding.js';
+import { Scene } from './attributes/scene.js';
+import { PointerBuilder } from '../../../../pointer';
 
 /**
  * Represents additional metadata associated with
@@ -97,6 +99,20 @@ export const VideoMetadataSchema = z.object({
     .optional(),
 
   /**
+   * A pointer to an array of scenes detected in the video.
+   */
+  scenes: z
+    .string()
+    .url()
+    .describe('The detected scenes in the video.')
+    .transform((url) => {
+      return (new PointerBuilder<Array<Scene>>()
+        .withUri(url)
+        .withClassType(Scene)
+        .build());
+    }).optional(),
+
+  /**
    * User-defined metadata associated with the video.
    */
   custom: z
@@ -109,3 +125,4 @@ export type VideoMetadata = z.infer<typeof VideoMetadataSchema>;
 
 export * from '../attributes/dimensions.js';
 export * from '../audio/index.js';
+export * from './attributes';
