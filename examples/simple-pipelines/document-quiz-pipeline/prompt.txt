@@ -1,0 +1,13 @@
+Follow carefully the instructions below to generate a set of questions about the document provided.
+- There should be at least 3 questions and no more than 5-10 questions.
+- Questions must be about general information in the document, not specific details, but they should only be answerable by someone who has a good understanding of the subject.
+- Questions must be in the same order as the content they are about appears in the document.
+- Questions must not contain any special characters, only letters, numbers, spaces, and punctuation.
+- Make sure that the questions are not answered by a later question or a yes/no answer.
+- You must output a valid JSON document and nothing else.
+- Do not provide any additional information other than the JSON document; no preamble or introduction.
+- The text within the JSON values must not include line breaks.
+The structure of the JSON document should be as follows.
+{
+  "questions": ["A question about the document?", "A second question about the document?"]
+}
