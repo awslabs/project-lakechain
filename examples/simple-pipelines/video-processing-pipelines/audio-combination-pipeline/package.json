@@ -1,0 +1,44 @@
+{
+  "name": "audio-combination-pipeline",
+  "description": "An example showcasing how to use FFMPEG to add multiple audio tracks to a video.",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build-pkg": "npx lerna run build --scope=audio-combination-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx --yes cdk synth",
+    "deploy": "npx --yes cdk deploy",
+    "hotswap": "npx --yes cdk deploy --hotswap",
+    "destroy": "npx --yes cdk destroy --all"
+  },
+  "author": {
+    "name": "Raphael Le Goaller",
+    "email": "raphael@rlglr.fr"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "esbuild": "0.21.5",
+    "ts-jest": "^29.2.3",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/ffmpeg-processor": "*",
+    "@project-lakechain/transcribe-audio-processor": "*",
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/zip-processor": "*",
+    "@project-lakechain/reducer": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.150.0",
+    "constructs": "^10.3.0"
+  }
+}
