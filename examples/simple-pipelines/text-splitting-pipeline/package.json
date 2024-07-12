@@ -40,7 +40,7 @@
     "@project-lakechain/regexp-text-splitter": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.147.1",
+    "aws-cdk-lib": "2.148.0",
     "constructs": "^10.3.0"
   }
 }

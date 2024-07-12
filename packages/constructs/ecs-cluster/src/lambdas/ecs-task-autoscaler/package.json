@@ -26,12 +26,12 @@
     "@aws-lambda-powertools/tracer": "^2.3.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-ecs": "^3.606.0",
-    "@aws-sdk/client-sqs": "^3.606.0",
+    "@aws-sdk/client-ecs": "^3.613.0",
+    "@aws-sdk/client-sqs": "^3.613.0",
     "@types/aws-lambda": "^8.10.119",
     "aws-sdk-client-mock": "^4.0.1",
     "esbuild": "0.21.5",
     "eslint": "^8.57.0",
-    "tsx": "^4.16.0"
+    "tsx": "^4.16.2"
   }
 }

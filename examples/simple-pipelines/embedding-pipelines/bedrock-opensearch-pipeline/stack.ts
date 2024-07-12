@@ -29,6 +29,7 @@ import { TitanEmbeddingProcessor, TitanEmbeddingModel } from '@project-lakechain
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
 import { OpenSearchDomain } from '@project-lakechain/opensearch-domain';
+import { ServiceLinkedRole } from '@project-lakechain/service-linked-role';
 
 /**
  * An example stack showcasing how to use Amazon Bedrock embeddings
@@ -44,6 +45,7 @@ import { OpenSearchDomain } from '@project-lakechain/opensearch-domain';
  * └──────────────┘   └────────────────────┘   └───────────────┘   └───────────┘   └──────────────┘
  *
  */
+@ServiceLinkedRole('opensearch')
 export class BedrockEmbeddingPipeline extends cdk.Stack {
 
   /**

@@ -53,11 +53,11 @@
     "@types/semver": "^7.5.8",
     "@types/tmp": "^0.2.6",
     "jest": "^29.7.0",
-    "rimraf": "^5.0.7"
+    "rimraf": "^5.0.9"
   },
   "dependencies": {
     "@mermaid-js/mermaid-cli": "^10.9.1",
-    "aws-cdk-lib": "^2.147.2",
+    "aws-cdk-lib": "2.148.0",
     "constructs": "^10.3.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
@@ -68,7 +68,7 @@
     "zod-error": "^1.5.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.147.2",
+    "aws-cdk-lib": "2.148.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

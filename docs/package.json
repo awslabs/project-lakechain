@@ -23,11 +23,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@astrojs/starlight": "^0.23.2",
-    "astro": "^4.9.2",
+    "@astrojs/starlight": "^0.25.0",
+    "astro": "^4.11.5",
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "rimraf": "^5.0.7"
+    "rimraf": "^5.0.9"
   }
 }

@@ -1,0 +1,60 @@
+{
+  "name": "@project-lakechain/service-linked-role",
+  "description": "Creates a service linked role for a given service in an idempotent way.",
+  "version": "0.7.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check .",
+    "test": "npx jest --passWithNoTests"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.126",
+    "@types/jest": "^29.5.7",
+    "@types/node": "^20.8.10",
+    "cdk-nag": "^2.27.229",
+    "esbuild": "0.21.5",
+    "eslint": "^8.57.0",
+    "rimraf": "^5.0.9",
+    "ts-jest": "^29.2.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-iam": "^3.613.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.148.0",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "service-linked-role",
+    "iam"
+  ]
+}
