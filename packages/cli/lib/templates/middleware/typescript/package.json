@@ -15,8 +15,8 @@
     "prettier:check": "npx prettier --check ."
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.613.0",
-    "@aws-sdk/client-sns": "^3.613.0",
+    "@aws-sdk/client-s3": "^3.614.0",
+    "@aws-sdk/client-sns": "^3.614.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/lodash": "^4.17.6",
     "@types/node": "^20.8.10",
@@ -25,14 +25,14 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.148.0",
+    "aws-cdk-lib": "2.149.0",
     "constructs": "^10.3.0"
   },
   "dependencies": {
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
     "esbuild": "0.21.5",
-    "aws-cdk-lib": "2.148.0",
+    "aws-cdk-lib": "2.149.0",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

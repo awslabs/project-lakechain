@@ -38,7 +38,7 @@
     "esbuild": "0.21.5",
     "eslint": "^8.57.0",
     "rimraf": "^5.0.9",
-    "ts-jest": "^29.2.0"
+    "ts-jest": "^29.2.2"
   },
   "dependencies": {
     "@aws-sdk/credential-provider-node": "^3.451.0",
@@ -46,7 +46,7 @@
     "@project-lakechain/opensearch-collection": "^0.7.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.148.0",
+    "aws-cdk-lib": "2.149.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

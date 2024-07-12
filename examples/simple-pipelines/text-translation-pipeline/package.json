@@ -35,7 +35,7 @@
     "@project-lakechain/translate-text-processor": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.148.0",
+    "aws-cdk-lib": "2.149.0",
     "constructs": "^10.3.0"
   }
 }

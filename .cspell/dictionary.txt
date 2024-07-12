@@ -203,3 +203,5 @@ pullthroughcache
 hdfs
 ontap
 timecode
+nodegroup
+managedupdates

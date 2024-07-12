@@ -31,7 +31,7 @@
   },
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-sdk/client-sts": "3.613.0",
+    "@aws-sdk/client-sts": "3.614.0",
     "boxen": "^7.1.1",
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.4",
@@ -46,7 +46,7 @@
     "pretty-bytes": "^6.1.1",
     "prompts": "^2.4.2",
     "stdin-discarder": "^0.2.2",
-    "update-notifier": "^7.0.0",
+    "update-notifier": "^7.1.0",
     "zod": "^3.23.8",
     "zod-error": "^1.5.0"
   },
