@@ -9,7 +9,7 @@
     "clean": "npx rimraf dist/ cdk.out/ node_modules/ cli/node_modules cli/dist",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",
-    "synth": "npx cdk synth",
+    "synth": "npx --yes cdk synth",
     "deploy": "npx cdk deploy",
     "hotswap": "npx cdk deploy --hotswap",
     "destroy": "npx cdk destroy --all"
