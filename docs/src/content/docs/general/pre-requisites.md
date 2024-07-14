@@ -66,9 +66,9 @@ Client: Docker Engine - Community
 
 ### 📦 Node.js + NPM
 
-Node.js and NPM must be available to install the Lakechain project dependencies. You can use the [Node.js CLI](https://nodejs.org/api/cli.html) to verify that you have access to the Node.js runtime.
+Node.js 18+ and NPM must be available to install the Lakechain project dependencies. You can use the [Node.js CLI](https://nodejs.org/api/cli.html) to verify that you have access to the Node.js runtime.
 
-> We recommend using Node.js 18+. You can use [nvm](https://github.com/nvm-sh/nvm) to easily manage multiple versions of Node.js on your development machine.
+> We recommend using Node.js 20+. You can use [nvm](https://github.com/nvm-sh/nvm) to easily manage multiple versions of Node.js on your development machine.
 
 ```bash
 $ node --version
