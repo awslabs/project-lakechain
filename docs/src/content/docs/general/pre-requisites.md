@@ -12,7 +12,7 @@ We recommend having 50GB of free storage on your development machine to be able 
 
 > 👇 We have a ready made Dev Container for GitHub Codespaces that you can use to get started quickly.
 
-<a href="https://codespaces.new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
+<a href="https://github.com/codespaces/new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
 
 > ℹ️ **Tip** We've also created a [Cloud9 script](https://github.com/awslabs/project-lakechain/blob/master/.cloud9/resize.sh) that you can use in your Cloud9 environment to resize the EBS storage associated with the instance.
 

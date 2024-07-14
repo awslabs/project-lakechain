@@ -6,7 +6,7 @@
   <h2 align="center">Project Lakechain &nbsp;<img alt="Static Badge" src="https://img.shields.io/badge/Alpha-e28743"></h2>
   <p align="center">Cloud-native, AI-powered, document processing pipelines on AWS.</p>
   <p align="center">
-    <a href="https://codespaces.new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
+    <a href="https://github.com/codespaces/new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
   </p>
 </p>
 <br>
