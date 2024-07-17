@@ -47,7 +47,7 @@
     "@project-lakechain/core": "*",
     "@project-lakechain/layers": "*",
     "@project-lakechain/sdk": "*",
-    "vectordb": "^0.5.0"
+    "vectordb": "^0.7.1"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.149.0",
