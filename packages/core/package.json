@@ -48,7 +48,7 @@
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/lodash": "^4.17.6",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20.8.10",
     "@types/semver": "^7.5.8",
     "@types/tmp": "^0.2.6",
@@ -61,7 +61,7 @@
     "constructs": "^10.3.0",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.35",
-    "semver": "^7.6.2",
+    "semver": "^7.6.3",
     "table": "^6.8.2",
     "tmp": "^0.2.3",
     "zod": "^3.23.8",
