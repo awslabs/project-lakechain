@@ -81,6 +81,14 @@ npm run clean
 
 This will remove all build artifacts and `node_modules` directories.
 
+## Synth
+
+To synthesize all CDK example stacks, run:
+
+```bash
+npm run synth
+```
+
 ## Lint
 
 To lint all packages, run:
