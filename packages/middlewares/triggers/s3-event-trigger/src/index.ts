@@ -97,6 +97,17 @@ class S3EventTriggerBuilder extends MiddlewareBuilder {
   }
 
   /**
+   * Sets whether to fetch the metadata of the S3 objects to
+   * enrich the document metadata.
+   * @param value whether to fetch the metadata.
+   * @default false
+   */
+  public withFetchMetadata(value: boolean) {
+    this.triggerProps.fetchMetadata = value;
+    return (this);
+  }
+
+  /**
    * @returns a new instance of the `S3EventTrigger`
    * service constructed with the given parameters.
    */
@@ -157,7 +168,8 @@ export class S3EventTrigger extends Middleware {
       environment: {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
-        SNS_TARGET_TOPIC: this.eventBus.topicArn
+        SNS_TARGET_TOPIC: this.eventBus.topicArn,
+        FETCH_METADATA: this.props.fetchMetadata ? 'true' : 'false'
       },
       bundling: {
         minify: true,

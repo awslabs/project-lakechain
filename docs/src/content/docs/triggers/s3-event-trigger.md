@@ -53,7 +53,7 @@ class Stack extends cdk.Stack {
 }
 ```
 
-You can also specify multiple buckets to be monitored by the S3 trigger.
+You can also specify multiple buckets to be monitored by the S3 trigger by passing an array of S3 buckets to the `.withBuckets` method.
 
 ```typescript
 const trigger = new S3EventTrigger.Builder()
@@ -64,7 +64,7 @@ const trigger = new S3EventTrigger.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -85,11 +85,31 @@ const trigger = new S3EventTrigger.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
 ### 🗂️ Metadata
+
+The S3 event trigger middleware makes it optionally possible to fetch the [metadata](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingMetadata.html) associated with the S3 object, and enrich the created cloud event with the object metadata.
+
+> 💁 Metadata retrieval is disabled by default, and can be enabled by using the `.withFetchMetadata` API.
+
+```typescript
+const trigger = new S3EventTrigger.Builder()
+  .withScope(this)
+  .withIdentifier('Trigger')
+  .withCacheStorage(cache)
+  .withBucket(bucket)
+  .withFetchMetadata(true)
+  .build();
+```
+
+<br />
+
+---
+
+### 👨‍💻 Algorithm
 
 The S3 event trigger middleware converts S3 native events into the [CloudEvents](/project-lakechain/general/events) specification and enriches the document description with required metadata, such as the mime-type, the size, and the Etag associated with the document.
 
@@ -101,8 +121,9 @@ All those information cannot be inferred from the S3 event alone, and to efficie
 4. If the mime-type cannot be inferred from the extension, we try to infer it from the S3 reported content type.
 5. If the mime-type cannot be inferred from the S3 reported content type, we try to infer it from the first bytes of the document using a chunked request.
 6. If the mime-type cannot be inferred at all, we set the mime-type to `application/octet-stream`.
+7. If [S3 object metadata retrieval](#%EF%B8%8F-metadata) is enabled, the middleware will issue a request to S3 and enrich the Cloud Event with the object metadata.
 
-<br>
+<br />
 
 ---
 
@@ -184,7 +205,7 @@ This middleware emits [Cloud Events](/project-lakechain/general/events) whenever
 </table>
 </details>
 
-<br>
+<br />
 
 ---
 
@@ -194,13 +215,13 @@ The S3 trigger receives S3 events from subscribed buckets on its SQS input queue
 
 ![Architecture](../../../assets/s3-event-trigger-architecture.png)
 
-<br>
+<br />
 
 ---
 
 ### 🏷️ Properties
 
-<br>
+<br />
 
 ##### Supported Inputs
 
@@ -218,7 +239,7 @@ The S3 trigger receives S3 events from subscribed buckets on its SQS input queue
 | ----- | ----------- |
 | `CPU` | This middleware is based on a Lambda architecture. |
 
-<br>
+<br />
 
 ---
 

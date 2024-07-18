@@ -30,7 +30,17 @@ export const S3EventTriggerPropsSchema = MiddlewarePropsSchema.extend({
     .array(z.custom<SourceDescriptor>(
       (data) => data instanceof Object
     ))
-    .nonempty()
+    .nonempty(),
+
+  /**
+   * Whether to fetch the metadata of the S3 objects to
+   * enrich the document metadata.
+   * @default false
+   */
+  fetchMetadata: z
+    .boolean()
+    .optional()
+    .default(false)
 });
 
 // Export the `S3EventTriggerProps` type.

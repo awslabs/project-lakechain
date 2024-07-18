@@ -15,7 +15,7 @@
  */
 
 import { randomUUID } from 'crypto';
-import { getDocument } from './get-document';
+import { getDocument, getMetadata } from './get-document';
 import { ObjectNotFoundException, InvalidDocumentObjectException } from './exceptions';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
@@ -32,13 +32,19 @@ import {
 import {
   CloudEvent,
   EventType as DocumentEvent,
-  DataEnvelope
+  DataEnvelope,
+  DocumentMetadata
 } from '@project-lakechain/sdk/models';
 import {
   BatchProcessor,
   EventType,
   processPartialResponse
 } from '@aws-lambda-powertools/batch';
+
+/**
+ * Environment variables.
+ */
+const FETCH_METADATA = process.env.FETCH_METADATA === 'true';
 
 /**
  * The async batch processor processes the received
@@ -83,7 +89,7 @@ const unquote = (event: S3EventRecord): S3EventRecord => {
 class Lambda implements LambdaInterface {
 
   /**
-   * @param event the S3 event record.
+   * @param s3Event the S3 event record.
    * @note the `next` decorator will automatically forward the
    * returned cloud event to the next middlewares
    */
@@ -91,6 +97,7 @@ class Lambda implements LambdaInterface {
   async s3RecordHandler(s3Event: S3EventRecord): Promise<CloudEvent> {
     const event     = unquote(s3Event);
     const eventType = getEventType(event.eventName);
+    let metadata: DocumentMetadata = {};
 
     // Construct a document from the S3 object.
     const document = await getDocument(
@@ -98,6 +105,15 @@ class Lambda implements LambdaInterface {
       event.s3.object,
       eventType
     );
+
+    // Optionally fetch the object metadata.
+    if (FETCH_METADATA) {
+      metadata = await getMetadata(
+        event.s3.bucket,
+        event.s3.object,
+        eventType
+      );
+    }
 
     // Construct the initial event that will be consumed
     // by the next middlewares.
@@ -107,7 +123,7 @@ class Lambda implements LambdaInterface {
         .withChainId(randomUUID())
         .withSourceDocument(document)
         .withDocument(document)
-        .withMetadata({})
+        .withMetadata(metadata)
         .build())
       .build());
   }

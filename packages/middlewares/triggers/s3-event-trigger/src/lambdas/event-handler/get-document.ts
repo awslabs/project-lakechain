@@ -19,14 +19,15 @@ import mimeTypes from './mime-types.json';
 import { Readable } from 'stream';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { S3Bucket, S3Object } from './definitions/s3';
-import { Document, EventType } from '@project-lakechain/sdk/models';
+import { Document, DocumentMetadata, EventType } from '@project-lakechain/sdk/models';
 import { tracer } from '@project-lakechain/sdk/powertools';
 
 import {
   S3Client,
   GetObjectCommand,
+  HeadObjectCommand,
   NotFound,
-  NoSuchKey,
+  NoSuchKey
 } from '@aws-sdk/client-s3';
 import {
   ObjectNotFoundException,
@@ -187,6 +188,39 @@ const onDeleted = (bucket: S3Bucket, obj: S3Object): Document => {
     .withSize(obj.size)
     .withType(mimeType)
     .build());
+};
+
+/**
+ * @param bucket the bucket information.
+ * @param obj the object information.
+ * @param eventType whether the event is an object created or removed event.
+ * @returns the metadata associated with the S3 object.
+ */
+export const getMetadata = async (bucket: S3Bucket, obj: S3Object, eventType: EventType): Promise<DocumentMetadata> => {
+  const metadata: DocumentMetadata = {};
+
+  if (eventType === EventType.DOCUMENT_DELETED) {
+    // When a document is deleted, it is not possible
+    // to fetch its metadata.
+    return ({});
+  }
+
+  try {
+    // Fetch the metadata of the S3 object.
+    const res = await client.send(new HeadObjectCommand({
+      Bucket: bucket.name,
+      Key: obj.key
+    }));
+
+    // Add the metadata to the document.
+    if (res.Metadata && Object.keys(res.Metadata).length > 0) {
+      metadata.custom = res.Metadata;
+    }
+  } catch (err) {
+    return (metadata);
+  }
+
+  return (metadata);
 };
 
 /**
