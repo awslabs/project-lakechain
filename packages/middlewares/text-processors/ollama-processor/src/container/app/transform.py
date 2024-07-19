@@ -41,8 +41,8 @@ def load_document(url: str) -> bytes:
 
 def exists(model):
   """
-  Checks if an ollama model exists in the cache.
-  :param model: The name of the model to check.
+  Checks if the given ollama model exists in the cache.
+  :param model: The name of the ollama model.
   :return: True if the model exists, False otherwise.
   """
   try:
@@ -58,13 +58,11 @@ def pull(model: str):
   This function will create a distributed lock on the network
   filesystem to ensure that only one process can pull the model
   at a time.
-  :param model: The name of the model to pull.
+  :param model: The name of the ollama model to pull.
   """
   lock = FileLock(os.path.join(cache, f'{model}.lock'))
   
-  print(f'Created lock for model {model}.lock, waiting for lock ...')
   with lock.acquire(timeout=30):
-    print('Acquired lock, pulling model ...')
     previous_ms = 0
     for progress in ollama.pull(model, stream=True):
       digest = progress.get('digest', '')
@@ -92,7 +90,6 @@ def process(content: bytes, document: dict) -> dict:
   """
   if not exists(model):
     try:
-      print(f'Model {model} does not exist, pulling ...')
       pull(model)
     except Exception as e:
       raise ValueError(f"Failed to pull model {model}: {e}")
@@ -112,7 +109,7 @@ def process(content: bytes, document: dict) -> dict:
       model,
       prompt=prompt,
       images=[content],
-      context=[],
+      context=[]
     )
   
   raise ValueError(f"Unsupported document type: {document['type']}")

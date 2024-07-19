@@ -72,6 +72,16 @@ export class OllamaModel {
   });
 
   /**
+   * The `gemma2` model.
+   * @see https://ollama.com/library/gemma2
+   */
+  public static GEMMA_2 = new OllamaModel('gemma2', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `llama2` model.
    * @see https://ollama.com/library/llama2
    */
@@ -106,6 +116,16 @@ export class OllamaModel {
    * @see https://ollama.com/library/mixtral
    */
   public static MIXTRAL = new OllamaModel('mixtral', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `mathstral` model.
+   * @see https://ollama.com/library/mathstral
+   */
+  public static MATHSTRAL = new OllamaModel('mathstral', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -215,6 +235,16 @@ export class OllamaModel {
   });
 
   /**
+   * The `deepseek-coder-v2` model.
+   * @see https://ollama.com/library/deepseek-coder-v2
+   */
+  public static DEEPSEEK_CODER_V2 = new OllamaModel('deepseek-coder-v2', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `dolphin-mistral` model.
    * @see https://ollama.com/library/dolphin-mistral
    */
@@ -309,6 +339,16 @@ export class OllamaModel {
    * @see https://ollama.com/library/qwen
    */
   public static QWEN = new OllamaModel('qwen', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `qwen2` model.
+   * @see https://ollama.com/library/qwen2
+   */
+  public static QWEN_2 = new OllamaModel('qwen2', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -702,6 +742,16 @@ export class OllamaModel {
    * @see https://ollama.com/library/dbrx
    */
   public static DBRX = new OllamaModel('dbrx', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `aya` model.
+   * @see https://ollama.com/library/aya
+   */
+  public static AYA = new OllamaModel('aya', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']

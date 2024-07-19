@@ -20,27 +20,27 @@ from typing import Callable
 sqs_client = boto3.client('sqs')
 
 def sqs_consume_queue(queue_url: str, message_processor: Callable):
-    """
-    Poll messages from the input queue and execute
-    processing jobs. This function will continuously
-    poll messages as long as the queue returns messages.
-    """
+  """
+  Poll messages from the input queue and execute
+  processing jobs. This function will continuously
+  poll messages as long as the queue returns messages.
+  """
+  
+  while True:
+    # We first try to poll for new messages from the SQS queue.
+    messages = sqs_client.receive_message(
+      QueueUrl=queue_url,
+      MaxNumberOfMessages=1,
+      WaitTimeSeconds=20
+    ).get('Messages', [])
     
-    while True:
-      # We first try to poll for new messages from the SQS queue.
-      messages = sqs_client.receive_message(
-        QueueUrl=queue_url,
-        MaxNumberOfMessages=1,
-        WaitTimeSeconds=20
-      ).get('Messages', [])
-      
-      if len(messages) > 0:
-        # Processing each event sequentially.
-        for message in messages:
-          try:
-            # Distribute the messages to the workers.
-            message_processor(message)
-          except Exception as e:
-            logging.error(e)
-      else:
-        break
+    if len(messages) > 0:
+      # Processing each event sequentially.
+      for message in messages:
+        try:
+          # Distribute the messages to the workers.
+          message_processor(message)
+        except Exception as e:
+          logging.error(e)
+    else:
+      break

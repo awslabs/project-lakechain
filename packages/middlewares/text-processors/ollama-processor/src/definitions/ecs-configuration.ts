@@ -34,8 +34,8 @@ const getPlatform = (instanceType: ec2.InstanceType) => {
 };
 
 /**
- * @returns whether the given instance type is a GPU instance.
  * @param instanceType the instance type to evaluate.
+ * @returns whether the instance type is a GPU instance.
  */
 export const isGpu = (instanceType: ec2.InstanceType) => {
   const name = instanceType.toString();
@@ -47,8 +47,8 @@ export const isGpu = (instanceType: ec2.InstanceType) => {
 };
 
 /**
- * @returns the GPU configuration for the given infrastructure.
  * @param infrastructure the infrastructure to use.
+ * @returns the GPU configuration for the given infrastructure.
  */
 export const getGpuConfiguration = (infrastructure: InfrastructureDefinition) => {
   const instanceName = infrastructure.instanceType.toString();
