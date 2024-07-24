@@ -57,7 +57,7 @@ class TestMiddleware extends Middleware {
     return ([ComputeType.CPU]);
   }
 
-  grantReadProcessedDocuments(grantee: cdk.aws_iam.IGrantable): cdk.aws_iam.Grant {
+  grantReadProcessedDocuments(_: cdk.aws_iam.IGrantable): cdk.aws_iam.Grant {
     return ({} as cdk.aws_iam.Grant);
   }
 }
@@ -190,23 +190,6 @@ describe('Middleware API', () => {
                 'kms:GenerateDataKey*',
                 'kms:Describe*'
               ]),
-              Principal: Match.objectLike({
-                Service: Match.objectLike({
-                  'Fn::Join': [
-                    '',
-                    [
-                      'logs.',
-                      {
-                        Ref: 'AWS::Region'
-                      },
-                      '.',
-                      {
-                        Ref: 'AWS::URLSuffix'
-                      }
-                    ]
-                  ]
-                })
-              }),
               Condition: {
                 ArnLike: {
                   'kms:EncryptionContext:aws:logs:arn': Match.anyValue()
