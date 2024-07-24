@@ -37,10 +37,10 @@
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.8.10",
-    "cdk-nag": "^2.28.160",
+    "cdk-nag": "^2.28.163",
     "esbuild": "0.21.5",
     "rimraf": "^5.0.9",
-    "ts-jest": "^29.2.2"
+    "ts-jest": "^29.2.3"
   },
   "dependencies": {
     "@aws-lambda-powertools/batch": "^2.5.0",
@@ -51,7 +51,7 @@
     "@project-lakechain/sdk": "^0.7.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.149.0",
+    "aws-cdk-lib": "2.150.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

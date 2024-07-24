@@ -122,6 +122,66 @@ export class OllamaModel {
   });
 
   /**
+   * The `mistral-openorca` model.
+   * @see https://ollama.com/library/mistral-openorca
+   */
+  public static MISTRAL_OPENORCA = new OllamaModel('mistral-openorca', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `dolphin-mistral` model.
+   * @see https://ollama.com/library/dolphin-mistral
+   */
+  public static DOLPHIN_MISTRAL = new OllamaModel('dolphin-mistral', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `yarn-mistral` model.
+   * @see https://ollama.com/library/yarn-mistral
+   */
+  public static YARN_MISTRAL = new OllamaModel('yarn-mistral', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `samantha-mistral` model.
+   * @see https://ollama.com/library/samantha-mistral
+   */
+  public static SAMANTHA_MISTRAL = new OllamaModel('samantha-mistral', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `mistrallite` model.
+   * @see https://ollama.com/library/mistrallite
+   */
+  public static MISTRAL_LITE = new OllamaModel('mistrallite', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `mistral-nemo` model.
+   * @see https://ollama.com/library/mistral-nemo
+   */
+  public static MISTRAL_NEMO = new OllamaModel('mistral-nemo', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `mathstral` model.
    * @see https://ollama.com/library/mathstral
    */
@@ -169,16 +229,6 @@ export class OllamaModel {
    * @see https://ollama.com/library/dolphin-mixtral
    */
   public static DOLPHIN_MIXTRAL = new OllamaModel('dolphin-mixtral', {
-    tag: 'latest',
-    inputs: BASE_TEXT_INPUTS,
-    outputs: ['text/plain']
-  });
-
-  /**
-   * The `mistral-openorca` model.
-   * @see https://ollama.com/library/mistral-openorca
-   */
-  public static MISTRAL_OPENORCA = new OllamaModel('mistral-openorca', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -239,16 +289,6 @@ export class OllamaModel {
    * @see https://ollama.com/library/deepseek-coder-v2
    */
   public static DEEPSEEK_CODER_V2 = new OllamaModel('deepseek-coder-v2', {
-    tag: 'latest',
-    inputs: BASE_TEXT_INPUTS,
-    outputs: ['text/plain']
-  });
-
-  /**
-   * The `dolphin-mistral` model.
-   * @see https://ollama.com/library/dolphin-mistral
-   */
-  public static DOLPHIN_MISTRAL = new OllamaModel('dolphin-mistral', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']
@@ -548,26 +588,6 @@ export class OllamaModel {
   });
 
   /**
-   * The `yarn-mistral` model.
-   * @see https://ollama.com/library/yarn-mistral
-   */
-  public static YARN_MISTRAL = new OllamaModel('yarn-mistral', {
-    tag: 'latest',
-    inputs: BASE_TEXT_INPUTS,
-    outputs: ['text/plain']
-  });
-
-  /**
-   * The `samantha-mistral` model.
-   * @see https://ollama.com/library/samantha-mistral
-   */
-  public static SAMANTHA_MISTRAL = new OllamaModel('samantha-mistral', {
-    tag: 'latest',
-    inputs: BASE_TEXT_INPUTS,
-    outputs: ['text/plain']
-  });
-
-  /**
    * The `meditron` model.
    * @see https://ollama.com/library/meditron
    */
@@ -622,16 +642,6 @@ export class OllamaModel {
    * @see https://ollama.com/library/nexusraven
    */
   public static NEXUS_RAVEN = new OllamaModel('nexusraven', {
-    tag: 'latest',
-    inputs: BASE_TEXT_INPUTS,
-    outputs: ['text/plain']
-  });
-
-  /**
-   * The `mistrallite` model.
-   * @see https://ollama.com/library/mistrallite
-   */
-  public static MISTRAL_LITE = new OllamaModel('mistrallite', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']

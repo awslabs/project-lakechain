@@ -121,7 +121,7 @@ export class BedrockSummarizationStack extends cdk.Stack {
       .withRegion('us-east-1')
       .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_HAIKU)
       .withPrompt(`
-        Give a detailed summary of the text with the following constraints:
+        Provide a detailed summary of the given text with the following constraints:
         - Write a very detailed summary in the same language as the original text.
         - Keep the original meaning, style, and tone of the text in the summary.
         - Do not say "Here is a summary", just write the summary as is.

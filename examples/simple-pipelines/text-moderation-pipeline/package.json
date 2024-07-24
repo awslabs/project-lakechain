@@ -24,7 +24,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^20.14.11",
+    "@types/node": "^20.14.12",
     "esbuild": "0.21.5",
     "rimraf": "^5.0.9",
     "ts-node": "^10.9.2"
@@ -37,7 +37,7 @@
     "@project-lakechain/nlp-text-processor": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.149.0",
+    "aws-cdk-lib": "2.150.0",
     "constructs": "^10.3.0"
   }
 }

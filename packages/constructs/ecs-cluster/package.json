@@ -43,16 +43,16 @@
     "@aws-sdk/client-sqs": "^3.614.0",
     "@types/aws-lambda": "^8.10.141",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.11",
-    "cdk-nag": "^2.28.160",
+    "@types/node": "^20.14.12",
+    "cdk-nag": "^2.28.163",
     "esbuild": "0.21.5",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "rimraf": "^5.0.9",
-    "ts-jest": "^29.2.2"
+    "ts-jest": "^29.2.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.149.0",
+    "aws-cdk-lib": "2.150.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

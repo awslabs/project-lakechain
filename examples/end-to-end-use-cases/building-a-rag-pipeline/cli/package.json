@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/node": "^20.14.11",
+    "@types/node": "^20.14.12",
     "@types/prompts": "^2.4.9",
     "rimraf": "^5.0.9",
     "typescript": "^5.5.3"
