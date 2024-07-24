@@ -36,6 +36,18 @@ const getImage = (picture: any) => {
 };
 
 /**
+ * A small helper allowing 
+ * @param num the number to convert into a decimal
+ * fixed digits number.
+ * @param digits the number of decimal digits to keep.
+ * @param base the base associated with the number.
+ */
+const toFixed = (num: number, digits = 0, base = 10) => {
+  const pow = Math.pow(base, digits);
+  return (Math.round(num * pow) / pow);
+};
+
+/**
  * @param audio the buffer containing the audio
  * to extract metadata from.
  * @returns a new document instance with the
@@ -68,7 +80,7 @@ export const getMetadata = async (audio: Buffer): Promise<DocumentMetadata> => {
 
     // Bitrate.
     if (data.format.bitrate) {
-      metadata.properties.attrs.bitrate = data.format.bitrate;
+      metadata.properties.attrs.bitrate = toFixed(data.format.bitrate);
     }
 
     // Sample rate.
@@ -83,7 +95,7 @@ export const getMetadata = async (audio: Buffer): Promise<DocumentMetadata> => {
 
     // Duration.
     if (data.format.duration) {
-      metadata.properties.attrs.duration = data.format.duration;
+      metadata.properties.attrs.duration = toFixed(data.format.duration, 2);
     }
 
     // Creation and modification time.

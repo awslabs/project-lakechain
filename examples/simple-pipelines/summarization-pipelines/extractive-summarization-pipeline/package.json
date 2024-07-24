@@ -11,8 +11,8 @@
     "lint": "npx eslint .",
     "synth": "npx --yes cdk synth",
     "deploy": "npx --yes cdk deploy",
-    "hotswap": "npx cdk deploy --hotswap",
-    "destroy": "npx cdk destroy --all"
+    "hotswap": "npx --yes cdk deploy --hotswap",
+    "destroy": "npx --yes cdk destroy --all"
   },
   "author": {
     "name": "Amazon Web Services",
