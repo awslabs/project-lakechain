@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.10
+FROM public.ecr.aws/lambda/python:3.9
 
 # Add requirements to the layer.
 COPY requirements.txt ${LAMBDA_TASK_ROOT}

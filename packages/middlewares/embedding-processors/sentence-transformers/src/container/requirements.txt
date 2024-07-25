@@ -3,4 +3,4 @@ aws_lambda_powertools==2.31.0
 aws-xray-sdk==2.12.1
 sentence-transformers==2.2.2
 --extra-index-url https://download.pytorch.org/whl/cu117
-torch==1.13.1
+torch==2.4.0

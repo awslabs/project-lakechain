@@ -1,4 +1,4 @@
-FROM huggingface/transformers-pytorch-gpu:4.35.2
+FROM huggingface/transformers-pytorch-gpu:4.41.3
 
 # Create a new user for running the application.
 ARG UID=1000
