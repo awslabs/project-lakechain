@@ -107,6 +107,30 @@ export class MistralTextModel {
   });
 
   /**
+   * The Bedrock `mistral.mistral-large-2407-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static MISTRAL_LARGE_2 = new MistralTextModel({
+    name: 'mistral.mistral-large-2407-v1:0',
+    inputs: [
+      ...BASE_TEXT_INPUTS
+    ],
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The Bedrock `mistral.mistral-small-2402-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static MISTRAL_SMALL = new MistralTextModel({
+    name: 'mistral.mistral-small-2402-v1:0',
+    inputs: [
+      ...BASE_TEXT_INPUTS
+    ],
+    outputs: ['text/plain']
+  });
+
+  /**
    * Create a new instance of the `MistralTextModel`
    * by name.
    * @param props the properties of the model.

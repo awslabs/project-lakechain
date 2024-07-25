@@ -41,7 +41,7 @@
   "devDependencies": {
     "@aws-sdk/client-ecs": "^3.614.0",
     "@aws-sdk/client-sqs": "^3.614.0",
-    "@types/aws-lambda": "^8.10.141",
+    "@types/aws-lambda": "^8.10.142",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.12",
     "cdk-nag": "^2.28.163",

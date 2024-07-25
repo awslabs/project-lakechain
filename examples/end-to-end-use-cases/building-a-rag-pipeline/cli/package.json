@@ -24,7 +24,7 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.598.0",
     "@aws-sdk/credential-provider-node": "^3.598.0",
-    "@opensearch-project/opensearch": "^2.10.0",
+    "@opensearch-project/opensearch": "^2.11.0",
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "ora": "^8.0.1",

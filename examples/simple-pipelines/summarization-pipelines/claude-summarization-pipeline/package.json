@@ -1,11 +1,11 @@
 {
-  "name": "bedrock-summarization-pipeline",
-  "description": "Builds a pipeline for text summarization using Amazon Bedrock.",
+  "name": "claude-summarization-pipeline",
+  "description": "Builds a pipeline for text summarization using Claude models on Amazon Bedrock.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
-    "build-pkg": "npx lerna run build --scope=bedrock-summarization-pipeline --include-dependencies",
+    "build-pkg": "npx lerna run build --scope=claude-summarization-pipeline --include-dependencies",
     "clean": "npx rimraf dist/ cdk.out/ node_modules/",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",

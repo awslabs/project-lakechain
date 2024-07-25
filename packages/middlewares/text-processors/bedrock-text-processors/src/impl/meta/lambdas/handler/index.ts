@@ -66,6 +66,8 @@ class Lambda implements LambdaInterface {
    */
   private async getPromptv3(event: CloudEvent) {
     let text = '<|begin_of_text|>';
+
+    // Load the document and prompt.
     const document = event.data().document();
     const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
     const content = (await document.data().asBuffer()).toString('utf-8');
@@ -76,7 +78,7 @@ class Lambda implements LambdaInterface {
     }
     
     // Add the user prompt and content.
-    text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n${content}<|eot_id|>`;
+    text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n\`\`\`\n${content}\n\`\`\`<|eot_id|>`;
     
     // Add the assistant.
     text += `<|start_header_id|>assistant<|end_header_id|>`;

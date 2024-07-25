@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@aws-sdk/credential-provider-node": "^3.451.0",
-    "@opensearch-project/opensearch": "^2.10.0"
+    "@opensearch-project/opensearch": "^2.11.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.150.0",

@@ -48,6 +48,7 @@ export class LlamaModel {
   /**
    * The Bedrock `meta.llama2-13b-chat-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   * @deprecated use `LLAMA3_8B_INSTRUCT_V1` instead.
    */
   public static LLAMA2_13B_CHAT_V1 = new LlamaModel({
     name: 'meta.llama2-13b-chat-v1',
@@ -57,6 +58,7 @@ export class LlamaModel {
   /**
    * The Bedrock `meta.llama2-70b-chat-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   * @deprecated use `LLAMA3_70B_INSTRUCT_V1` instead.
    */
   public static LLAMA2_70B_CHAT_V1 = new LlamaModel({
     name: 'meta.llama2-70b-chat-v1',
@@ -69,7 +71,7 @@ export class LlamaModel {
    */
   public static LLAMA3_8B_INSTRUCT_V1 = new LlamaModel({
     name: 'meta.llama3-8b-instruct-v1:0',
-    maxTokens: 8192
+    maxTokens: 2048
   });
 
   /**
@@ -78,7 +80,34 @@ export class LlamaModel {
    */
   public static LLAMA3_70B_INSTRUCT_V1 = new LlamaModel({
     name: 'meta.llama3-70b-instruct-v1:0',
-    maxTokens: 8192
+    maxTokens: 2048
+  });
+
+  /**
+   * The Bedrock `meta.llama3-1-8b-instruct-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static LLAMA3_1_8B_INSTRUCT_V1 = new LlamaModel({
+    name: 'meta.llama3-1-8b-instruct-v1:0',
+    maxTokens: 2048
+  });
+
+  /**
+   * The Bedrock `meta.llama3-1-70b-instruct-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static LLAMA3_1_70B_INSTRUCT_V1 = new LlamaModel({
+    name: 'meta.llama3-1-70b-instruct-v1:0',
+    maxTokens: 2048
+  });
+
+  /**
+   * The Bedrock `meta.llama3-1-405b-instruct-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static LLAMA3_1_405B_INSTRUCT_V1 = new LlamaModel({
+    name: 'meta.llama3-1-405b-instruct-v1:0',
+    maxTokens: 2048
   });
 
   /**
