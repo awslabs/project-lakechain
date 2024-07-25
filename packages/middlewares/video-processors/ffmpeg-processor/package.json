@@ -45,7 +45,7 @@
     "@types/fluent-ffmpeg": "2.1.24",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.8.10",
-    "rimraf": "^5.0.9",
+    "rimraf": "^6.0.1",
     "shx": "^0.3.4"
   },
   "peerDependencies": {

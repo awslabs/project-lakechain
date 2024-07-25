@@ -28,6 +28,6 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "rimraf": "^5.0.9"
+    "rimraf": "^6.0.1"
   }
 }
