@@ -1,11 +1,11 @@
 {
-  "name": "amazon-titan-inpainting-pipeline",
-  "description": "An example showcasing how to perform image inpainting using Amazon Titan.",
+  "name": "image-generation-pipeline",
+  "description": "An example showcasing how to generate image using SDXL and Titan models on Amazon Bedrock.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "build-pkg": "npx lerna run build --scope=amazon-titan-inpainting-pipeline --include-dependencies",
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=image-generation-pipeline --include-dependencies",
     "clean": "npx rimraf dist/ cdk.out/ node_modules/",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",
@@ -26,16 +26,17 @@
   "devDependencies": {
     "@types/node": "^20.8.10",
     "esbuild": "0.21.5",
-    "ts-jest": "^29.2.3",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
     "@project-lakechain/bedrock-image-generators": "*",
-    "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
-    "@project-lakechain/sharp-image-transform": "*"
+    "@project-lakechain/scheduler-event-trigger": "*"
   },
   "peerDependencies": {
+    "@aws-cdk/aws-scheduler-alpha": "^2.150.0-alpha.0",
+    "@aws-cdk/aws-scheduler-targets-alpha": "^2.150.0-alpha.0",
     "aws-cdk-lib": "2.150.0",
     "constructs": "^10.3.0"
   }
