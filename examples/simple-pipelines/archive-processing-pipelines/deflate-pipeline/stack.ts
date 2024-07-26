@@ -119,7 +119,6 @@ export class DeflatePipelineStack extends cdk.Stack {
         .build())
       .build();
 
-
     // ZIP documents.
     const zip = new ZipDeflateProcessor.Builder()
       .withScope(this)
