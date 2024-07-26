@@ -113,4 +113,4 @@ This middleware is based on a Lambda compute running the JMESPath Node.js librar
 
 ### 📖 Examples
 
-- [JMESPath Parsing Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/jmespath-parsing-pipeline/) - An example showcasing how parse JSON documents at scale.
+- [JMESPath Parsing Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/jmespath-parsing-pipeline/) - An example showcasing how parse JSON documents at scale.

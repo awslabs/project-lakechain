@@ -284,5 +284,5 @@ The NLP text processor uses AWS Lambda as its compute, using an ARM64 architectu
 
 ### 📖 Examples
 
-- [NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/nlp-pipeline) - Builds a pipeline for extracting metadata from text-oriented documents.
-- [PII Redaction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/pii-redaction-pipeline) - A PII redaction pipeline using Project Lakechain.
+- [NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/nlp-pipeline) - Builds a pipeline for extracting metadata from text-oriented documents.
+- [PII Redaction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/pii-redaction-pipeline) - A PII redaction pipeline using Project Lakechain.

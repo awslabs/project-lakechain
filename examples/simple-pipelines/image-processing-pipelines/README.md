@@ -1,6 +1,6 @@
 # 🖼️ Image Processing Pipelines
 
-In this directory we provide several examples that showcase how to process and transform images using different middlewares on AWS using Project Lakechain.
+In this directory we provide several examples that showcase how to process and transform images using different middlewares on AWS with Project Lakechain.
 
 ## 🌟 Examples
 

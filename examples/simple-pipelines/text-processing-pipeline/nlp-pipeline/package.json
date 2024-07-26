@@ -1,6 +1,6 @@
 {
   "name": "nlp-pipeline",
-  "description": "Builds a pipeline for extracting metadata from text-oriented documents.",
+  "description": "Builds a pipeline for analyzing the natural language in text-oriented documents.",
   "version": "0.7.0",
   "private": true,
   "scripts": {

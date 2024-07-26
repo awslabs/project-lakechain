@@ -228,4 +228,4 @@ This middleware is based on a Lambda compute running the `pdfminer.six` library 
 ### 📖 Examples
 
 - [Building a RAG Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-rag-pipeline/) - End-to-end RAG pipeline using Amazon Bedrock and Amazon OpenSearch.
-- [PDF Vision Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/pdf-vision-pipeline) - A pipeline transcribing PDF documents to text using a vision model.
+- [PDF Vision Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/pdf-vision-pipeline) - A pipeline transcribing PDF documents to text using a vision model.
