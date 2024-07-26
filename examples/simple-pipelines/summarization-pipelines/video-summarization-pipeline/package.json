@@ -1,6 +1,6 @@
 {
   "name": "video-summarization-pipeline",
-  "description": "Builds a pipeline for video summarization.",
+  "description": "Builds a pipeline for video summarization using Amazon Transcribe and Amazon Bedrock.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
