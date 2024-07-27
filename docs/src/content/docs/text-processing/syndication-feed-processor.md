@@ -172,4 +172,4 @@ This middleware is based on a Lambda compute using the [`feedparser`](https://py
 
 ### 📖 Examples
 
-- [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/article-curation-pipeline/) - Builds a pipeline converting HTML articles into plain text.
+- [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/article-curation-pipeline/) - Builds a pipeline converting HTML articles into plain text.

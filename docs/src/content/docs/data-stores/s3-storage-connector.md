@@ -134,5 +134,5 @@ Thi middleware is based on a Lambda ARM64 compute to perform the copying of docu
 
 ### 📖 Examples
 
-- [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/article-curation-pipeline) - Builds a pipeline converting HTML articles into plain text.
+- [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/article-curation-pipeline) - Builds a pipeline converting HTML articles into plain text.
 - [Face Detection Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/face-detection-pipeline) - An example showcasing how to build face detection pipelines using Project Lakechain.

@@ -135,4 +135,4 @@ This middleware is based on a Lambda compute running the logic associated with t
 
 ### 📖 Examples
 
-- [PII Redaction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/pii-redaction-pipeline/) - A PII redaction pipeline using Project Lakechain.
+- [PII Redaction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/pii-redaction-pipeline/) - A PII redaction pipeline using Project Lakechain.

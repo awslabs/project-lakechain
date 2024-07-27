@@ -83,11 +83,3 @@ This middleware is based on a Lambda compute running the Trafilatura library pac
 | Type  | Description |
 | ----- | ----------- |
 | `CPU` | This middleware only supports CPU compute. |
-
-<br>
-
----
-
-### 📖 Examples
-
-- [Article Curation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/article-curation-pipeline/) - Builds a pipeline converting HTML articles into plain text.

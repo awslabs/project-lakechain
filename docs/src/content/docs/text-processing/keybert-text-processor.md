@@ -187,4 +187,4 @@ The KeyBERT middleware runs within a Lambda compute running the KeyBERT library 
 
 ### 📖 Examples
 
-- [Topic Modeling Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/topic-modeling-pipeline/) - An example showcasing how to extract relevant topics from text documents.
+- [Topic Modeling Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/topic-modeling-pipeline/) - An example showcasing how to extract relevant topics from text documents.
