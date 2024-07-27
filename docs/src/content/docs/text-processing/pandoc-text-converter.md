@@ -166,4 +166,4 @@ This middleware is based on a Python Lambda compute running the Pandoc project u
 ### 📖 Examples
 
 - [Building a RAG Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-rag-pipeline/) - End-to-end RAG pipeline using Amazon Bedrock and Amazon OpenSearch.
-- [Pipeline Encryption](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/pipeline-encryption/) - An example showcasing how to encrypt end-to-end a pipeline using a CMK.
+- [Pipeline Encryption](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/security-hardened-pipelines/pipeline-encryption/) - An example showcasing how to encrypt end-to-end a pipeline using a CMK.

@@ -1,4 +1,4 @@
-# 🔐 Data Extraction Pipelines
+# 🔍 Data Extraction Pipelines
 
 In this directory we provide several examples that showcase how to extract structured information from documents using different middlewares on AWS with Project Lakechain.
 
