@@ -1,6 +1,6 @@
 {
   "name": "graph-rendering-pipeline",
-  "description": "An example showcasing how to render a DAG using Mermaid.",
+  "description": "An example showcasing how to render a DAG of a Lakechain pipeline using Mermaid.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
