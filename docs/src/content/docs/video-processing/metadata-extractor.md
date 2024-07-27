@@ -153,4 +153,4 @@ This middleware runs within a Lambda compute based on the ARM64 architecture, an
 
 ### 📖 Examples
 
-- [Metadata Extraction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/metadata-extraction-pipeline) - Builds a simple metadata extraction pipeline.
+- [Metadata Extraction Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/data-extraction-pipelines/metadata-extraction-pipeline) - Builds a simple metadata extraction pipeline.

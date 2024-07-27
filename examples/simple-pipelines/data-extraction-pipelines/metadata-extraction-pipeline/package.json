@@ -1,6 +1,6 @@
 {
   "name": "metadata-extraction",
-  "description": "Builds a simple metadata extraction pipeline.",
+  "description": "Builds a pipeline extracting metadata from document files.",
   "version": "0.7.0",
   "private": true,
   "scripts": {

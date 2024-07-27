@@ -15,4 +15,3 @@ Pipeline | Description
 [PII Redaction Pipeline](pii-redaction-pipeline) | A PII redaction pipeline using Project Lakechain.
 [Text Moderation Pipeline](text-moderation-pipeline) | An example showcasing how to moderate text documents using Amazon Comprehend.
 [Text Splitting Pipeline](text-splitting-pipeline) | A pipeline for splitting text documents using different text splitting algorithms.
-[Topic Modeling Pipeline](topic-modeling-pipeline) | An example showcasing how to extract relevant topics from text documents.
