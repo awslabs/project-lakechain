@@ -10,7 +10,7 @@ To help you kickstart your journey with Project Lakechain, we are going to walk 
 
 ### 📔 Overview
 
-For this first deployment, we are going to deploy a face detection pipeline [we've created](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/face-detection-pipeline). The pipeline is triggered by images uploaded in a source S3 bucket. It uses AWS Rekognition to detect faces in the uploaded image, and creates a new image with the faces blurred and face landmarks drawn on top of them. Transformed images are then automatically stored in a destination S3 bucket.
+For this first deployment, we are going to deploy a face detection pipeline [we've created](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-processing-pipelines/face-detection-pipeline). The pipeline is triggered by images uploaded in a source S3 bucket. It uses AWS Rekognition to detect faces in the uploaded image, and creates a new image with the faces blurred and face landmarks drawn on top of them. Transformed images are then automatically stored in a destination S3 bucket.
 
 <br>
 
@@ -58,10 +58,10 @@ git clone https://github.com/awslabs/project-lakechain \
 
 <br>
 
-Next, head to the `examples/simple-pipelines/face-detection-pipeline` directory in the repository, and build the example and the middlewares it relies on :
+Next, head to the `examples/simple-pipelines/image-processing-pipelines/face-detection-pipeline` directory in the repository, and build the example and the middlewares it relies on :
 
 ```bash
-cd examples/simple-pipelines/face-detection-pipeline \
+cd examples/simple-pipelines/image-processing-pipelines/face-detection-pipeline \
   && npm run build-pkg
 ```
 
