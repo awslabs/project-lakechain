@@ -209,4 +209,4 @@ This middleware runs within a Lambda compute, and packages different libraries a
 
 ### 📖 Examples
 
-- [Face Detection Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/face-detection-pipeline) - An example showcasing how to build face detection pipelines using Project Lakechain.
+- [Face Detection Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-processing-pipelines/face-detection-pipeline) - An example showcasing how to build face detection pipelines using Project Lakechain.
