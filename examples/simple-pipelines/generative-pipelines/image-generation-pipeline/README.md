@@ -39,7 +39,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/simple-pipelines/generative-pipelines/text-generation-pipeline`](/examples/simple-pipelines/generative-pipelines/text-generation-pipeline) in the repository and run the following commands to build the example:
+Head to the directory [`examples/simple-pipelines/generative-pipelines/image-generation-pipeline`](/examples/simple-pipelines/generative-pipelines/image-generation-pipeline) in the repository and run the following commands to build the example:
 
 ```bash
 npm install
