@@ -23,7 +23,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 - You need access to a development AWS account.
 - [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) is required to deploy the infrastructure.
 - [Docker](https://docs.docker.com/get-docker/) is required to be running to build middlewares.
-- [Node.js](https://nodejs.org/en/download/) v18+ and NPM.
+- [Node.js](https://nodejs.org/en/download/) v20+ and NPM.
 - [Python](https://www.python.org/downloads/) v3.8+ and [Pip](https://pip.pypa.io/en/stable/installation/).
 
 ## 🚀 Deploy

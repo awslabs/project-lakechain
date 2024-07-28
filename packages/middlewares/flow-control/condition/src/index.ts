@@ -80,9 +80,9 @@ class ConditionBuilder extends MiddlewareBuilder {
   private providerProps: Partial<ConditionProps> = {};
 
   /**
-   * The time or Condition duration at which the pipeline
-   * should resume.
-   * @param time the time or Condition duration.
+   * Sets the conditional expression to evaluate.
+   * @param conditional a conditional expression or a reference
+   * to a lambda function.
    * @returns the builder instance.
    */
   public withConditional(conditional: ConditionalExpression | lambda.IFunction) {

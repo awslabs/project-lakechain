@@ -25,6 +25,7 @@ import { ReducerStrategy } from './definitions/strategies/strategy';
 import { when } from '@project-lakechain/core/dsl';
 import { TimeWindowStrategyConstruct } from './impl/time-window-strategy';
 import { StaticCounterStrategyConstruct } from './impl/static-counter-strategy';
+import { ConditionalStrategyConstruct } from './impl/conditional-strategy';
 
 import {
   ReducerProps,
@@ -128,6 +129,8 @@ export class Reducer extends Middleware {
       new TimeWindowStrategyConstruct(this, 'TimeWindowStrategy', this, props);
     } else if (props.strategy.name() === 'STATIC_COUNTER') {
       new StaticCounterStrategyConstruct(this, 'StaticCounterStrategy', this, props);
+    } else if (props.strategy.name() === 'CONDITIONAL') {
+      new ConditionalStrategyConstruct(this, 'ConditionalStrategy', this, props);
     } else {
       throw new Error(`Unsupported reducer strategy: ${props.strategy.name()}`);
     }
@@ -197,3 +200,4 @@ export class Reducer extends Middleware {
 }
 
 export * from './definitions/strategies';
+export { CloudEvent } from '@project-lakechain/sdk';

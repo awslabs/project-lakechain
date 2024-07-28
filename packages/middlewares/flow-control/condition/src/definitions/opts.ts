@@ -16,16 +16,13 @@ export type ConditionalExpression = (event: Readonly<CloudEvent>) => Promise<boo
 export const ConditionPropsSchema = MiddlewarePropsSchema.extend({
 
   /**
-   * The duration for the Condition.
-   * This can be either a `cdk.Duration` to determine a relative Condition,
-   * or a `Date` object to determine an absolute time at which the
-   * next middlewares in the pipeline will be called.
-   * @default true
+   * A conditional expression, or a lambda function which will
+   * evaluate a conditional expression.
    */
   conditional: z
     .union([
       z.custom<lambda.IFunction>(),
-      z.custom<ConditionalExpression>(),
+      z.custom<ConditionalExpression>()
     ])
 });
 

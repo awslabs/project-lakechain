@@ -54,6 +54,11 @@ export class StaticCounterStrategyConstruct extends Construct {
   public deduplicationFn: lambda.IFunction;
 
   /**
+   * The counter function.
+   */
+  public counterFn: lambda.IFunction;
+
+  /**
    * The reducer function.
    */
   public reducerFn: lambda.IFunction;
@@ -78,6 +83,7 @@ export class StaticCounterStrategyConstruct extends Construct {
     const queue = reducer.getQueue();
     const eventBus = reducer.getEventBus();
     const logGroup = reducer.getLogGroup();
+    const eventCount = props.strategy.compile().eventCount;
 
     ///////////////////////////////////////////
     ///////       Event Storage         ///////
@@ -201,6 +207,59 @@ export class StaticCounterStrategyConstruct extends Construct {
     this.table.grantWriteData(this.insertionProcessor);
 
     ///////////////////////////////////////////
+    ///////      Counter Function        //////
+    ///////////////////////////////////////////
+
+    this.counterFn = new node.NodejsFunction(this, 'Counter', {
+      description: 'A function counting the number of events for a chain identifier.',
+      entry: path.resolve(__dirname, 'lambdas', 'counter', 'index.js'),
+      vpc: props.vpc,
+      timeout: cdk.Duration.seconds(10),
+      runtime: EXECUTION_RUNTIME,
+      architecture: lambda.Architecture.ARM_64,
+      tracing: lambda.Tracing.ACTIVE,
+      environmentEncryption: props.kmsKey,
+      logGroup,
+      insightsVersion: props.cloudWatchInsights ?
+        LAMBDA_INSIGHTS_VERSION :
+        undefined,
+      environment: {
+        POWERTOOLS_SERVICE_NAME: reducer.name(),
+        POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
+        TABLE_NAME: this.table.tableName
+      },
+      bundling: {
+        minify: true,
+        externalModules: [
+          '@aws-sdk/client-dynamodb'
+        ]
+      }
+    });
+
+    // Function permissions.
+    this.table.grantWriteData(this.counterFn);
+
+    // Plug the DynamoDB stream into the lambda function.
+    this.counterFn.addEventSource(new sources.DynamoEventSource(this.table, {
+      startingPosition: lambda.StartingPosition.LATEST,
+      batchSize: 1,
+      parallelizationFactor: 10,
+      retryAttempts: props.maxRetry,
+      filters: [
+        lambda.FilterCriteria.filter({
+          eventName: lambda.FilterRule.isEqual('INSERT'),
+          dynamodb: {
+            Keys: {
+              sk: {
+                S: lambda.FilterRule.beginsWith('EVENT##')
+              }
+            }
+          }
+        })
+      ]
+    }));
+
+    ///////////////////////////////////////////
     ///////      Reducer Function        //////
     ///////////////////////////////////////////
 
@@ -222,14 +281,14 @@ export class StaticCounterStrategyConstruct extends Construct {
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: eventBus.topicArn,
         PROCESSED_FILES_BUCKET: reducer.storage.id(),
-        TABLE_NAME: this.table.tableName,
-        COUNTER_THRESHOLD: `${props.strategy.compile().eventCount}`
+        TABLE_NAME: this.table.tableName
       },
       bundling: {
         minify: true,
         externalModules: [
           '@aws-sdk/client-dynamodb',
-          '@aws-sdk/client-s3'
+          '@aws-sdk/client-s3',
+          '@aws-sdk/client-sns'
         ]
       }
     });
@@ -239,16 +298,28 @@ export class StaticCounterStrategyConstruct extends Construct {
     reducer.storage.grantWrite(this.reducerFn);
     eventBus.grantPublish(this.reducerFn);
 
-    // Plug the DynamoDB stream into the lambda function.
+    // Plug the DynamoDB stream into the lambda function with a filter
+    // that evaluates the counter value to trigger the reduction.
     this.reducerFn.addEventSource(new sources.DynamoEventSource(this.table, {
       startingPosition: lambda.StartingPosition.LATEST,
-      batchSize: 50,
+      batchSize: 1,
       parallelizationFactor: 1,
-      maxBatchingWindow: cdk.Duration.seconds(30),
       retryAttempts: props.maxRetry,
       filters: [
         lambda.FilterCriteria.filter({
-          eventName: lambda.FilterRule.isEqual('INSERT')
+          eventName: lambda.FilterRule.notEquals('REMOVE'),
+          dynamodb: {
+            Keys: {
+              sk: {
+                S: lambda.FilterRule.isEqual('COUNTER')
+              }
+            },
+            NewImage: {
+              count: {
+                N: lambda.FilterRule.isEqual(eventCount)
+              }
+            }
+          }
         })
       ]
     }));

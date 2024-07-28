@@ -59,12 +59,12 @@ const processor = new BatchProcessor(EventType.SQS);
 class Lambda implements LambdaInterface {
 
   /**
-   * @param chunk the chunk of text to return
-   * metadata for.
+   * @param chunk the chunk of text to return metadata for.
    * @param order the order of the chunk.
+   * @param total the total number of chunks in the document.
    * @returns the metadata for the chunk.
    */
-  getMetadata(chunk: string, order: number): DocumentMetadata {
+  getMetadata(chunk: string, order: number, total: number): DocumentMetadata {
     return ({
       properties: {
         kind: 'text',
@@ -74,7 +74,8 @@ class Lambda implements LambdaInterface {
               .createHash('sha256')
               .update(chunk)
               .digest('hex'),
-            order
+            order,
+            total
           }
         }
       }
@@ -82,22 +83,21 @@ class Lambda implements LambdaInterface {
   }
 
   /**
-   * Called back for each chunk of text. This method
-   * publishes the chunk as a separate document to the
-   * next middlewares, while preserving the original
-   * chain execution identifier.
+   * Called back for each chunk of text. This method publishes the chunk
+   * as a separate document to the next middlewares, while preserving the
+   * original chain execution identifier.
    * @param chunk the chunk to publish.
-   * @param order the order in which the chunk appears
-   * in the original document.
-   * @param source the event associated with the original
-   * document.
+   * @param order the order in which the chunk appears in the original document.
+   * @param total the total number of chunks in the original document.
+   * @param source the event associated with the original document.
    * @returns a promise resolving the updated event.
    */
   @next()
-  async onChunk(chunk: string, order: number, source: CloudEvent): Promise<any> {
+  async onChunk(chunk: string, order: number, total: number, source: CloudEvent): Promise<any> {
     const event     = source.clone();
     const document  = event.data().document();
     const chainId   = event.data().chainId();
+    const metadata  = event.data().props.metadata;
     const outputKey = `${chainId}/character-text-splitter-${document.etag()}-${order}.txt`;
 
     // Create a new document for the chunk.
@@ -110,8 +110,8 @@ class Lambda implements LambdaInterface {
       data: Buffer.from(chunk, 'utf-8')
     });
 
-    // Update the metadata.
-    merge(event.data().props.metadata, this.getMetadata(chunk, order));
+    // Update the document metadata.
+    merge(metadata, this.getMetadata(chunk, order, total));
 
     return (event);
   }
@@ -136,10 +136,11 @@ class Lambda implements LambdaInterface {
 
     // Split the text into chunks.
     const chunks = await textSplitter.splitText(text);
+    const total  = chunks.length;
 
     // Publish each chunk as a separate document.
     for (const [idx, chunk] of chunks.entries()) {
-      await this.onChunk(chunk, idx, event);
+      await this.onChunk(chunk, idx, total, event);
     }
 
     return (event);

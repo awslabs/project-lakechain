@@ -171,4 +171,4 @@ When using asynchronous translations, This middleware uses an event-driven archi
 
 ### 📖 Examples
 
-- [Text Translation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-translation-pipeline/) - An example showcasing how to translate documents using Amazon Translate.
+- [Text Translation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-translation-pipelines/translate-pipeline/) - An example showcasing how to translate documents using Amazon Translate.

@@ -19,7 +19,7 @@ import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { next } from '@project-lakechain/sdk/decorators';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { Context } from 'aws-lambda';
+import { Context, DynamoDBStreamEvent } from 'aws-lambda';
 
 import {
   DynamoDBClient,
@@ -46,20 +46,6 @@ const dynamoDb = tracer.captureAWSv3Client(new DynamoDBClient({
   region: process.env.AWS_REGION,
   maxAttempts: 3
 }));
-
-/**
- * Group an array of elements by a given key.
- * @param arr the array to group.
- * @param key the key to group by.
- * @returns a record mapping the given key to the
- * elements of the array.
- */
-const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
-  arr.reduce((groups, item) => {
-    (groups[key(item)] ||= []).push(item);
-    return groups;
-  }, {} as Record<K, T[]>
-);
 
 /**
  * The lambda class definition containing the lambda handler.
@@ -112,42 +98,31 @@ class Lambda implements LambdaInterface {
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async handler(event: any, _: Context): Promise<any> {
+  async handler(event: DynamoDBStreamEvent, _: Context): Promise<any> {
     try {
-      // Group all records by `chainId`.
-      const records = groupBy(event.Records, (record: any) => {
-        return (CloudEvent
-          .from(record.dynamodb.NewImage.event.S)
-          .data()
-          .chainId()
-        );
-      });
+      // The primary key of the event.
+      const chainId = event.Records[0].dynamodb!.NewImage!.pk.S!;
 
-      // For each `chainId` we want to query the number of events
-      // currently stored in the table. If the number of events
-      // is equal or greater than the given threshold, we reduce
-      // the events.
-      for (const chainId in records) {
-        const results = await dynamoDb.send(new QueryCommand({
-          TableName: TABLE_NAME,
-          KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :prefix)',
-          ConsistentRead: true,
-          ExpressionAttributeNames: {
-            '#pk': 'pk',
-            '#sk': 'sk'
-          },
-          ExpressionAttributeValues: {
-            ':pk': { S: chainId },
-            ':prefix': { S: 'EVENT##' }
-          }
-        }));
-
-        if (results.Count && results.Count >= COUNTER_THRESHOLD) {
-          await this.reduceEvents(chainId, results.Items?.map((item) => {
-            return (CloudEvent.from(JSON.parse(item.event.S as string)));
-          }) ?? []);
+      // Retrieve all the events to reduce from the table.
+      const results = await dynamoDb.send(new QueryCommand({
+        TableName: TABLE_NAME,
+        KeyConditionExpression: '#pk = :pk AND begins_with(#sk, :prefix)',
+        ConsistentRead: true,
+        Limit: COUNTER_THRESHOLD,
+        ExpressionAttributeNames: {
+          '#pk': 'pk',
+          '#sk': 'sk'
+        },
+        ExpressionAttributeValues: {
+          ':pk': { S: chainId },
+          ':prefix': { S: 'EVENT##' }
         }
-      }
+      }));
+
+      // Reduce the events.
+      await this.reduceEvents(chainId, results.Items?.map((item) => {
+        return (CloudEvent.from(JSON.parse(item.event.S as string)));
+      }) ?? []);
     } catch (error) {
       logger.error(error as any);
       throw error;

@@ -21,10 +21,44 @@ import { z } from 'zod';
  * and provides information about the chunk.
  */
 export const ChunkSchema = z.object({
-  id: z.string(),
-  order: z.number(),
-  startOffset: z.number().optional(),
-  endOffset: z.number().optional()
+
+  /**
+   * The unique identifier of the chunk.
+   */
+  id: z
+    .string()
+    .describe('The unique identifier of the chunk.'),
+
+  /**
+   * The order of the chunk in the text.
+   */
+  order: z
+    .number()
+    .describe('The order of the chunk in the text.'),
+
+  /**
+   * The total number of chunks in the text.
+   */
+  total: z
+    .number()
+    .optional()
+    .describe('The total number of chunks in the text.'),
+
+  /**
+   * The start offset of the chunk in the text.
+   */
+  startOffset: z
+    .number()
+    .optional()
+    .describe('The start offset of the chunk in the text.'),
+  
+  /**
+   * The end offset of the chunk in the text.
+   */
+  endOffset: z
+    .number()
+    .optional()
+    .describe('The end offset of the chunk in the text.'),
 });
 
 export type Chunk = z.infer<typeof ChunkSchema>;

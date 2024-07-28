@@ -59,10 +59,11 @@ def load_document(url) -> str:
   return response['Body'].read().decode('utf-8')
 
 
-def get_metadata(chunk: str, order: int) -> dict:
+def get_metadata(chunk: str, order: int, total: int) -> dict:
   """
   :param chunk: The chunk to process.
   :param order: The order of the chunk.
+  :param total: The total number of chunks.
   :return: The metadata for the given chunk.
   """
   return {
@@ -71,16 +72,21 @@ def get_metadata(chunk: str, order: int) -> dict:
       'attrs': {
         'chunk': {
           'id': hashlib.sha256(chunk.encode('utf-8')).hexdigest(),
-          'order': order
+          'order': order,
+          'total': total
         }
       }
     }
   }
 
 
-def on_chunk(chunk: str, order: int, event: dict):
+def on_chunk(chunk: str, order: int, total: int, event: dict):
   """
   Publishes the chunk to the next middlewares.
+  :param chunk: The chunk text.
+  :param order: The order of the chunk.
+  :param total: The total number of chunks.
+  :param event: The source event.
   """
   document   = event['data']['document']
   chain_id   = event['data']['chainId']
@@ -103,7 +109,7 @@ def on_chunk(chunk: str, order: int, event: dict):
   }
   
   # Update the metadata.
-  event['data']['metadata'] |= get_metadata(chunk, order)
+  event['data']['metadata'] |= get_metadata(chunk, order, total)
   
   return publish_event(event)
 
@@ -121,8 +127,11 @@ def document_handler(event: dict):
   
   # Split the text.
   chunks = chunk_text(text, MAX_BYTES_LENGTH)
+  total  = len(chunks)
+
+  # Forward each chunk to the next middlewares.
   for idx, tile in enumerate(chunks):
-    on_chunk(tile, idx, event)
+    on_chunk(tile, idx, total, event)
   
   return event
 

@@ -102,6 +102,16 @@ export class OllamaModel {
   });
 
   /**
+   * The `llama3.1` model.
+   * @see https://ollama.com/library/llama3.1
+   */
+  public static LLAMA_3_1 = new OllamaModel('llama3.1', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
    * The `mistral` model.
    * @see https://ollama.com/library/mistral
    */
@@ -116,6 +126,16 @@ export class OllamaModel {
    * @see https://ollama.com/library/mixtral
    */
   public static MIXTRAL = new OllamaModel('mixtral', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: ['text/plain']
+  });
+
+  /**
+   * The `mistral-large` model.
+   * @see https://ollama.com/library/mistral-large
+   */
+  public static MISTRAL_LARGE = new OllamaModel('mistral-large', {
     tag: 'latest',
     inputs: BASE_TEXT_INPUTS,
     outputs: ['text/plain']

@@ -24,7 +24,7 @@ The `Reducer` middleware is an essential flow control mechanism of Project Lakec
 
 At its core, this middleware allows pipeline builders to group relevant documents into a single semantical envelope, and perform combined operations on them. In combination with other middlewares this unlocks many use-cases, for example, aggregating multiple audio files together to concatenate them, zip a collection of documents on-the-fly, or insert a set of subtitles into a video.
 
-The `Reducer` middleware can aggregate multiple documents based on specific strategies which we will document below.
+> The `Reducer` middleware can aggregate multiple documents based on specific strategies which we document below.
 
 <br />
 
@@ -50,7 +50,7 @@ We say that a new pipeline execution is triggered when a new video is uploaded t
 
 #### Time Windows
 
-The time window strategy makes it possible to reduce events belonging to the same `chainId` within a specific time window. It defines a static time window, comprised between 1 second and 48 hours, in which all events belonging to the same `chainId` are aggregated together. When the time window reaches its end, the aggregated events are reduced into a single composite event, and forwarded to the next middlewares in the pipeline.
+The time window strategy reduces events belonging to the same `chainId` within a user defined time window. The time window can be comprised between 1 second and 48 hours. When the time window reaches its end, the aggregated events are reduced into a single composite event, and forwarded to the next middlewares in the pipeline.
 
 This strategy is a good fit for scenarios where you don't necessarily know how many documents will be produced by previous middlewares preceding the `Reducer` step.
 
@@ -60,7 +60,7 @@ It starts aggregating documents belonging to the same `chainId` when the first d
 
 ##### Jitter
 
-The `TimeWindowStrategy` also allows you to optionally specify a specific jitter which consists of a random number between zero and the specified jitter value. Using a jitter can be very useful to smoothen the aggregation process across multiple `chainId`.
+The `TimeWindowStrategy` allows you to optionally specify a jitter which consists of a random number between zero and an arbitrary value. Using a jitter can be useful to smoothen the aggregation process across multiple `chainId`.
 
 For example, if your time window is 10 minutes, and you add a jitter of 30 seconds, each reduce operation will occur after 10 minutes + a random value comprised between zero and 30 seconds.
 
@@ -101,15 +101,17 @@ class Stack extends cdk.Stack {
 
 #### Static Counter
 
-The static counter strategy allows you to reduce all events belonging to the same `chainId`, based on a static counter. It allows you to specify the number of documents to aggregate together before reducing them into a single event.
+The static counter strategy reduces all events belonging to the same `chainId`, based on a static counter. It allows you to specify the number of documents to aggregate together before reducing them into a single event.
 
 This strategy is a good fit when you know the exact number of documents that you expect to be reduced.
 
-For example, let's say that you want to translate a document in french, english, and spanish using the [Translate Text Processor](/project-lakechain/text-processing/translate-text-processor), and reduce the translated documents back together to zip them. In this case, you know that you will be expecting 3 documents associated with the 3 translated languages.
+For example, let's say that you want to translate a document in french, english, and spanish using the [Translate Text Processor](/project-lakechain/text-processing/translate-text-processor), and reduce the translated documents back together to zip them. In this case, you know that you will be expecting exaxtly 3 documents associated with the translated languages.
 
 ##### Unmatched Events
 
-As the reducer awaits for the static count condition to be met, it will aggregate documents for a period of 48 hours. If the condition is unmet after this period, the aggregated documents will be dismissed, and no event will be created.
+As the reducer awaits for the static count condition to be met, it will aggregate documents for a period of up to 48 hours. If the counter is not reached after this period, the aggregated documents will be dismissed.
+
+Similarly, if a reduce operation already occurred for a given chain identifier, any subsequent document that may arrive after the count condition has been met will be dismissed.
 
 ##### Usage
 
@@ -137,7 +139,76 @@ class Stack extends cdk.Stack {
 }
 ```
 
-<br>
+<br />
+
+---
+
+#### Conditional Strategy
+
+The conditional strategy reduces events based on a custom user-provided condition. It allows you to define a [funclet](/project-lakechain/guides/funclets) or a lambda function that gets called back when a new document belonging to a given `chainId` is being aggregated. This conditional expression defines when the aggregated events should be reduced.
+
+This strategy is a good fit when you want to control the reduce process based on a specific condition. For example, let's say that you want to reduce a collection of events based on the metadata of the documents, or even based on a third-party API, you can use the conditional strategy to do that.
+
+##### Unmatched Events
+
+This strategy allows you to evaluate each aggregated document for a duration of up to 48 hours. If the condition is unmet after this period, the aggregated documents will be dismissed.
+
+If a reduce operation already occurred for a given chain identifier, any subsequent document that may arrive after the condition has been met, and having the same chain identifier, will be dismissed.
+
+##### Usage
+
+To reduce events using the `ConditionalStrategy`, you must import and instantiate the `Reducer` middleware as part of your pipeline.
+
+> 💁 Below is an example showcasing how to instantiate the reducer using the `ConditionalStrategy` with a custom condition.
+
+```typescript
+import * as cdk from 'aws-cdk-lib';
+import { CloudEvent, TextMetadata } from '@project-lakechain/sdk';
+import { Reducer, ConditionalStrategy } from '@project-lakechain/reducer';
+
+/**
+ * This conditional expression is called by the reducer middleware
+ * for every new received event. In this example, we want to reduce
+ * the events based on the total number of chunks produced by the
+ * previous middlewares.
+ * @param events the event to process.
+ * @param storedEvents the list of events stored in the table.
+ * @returns a promise resolving to a boolean value.
+ */
+export const conditional = async (event: CloudEvent, storedEvents: CloudEvent[]) => {
+  const metadata = event.data().metadata().properties?.attrs as TextMetadata;
+
+  // Return a boolean value.
+  return (storedEvents.length === metadata.chunk?.total);
+};
+
+class Stack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string) {
+    const reducer = new Reducer.Builder()
+      .withScope(this)
+      .withIdentifier('Reducer')
+      .withCacheStorage(cache)
+      .withSources([M1, M2, M3]) // 👈 Specifies the sources.
+      .withReducerStrategy(new ConditionalStrategy.Builder()
+        .withConditional(conditional)
+        .build()
+      )
+      .build();
+  }
+}
+```
+
+##### Funclet Signature
+
+Funclet expressions use the power of a full programming language to express complex reduce conditional expressions. They are asynchronous and can be defined as TypeScript named functions, anonymous functions, or arrow functions.
+
+A reduce conditional funclet takes 2 arguments. A CloudEvent describing the document that is being handled by the reducer, and a collection of the stored events up until now — excluding the received event. It must return a promise to a boolean value representing the result of the evaluation, true if the reduce operation should occur, false otherwise.
+
+```typescript
+type ConditionalExpression = (event: CloudEvent, storedEvents: CloudEvent[]) => Promise<boolean>;
+```
+
+<br />
 
 ---
 
@@ -147,7 +218,7 @@ The architecture implemented by this middleware depends on the selected strategy
 
 #### `TimeWindowStrategy`
 
-This strategy implements a serverless aggregation architecture based on DynamoDB for document event aggregation, and the [EventBridge Scheduler](https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html) service for scheduling the execution of the reducer for each `chainId` group of events.
+This strategy implements a serverless aggregation architecture based on DynamoDB for document event aggregation, and the [EventBridge Scheduler](https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html) service for scheduling the execution of the reducer for each `chainId` group of events when the time window is reached.
 
 ![Time Window Architecture](../../../assets/reduce-time-window-architecture.png)
 
@@ -157,13 +228,19 @@ This strategy also implements a serverless aggregation architecture based on Dyn
 
 ![Static Counter Architecture](../../../assets/reduce-static-counter-architecture.png)
 
-<br>
+#### `ConditionalStrategy`
+
+The conditional strategy implements a serverless aggregation architecture based on DynamoDB as the document aggregator, and leverages an event-driven approach to evaluate a conditional expression for each received document belonging to the same `chainId`.
+
+![Conditional Strategy Architecture](../../../assets/reduce-conditional-strategy-architecture.png)
+
+<br />
 
 ---
 
 ### 🏷️ Properties
 
-<br>
+<br />
 
 ##### Supported Inputs
 
@@ -183,7 +260,7 @@ This strategy also implements a serverless aggregation architecture based on Dyn
 | ----- | ----------- |
 | `CPU` | This middleware only supports CPU compute. |
 
-<br>
+<br />
 
 ---
 
@@ -191,3 +268,4 @@ This strategy also implements a serverless aggregation architecture based on Dyn
 
 - [Building a Generative Podcast](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-podcast-generator) - Builds a pipeline for creating a generative weekly AWS news podcast.
 - [Building a Video Chaptering Service](https://github.com/awslabs/project-lakechain/tree/main/examples/end-to-end-use-cases/building-a-video-chaptering-service) - Builds a pipeline for automatic video chaptering generation.
+- [Bedrock Translation Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-translation-pipelines/bedrock-translation-pipeline) - Translates documents using a large-language model hosted on Amazon Bedrock.
