@@ -23,7 +23,6 @@ import { evaluate } from './evaluate';
 import {
   DynamoDBClient,
   QueryCommand,
-  PutItemCommand,
   UpdateItemCommand
 } from '@aws-sdk/client-dynamodb';
 
@@ -39,18 +38,6 @@ const dynamoDb = tracer.captureAWSv3Client(new DynamoDBClient({
   region: process.env.AWS_REGION,
   maxAttempts: 3
 }));
-
-/**
- * This method computes the time-to-live value for events stored in DynamoDB.
- * The purpose is to ensure that elements within the table are automatically
- * deleted after a certain amount of time.
- * @returns a time-to-live value for events stored in DynamoDB.
- * @default 48 hours.
- */
-const getTtl = () => {
-  const SECONDS_IN_AN_HOUR = 60 * 60;
-  return (Math.round(Date.now() / 1000) + (48 * SECONDS_IN_AN_HOUR));
-};
 
 /**
  * The lambda class definition containing the lambda handler.

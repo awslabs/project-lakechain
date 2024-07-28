@@ -105,7 +105,7 @@ The static counter strategy reduces all events belonging to the same `chainId`, 
 
 This strategy is a good fit when you know the exact number of documents that you expect to be reduced.
 
-For example, let's say that you want to translate a document in french, english, and spanish using the [Translate Text Processor](/project-lakechain/text-processing/translate-text-processor), and reduce the translated documents back together to zip them. In this case, you know that you will be expecting exaxtly 3 documents associated with the translated languages.
+For example, let's say that you want to translate a document in french, english, and spanish using the [Translate Text Processor](/project-lakechain/text-processing/translate-text-processor), and reduce the translated documents back together to zip them. In this case, you know that you will be expecting exactly 3 documents associated with the translated languages.
 
 ##### Unmatched Events
 
