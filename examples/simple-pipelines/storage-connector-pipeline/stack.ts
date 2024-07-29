@@ -188,7 +188,8 @@ export class MultiOutputPipeline extends cdk.Stack {
       encryption: s3.BucketEncryption.S3_MANAGED,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      enforceSSL: true
     });
 
     // The IAM role to be used by the delivery stream.

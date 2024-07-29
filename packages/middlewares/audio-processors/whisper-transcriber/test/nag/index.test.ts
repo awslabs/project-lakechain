@@ -22,6 +22,7 @@
 
 import path from 'path';
 import fs from 'fs';
+import cdk from 'aws-cdk-lib';
 
 import { App, Aspects, Stack } from 'aws-cdk-lib';
 import { Annotations, Match } from 'aws-cdk-lib/assertions';
@@ -36,8 +37,10 @@ import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
 const cache = new CacheStorage(mockStack, 'Cache', {});
-const bucket = new Bucket(mockStack, 'InputBucket');
-
+const bucket = new Bucket(mockStack, 'InputBucket', {
+  removalPolicy: cdk.RemovalPolicy.DESTROY,
+  enforceSSL: true
+});
 const oldResolve = path.resolve;
 
 /**

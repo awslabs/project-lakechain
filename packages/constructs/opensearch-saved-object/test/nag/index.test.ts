@@ -31,7 +31,6 @@ import { Domain, EngineVersion, TLSSecurityPolicy } from "aws-cdk-lib/aws-opense
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack');
-
 const oldResolve = path.resolve;
 
 /**
@@ -53,9 +52,13 @@ path.resolve = (...args: string[]) => {
   return (oldResolve(...args));
 };
 
+// The OpenSearch domain.
 const domain = new Domain(mockStack, 'domain', {
   version: EngineVersion.OPENSEARCH_2_9,
-  tlsSecurityPolicy: TLSSecurityPolicy.TLS_1_2
+  tlsSecurityPolicy: TLSSecurityPolicy.TLS_1_2,
+  encryptionAtRest: {
+    enabled: true
+  }
 });
 
 // Instantiate Construct
