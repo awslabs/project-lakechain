@@ -41,7 +41,7 @@ export class CohereEmbeddingModel {
   /**
    * The Bedrock `cohere.embed-english-v3` embedding model.
    */
-  public static COHERE_EMBED_ENGLISH_V3 = new CohereEmbeddingModel('cohere.embed-english-v3', {
+  static readonly COHERE_EMBED_ENGLISH_V3 = new CohereEmbeddingModel('cohere.embed-english-v3', {
     dimensions: 1024,
     maxTokens: 512
   });
@@ -49,7 +49,7 @@ export class CohereEmbeddingModel {
   /**
    * The Bedrock `cohere.embed-multilingual-v3` embedding model.
    */
-  public static COHERE_EMBED_MULTILINGUAL_V3 = new CohereEmbeddingModel('cohere.embed-multilingual-v3', {
+  static readonly COHERE_EMBED_MULTILINGUAL_V3 = new CohereEmbeddingModel('cohere.embed-multilingual-v3', {
     dimensions: 1024,
     maxTokens: 512
   });

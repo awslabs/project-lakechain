@@ -74,7 +74,7 @@ export class CohereTextModel {
    * The Bedrock `cohere.command-text-v14` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static COHERE_COMMAND_TEXT_V14 = new CohereTextModel({
+  public static readonly COHERE_COMMAND_TEXT_V14 = new CohereTextModel({
     name: 'cohere.command-text-v14',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -86,7 +86,7 @@ export class CohereTextModel {
    * The Bedrock `cohere.command-light-text-v14` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static COHERE_COMMAND_LIGHT_TEXT_V14 = new CohereTextModel({
+  public static readonly COHERE_COMMAND_LIGHT_TEXT_V14 = new CohereTextModel({
     name: 'cohere.command-light-text-v14',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -98,7 +98,7 @@ export class CohereTextModel {
    * The Bedrock `cohere.command-r-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static COHERE_COMMAND_R = new CohereTextModel({
+  public static readonly COHERE_COMMAND_R = new CohereTextModel({
     name: 'cohere.command-r-v1:0',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -110,7 +110,7 @@ export class CohereTextModel {
    * The Bedrock `cohere.command-r-plus-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static COHERE_COMMAND_R_PLUS = new CohereTextModel({
+  public static readonly COHERE_COMMAND_R_PLUS = new CohereTextModel({
     name: 'cohere.command-r-plus-v1:0',
     inputs: [
       ...BASE_TEXT_INPUTS

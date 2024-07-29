@@ -49,7 +49,7 @@ export class AI21TextModel {
    * The Bedrock `ai21.j2-mid-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static AI21_J2_MID_V1 = new AI21TextModel({
+  public static readonly AI21_J2_MID_V1 = new AI21TextModel({
     name: 'ai21.j2-mid-v1',
     maxTokens: 8191
   });
@@ -58,7 +58,7 @@ export class AI21TextModel {
    * The Bedrock `ai21.j2-ultra-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static AI21_J2_ULTRA_V1 = new AI21TextModel({
+  public static readonly AI21_J2_ULTRA_V1 = new AI21TextModel({
     name: 'ai21.j2-ultra-v1',
     maxTokens: 8191
   });

@@ -74,7 +74,7 @@ export class MistralTextModel {
    * The Bedrock `mistral.mistral-7b-instruct-v0:2` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static MISTRAL_7B_INSTRUCT = new MistralTextModel({
+  public static readonly MISTRAL_7B_INSTRUCT = new MistralTextModel({
     name: 'mistral.mistral-7b-instruct-v0:2',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -86,7 +86,7 @@ export class MistralTextModel {
    * The Bedrock `mistral.mixtral-8x7b-instruct-v0:1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static MIXTRAL_8x7B_INSTRUCT = new MistralTextModel({
+  public static readonly MIXTRAL_8x7B_INSTRUCT = new MistralTextModel({
     name: 'mistral.mixtral-8x7b-instruct-v0:1',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -98,7 +98,7 @@ export class MistralTextModel {
    * The Bedrock `mistral.mistral-large-2402-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static MISTRAL_LARGE = new MistralTextModel({
+  public static readonly MISTRAL_LARGE = new MistralTextModel({
     name: 'mistral.mistral-large-2402-v1:0',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -110,7 +110,7 @@ export class MistralTextModel {
    * The Bedrock `mistral.mistral-large-2407-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static MISTRAL_LARGE_2 = new MistralTextModel({
+  public static readonly MISTRAL_LARGE_2 = new MistralTextModel({
     name: 'mistral.mistral-large-2407-v1:0',
     inputs: [
       ...BASE_TEXT_INPUTS
@@ -122,7 +122,7 @@ export class MistralTextModel {
    * The Bedrock `mistral.mistral-small-2402-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static MISTRAL_SMALL = new MistralTextModel({
+  public static readonly MISTRAL_SMALL = new MistralTextModel({
     name: 'mistral.mistral-small-2402-v1:0',
     inputs: [
       ...BASE_TEXT_INPUTS

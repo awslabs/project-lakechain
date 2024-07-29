@@ -92,7 +92,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-instant-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_INSTANT_V1 = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_INSTANT_V1 = new AnthropicTextModel({
     name: 'anthropic.claude-instant-v1',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -105,7 +105,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-v2` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V2 = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V2 = new AnthropicTextModel({
     name: 'anthropic.claude-v2',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -118,7 +118,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-v2:1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V2_1 = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V2_1 = new AnthropicTextModel({
     name: 'anthropic.claude-v2:1',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -131,7 +131,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-3-haiku-20240307-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V3_HAIKU = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V3_HAIKU = new AnthropicTextModel({
     name: 'anthropic.claude-3-haiku-20240307-v1:0',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -145,7 +145,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-3-sonnet-20240229-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V3_SONNET = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V3_SONNET = new AnthropicTextModel({
     name: 'anthropic.claude-3-sonnet-20240229-v1:0',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -159,7 +159,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-3-5-sonnet-20240620-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V3_5_SONNET = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V3_5_SONNET = new AnthropicTextModel({
     name: 'anthropic.claude-3-5-sonnet-20240620-v1:0',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,
@@ -173,7 +173,7 @@ export class AnthropicTextModel {
    * The Bedrock `anthropic.claude-3-opus-20240229-v1:0` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static ANTHROPIC_CLAUDE_V3_OPUS = new AnthropicTextModel({
+  public static readonly ANTHROPIC_CLAUDE_V3_OPUS = new AnthropicTextModel({
     name: 'anthropic.claude-3-opus-20240229-v1:0',
     inputs: [
       ...AGGREGATE_EVENT_TYPES,

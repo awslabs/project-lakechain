@@ -24,7 +24,7 @@ export class SentenceTransformersModel {
    * The `all-mpnet-base-v2` model.
    * @see https://huggingface.co/sentence-transformers/all-mpnet-base-v2
    */
-  public static ALL_MPNET_BASE_V2 = new SentenceTransformersModel(
+  public static readonly ALL_MPNET_BASE_V2 = new SentenceTransformersModel(
     'all-mpnet-base-v2'
   );
 
@@ -32,7 +32,7 @@ export class SentenceTransformersModel {
    * The `all-MiniLM-L6-v2` model.
    * @see https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
    */
-  public static ALL_MINI_LM_L6_V2 = new SentenceTransformersModel(
+  public static readonly ALL_MINI_LM_L6_V2 = new SentenceTransformersModel(
     'all-MiniLM-L6-v2'
   );
 
@@ -40,7 +40,7 @@ export class SentenceTransformersModel {
    * The `all-MiniLM-L12-v2` model.
    * @see https://huggingface.co/sentence-transformers/all-MiniLM-L12-v2
    */
-  public static ALL_MINI_LM_L12_V2 = new SentenceTransformersModel(
+  public static readonly ALL_MINI_LM_L12_V2 = new SentenceTransformersModel(
     'all-MiniLM-L12-v2'
   );
 
@@ -48,7 +48,7 @@ export class SentenceTransformersModel {
    * The `instructor-large` model.
    * @see https://huggingface.co/hkunlp/instructor-large
    */
-  public static INSTRUCTOR_LARGE = new SentenceTransformersModel(
+  public static readonly INSTRUCTOR_LARGE = new SentenceTransformersModel(
     'hkunlp/instructor-large'
   );
 
@@ -56,7 +56,7 @@ export class SentenceTransformersModel {
    * The `instructor-xl` model.
    * @see https://huggingface.co/hkunlp/instructor-xl
    */
-  public static INSTRUCTOR_XL = new SentenceTransformersModel(
+  public static readonly INSTRUCTOR_XL = new SentenceTransformersModel(
     'hkunlp/instructor-xl'
   );
 
@@ -64,7 +64,7 @@ export class SentenceTransformersModel {
    * The `e5-base-v2` model.
    * @see https://huggingface.co/intfloat/e5-large-v2
    */
-  public static E5_BASE_V2 = new SentenceTransformersModel(
+  public static readonly E5_BASE_V2 = new SentenceTransformersModel(
     'intfloat/e5-large-v2'
   );
 
@@ -72,7 +72,7 @@ export class SentenceTransformersModel {
    * The `e5-large-v2` model.
    * @see https://huggingface.co/intfloat/e5-large-v2
    */
-  public static E5_LARGE_V2 = new SentenceTransformersModel(
+  public static readonly E5_LARGE_V2 = new SentenceTransformersModel(
     'e5-large-v2'
   );
 

@@ -49,7 +49,7 @@ export class TitanTextModel {
    * The Bedrock `amazon.titan-text-lite-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static AMAZON_TITAN_TEXT_LITE_V1 = new TitanTextModel({
+  public static readonly AMAZON_TITAN_TEXT_LITE_V1 = new TitanTextModel({
     name: 'amazon.titan-text-lite-v1',
     maxTokens: 4000
   });
@@ -58,7 +58,7 @@ export class TitanTextModel {
    * The Bedrock `amazon.titan-text-express-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
-  public static AMAZON_TITAN_TEXT_EXPRESS_V1 = new TitanTextModel({
+  public static readonly AMAZON_TITAN_TEXT_EXPRESS_V1 = new TitanTextModel({
     name: 'amazon.titan-text-express-v1',
     maxTokens: 8000
   });

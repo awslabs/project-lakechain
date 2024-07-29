@@ -42,7 +42,7 @@ export class TitanEmbeddingModel {
    * The Bedrock `amazon.titan-embed-text-v1` embedding model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/embeddings.html
    */
-  public static AMAZON_TITAN_EMBED_TEXT_V1 = new TitanEmbeddingModel('amazon.titan-embed-text-v1', {
+  static readonly AMAZON_TITAN_EMBED_TEXT_V1 = new TitanEmbeddingModel('amazon.titan-embed-text-v1', {
     dimensions: 1536,
     maxTokens: 8192
   });
@@ -51,7 +51,7 @@ export class TitanEmbeddingModel {
    * The Bedrock `amazon.titan-embed-text-v2:0` embedding model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/embeddings.html
    */
-  public static AMAZON_TITAN_EMBED_TEXT_V2 = new TitanEmbeddingModel('amazon.titan-embed-text-v2:0', {
+  static readonly AMAZON_TITAN_EMBED_TEXT_V2 = new TitanEmbeddingModel('amazon.titan-embed-text-v2:0', {
     dimensions: 1024,
     maxTokens: 8192
   });
