@@ -189,7 +189,7 @@ export class OpenSearchVectorIndexDefinition {
   /**
    * The builder constructor.
    */
-  public static Builder = OpenSearchIndexDefinitionBuilder;
+  public static readonly Builder = OpenSearchIndexDefinitionBuilder;
 
   /**
    * OpenSearch index definition constructor.

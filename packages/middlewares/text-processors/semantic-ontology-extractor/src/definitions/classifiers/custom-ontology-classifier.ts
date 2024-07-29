@@ -200,7 +200,7 @@ export class CustomOntologyClassifier {
   /**
    * The `CustomOntologyClassifier` Builder.
    */
-  public static Builder = CustomOntologyClassifierBuilder;
+  public static readonly Builder = CustomOntologyClassifierBuilder;
 
   /**
    * The default classifier.

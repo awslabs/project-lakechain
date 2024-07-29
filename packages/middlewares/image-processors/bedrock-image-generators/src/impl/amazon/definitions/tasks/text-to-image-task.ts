@@ -123,7 +123,7 @@ export class TextToImageTask {
   /**
    * The builder constructor.
    */
-  public static Builder = TextToImageTaskBuilder;
+  public static readonly Builder = TextToImageTaskBuilder;
 
   /**
    * Creates a new instance of the `TextToImageTask` class.

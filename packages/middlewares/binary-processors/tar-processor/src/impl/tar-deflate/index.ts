@@ -126,7 +126,7 @@ export class TarDeflateProcessor extends Middleware {
   /**
    * The builder for the `TarDeflateProcessor` service.
    */
-  static Builder = TarDeflateProcessorBuilder;
+  public static readonly Builder = TarDeflateProcessorBuilder;
 
   /**
    * Construct constructor.

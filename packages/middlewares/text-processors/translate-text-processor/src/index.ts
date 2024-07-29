@@ -150,7 +150,7 @@ export class TranslateTextProcessor extends Middleware {
   /**
    * The builder for the `TranslateTextProcessor` service.
    */
-  static Builder = TranslateTextProcessorBuilder;
+  public static readonly Builder = TranslateTextProcessorBuilder;
 
   /**
    * Provider constructor.

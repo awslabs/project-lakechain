@@ -142,7 +142,7 @@ export class ConditionalStrategy implements ReducerStrategy {
   /**
    * The `ConditionalStrategy` Builder.
    */
-  public static Builder = ConditionalStrategyBuilder;
+  public static readonly Builder = ConditionalStrategyBuilder;
 
   /**
    * Creates a new instance of the `ConditionalStrategy` class.

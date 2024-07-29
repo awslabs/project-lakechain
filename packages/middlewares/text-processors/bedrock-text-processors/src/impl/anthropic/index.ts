@@ -181,7 +181,7 @@ export class AnthropicTextProcessor extends Middleware {
   /**
    * The builder for the `AnthropicTextProcessor` service.
    */
-  static Builder = AnthropicTextProcessorBuilder;
+  public static readonly Builder = AnthropicTextProcessorBuilder;
 
   /**
    * Construct constructor.

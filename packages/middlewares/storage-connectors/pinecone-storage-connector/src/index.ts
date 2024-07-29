@@ -148,7 +148,7 @@ export class PineconeStorageConnector extends Middleware {
   /**
    * The builder for the `PineconeStorageConnector` service.
    */
-  static Builder = PineconeStorageConnectorBuilder;
+  public static readonly Builder = PineconeStorageConnectorBuilder;
 
   /**
    * Pinecone data store constructor.

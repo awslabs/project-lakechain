@@ -132,7 +132,7 @@ export class S3StorageConnector extends Middleware {
   /**
    * The builder for the `S3StorageConnector` service.
    */
-  static Builder = S3StorageConnectorBuilder;
+  public static readonly Builder = S3StorageConnectorBuilder;
 
   /**
    * Provider constructor.

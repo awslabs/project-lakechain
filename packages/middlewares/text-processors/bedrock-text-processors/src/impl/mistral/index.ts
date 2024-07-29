@@ -181,7 +181,7 @@ export class MistralTextProcessor extends Middleware {
   /**
    * The builder for the `MistralTextProcessor` service.
    */
-  static Builder = MistralTextProcessorBuilder;
+  public static readonly Builder = MistralTextProcessorBuilder;
 
   /**
    * Construct constructor.

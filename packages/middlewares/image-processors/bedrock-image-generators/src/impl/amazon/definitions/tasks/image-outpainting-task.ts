@@ -200,7 +200,7 @@ export class ImageOutpaintingTask {
   /**
    * The `ImageOutpaintingTask` Builder.
    */
-  public static Builder = ImageOutpaintingTaskBuilder;
+  public static readonly Builder = ImageOutpaintingTaskBuilder;
 
   /**
    * Creates a new instance of the `ImageOutpaintingTask` class.

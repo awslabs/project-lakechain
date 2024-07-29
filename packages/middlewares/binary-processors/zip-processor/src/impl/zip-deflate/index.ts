@@ -114,7 +114,7 @@ export class ZipDeflateProcessor extends Middleware {
   /**
    * The builder for the `ZipDeflateProcessor` service.
    */
-  static Builder = ZipDeflateProcessorBuilder;
+  public static readonly Builder = ZipDeflateProcessorBuilder;
 
   /**
    * Construct constructor.

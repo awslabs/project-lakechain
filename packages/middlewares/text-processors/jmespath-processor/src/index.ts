@@ -114,7 +114,7 @@ export class JMESPathProcessor extends Middleware {
   /**
    * The builder for the `JMESPathProcessor` service.
    */
-  static Builder = JMESPathProcessorBuilder;
+  public static readonly Builder = JMESPathProcessorBuilder;
 
   /**
    * Construct constructor.

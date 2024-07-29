@@ -36,7 +36,7 @@ In its most basic form, a middleware requires at least three components.
 - A string *identifier* used to identify the middleware.
 - A *cache storage* used to share data between middlewares.
 
-<br>
+<br />
 
 ---
 
@@ -77,7 +77,7 @@ const C = new MiddlewareC.Builder()
 
 The `.withSource` API provides a simple but very powerful way to express the most complex pipelines and middleware relationships.
 
-<br>
+<br />
 
 ---
 
@@ -95,7 +95,7 @@ const C = //...
 A.pipe(B).pipe(C);
 ```
 
-<br>
+<br />
 
 ---
 
@@ -146,7 +146,7 @@ const B = new MiddlewareB.Builder()
 
 If you need to express more complex conditions, that also applies on the content of the document, see the [Condition](/project-lakechain/flow-control/condition) middleware.
 
-<br>
+<br />
 
 ---
 
@@ -167,7 +167,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -186,7 +186,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -205,7 +205,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -225,7 +225,7 @@ const middleware = new ExampleMiddleware.Builder()
   .withBatchingWindow(cdk.Duration.minutes(5))
   .build();
 ```
-<br>
+<br />
 
 ---
 
@@ -244,7 +244,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -263,7 +263,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -284,7 +284,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -303,7 +303,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -339,7 +339,7 @@ const deliveredMessages = middleware.metricDeliveredMessages();
 const failedMessages = middleware.metricFailedMessages();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -384,7 +384,7 @@ const middleware = new ExampleMiddleware.Builder()
 middleware.grantReadProcessedDocuments(fn);
 ```
 
-<br>
+<br />
 
 ---
 
@@ -411,7 +411,7 @@ const middleware = new ExampleMiddleware.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -439,7 +439,7 @@ middleware.pipe(consumer);
 producer.pipe(middleware);
 ```
 
-<br>
+<br />
 
 ---
 
@@ -457,40 +457,3 @@ const middleware = new ExampleMiddleware.Builder()
 ```
 
 > 💁 Customers having strong security and compliance requirements can also pass a VPC instance to middlewares (including those based on AWS Lambda) that are configured with specific VPC Endpoints. For more information please read our [Using VPC Endpoints](/project-lakechain/guides/security-model#-vpc-endpoints) guide.
-
-<br>
-
----
-
-### Visualization
-
-When designing complex pipelines, it is very useful to get a visual representation of the pipeline to ensure it is correct. The Middleware API exposes a `DagRenderer` component making it possible to render a pipeline expressed as code into an SVG graph using the [Mermaid](https://mermaid.js.org/) rendering engine.
-
-> ℹ️ In the below example, we use the `DagRenderer` to render the pipeline into an SVG graph, and save it to a file.
-
-```typescript
-import { DagRenderer, MermaidRenderer } from '@project-lakechain/core/renderer';
-
-// Assume we have a pipeline defined as follows.
-const A, B, C = // ...
-
-// Create the renderer using the `Mermaid` engine.
-const renderer = new DagRenderer({
-  engine: new MermaidRenderer()
-});
-
-// Render the pipeline into an SVG graph.
-renderer.render([ A, B, C ]);
-```
-
-The link to the generated SVG file is written on `stderr` and can be captured when synthesizing the stack.
-
-```bash
-npx cdk synth 2> output.txt
-```
-
-![SVG Output](../../../assets/svg-output.png)
-
-The SVG file can be opened in any browser to visualize the pipeline.
-
-![SVG Graph](../../../assets/pipeline-graph.png)

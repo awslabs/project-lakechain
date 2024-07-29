@@ -39,7 +39,7 @@ class DefaultMiddlewareBuilder extends MiddlewareBuilder {
 }
 
 class DefaultTestMiddleware extends Middleware {
-  public static Builder = DefaultMiddlewareBuilder;
+  public static readonly Builder = DefaultMiddlewareBuilder;
 
   constructor(scope: Construct, id: string, opts: MiddlewareProps) {
     super(scope, id, description, opts);

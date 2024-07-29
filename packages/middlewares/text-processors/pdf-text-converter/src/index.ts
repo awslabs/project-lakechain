@@ -110,7 +110,7 @@ export class PdfTextConverter extends Middleware {
   /**
    * The builder for the `PdfTextConverter` service.
    */
-  static Builder = PdfTextConverterBuilder;
+  public static readonly Builder = PdfTextConverterBuilder;
 
   /**
    * Construct constructor.

@@ -145,7 +145,7 @@ export class CharacterTextSplitter extends Middleware {
   /**
    * The builder for the `CharacterTextSplitter` service.
    */
-  static Builder = CharacterTextSplitterBuilder;
+  public static readonly Builder = CharacterTextSplitterBuilder;
 
   /**
    * Construct constructor.

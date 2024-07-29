@@ -95,7 +95,7 @@ export class TrafilaturaParser extends Middleware {
   /**
    * The builder for the `TrafilaturaParser` service.
    */
-  static Builder = TrafilaturaParserBuilder;
+  public static readonly Builder = TrafilaturaParserBuilder;
 
   /**
    * Construct constructor.

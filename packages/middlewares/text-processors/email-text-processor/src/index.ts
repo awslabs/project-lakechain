@@ -136,7 +136,7 @@ export class EmailTextProcessor extends Middleware {
   /**
    * The builder for the `EmailTextProcessor` service.
    */
-  static Builder = EmailTextProcessorBuilder;
+  public static readonly Builder = EmailTextProcessorBuilder;
 
   /**
    * Construct constructor.

@@ -123,7 +123,7 @@ export class TitanEmbeddingProcessor extends Middleware {
   /**
    * The builder for the `TitanEmbeddingProcessor` service.
    */
-  static Builder = TitanEmbeddingProcessorBuilder;
+  public static readonly Builder = TitanEmbeddingProcessorBuilder;
 
   /**
    * Construct constructor.

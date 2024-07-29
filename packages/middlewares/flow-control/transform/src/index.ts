@@ -125,7 +125,7 @@ export class Transform extends Middleware {
   /**
    * The builder for the `Transform` service.
    */
-  static Builder = TransformBuilder;
+  public static readonly Builder = TransformBuilder;
 
   /**
    * Provider constructor.

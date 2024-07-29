@@ -147,7 +147,7 @@ export class LanceDbStorageConnector extends Middleware {
   /**
    * The builder for the `LanceDbStorageConnector` service.
    */
-  static Builder = LanceDbStorageConnectorBuilder;
+  public static readonly Builder = LanceDbStorageConnectorBuilder;
 
   /**
    * LanceDb data store constructor.

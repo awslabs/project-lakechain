@@ -80,7 +80,7 @@ export class StaticCounterStrategy implements ReducerStrategy {
   /**
    * The `StaticCounterStrategy` Builder.
    */
-  public static Builder = StaticCounterStrategyBuilder;
+  public static readonly Builder = StaticCounterStrategyBuilder;
 
   /**
    * Creates a new instance of the `StaticCounterStrategy` class.

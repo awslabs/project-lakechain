@@ -136,7 +136,7 @@ export class S3EventTrigger extends Middleware {
   /**
    * The builder for the `S3EventTrigger` service.
    */
-  static Builder = S3EventTriggerBuilder;
+  public static readonly Builder = S3EventTriggerBuilder;
 
   /**
    * Provider constructor.

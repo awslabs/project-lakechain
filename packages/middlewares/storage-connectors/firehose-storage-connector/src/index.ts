@@ -81,7 +81,7 @@ export class FirehoseStorageConnector extends Middleware {
   /**
    * The builder for the `FirehoseStorageConnector` service.
    */
-  static Builder = FirehoseStorageConnectorBuilder;
+  public static readonly Builder = FirehoseStorageConnectorBuilder;
 
   /**
    * Construct constructor.

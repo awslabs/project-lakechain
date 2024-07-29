@@ -111,7 +111,7 @@ export class SubtitleProcessor extends Middleware {
   /**
    * The builder for the `SubtitleProcessor` service.
    */
-  static Builder = SubtitleProcessorBuilder;
+  public static readonly Builder = SubtitleProcessorBuilder;
 
   /**
    * Construct constructor.

@@ -160,7 +160,7 @@ export class EfsStorageProvider extends Construct implements LanceDbStorageProvi
   /**
    * The `EfsStorageProvider` Builder.
    */
-  public static Builder = EfsStorageProviderBuilder;
+  public static readonly Builder = EfsStorageProviderBuilder;
 
   /**
    * The file system.

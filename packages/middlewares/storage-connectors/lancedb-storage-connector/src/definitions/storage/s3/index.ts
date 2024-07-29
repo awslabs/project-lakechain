@@ -138,7 +138,7 @@ export class S3StorageProvider extends Construct implements LanceDbStorageProvid
   /**
    * The `S3StorageProvider` Builder.
    */
-  public static Builder = S3StorageProviderBuilder;
+  public static readonly Builder = S3StorageProviderBuilder;
 
   /**
    * The S3 bucket.

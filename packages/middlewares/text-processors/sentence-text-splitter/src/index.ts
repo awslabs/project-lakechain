@@ -108,7 +108,7 @@ export class SentenceTextSplitter extends Middleware {
   /**
    * The builder for the `SentenceTextSplitter` service.
    */
-  static Builder = SentenceTextSplitterBuilder;
+  public static readonly Builder = SentenceTextSplitterBuilder;
 
   /**
    * Construct constructor.

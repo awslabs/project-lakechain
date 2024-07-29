@@ -164,7 +164,7 @@ export class ImageGenerationParameters {
   /**
    * The builder constructor.
    */
-  public static Builder = ImageGenerationParametersBuilder;
+  public static readonly Builder = ImageGenerationParametersBuilder;
 
   /**
    * Image generation parameters constructor.

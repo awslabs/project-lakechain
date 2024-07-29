@@ -115,7 +115,7 @@ export class LaplacianImageProcessor extends Middleware {
   /**
    * The builder for the `LaplacianImageProcessor` service.
    */
-  static Builder = LaplacianImageProcessorBuilder;
+  public static readonly Builder = LaplacianImageProcessorBuilder;
 
   /**
    * Provider constructor.

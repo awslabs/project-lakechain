@@ -95,7 +95,7 @@ export class ImageMetadataExtractor extends Middleware {
   /**
    * The builder for the `ImageMetadataExtractor` service.
    */
-  static Builder = ImageMetadataExtractorBuilder;
+  public static readonly Builder = ImageMetadataExtractorBuilder;
 
   /**
    * Provider constructor.

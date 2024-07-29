@@ -130,7 +130,7 @@ export class OllamaProcessor extends Middleware {
   /**
    * The builder for the `OllamaProcessor` service.
    */
-  static Builder = OllamaProcessorBuilder;
+  public static readonly Builder = OllamaProcessorBuilder;
 
   /**
    * Construct constructor.

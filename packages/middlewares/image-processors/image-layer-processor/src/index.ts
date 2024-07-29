@@ -107,7 +107,7 @@ export class ImageLayerProcessor extends Middleware {
   /**
    * The builder for the `ImageLayerProcessor` service.
    */
-  static Builder = ImageLayerProcessorBuilder;
+  public static readonly Builder = ImageLayerProcessorBuilder;
 
   /**
    * Provider constructor.

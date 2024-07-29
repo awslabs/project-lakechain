@@ -193,7 +193,7 @@ export class RembgImageProcessor extends Middleware {
   /**
    * The builder for the `RembgImageProcessor` service.
    */
-  static Builder = RembgImageProcessorBuilder;
+  public static readonly Builder = RembgImageProcessorBuilder;
 
   /**
    * Construct constructor.

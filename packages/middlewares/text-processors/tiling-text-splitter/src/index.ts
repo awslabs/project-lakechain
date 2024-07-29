@@ -107,7 +107,7 @@ export class TilingTextSplitter extends Middleware {
   /**
    * The builder for the `TilingTextSplitter` service.
    */
-  static Builder = TilingTextSplitterBuilder;
+  public static readonly Builder = TilingTextSplitterBuilder;
 
   /**
    * Construct constructor.

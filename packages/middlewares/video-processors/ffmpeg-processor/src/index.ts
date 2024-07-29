@@ -133,7 +133,7 @@ export class FfmpegProcessor extends Middleware {
   /**
    * The builder for the `FfmpegProcessor` service.
    */
-  static Builder = FfmpegProcessorBuilder;
+  public static readonly Builder = FfmpegProcessorBuilder;
 
   /**
    * Construct constructor.

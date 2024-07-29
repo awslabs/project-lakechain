@@ -106,7 +106,7 @@ export class Delay extends Middleware {
   /**
    * The builder for the `Delay` service.
    */
-  static Builder = DelayBuilder;
+  public static readonly Builder = DelayBuilder;
 
   /**
    * Provider constructor.

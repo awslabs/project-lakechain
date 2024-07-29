@@ -146,7 +146,7 @@ export class KeybertTextProcessor extends Middleware {
   /**
    * The builder for the `KeybertTextProcessor` service.
    */
-  static Builder = KeybertTextProcessorBuilder;
+  public static readonly Builder = KeybertTextProcessorBuilder;
 
   /**
    * Construct constructor.

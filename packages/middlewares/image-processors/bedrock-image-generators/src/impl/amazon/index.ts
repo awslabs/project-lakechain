@@ -144,7 +144,7 @@ export class TitanImageGenerator extends Middleware {
   /**
    * The builder for the `TitanImageGenerator` service.
    */
-  static Builder = TitanImageGeneratorBuilder;
+  public static readonly Builder = TitanImageGeneratorBuilder;
 
   /**
    * Construct constructor.

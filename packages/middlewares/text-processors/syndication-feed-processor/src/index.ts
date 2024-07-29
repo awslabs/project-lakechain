@@ -92,7 +92,7 @@ export class SyndicationFeedProcessor extends Middleware {
   /**
    * The builder for the `SyndicationFeedProcessor` service.
    */
-  static Builder = SyndicationFeedProcessorBuilder;
+  public static readonly Builder = SyndicationFeedProcessorBuilder;
 
   /**
    * Construct constructor.

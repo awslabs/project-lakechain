@@ -93,7 +93,7 @@ export class AudioMetadataExtractor extends Middleware {
   /**
    * The builder for the `AudioMetadataExtractor` service.
    */
-  static Builder = AudioMetadataExtractorBuilder;
+  public static readonly Builder = AudioMetadataExtractorBuilder;
 
   /**
    * Provider constructor.

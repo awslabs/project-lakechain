@@ -101,7 +101,7 @@ export class TarInflateProcessor extends Middleware {
   /**
    * The builder for the `TarInflateProcessor` service.
    */
-  static Builder = TarInflateProcessorBuilder;
+  public static readonly Builder = TarInflateProcessorBuilder;
 
   /**
    * Construct constructor.

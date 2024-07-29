@@ -116,7 +116,7 @@ export class TranscribeAudioProcessor extends Middleware {
   /**
    * The builder for the `TranscribeAudioProcessor` service.
    */
-  static Builder = TranscribeAudioProcessorBuilder;
+  public static readonly Builder = TranscribeAudioProcessorBuilder;
 
   /**
    * Provider constructor.

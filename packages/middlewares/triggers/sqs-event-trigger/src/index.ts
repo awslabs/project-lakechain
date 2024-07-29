@@ -112,7 +112,7 @@ export class SqsEventTrigger extends Middleware {
   /**
    * The builder for the `SqsEventTrigger` service.
    */
-  static Builder = SqsEventTriggerBuilder;
+  public static readonly Builder = SqsEventTriggerBuilder;
 
   /**
    * Provider constructor.

@@ -100,7 +100,7 @@ export class ExtractDocumentTask {
   /**
    * The `ExtractDocumentTask` Builder.
    */
-  public static Builder = ExtractDocumentTaskBuilder;
+  public static readonly Builder = ExtractDocumentTaskBuilder;
 
   /**
    * Creates a new instance of the `ExtractDocumentTask` class.

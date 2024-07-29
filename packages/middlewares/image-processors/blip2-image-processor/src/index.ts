@@ -95,7 +95,7 @@ export class Blip2ImageProcessor extends Middleware {
   /**
    * The builder for the `Blip2ImageProcessor` service.
    */
-  static Builder = Blip2ImageProcessorBuilder;
+  public static readonly Builder = Blip2ImageProcessorBuilder;
 
   constructor(scope: Construct, id: string, props: Blip2ImageProcessorProps) {
     super(scope, id, description, props);

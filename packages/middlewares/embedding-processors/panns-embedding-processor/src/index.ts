@@ -93,7 +93,7 @@ export class PannsEmbeddingProcessor extends Middleware {
   /**
    * The builder for the `PannsEmbeddingProcessor` service.
    */
-  static Builder = PannsEmbeddingProcessorBuilder;
+  public static readonly Builder = PannsEmbeddingProcessorBuilder;
 
   /**
    * Provider constructor.

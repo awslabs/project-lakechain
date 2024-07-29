@@ -122,7 +122,7 @@ export class SchedulerEventTrigger extends Middleware {
   /**
    * The builder for the `SchedulerEventTrigger` service.
    */
-  static Builder = SchedulerEventTriggerBuilder;
+  public static readonly Builder = SchedulerEventTriggerBuilder;
 
   /**
    * Provider constructor.

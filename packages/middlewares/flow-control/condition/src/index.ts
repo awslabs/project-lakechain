@@ -118,7 +118,7 @@ export class Condition extends Middleware {
   /**
    * The builder for the `Condition` service.
    */
-  static Builder = ConditionBuilder;
+  public static readonly Builder = ConditionBuilder;
 
   /**
    * Provider constructor.

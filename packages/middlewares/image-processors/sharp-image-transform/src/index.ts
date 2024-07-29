@@ -120,7 +120,7 @@ export class SharpImageTransform extends Middleware {
   /**
    * The builder for the `SharpImageTransform` service.
    */
-  static Builder = SharpImageTransformBuilder;
+  public static readonly Builder = SharpImageTransformBuilder;
 
   /**
    * Provider constructor.

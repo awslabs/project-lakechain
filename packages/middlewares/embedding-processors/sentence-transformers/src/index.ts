@@ -119,7 +119,7 @@ export class SentenceTransformers extends Middleware {
   /**
    * The builder for the `SentenceTransformers` service.
    */
-  static Builder = SentenceTransformersBuilder;
+  public static readonly Builder = SentenceTransformersBuilder;
 
   /**
    * Construct constructor.

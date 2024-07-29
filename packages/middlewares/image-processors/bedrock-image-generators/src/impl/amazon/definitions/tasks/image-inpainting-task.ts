@@ -182,7 +182,7 @@ export class ImageInpaintingTask {
   /**
    * The `ImageInpaintingTask` Builder.
    */
-  public static Builder = ImageInpaintingTaskBuilder;
+  public static readonly Builder = ImageInpaintingTaskBuilder;
 
   /**
    * Creates a new instance of the `ImageInpaintingTask` class.

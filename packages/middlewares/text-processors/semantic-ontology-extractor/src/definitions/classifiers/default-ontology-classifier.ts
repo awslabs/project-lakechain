@@ -99,7 +99,7 @@ export class DefaultOntologyClassifier implements OntologyClassifier {
   /**
    * The `DefaultOntologyClassifier` Builder.
    */
-  public static Builder = DefaultOntologyClassifierBuilder;
+  public static readonly Builder = DefaultOntologyClassifierBuilder;
 
   /**
    * Creates a new instance of the `DefaultOntologyClassifier` class.

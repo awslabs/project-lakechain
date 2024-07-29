@@ -142,7 +142,7 @@ export class ImageVariationTask {
   /**
    * The `ImageVariationTask` Builder.
    */
-  public static Builder = ImageVariationTaskBuilder;
+  public static readonly Builder = ImageVariationTaskBuilder;
 
   /**
    * Creates a new instance of the `ImageVariationTask` class.

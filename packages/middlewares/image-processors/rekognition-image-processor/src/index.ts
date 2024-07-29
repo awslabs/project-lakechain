@@ -110,7 +110,7 @@ export class RekognitionImageProcessor extends Middleware {
   /**
    * The builder for the `RekognitionImageProcessor` service.
    */
-  static Builder = RekognitionImageProcessorBuilder;
+  public static readonly Builder = RekognitionImageProcessorBuilder;
 
   /**
    * Provider constructor.

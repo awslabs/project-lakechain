@@ -180,7 +180,7 @@ export class PollySynthesizer extends Middleware {
   /**
    * The builder for the `PollySynthesizer` service.
    */
-  static Builder = PollySynthesizerBuilder;
+  public static readonly Builder = PollySynthesizerBuilder;
 
   /**
    * Provider constructor.

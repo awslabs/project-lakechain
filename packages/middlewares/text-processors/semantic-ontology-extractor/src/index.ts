@@ -131,7 +131,7 @@ export class SemanticOntologyExtractor extends Middleware {
   /**
    * The builder for the `SemanticOntologyExtractor` service.
    */
-  static Builder = SemanticOntologyExtractorBuilder;
+  public static readonly Builder = SemanticOntologyExtractorBuilder;
 
   /**
    * Construct constructor.

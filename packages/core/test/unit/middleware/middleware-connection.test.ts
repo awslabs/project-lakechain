@@ -37,7 +37,7 @@ class ProducerMiddlewareBuilder extends MiddlewareBuilder {
 }
 
 class ProducerMiddleware extends Middleware {
-  public static Builder = ProducerMiddlewareBuilder;
+  public static readonly Builder = ProducerMiddlewareBuilder;
 
   constructor(scope: Construct, id: string, opts: MiddlewareProps) {
     super(scope, id, description, opts);

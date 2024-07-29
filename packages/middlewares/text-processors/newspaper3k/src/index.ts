@@ -97,7 +97,7 @@ export class Newspaper3kParser extends Middleware {
   /**
    * The builder for the `Newspaper3kParser` service.
    */
-  static Builder = Newspaper3kParserBuilder;
+  public static readonly Builder = Newspaper3kParserBuilder;
 
   /**
    * Construct constructor.

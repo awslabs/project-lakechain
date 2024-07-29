@@ -114,7 +114,7 @@ export class PandocTextConverter extends Middleware {
   /**
    * The builder for the `PandocTextConverter` service.
    */
-  static Builder = PandocTextConverterBuilder;
+  public static readonly Builder = PandocTextConverterBuilder;
 
   /**
    * Construct constructor.

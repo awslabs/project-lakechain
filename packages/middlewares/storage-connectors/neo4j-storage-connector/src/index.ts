@@ -114,7 +114,7 @@ export class Neo4jStorageConnector extends Middleware {
   /**
    * The builder for the `Neo4jStorageConnector` service.
    */
-  static Builder = Neo4jStorageConnectorBuilder;
+  public static readonly Builder = Neo4jStorageConnectorBuilder;
 
   /**
    * Neo4j data store constructor.

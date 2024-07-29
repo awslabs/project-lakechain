@@ -160,7 +160,7 @@ export class TitanTextProcessor extends Middleware {
   /**
    * The builder for the `TitanTextProcessor` service.
    */
-  static Builder = TitanTextProcessorBuilder;
+  public static readonly Builder = TitanTextProcessorBuilder;
 
   /**
    * Construct constructor.

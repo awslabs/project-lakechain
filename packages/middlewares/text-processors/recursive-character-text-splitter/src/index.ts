@@ -146,7 +146,7 @@ export class RecursiveCharacterTextSplitter extends Middleware {
   /**
    * The builder for the `RecursiveCharacterTextSplitter` service.
    */
-  static Builder = RecursiveCharacterTextSplitterBuilder;
+  public static readonly Builder = RecursiveCharacterTextSplitterBuilder;
 
   /**
    * Construct constructor.

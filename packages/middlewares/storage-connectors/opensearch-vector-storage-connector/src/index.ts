@@ -145,7 +145,7 @@ export class OpenSearchVectorStorageConnector extends Middleware {
   /**
    * The builder for the `OpenSearchVectorStorageConnector` service.
    */
-  static Builder = OpenSearchVectorStorageConnectorBuilder;
+  public static readonly Builder = OpenSearchVectorStorageConnectorBuilder;
 
   /**
    * Construct constructor.

@@ -145,7 +145,7 @@ export class HashingImageProcessor extends Middleware {
   /**
    * The builder for the `HashingImageProcessor` service.
    */
-  static Builder = HashingImageProcessorBuilder;
+  public static readonly Builder = HashingImageProcessorBuilder;
 
   /**
    * Provider constructor.

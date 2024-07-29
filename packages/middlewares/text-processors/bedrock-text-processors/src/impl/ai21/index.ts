@@ -160,7 +160,7 @@ export class AI21TextProcessor extends Middleware {
   /**
    * The builder for the `AI21TextProcessor` service.
    */
-  static Builder = AI21TextProcessorBuilder;
+  public static readonly Builder = AI21TextProcessorBuilder;
 
   /**
    * Construct constructor.

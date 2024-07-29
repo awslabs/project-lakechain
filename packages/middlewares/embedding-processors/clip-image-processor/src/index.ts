@@ -116,7 +116,7 @@ export class ClipImageProcessor extends Middleware {
   /**
    * The builder for the `ClipImageProcessor` service.
    */
-  static Builder = ClipImageProcessorBuilder;
+  public static readonly Builder = ClipImageProcessorBuilder;
 
   /**
    * Provider constructor.

@@ -95,7 +95,7 @@ export class VideoMetadataExtractor extends Middleware {
   /**
    * The builder for the `VideoMetadataExtractor` service.
    */
-  static Builder = VideoMetadataExtractorBuilder;
+  public static readonly Builder = VideoMetadataExtractorBuilder;
 
   /**
    * Provider constructor.

@@ -133,7 +133,7 @@ export class ExtractPagesTask {
   /**
    * The `ExtractPagesTask` Builder.
    */
-  public static Builder = ExtractPagesTaskBuilder;
+  public static readonly Builder = ExtractPagesTaskBuilder;
 
   /**
    * Creates a new instance of the `ExtractPagesTask` class.

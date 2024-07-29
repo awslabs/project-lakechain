@@ -124,7 +124,7 @@ export class WhisperTranscriber extends Middleware {
   /**
    * The builder for the `WhisperTranscriber` service.
    */
-  static Builder = WhisperTranscriberBuilder;
+  public static readonly Builder = WhisperTranscriberBuilder;
 
   /**
    * Provider constructor.

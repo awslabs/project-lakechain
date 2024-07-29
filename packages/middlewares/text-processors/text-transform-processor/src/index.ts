@@ -112,7 +112,7 @@ export class TextTransformProcessor extends Middleware {
   /**
    * The builder for the `TextTransformProcessor` service.
    */
-  static Builder = TextTransformProcessorBuilder;
+  public static readonly Builder = TextTransformProcessorBuilder;
 
   /**
    * Construct constructor.

@@ -160,7 +160,7 @@ export class BarkSynthesizer extends Middleware {
   /**
    * The builder for the `BarkSynthesizer` service.
    */
-  static Builder = BarkSynthesizerBuilder;
+  public static readonly Builder = BarkSynthesizerBuilder;
 
   /**
    * Provider constructor.

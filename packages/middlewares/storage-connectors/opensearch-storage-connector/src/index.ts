@@ -133,7 +133,7 @@ export class OpenSearchStorageConnector extends Middleware {
   /**
    * The builder for the `OpenSearchStorageConnector` service.
    */
-  static Builder = OpenSearchStorageConnectorBuilder;
+  public static readonly Builder = OpenSearchStorageConnectorBuilder;
 
   /**
    * Construct constructor.

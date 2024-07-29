@@ -160,7 +160,7 @@ export class CohereTextProcessor extends Middleware {
   /**
    * The builder for the `CohereTextProcessor` service.
    */
-  static Builder = CohereTextProcessorBuilder;
+  public static readonly Builder = CohereTextProcessorBuilder;
 
   /**
    * Construct constructor.

@@ -95,7 +95,7 @@ export class SimpleTextProcessor extends Middleware {
   /**
    * The builder for the `SimpleTextProcessor` service.
    */
-  static Builder = SimpleTextProcessorBuilder;
+  public static readonly Builder = SimpleTextProcessorBuilder;
 
   /**
    * Provider constructor.

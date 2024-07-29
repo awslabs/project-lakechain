@@ -123,7 +123,7 @@ export class CohereEmbeddingProcessor extends Middleware {
   /**
    * The builder for the `CohereEmbeddingProcessor` service.
    */
-  static Builder = CohereEmbeddingProcessorBuilder;
+  public static readonly Builder = CohereEmbeddingProcessorBuilder;
 
   /**
    * Construct constructor.

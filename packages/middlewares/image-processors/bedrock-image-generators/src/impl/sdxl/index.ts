@@ -176,7 +176,7 @@ export class SdxlImageGenerator extends Middleware {
   /**
    * The builder for the `SdxlImageGenerator` service.
    */
-  static Builder = SdxlImageGeneratorBuilder;
+  public static readonly Builder = SdxlImageGeneratorBuilder;
 
   /**
    * Construct constructor.

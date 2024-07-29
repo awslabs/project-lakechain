@@ -79,7 +79,7 @@ export class InfrastructureDefinition {
   /**
    * The `InfrastructureDefinition` builder.
    */
-  public static Builder = InfrastructureDefinitionBuilder;
+  public static readonly Builder = InfrastructureDefinitionBuilder;
 
   /**
    * Creates a new instance of the `InfrastructureDefinition` class.

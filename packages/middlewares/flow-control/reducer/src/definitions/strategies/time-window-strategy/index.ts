@@ -107,7 +107,7 @@ export class TimeWindowStrategy implements ReducerStrategy {
   /**
    * The `TimeWindowStrategy` Builder.
    */
-  public static Builder = TimeWindowStrategyBuilder;
+  public static readonly Builder = TimeWindowStrategyBuilder;
 
   /**
    * Creates a new instance of the `TimeWindowStrategy` class.

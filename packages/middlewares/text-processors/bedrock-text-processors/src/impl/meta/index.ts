@@ -181,7 +181,7 @@ export class LlamaTextProcessor extends Middleware {
   /**
    * The builder for the `LlamaTextProcessor` service.
    */
-  static Builder = LlamaTextProcessorBuilder;
+  public static readonly Builder = LlamaTextProcessorBuilder;
 
   /**
    * Construct constructor.

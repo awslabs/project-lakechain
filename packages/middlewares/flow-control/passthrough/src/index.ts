@@ -104,7 +104,7 @@ export class Passthrough extends Middleware {
   /**
    * The builder for the `Passthrough` service.
    */
-  static Builder = PassthroughBuilder;
+  public static readonly Builder = PassthroughBuilder;
 
   /**
    * Provider constructor.

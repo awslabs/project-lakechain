@@ -111,7 +111,7 @@ export class RegexpTextSplitter extends Middleware {
   /**
    * The builder for the `RegexpTextSplitter` service.
    */
-  static Builder = RegexpTextSplitterBuilder;
+  public static readonly Builder = RegexpTextSplitterBuilder;
 
   /**
    * Construct constructor.

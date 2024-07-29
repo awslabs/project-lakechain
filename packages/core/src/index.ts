@@ -18,5 +18,4 @@ export * from './service';
 export * from './middleware';
 export * from './compute-type';
 export * from './cache-storage';
-export * from './visualization/dag-renderer/index';
 export * from './dsl/index';

@@ -16,7 +16,6 @@
     "./middleware": "./dist/middleware.js",
     "./compute-type": "./dist/compute-type.js",
     "./cache-storage": "./dist/cache-storage.js",
-    "./renderer": "./dist/visualization/dag-renderer/index.js",
     "./dsl": "./dist/dsl/index.js",
     "./dsl/intent": "./dist/dsl/intent.js",
     "./dsl/vocabulary/filters": "./dist/dsl/vocabulary/filters.js",
@@ -56,7 +55,6 @@
     "rimraf": "^6.0.1"
   },
   "dependencies": {
-    "@mermaid-js/mermaid-cli": "^10.9.1",
     "aws-cdk-lib": "2.150.0",
     "constructs": "^10.3.0",
     "lodash": "^4.17.21",

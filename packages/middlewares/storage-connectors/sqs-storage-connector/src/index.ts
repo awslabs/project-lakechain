@@ -76,7 +76,7 @@ export class SqsStorageConnector extends Middleware {
   /**
    * The builder for the `SqsStorageConnector` service.
    */
-  static Builder = SqsStorageConnectorBuilder;
+  public static readonly Builder = SqsStorageConnectorBuilder;
 
   /**
    * Provider constructor.

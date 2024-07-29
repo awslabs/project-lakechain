@@ -97,7 +97,7 @@ export class Reducer extends Middleware {
   /**
    * The builder for the `Reducer` service.
    */
-  static Builder = ReducerBuilder;
+  public static readonly Builder = ReducerBuilder;
 
   /**
    * Provider constructor.

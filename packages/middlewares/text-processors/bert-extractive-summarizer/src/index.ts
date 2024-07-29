@@ -148,7 +148,7 @@ export class BertExtractiveSummarizer extends Middleware {
   /**
    * The builder for the `BertExtractiveSummarizer` service.
    */
-  static Builder = BertExtractiveSummarizerBuilder;
+  public static readonly Builder = BertExtractiveSummarizerBuilder;
 
   /**
    * Construct constructor.

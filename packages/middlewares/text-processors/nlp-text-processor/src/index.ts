@@ -100,7 +100,7 @@ export class NlpTextProcessor extends Middleware {
   /**
    * The builder for the `NlpTextProcessor` service.
    */
-  static Builder = NlpTextProcessorBuilder;
+  public static readonly Builder = NlpTextProcessorBuilder;
 
   /**
    * Construct constructor.
