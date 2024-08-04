@@ -37,7 +37,7 @@ To orchestrate deployments, this middleware deploys an auto-scaled cluster of CP
 ### 🦙 Embedding Documents
 
 To use this middleware, you import it in your CDK stack and specify a VPC in which the processing cluster will be deployed.
-You will also need to select the specific embedding model to use within the container.
+You will also need to select the specific embedding model to use.
 
 > ℹ️ The below example shows how to deploy this middleware in a VPC using the [`nomic-embed-text`](https://ollama.com/library/nomic-embed-text) model.
 
@@ -86,7 +86,7 @@ class Stack extends cdk.Stack {
 
 Ollama supports a variety of embedding models, and you can specify the model and optionally the specific tag to use.
 
-> 💁 When no tag is provided, the `latest` tag is used. The example below showcases how to use a specific tag on a model.
+> 💁 When no tag is provided, the `latest` tag is automatically used. The example below showcases how to use a specific tag on a model.
 
 ```typescript
 import { OllamaEmbeddingProcessor, OllamaEmbeddingModel } from '@project-lakechain/ollama-embedding-processor';
