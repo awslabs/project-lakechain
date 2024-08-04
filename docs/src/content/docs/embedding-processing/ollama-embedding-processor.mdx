@@ -28,9 +28,9 @@ import icon from '../../../assets/icon-ollama.png';
 
 ---
 
-The Ollama embedding middleware enables customers to run [Ollama supported models](https://ollama.com/library) within their AWS account to create vector embeddings for text and markdown documents.
-It deploys an auto-scaled cluster of CPU or GPU-enabled containers to process documents using one of the selected embedding model,
-such that all the processing remains on customers AWS environment.
+The Ollama embedding middleware enables customers to run [Ollama embedding models](https://ollama.com/library) within their AWS account to create vector embeddings for text and markdown documents.
+
+To orchestrate deployments, this middleware deploys an auto-scaled cluster of CPU or GPU-enabled containers that consume documents from the middleware input queue. The cluster is deployed in the private subnet of the given VPC, and caches the models on an EFS storage to optimize cold-starts.
 
 ---
 
