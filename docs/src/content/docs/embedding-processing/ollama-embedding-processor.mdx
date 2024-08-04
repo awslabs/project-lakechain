@@ -163,7 +163,7 @@ Ollama supports processing documents in batches since [Ollama 0.2.0](https://git
 This middleware can take advantage of the new *parallel requests* feature of Ollama to create embeddings for multiple documents in a single request, thus improving
 the overall throughput of the processing cluster.
 
-> ℹ️ You can configure the maximum number of documents to process in a single batch by using the `.withBatchSize` method. Note that the maximum batch size is set to 10, and that batching depends on the size of the chosen instance.
+> ℹ️ You can configure the maximum number of documents to process in a single batch by using the `.withBatchSize` method. Note that the maximum batch size is set to 10, and that batching performance depends on the size of the chosen instance.
 
 ```typescript
 const ollama = new OllamaEmbeddingProcessor.Builder()
