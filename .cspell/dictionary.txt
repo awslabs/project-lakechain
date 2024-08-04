@@ -207,3 +207,6 @@ nodegroup
 managedupdates
 nemo
 mathstral
+nomic
+mxbai
+minilm
