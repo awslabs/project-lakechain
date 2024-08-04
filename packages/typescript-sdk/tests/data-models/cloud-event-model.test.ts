@@ -74,7 +74,7 @@ describe('Cloud Event Data Model', () => {
     try {
       new CloudEvent.Builder().build();
       assert(false);
-    } catch (error) {
+    } catch (_) {
       assert(true);
     }
   });

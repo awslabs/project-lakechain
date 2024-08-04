@@ -52,6 +52,7 @@ export class GraphResolver {
    */
   private addDocument(graph: DirectedGraph) {
     const document = this.event.data().document();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { properties: _1, custom: _2, type, ...rest } = this.event.data().metadata();
 
     // Add the current document to the graph.
