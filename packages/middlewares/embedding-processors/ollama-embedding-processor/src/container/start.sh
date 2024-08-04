@@ -23,7 +23,7 @@ wait_for_server() {
   local wait=5
   local url=http://127.0.0.1:11434
 
-  until $(curl --output /dev/null --silent --head --fail "$url"); do
+  until curl --output /dev/null --silent --head --fail "$url"; do
     if [ $retries -eq 0 ]; then
       echo "Ollama server failed to start."
       exit 1
