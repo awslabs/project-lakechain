@@ -22,9 +22,8 @@
 
 import path from 'path';
 import fs from 'fs';
-import * as cdk from 'aws-cdk-lib';
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
+import { App, Aspects, Stack, RemovalPolicy } from 'aws-cdk-lib';
 import { Annotations, Match } from 'aws-cdk-lib/assertions';
 import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
 import { TranscribeAudioProcessor } from '../../src';
@@ -37,7 +36,7 @@ const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
 const cache = new CacheStorage(mockStack, 'Cache', {});
 const bucket = new Bucket(mockStack, 'InputBucket', {
-  removalPolicy: cdk.RemovalPolicy.DESTROY,
+  removalPolicy: RemovalPolicy.DESTROY,
   enforceSSL: true
 });
 const oldResolve = path.resolve;

@@ -39,12 +39,12 @@
     "serialize-javascript": "^6.0.2"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.614.0",
-    "@aws-sdk/client-sns": "^3.614.0",
+    "@aws-sdk/client-s3": "^3.622.0",
+    "@aws-sdk/client-sns": "^3.622.0",
     "@types/aws-lambda": "^8.10.126",
-    "@types/fluent-ffmpeg": "2.1.24",
+    "@types/fluent-ffmpeg": "2.1.25",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^20.8.10",
+    "@types/node": "^22.1.0",
     "rimraf": "^6.0.1",
     "shx": "^0.3.4"
   },

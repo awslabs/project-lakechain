@@ -65,6 +65,10 @@ export class InfrastructureDefinitionBuilder {
     return (this);
   }
 
+  /**
+   * Builds the infrastructure definition.
+   * @returns the infrastructure definition.
+   */
   public build(): InfrastructureDefinition {
     return (InfrastructureDefinition.from(this.props));
   }

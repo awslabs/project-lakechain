@@ -295,7 +295,7 @@ export class RembgImageProcessor extends Middleware {
       }
     });
 
-    // The summarizer function.
+    // The processing function.
     this.processor = new lambda.DockerImageFunction(this, 'Compute', {
       description: 'A function removing the background from images.',
       code: lambda.DockerImageCode.fromImageAsset(

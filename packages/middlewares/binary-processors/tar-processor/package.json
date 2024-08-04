@@ -30,13 +30,13 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.614.0",
-    "@aws-sdk/client-sns": "^3.614.0",
+    "@aws-sdk/client-s3": "^3.622.0",
+    "@aws-sdk/client-sns": "^3.622.0",
     "@types/archiver": "^6.0.2",
     "@types/aws-lambda": "^8.10.142",
     "@types/gunzip-maybe": "^1.4.2",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.12",
+    "@types/node": "^22.1.0",
     "@types/tar-stream": "^3.1.3",
     "esbuild": "0.21.5",
     "rimraf": "^6.0.1"

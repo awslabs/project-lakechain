@@ -150,6 +150,20 @@ export const MiddlewarePropsSchema = z.object({
     .optional(),
 
   /**
+   * The number of documents to process in parallel
+   * by the middleware.
+   * @note this is a hint to the middleware, and every
+   * implementation might not support setting a maximum
+   * concurrency value.
+   * @min 1
+   */
+  maxConcurrency: z
+    .number()
+    .int()
+    .min(1)
+    .optional(),
+
+  /**
    * Whether to enable CloudWatch Insights for the
    * middlewares.
    * @default false
@@ -377,6 +391,20 @@ export abstract class MiddlewareBuilder {
    */
   public withBatchSize(batchSize: number) {
     this.props.batchSize = batchSize;
+    return (this);
+  }
+
+  /**
+   * Sets the number of documents to process in parallel
+   * by the middleware.
+   * @note this is a hint to the middleware, and every
+   * implementation might not support setting a maximum
+   * concurrency value.
+   * @param maxConcurrency the maximum concurrency value.
+   * @min 1
+   */
+  public withMaxConcurrency(maxConcurrency: number) {
+    this.props.maxConcurrency = maxConcurrency;
     return (this);
   }
 

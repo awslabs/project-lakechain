@@ -118,7 +118,6 @@ class Lambda implements LambdaInterface {
           key: path.join(prefix, entry.path),
           contentType: mimeType
         });
-        // Start uploading the file.
         entry.pipe(writeStream);
         // Wait for the upload to complete and send the
         // extracted document to the next middlewares.

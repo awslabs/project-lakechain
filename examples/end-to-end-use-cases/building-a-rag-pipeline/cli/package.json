@@ -22,8 +22,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.598.0",
-    "@aws-sdk/credential-provider-node": "^3.598.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.622.0",
+    "@aws-sdk/credential-provider-node": "^3.622.0",
     "@opensearch-project/opensearch": "^2.11.0",
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/node": "^20.14.12",
+    "@types/node": "^22.1.0",
     "@types/prompts": "^2.4.9",
     "rimraf": "^6.0.1",
     "typescript": "^5.5.3"

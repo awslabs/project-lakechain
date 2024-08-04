@@ -52,7 +52,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.seconds(30);
+const PROCESSING_TIMEOUT = cdk.Duration.seconds(60);
 
 /**
  * The execution runtime for used compute.

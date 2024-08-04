@@ -38,7 +38,7 @@
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.12",
+    "@types/node": "^22.1.0",
     "esbuild": "0.21.5",
     "npkill": "^0.12.1",
     "rimraf": "^6.0.1",

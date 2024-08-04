@@ -129,6 +129,9 @@ export default defineConfig({
 				}, {
 					label: 'PANN',
 					link: '/embedding-processing/panns-embedding-processor'
+				}, {
+					label: 'Ollama',
+					link: '/embedding-processing/ollama-embedding-processor'
 				}]
 			}, {
 				label: 'Generative AI',

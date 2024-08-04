@@ -33,12 +33,12 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.126",
     "@types/jest": "^29.5.7",
-    "@types/node": "^20.8.10",
+    "@types/node": "^22.1.0",
     "cdk-nag": "^2.27.229",
     "esbuild": "0.21.5",
     "eslint": "^8.57.0",
     "rimraf": "^6.0.1",
-    "ts-jest": "^29.2.3"
+    "ts-jest": "^29.2.4"
   },
   "dependencies": {
     "@aws-sdk/credential-provider-node": "^3.451.0",

@@ -1,0 +1,44 @@
+{
+  "name": "ollama-lancedb-pipeline",
+  "description": "An example showcasing an embedding pipeline using Ollama and LanceDB.",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "build": "npx tsc",
+    "build-pkg": "npx lerna run build --scope=ollama-lancedb-pipeline --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx --yes cdk synth",
+    "deploy": "npx --yes cdk deploy",
+    "hotswap": "npx --yes cdk deploy --hotswap",
+    "destroy": "npx --yes cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "esbuild": "0.23.0",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/pdf-text-converter": "*",
+    "@project-lakechain/ollama-embedding-processor": "*",
+    "@project-lakechain/lancedb-storage-connector": "*",
+    "@project-lakechain/recursive-character-text-splitter": "*",
+    "@project-lakechain/s3-event-trigger": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.150.0",
+    "constructs": "^10.3.0"
+  }
+}

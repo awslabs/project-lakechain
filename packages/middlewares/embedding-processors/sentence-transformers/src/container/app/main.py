@@ -92,7 +92,7 @@ def create_embeddings(data) -> list:
   ).tolist()
 
 
-def get_embeddings_from_event(event: dict):
+def get_embeddings(event: dict):
   """
   Creates embeddings for the document associated
   with the given event.
@@ -151,7 +151,7 @@ def on_message(message: dict):
     event      = json.loads(message['Body'])
     
     # Generate the embeddings for the document.
-    publish_event(get_embeddings_from_event(event))
+    publish_event(get_embeddings(event))
     
     # Deleting the message from the queue.
     sqs_client.delete_message(

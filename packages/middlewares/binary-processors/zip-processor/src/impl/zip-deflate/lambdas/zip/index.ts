@@ -139,12 +139,9 @@ class Lambda implements LambdaInterface {
     // Append each document read stream to the archive.
     for (const event of events) {
       const document = event.data().document();
-      const etag = document.etag();
-      const name = `${event.data().chainId()}/${etag}-${document.filename().basename()}`;
-      archive.append(
-        await document.data().asReadStream(),
-        { name }
-      );
+      const etag     = document.etag();
+      const name     = `${event.data().chainId()}/${etag}-${document.filename().basename()}`;
+      archive.append(await document.data().asReadStream(), { name });
     }
 
     // Wait for the process to complete.

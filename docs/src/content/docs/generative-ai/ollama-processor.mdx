@@ -28,9 +28,9 @@ import icon from '../../../assets/icon-ollama.png';
 
 ---
 
-The Ollama processor makes it possible to run the open-source language and image models supported by [Ollama](https://ollama.com/) on AWS within a customer VPC.
+The Ollama processor makes it possible to run open-source language and multimodal models supported by [Ollama](https://ollama.com/) on AWS.
 
-Using this middleware, customers can transform their text documents, as well as extract meaningful information from their image documents, while keeping their data secure within the boundaries of their AWS account.
+Using this middleware, customers can analyze and transform their text and image documents, while keeping their data secure within the boundaries of their AWS account.
 
 > 💁 You can view the list of models supported by Ollama [here](https://ollama.com/library).
 
@@ -120,11 +120,13 @@ const ollama = new OllamaProcessor.Builder()
 
 #### Escape Hatch
 
-The `OllamaModel` class provides a quick way to reference existing models, and select a specific tag. However, as Ollama adds new models, you may be in a situation where a model is not yet referenced by this middleware.
+The `OllamaModel` class provides a quick way to reference existing models, and select a specific tag.
+However, as Ollama adds new models, you may be in a situation where a model is not yet referenced by this middleware.
 
-To address this situation, you can manually specify a model definition pointing to the supported Ollama model you wish to run. You do so by specifying the name of the model in the ollama library, the tag you wish to use, and its input and output mime-types.
+To address this situation, you can manually specify a model definition pointing to the supported Ollama model you wish to run.
+You do so by specifying the name of the model in the [Ollama library](https://ollama.com/library), the tag you wish to use, and its supported input and output mime-types.
 
-> 💁 In the example below, we redefine the `llava` image model and its inputs and outputs.
+> 💁 In the example below, we define the `llava` image model and its inputs and outputs.
 
 ```typescript
 import { OllamaProcessor, OllamaModel } from '@project-lakechain/ollama-processor';
@@ -203,7 +205,7 @@ Below is a description of the fields associated with the infrastructure definiti
 | ----- | ----------- |
 | maxMemory | The maximum RAM in MiB to allocate to the container. |
 | gpus | The number of GPUs to allocate to the container (only relevant for GPU instances). |
-| instanceType | The EC2 instance type to use for running the container. |
+| instanceType | The EC2 instance type to use for running the containers. |
 
 <br />
 
@@ -215,7 +217,7 @@ The Ollama processor can run on either CPU or GPU compute. It packages the Ollam
 
 To orchestrate deployments, this middleware deploys an ECS auto-scaled cluster of containers that consume documents from the middleware input queue. The cluster is deployed in the private subnet of the given VPC, and caches the models on an EFS storage to optimize cold-starts.
 
-> ℹ️ The average cold-start for the Ollama containers is around 3 minutes when no instances are running.
+> ℹ️ The average cold-start for Ollama containers is around 3 minutes when no instances are running.
 
 ![Ollama Processor Architecture](../../../assets/ollama-processor-architecture.png)
 
