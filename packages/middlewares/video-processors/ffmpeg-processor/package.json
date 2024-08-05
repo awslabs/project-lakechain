@@ -39,8 +39,8 @@
     "serialize-javascript": "^6.0.2"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.622.0",
-    "@aws-sdk/client-sns": "^3.622.0",
+    "@aws-sdk/client-s3": "^3.623.0",
+    "@aws-sdk/client-sns": "^3.623.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/fluent-ffmpeg": "2.1.25",
     "@types/lodash": "^4.17.7",
@@ -49,7 +49,7 @@
     "shx": "^0.3.4"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.150.0",
+    "aws-cdk-lib": "2.151.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

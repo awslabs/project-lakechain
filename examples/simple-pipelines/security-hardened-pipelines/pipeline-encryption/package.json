@@ -35,7 +35,7 @@
     "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.150.0",
+    "aws-cdk-lib": "2.151.0",
     "constructs": "^10.3.0"
   }
 }
