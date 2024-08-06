@@ -100,10 +100,10 @@ This is the reason why a middleware that only supports images, is not invoked wh
 
 ### Cost
 
-Last, but definitely not least, this messaging design has been selected because of its very low cost. At **0.80$ per million** exchanged messages between middlewares, this messaging model provides a very cost-effective pay-as-you-go pricing.
+Last, but definitely not least, this messaging design has been selected because of its very low cost. At **1.20$ per million** exchanged messages between middlewares, this messaging model provides a very cost-effective pay-as-you-go pricing.
 
-The 0.80$/million message exchanged calculation goes as follow :
-0.40$ per million SQS [SendMessage](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#sendMessage-property) actions + 0.40$ per million SQS [ReceiveMessage](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#receiveMessage-property) action for receiving each message exchanged across middlewares.
+The 1.20$/million message exchanged calculation goes as follow :
+0.40$ per million SQS [SendMessage](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#sendMessage-property) actions + 0.40$ per million SQS [ReceiveMessage](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#receiveMessage-property) action for receiving each message exchanged across middlewares + 0.40$ per million SQS [DeleteMessage](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SQS.html#deleteMessage-property) action for deleting each message after processing.
 
 > ⚠️ Please note that this cost calculation only applies to messages exchanged between middlewares, and does not include the cost of running the compute associated with each middleware.
 
