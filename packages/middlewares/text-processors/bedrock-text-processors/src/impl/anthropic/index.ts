@@ -214,7 +214,6 @@ export class AnthropicTextProcessor extends Middleware {
     // in the lambda environment.
     if (this.props.prompt.subject.type === 'value'
       && this.props.prompt.subject.value.length > 3072) {
-      // Upload the prompt as a document in the internal storage.
       new s3deploy.BucketDeployment(this, 'Prompt', {
         sources: [s3deploy.Source.data('prompt.txt', this.props.prompt.subject.value)],
         destinationBucket: this.storage.getBucket()

@@ -161,13 +161,15 @@ def extract_document(event: dict, output_type = 'text') -> bytes:
   :return: The extracted text from the document.
   """
   document = event['data']['document']
+  doc_meta = event['data']['metadata']
   chain_id = event['data']['chainId']
   data     = load_document(document['url'])
   metadata = get_document_metadata(data)
+  attrs    = doc_meta.get('properties', {}).get('attrs', {})
   name     = f"{document['etag']}/{chain_id}-{str(uuid.uuid4())}-output"
 
   # Enrich the event with the document metadata.
-  if not 'pages' in metadata['properties']['attrs']:
+  if not 'pages' in attrs:
     merge(event['data']['metadata'], metadata)
 
   # Extract the layout of the document.

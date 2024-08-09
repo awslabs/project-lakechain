@@ -32,10 +32,10 @@
   "dependencies": {
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
-    "@project-lakechain/bedrock-text-processors": "*",
     "@project-lakechain/pandoc-text-converter": "*",
     "@project-lakechain/pdf-text-converter": "*",
     "@project-lakechain/sentence-text-splitter": "*",
+    "@project-lakechain/structured-entity-extractor": "*",
     "@project-lakechain/reducer": "*",
     "@project-lakechain/transform": "*"
   },

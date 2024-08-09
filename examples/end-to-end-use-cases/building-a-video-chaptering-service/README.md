@@ -16,18 +16,18 @@ flowchart LR
   Bucket[S3 Bucket] -.-> S3[S3 Event Trigger]
   S3 -. Video .-> FFMPEGAudio[FFMPEG Processor]
   FFMPEGAudio -. Audio .-> Transcribe[Transcribe Audio Processor]
-  Transcribe -. Text .-> Anthropic[Anthropic Text Processor]
-  Anthropic -. Text .-> Reducer[Reducer]
-  Anthropic -. Text .-> Reducer[Reducer]
+  Transcribe -. Text .-> Extractor[Structured Entity Extractor]
+  Extractor -. JSON .-> Reducer[Reducer]
+  S3 -. Video .-> Reducer
   Reducer -. Chapters + Video .-> FFMPEGVideo[FFMPEG Processor]
-  FFMPEGVideo -. Videos .-> S3Storage[S3 Storage Connector]
-  FFMPEGVideo -. Videos .-> S3Storage[S3 Storage Connector]
+  FFMPEGVideo -. Chapters .-> S3Storage[S3 Storage Connector]
+  FFMPEGVideo -. Chapters .-> S3Storage[S3 Storage Connector]
   S3Storage -. Videos .-> S3Destination[S3 Destination Bucket]
 ```
 
 ## What does this example do ❓
 
-This example showcases how to automatically chapter videos using their transcript and Generative AI on Amazon Bedrock.
+This example showcases how to automatically chapter videos using their transcript and Generative AI technologies using Amazon Bedrock.
 
 > 💁 The pipeline takes an input video from the pipeline source bucket and outputs a collection of chaptered videos and a JSON description of the generated chapters.
 
@@ -42,11 +42,10 @@ The sequence of processing steps in the pipeline goes as follows.
 1. The pipeline is triggered by a video upload to a source S3 bucket.
 2. The FFMPEG Processor extracts the audio from the video.
 3. The audio is transcribed into text using the Transcribe Audio Processor.
-4. The text is processed by the Anthropic Text Processor to generate a list of chapters from the transcript.
-5. The output of the Anthropic Text Processor is parsed to ensure that the chapters are correctly formatted as a JSON document.
-6. The reducer will reduce both the input video and the chapters into a single document.
-7. The FFMPEG Processor will then use the reduced document to generate multiple videos associated with each chapter.
-8. The generated videos are then uploaded to a destination S3 bucket along with the chapters JSON description.
+4. The text is processed by the Structured Entity Extractor middleware to generate a list of chapters from the transcript as a JSON document.
+5. The reducer reduces both the input video and the chapters into a single document.
+6. The FFMPEG Processor uses the reduced chapter description and the video to generate multiple videos associated with each chapter.
+7. The generated videos are then uploaded to a destination S3 bucket along with the chapters JSON description.
 
 ## 📝 Requirements
 

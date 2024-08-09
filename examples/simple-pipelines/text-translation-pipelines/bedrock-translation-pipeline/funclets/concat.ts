@@ -27,11 +27,12 @@ export const concat = async (events: CloudEvent[], sdk: Sdk, env: Environment) =
   // Concatenate all the translated chunks.
   for (const event of sorted) {
     const document = event.data().document();
-    const buffer = (await document.data().asBuffer()).toString('utf-8');
+    const content  = (await document.data().asBuffer()).toString('utf-8');
+    const result   = JSON.parse(content).translationResult;
     text = Buffer.concat([
       text,
-      Buffer.from('\n\n'),
-      Buffer.from(buffer)
+      Buffer.from(result, 'utf-8'),
+      Buffer.from('\n\n')
     ]);
   }
 

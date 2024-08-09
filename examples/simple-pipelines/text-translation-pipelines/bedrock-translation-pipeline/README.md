@@ -12,12 +12,12 @@ flowchart LR
   Trigger -. Text .-> TextSplitter[Sentence Text Splitter]
   PDF -. Text .-> TextSplitter
   Pandoc -. Text .-> TextSplitter
-  TextSplitter -. Chunks .-> Anthropic[Anthropic Text Processor]
-  TextSplitter -. Chunks .-> Anthropic[Anthropic Text Processor]
-  TextSplitter -. Chunks .-> Anthropic[Anthropic Text Processor]
-  Anthropic -. Translated Chunks .-> Reducer[Reducer]
-  Anthropic -. Translated Chunks .-> Reducer[Reducer]
-  Anthropic -. Translated Chunks .-> Reducer[Reducer]
+  TextSplitter -. Chunks .-> Extractor[Structured Entity Extractor]
+  TextSplitter -. Chunks .-> Extractor[Structured Entity Extractor]
+  TextSplitter -. Chunks .-> Extractor[Structured Entity Extractor]
+  Extractor -. Translated Chunks .-> Reducer[Reducer]
+  Extractor -. Translated Chunks .-> Reducer[Reducer]
+  Extractor -. Translated Chunks .-> Reducer[Reducer]
   Reducer -. Aggregated Event .-> Transform[Transform]
   Transform -. Translated Text .-> S3[S3 Storage Connector]
   S3 -.-> Output[S3 Bucket]
@@ -29,9 +29,7 @@ In this pipeline, we demonstrate how to translate long-form documents using a la
 
 Due to the limitation of 4k output tokens of many LLMs, we take input documents (Text, PDF, Docx, HTML, etc.) and chunk them using the [Sentence Text Splitter](https://awslabs.github.io/project-lakechain/text-splitters/sentence-text-splitter/) middleware while preserving sentence boundaries.
 
-Each chunk is then translated using the `Anthropic Text Processor` middleware to french (this can be changed by modifying the prompt in the example), and the translated chunks are then aggregated into a single document using the `Reducer` middleware.
-
-The aggregated document is then sorted and transformed back into a single text file, and stored in a destination S3 bucket.
+Each chunk is then translated using the `Structured Entity Extractor` middleware to french (this can be changed by modifying the prompt in the example) as a structured JSON document. The translated chunks are then aggregated into a single document using the `Reducer` middleware, sorted by the original order of the chunks, and transformed back into a single text file stored in a destination S3 bucket.
 
 ## 📝 Requirements
 

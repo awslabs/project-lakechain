@@ -11,3 +11,4 @@ Pipeline | Description
 [Knowledge Graph Pipeline](knowledge-graph-pipeline) | A pipeline for semantic ontology extraction from documents.
 [Metadata Extraction Pipeline](metadata-extraction-pipeline) | A pipeline extracting metadata from document files.
 [Topic Modeling Pipeline](topic-modeling-pipeline) | An example showcasing how to extract relevant topics from text documents.
+[Structured Data Extraction Pipeline](structured-data-extraction-pipeline) | A pipeline for extracting structured data from documents using Amazon Bedrock.

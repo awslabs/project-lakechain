@@ -162,6 +162,9 @@ export default defineConfig({
 				}, {
 					label: 'Ollama',
 					link: '/generative-ai/ollama-processor'
+				}, {
+					label: 'Entity Extractor',
+					link: '/generative-ai/structured-entity-extractor'
 				}]
 			}, {
 				label: 'Vector Stores',

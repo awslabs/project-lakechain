@@ -34,8 +34,9 @@
     "@project-lakechain/transcribe-audio-processor": "*",
     "@project-lakechain/reducer": "*",
     "@project-lakechain/ffmpeg-processor": "*",
-    "@project-lakechain/bedrock-text-processors": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/structured-entity-extractor": "*",
+    "@project-lakechain/s3-storage-connector": "*",
+    "zod": "^3.23.8"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.151.0",

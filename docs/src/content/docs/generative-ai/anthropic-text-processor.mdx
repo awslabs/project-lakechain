@@ -192,9 +192,9 @@ const anthropic = new AnthropicTextProcessor.Builder()
 
 ### 🧩 Composite Events
 
-In addition to handling single documents, the Anthropic text processor also supports [composite events](/project-lakechain/general/events#-composite-events) as an input. This means that it can take multiple text and image documents and compile them into a single input for the model.
+In addition to handling single documents, the Anthropic text processor also supports [composite events](/project-lakechain/general/events#-composite-events) as an input. This means that it can take multiple text and image documents and compile them into a single input to the model.
 
-This can come in handy in map-reduce pipelines where you use the [Reducer]() to combine multiple documents into a single input having a similar semantic, for example, multiple pages of a PDF document that you would like the model to summarize as a whole, while keeping the context between the pages.
+This can come in handy in map-reduce pipelines where you use the [Reducer](/project-lakechain/flow-control/reducer) to combine multiple documents into a single input having a similar semantic, for example, multiple pages of a PDF document that you would like the model to summarize as a whole, while keeping the context between the pages.
 
 <br />
 
@@ -282,4 +282,3 @@ The middleware also supports composite events as an input, which can be used to 
 
 - [Claude Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/claude-summarization-pipeline) - Builds a pipeline for text summarization using Amazon Bedrock and Anthropic Claude.
 - [Audio Recording Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/audio-recording-summarization-pipeline) - Builds a pipeline for summarizing audio recordings using Amazon Transcribe and Amazon Bedrock.
-- [Video Summarization Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/summarization-pipelines/video-summarization-pipeline) - Builds a pipeline for video summarization.

@@ -1,11 +1,11 @@
 {
-  "name": "video-summarization-pipeline",
-  "description": "Builds a pipeline for video summarization using Amazon Transcribe and Amazon Bedrock.",
+  "name": "structured-data-extraction-pipeline",
+  "description": "Builds a pipeline for structured data extraction from documents using Amazon Bedrock.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
-    "build-pkg": "npx lerna run build --scope=video-summarization-pipeline --include-dependencies",
+    "build-pkg": "npx lerna run build --scope=structured-data-extraction-pipeline --include-dependencies",
     "clean": "npx rimraf dist/ cdk.out/ node_modules/",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",
@@ -30,10 +30,10 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/ffmpeg-processor": "*",
-    "@project-lakechain/transcribe-audio-processor": "*",
     "@project-lakechain/structured-entity-extractor": "*",
+    "@project-lakechain/pandoc-text-converter": "*",
+    "@project-lakechain/pdf-text-converter": "*",
+    "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
     "zod": "^3.23.8"
   },

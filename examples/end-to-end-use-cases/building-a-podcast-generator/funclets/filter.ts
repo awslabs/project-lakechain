@@ -13,6 +13,5 @@ export const filterOut = async (event: Readonly<CloudEvent>) => {
   if (!metadata.createdAt) {
     return (false);
   }
-  // We compare the creation date of the feed item with today's date.
   return (new Date(metadata.createdAt).toDateString() === new Date().toDateString());
 };

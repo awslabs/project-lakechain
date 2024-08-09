@@ -27,9 +27,10 @@ import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { TranscribeAudioProcessor } from '@project-lakechain/transcribe-audio-processor';
-import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
+import { StructuredEntityExtractor } from '@project-lakechain/structured-entity-extractor';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 import { FfmpegProcessor } from '@project-lakechain/ffmpeg-processor';
+import { schema } from './schema';
 
 import {
   audioExtraction,
@@ -41,10 +42,10 @@ import {
 } from '@project-lakechain/reducer';
 
 /**
- * This is the prompt passed to the Claude model to generate
- * the chapters.
+ * A set of specific instructions to guide the model
+ * in extracting structured entities.
  */
-const prompt = fs.readFileSync(path.join(__dirname, 'prompt.txt'), 'utf-8');
+const instructions = fs.readFileSync(path.join(__dirname, 'prompt.txt'), 'utf-8');
 
 /**
  * An example showcasing how to extract chapters from
@@ -123,21 +124,16 @@ export class VideoChapteringStack extends cdk.Stack {
       .withOutputFormats('vtt')
       .build();
 
-    // This step uses Anthropic Claude on Bedrock to extract the
-    // key chapters from the VTT file.
-    const chapterCreator = new AnthropicTextProcessor.Builder()
+    // The `StructuredEntityExtractor` component will extract
+    // the chapters from the transcribed audio.
+    const chapterCreator = new StructuredEntityExtractor.Builder()
       .withScope(this)
-      .withIdentifier('AnthropicTextProcessor')
+      .withIdentifier('StructuredEntityExtractor')
       .withCacheStorage(cache)
-      .withSource(transcribe)
       .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
-      .withPrompt(prompt)
-      .withAssistantPrefill('[')
-      .withModelParameters({
-        temperature: 0.3,
-        max_tokens: 4096
-      })
+      .withSource(transcribe)
+      .withSchema(schema)
+      .withInstructions(instructions)
       .build();
 
     // The reducer middleware will aggregate the input video

@@ -85,6 +85,8 @@ export class StaticCounterStrategyConstruct extends Construct {
     const logGroup = reducer.getLogGroup();
     const eventCount = props.strategy.compile().eventCount;
 
+    console.log('eventCount', eventCount);
+
     ///////////////////////////////////////////
     ///////       Event Storage         ///////
     ///////////////////////////////////////////
@@ -307,7 +309,10 @@ export class StaticCounterStrategyConstruct extends Construct {
       retryAttempts: props.maxRetry,
       filters: [
         lambda.FilterCriteria.filter({
-          eventName: lambda.FilterRule.notEquals('REMOVE'),
+          eventName: lambda.FilterRule.or(
+            'INSERT',
+            'MODIFY'
+          ),
           dynamodb: {
             Keys: {
               sk: {
@@ -316,7 +321,7 @@ export class StaticCounterStrategyConstruct extends Construct {
             },
             NewImage: {
               count: {
-                N: lambda.FilterRule.isEqual(eventCount)
+                N: [`${eventCount}`]
               }
             }
           }

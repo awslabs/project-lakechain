@@ -14,7 +14,9 @@ import {
  * @param utils a set of utilities provided by the middleware.
  * @returns the FFMPEG instance.
  */
-export const ffmpegIntent = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) => {
+export const concat = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) => {
+  let chain = ffmpeg();
+
   // Get all audio files and sort them by chunk order.
   const videos = events
     .filter((event) => event.data().document().mimeType() === 'audio/mpeg')
@@ -23,11 +25,8 @@ export const ffmpegIntent = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: 
       const mb = b.data().metadata().properties?.attrs as TextMetadata;
       return ((ma.chunk?.order as number) - (mb.chunk?.order as number));
     });
-  
-  // Create a new FFMPEG instance.
-  let chain = ffmpeg();
 
-  // Add all input audio to the chain.
+  // Concatenate input audio files.
   for (const video of videos) {
     chain = chain.addInput(utils.file(video));
   }

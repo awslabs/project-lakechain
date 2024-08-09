@@ -9,15 +9,14 @@ flowchart LR
   Input([Recordings]) -.-> Trigger[S3 Trigger]
   Trigger -. Video .-> FFMPEG[FFMPEG Processor]
   FFMPEG -. Audio .-> Transcribe[Transcribe Audio Processor]
-  Transcribe -. VTT .-> Anthropic[Anthropic Text Processor]
-  Transcribe -. VTT .-> S3[S3 Storage Connector]
-  Anthropic -. JSON .-> S3
+  Transcribe -. VTT .-> Extractor[Structured Entity Extractor]
+  Extractor -. JSON .-> S3
   S3 -.-> Bucket[S3 Bucket]
 ```
 
 ## ❓ What is Happening
 
-In this pipeline, we demonstrate how to summarize and extract metadata from videos using Amazon Transcribe and the Anthropic [Claude v3 Sonnet](https://aws.amazon.com/fr/about-aws/whats-new/2024/03/anthropics-claude-3-sonnet-model-amazon-bedrock/) model hosted on Amazon Bedrock.
+In this pipeline, we demonstrate how to summarize and extract metadata from videos using Amazon Transcribe and Amazon Bedrock.
 
 > 💁 The pipeline takes an input video from the pipeline source bucket and outputs a structured JSON document with metadata describing the video.
 
@@ -29,7 +28,7 @@ In this pipeline, we demonstrate how to summarize and extract metadata from vide
 
 Using this pipeline, you can streamline the process of metadata extraction on videos including video podcasts, TV shows, daily news, etc. without your data leaving AWS.
 
-This pipeline stores the result of the transcription and the extracted metadata in a destination bucket, such that you can compare the original transcription with the summary.
+> The result of the structured data extraction is stored in the destination bucket.
 
 ## 📝 Requirements
 

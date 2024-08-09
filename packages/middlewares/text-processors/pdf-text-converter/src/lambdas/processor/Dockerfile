@@ -1,11 +1,10 @@
 FROM public.ecr.aws/lambda/python:3.11
 
 # Image arguments.
-ARG PANDOC_VERSION=3.1.11
+ARG PANDOC_VERSION=3.3
 
-# Add EPEL repository, Install dependencies and clean up in one layer
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
-  yum update -y && \
+# Install dependencies and clean up in one layer
+RUN yum update -y && \
   yum install -y \
       wget \
       tar \

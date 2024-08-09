@@ -20,24 +20,7 @@ export const transformExpression = async (events: InputEvent[], sdk: Sdk, env: E
   const outputs  = [];
   const document = events[0].data().document();
   const buffer   = (await document.data().asBuffer()).toString('utf-8');
-  let json       = null;
-
-  // We first check if the document is a valid JSON.
-  try {
-    json = JSON.parse(buffer);
-    if (!Array.isArray(json)) {
-      throw new Error('The document is not an array');
-    }
-  } catch (err) {
-    // If the document is not a valid JSON, we parse the content
-    // of the document until we find the start of the JSON document.
-    const str = buffer.match(/\[.*?\]/s);
-    if (!str) {
-      throw new Error('No valid JSON found in the document');
-    }
-    // We parse the JSON document.
-    json = JSON.parse(str[0]);
-  }
+  const json     = JSON.parse(buffer).conversation;
 
   // For each conversation, we create a new document containing
   // the conversation, and update the document metadata to include

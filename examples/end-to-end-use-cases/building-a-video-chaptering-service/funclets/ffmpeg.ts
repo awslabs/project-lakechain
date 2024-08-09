@@ -16,13 +16,13 @@ import {
  * @returns the FFMPEG chain.
  */
 export const audioExtraction = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) => {
-  const videos = events.filter(
+  const video = events.find(
     (event) => event.data().document().mimeType() === 'video/mp4'
   );
 
   // Create the FFMPEG chain.
   return (ffmpeg()
-    .input(utils.file(videos[0]))
+    .input(utils.file(video))
     .noVideo()
     .save('output.mp3')
   );
@@ -40,7 +40,7 @@ export const audioExtraction = async (events: CloudEvent[], ffmpeg: Ffmpeg, util
  */
 export const shorten = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) => {
   const video = events.find((event) => event.data().document().mimeType() === 'video/mp4');
-  const short = events.find((event) => event.data().document().mimeType() === 'text/plain');
+  const short = events.find((event) => event.data().document().mimeType() === 'application/json');
   let chain   = ffmpeg();
 
   /**
@@ -71,7 +71,7 @@ export const shorten = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: Ffmpe
     // using the given start and end times. We also
     // resize the video to match the aspect ratio of
     // a short video.
-    for (const moment of description) {
+    for (const moment of description.chapters) {
       const start = vttTimeToSeconds(moment.start);
       const end = vttTimeToSeconds(moment.end);
 

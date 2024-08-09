@@ -38,7 +38,7 @@
     "@project-lakechain/polly-synthesizer": "*",
     "@project-lakechain/syndication-feed-processor": "*",
     "@project-lakechain/ffmpeg-processor": "*",
-    "@project-lakechain/bedrock-text-processors": "*",
+    "@project-lakechain/structured-entity-extractor": "*",
     "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {

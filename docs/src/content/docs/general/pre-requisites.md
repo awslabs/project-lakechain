@@ -6,15 +6,13 @@ In this section we outline the main pre-requisites for using Project Lakechain a
 
 ### 💻 Environment
 
-Project Lakechain has been successfully tested on different Linux distributions, MacOS, and Cloud development environments such as [AWS Cloud9](https://docs.aws.amazon.com/cloud9/latest/user-guide/welcome.html) and [GitHub Codespaces](https://github.com/features/codespaces).
+Project Lakechain has been successfully tested on different Linux distributions, MacOS, and Cloud development environments such as [GitHub Codespaces](https://github.com/features/codespaces).
 
 We recommend having 50GB of free storage on your development machine to be able to build and deploy all the middlewares and examples.
 
 > 👇 We have a ready made Dev Container for GitHub Codespaces that you can use to get started quickly.
 
 <a href="https://github.com/codespaces/new/awslabs/project-lakechain"><img alt="Github Codespaces" src="https://github.com/codespaces/badge.svg" /></a>
-
-> ℹ️ **Tip** We've also created a [Cloud9 script](https://github.com/awslabs/project-lakechain/blob/master/.cloud9/resize.sh) that you can use in your Cloud9 environment to resize the EBS storage associated with the instance.
 
 <br>
 

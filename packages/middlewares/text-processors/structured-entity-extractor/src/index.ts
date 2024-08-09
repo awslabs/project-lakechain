@@ -21,21 +21,23 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sources from 'aws-cdk-lib/aws-lambda-event-sources';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as node from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 
+import { z } from 'zod';
 import { Construct } from 'constructs';
 import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
-import { BASE_IMAGE_INPUTS, BASE_TEXT_INPUTS } from './definitions/types';
+import { CacheStorage } from '@project-lakechain/core';
+import { zodToJsonSchema } from 'zod-to-json-schema';
+import { Model } from './definitions/model';
 
 import {
-  SemanticOntologyExtractorProps,
-  SemanticOntologyExtractorPropsSchema
+  ModelParameters,
+  StructuredEntityExtractorProps,
+  StructuredEntityExtractorPropsSchema
 } from './definitions/opts';
-import {
-  CustomOntologyClassifier,
-  DefaultOntologyClassifier
-} from './definitions/classifiers';
 import {
   Middleware,
   MiddlewareBuilder,
@@ -47,8 +49,8 @@ import {
  * The service description.
  */
 const description: ServiceDescription = {
-  name: 'semantic-ontology-extractor',
-  description: 'Extracts semantic ontology from processed documents.',
+  name: 'structured-entity-extractor',
+  description: 'Extracts structured entities from processed documents.',
   version: '0.7.0',
   attrs: {}
 };
@@ -70,15 +72,10 @@ const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
 const DEFAULT_MEMORY_SIZE = 256;
 
 /**
- * The default Bedrock model to use for ontology extraction.
+ * The builder for the `StructuredEntityExtractor` service.
  */
-const DEFAULT_MODEL_ID = 'anthropic.claude-3-sonnet-20240229-v1:0';
-
-/**
- * The builder for the `SemanticOntologyExtractor` service.
- */
-class SemanticOntologyExtractorBuilder extends MiddlewareBuilder {
-  private middlewareProps: Partial<SemanticOntologyExtractorProps> = {};
+class StructuredEntityExtractorBuilder extends MiddlewareBuilder {
+  private middlewareProps: Partial<StructuredEntityExtractorProps> = {};
 
   /**
    * Sets the AWS region in which the model
@@ -93,25 +90,71 @@ class SemanticOntologyExtractorBuilder extends MiddlewareBuilder {
   }
 
   /**
-   * Sets the ontology classifier to use to extract
-   * semantic ontology from documents.
-   * @param ontologyClassifier the ontology classifier to use.
+   * Sets the schema to use to extract structured
+   * entities from documents.
+   * @param schema the schema to use to extract structured
+   * entities from documents.
    * @returns the current builder instance.
    */
-  public withOntologyClassifier(ontologyClassifier: DefaultOntologyClassifier | CustomOntologyClassifier) {
-    this.middlewareProps.ontologyClassifier = ontologyClassifier;
+  public withSchema(schema: z.ZodSchema<any>) {
+    this.middlewareProps.schema = schema;
     return (this);
   }
 
   /**
-   * @returns a new instance of the `SemanticOntologyExtractor`
+   * Sets the output type of the structured entities.
+   * @param outputType the output type of the structured entities.
+   * @returns the current builder instance.
+   * @default 'json'
+   */
+  public withOutputType(outputType: 'json' | 'metadata') {
+    this.middlewareProps.outputType = outputType;
+    return (this);
+  }
+
+  /**
+   * Sets the model to use for structured entity extraction.
+   * @param model the model to use for structured entity extraction.
+   * @returns the current builder instance.
+   * @default 'anthropic.claude-3-sonnet-20240229-v1:0'
+   */
+  public withModel(model: Model) {
+    this.middlewareProps.model = model;
+    return (this);
+  }
+
+  /**
+   * Sets optional instruction to pass to the model to guide it
+   * in extracting structured entities.
+   * @param instructions optional instruction to pass to the model to guide it
+   * in extracting structured entities.
+   * @returns the current builder instance.
+   */
+  public withInstructions(instructions: string) {
+    this.middlewareProps.instructions = instructions;
+    return (this);
+  }
+
+  /**
+   * Sets the parameters to pass to the text model.
+   * @param parameters the parameters to pass to the text model.
+   * @default {}
+   * @returns the current builder instance.
+   */
+  public withModelParameters(parameters: ModelParameters) {
+    this.middlewareProps.modelParameters = parameters;
+    return (this);
+  }
+
+  /**
+   * @returns a new instance of the `StructuredEntityExtractor`
    * service constructed with the given parameters.
    */
-  public build(): SemanticOntologyExtractor {
-    return (new SemanticOntologyExtractor(
+  public build(): StructuredEntityExtractor {
+    return (new StructuredEntityExtractor(
       this.scope,
       this.identifier, {
-        ...this.middlewareProps as SemanticOntologyExtractorProps,
+        ...this.middlewareProps as StructuredEntityExtractorProps,
         ...this.props
       }
     ));
@@ -119,9 +162,14 @@ class SemanticOntologyExtractorBuilder extends MiddlewareBuilder {
 }
 
 /**
- * A service extracting semantic ontology from processed documents.
+ * A service extracting structured data from documents.
  */
-export class SemanticOntologyExtractor extends Middleware {
+export class StructuredEntityExtractor extends Middleware {
+
+  /**
+   * The storage containing processed files.
+   */
+  public storage: CacheStorage;
 
   /**
    * The data processor lambda function.
@@ -129,14 +177,14 @@ export class SemanticOntologyExtractor extends Middleware {
   public eventProcessor: lambda.IFunction;
 
   /**
-   * The builder for the `SemanticOntologyExtractor` service.
+   * The builder for the `StructuredEntityExtractor` service.
    */
-  public static readonly Builder = SemanticOntologyExtractorBuilder;
+  public static readonly Builder = StructuredEntityExtractorBuilder;
 
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, private props: SemanticOntologyExtractorProps) {
+  constructor(scope: Construct, id: string, private props: StructuredEntityExtractorProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
@@ -145,14 +193,52 @@ export class SemanticOntologyExtractor extends Middleware {
     });
 
     // Validate the properties.
-    this.props = this.parse(SemanticOntologyExtractorPropsSchema, props);
+    this.props = this.parse(StructuredEntityExtractorPropsSchema, props);
+
+    ///////////////////////////////////////////
+    ////////    Processing Storage      ///////
+    ///////////////////////////////////////////
+
+    this.storage = new CacheStorage(this, 'Storage', {
+      encryptionKey: props.kmsKey
+    });
+
+    ///////////////////////////////////////////
+    //////////    Schema Handler      /////////
+    ///////////////////////////////////////////
+
+    // Convert the Zod schema to a JSON schema.
+    const jsonSchema = zodToJsonSchema(this.props.schema) as any;
+
+    // Stringified JSON schema.
+    const schema = JSON.stringify(jsonSchema);
+
+    // Ensure the root schema is an object.
+    if (jsonSchema.type !== 'object') {
+      throw new Error(`
+        The root schema you provide must be of type 'object'.
+      `);
+    }
+
+    // Create a reference to the schema.
+    let reference: r.IReference<any> = r.reference(r.value(schema));
+
+    // If the schema is bigger than a certain threshold, we upload the schema
+    // to the internal storage and reference it in the lambda environment.
+    if (schema.length > 3072) {
+      new s3deploy.BucketDeployment(this, 'Schema', {
+        sources: [s3deploy.Source.data('schema', schema)],
+        destinationBucket: this.storage.getBucket()
+      });
+      reference = r.reference(r.url(`s3://${this.storage.getBucket().bucketName}/schema`));
+    }
 
     ///////////////////////////////////////////
     //////    Middleware Event Handler     ////
     ///////////////////////////////////////////
 
     this.eventProcessor = new node.NodejsFunction(this, 'Compute', {
-      description: 'Extracts semantic ontology from processed documents.',
+      description: 'Extracts structured entities from processed documents.',
       entry: path.resolve(__dirname, 'lambdas', 'handler', 'index.js'),
       vpc: this.props.vpc,
       memorySize: this.props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
@@ -169,12 +255,14 @@ export class SemanticOntologyExtractor extends Middleware {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
+        PROCESSED_FILES_BUCKET: this.storage.id(),
         LAKECHAIN_CACHE_STORAGE: this.props.cacheStorage.id(),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
-        MODEL_ID: DEFAULT_MODEL_ID,
-        ONTOLOGY_CLASSIFIER_PROPS: JSON.stringify(
-          this.props.ontologyClassifier
-        )
+        MODEL_ID: this.props.model,
+        SCHEMA: JSON.stringify(reference),
+        OUTPUT_TYPE: this.props.outputType,
+        INSTRUCTIONS: this.props.instructions ?? '',
+        MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters)
       },
       bundling: {
         minify: true,
@@ -193,7 +281,7 @@ export class SemanticOntologyExtractor extends Middleware {
     // Plug the SQS queue into the lambda function.
     this.eventProcessor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
       batchSize: this.props.batchSize ?? 1,
-      maxConcurrency: 3,
+      maxConcurrency: this.props.maxConcurrency ?? 3,
       reportBatchItemFailures: true
     }));
 
@@ -212,6 +300,10 @@ export class SemanticOntologyExtractor extends Middleware {
     // publish to the SNS topic.
     this.eventBus.grantPublish(this.grantPrincipal);
 
+    // Grant the compute type permissions to
+    // write to the storage.
+    this.storage.grantWrite(this.grantPrincipal);
+
     super.bind();
   }
 
@@ -220,14 +312,18 @@ export class SemanticOntologyExtractor extends Middleware {
    * generated by this middleware.
    */
   grantReadProcessedDocuments(grantee: iam.IGrantable): iam.Grant {
-    // Since this middleware simply passes through the data
-    // from the previous middleware, we grant any subsequent
-    // middlewares in the pipeline read access to the
-    // data of all source middlewares.
-    for (const source of this.sources) {
-      source.grantReadProcessedDocuments(grantee);
+    if (this.props.outputType === 'json') {
+      return (this.storage.grantRead(grantee));
+    } else {
+      // Since this middleware simply passes through the data
+      // from the previous middleware, we grant any subsequent
+      // middlewares in the pipeline read access to the
+      // data of all source middlewares.
+      for (const source of this.sources) {
+        source.grantReadProcessedDocuments(grantee);
+      }
+      return ({} as iam.Grant);
     }
-    return ({} as iam.Grant);
   }
 
   /**
@@ -236,8 +332,15 @@ export class SemanticOntologyExtractor extends Middleware {
    */
   supportedInputTypes(): string[] {
     return ([
-      ...BASE_TEXT_INPUTS,
-      ...BASE_IMAGE_INPUTS
+      'text/plain',
+      'text/markdown',
+      'text/csv',
+      'text/html',
+      'application/x-subrip',
+      'text/vtt',
+      'application/json',
+      'application/xml',
+      'application/cloudevents+json'
     ]);
   }
 
@@ -246,7 +349,10 @@ export class SemanticOntologyExtractor extends Middleware {
    * type by the data producer.
    */
   supportedOutputTypes(): string[] {
-    return (this.supportedInputTypes());
+    return (this.props.outputType === 'json' ?
+      ['application/json'] :
+      this.supportedInputTypes()
+    );
   }
 
   /**
@@ -273,6 +379,3 @@ export class SemanticOntologyExtractor extends Middleware {
     );
   }
 }
-
-export { DefaultOntologyClassifier } from './definitions/classifiers/default-ontology-classifier';
-export { CustomOntologyClassifier } from './definitions/classifiers/custom-ontology-classifier';

@@ -16,18 +16,16 @@
  * limitations under the License.
  */
 
-import fs from 'fs';
-import path from 'path';
-
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
+import { z } from 'zod';
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { TranscribeAudioProcessor } from '@project-lakechain/transcribe-audio-processor';
-import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
+import { StructuredEntityExtractor } from '@project-lakechain/structured-entity-extractor';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 import {
@@ -38,9 +36,29 @@ import {
 } from '@project-lakechain/ffmpeg-processor';
 
 /**
- * This is the prompt passed to the model to summarize videos.
+ * The schema of the structured data we want to extract
+ * from the video document.
  */
-const prompt = fs.readFileSync(path.join(__dirname, 'prompt.txt'), 'utf-8');
+const schema = z.object({
+  genre: z
+    .enum(['comedy', 'drama', 'documentary', 'action', 'news' ])
+    .describe('The genre associated with the video'),
+  title: z
+    .string()
+    .describe('A meaningful title for the video'),
+  rating: z
+    .string()
+    .describe('The rating of the video (e.g PG, R, G, NC-17)'),
+  summary: z
+    .string()
+    .describe('A short summary of the video'),
+  long_summary: z
+    .string()
+    .describe('A longer, more exhaustive, more detailed, summary of the video'),
+  topics: z
+    .array(z.string())
+    .describe('A list of topics discussed in the video')
+});
 
 /**
  * This intent is a function that will get executed in the cloud
@@ -72,9 +90,9 @@ const intent = async (events: CloudEvent[], ffmpeg: Ffmpeg, utils: FfmpegUtils) 
  * extract structured metadata from it.
  * The pipeline looks as follows:
  *
- * ┌──────┐   ┌──────────┐   ┌──────────────┐   ┌─────────────┐   ┌──────┐
- * │  S3  ├──►│  FFMPEG  ├──►│  Transcribe  │──►│   Bedrock   │──►│  S3  │
- * └──────┘   └──────────┘   └──────────────┘   └─────────────┘   └──────┘
+ * ┌──────┐   ┌──────────┐   ┌──────────────┐   ┌──────────────────┐   ┌──────┐
+ * │  S3  ├──►│  FFMPEG  ├──►│  Transcribe  │──►│  Data Extractor  │──►│  S3  │
+ * └──────┘   └──────────┘   └──────────────┘   └──────────────────┘   └──────┘
  *
  */
 export class VideoSummarizationStack extends cdk.Stack {
@@ -150,23 +168,15 @@ export class VideoSummarizationStack extends cdk.Stack {
           .withOutputFormats('vtt')
           .build()
       )
-      // We are using the `AnthropicTextProcessor` component to summarize
-      // the input text.
-      // The assistant prefill allows to guide the model in generating
-      // a JSON document with no preamble.
+      // We are using the `StructuredEntityExtractor` middleware to summarize
+      // the input text and extract structured metadata from it.
       .pipe(
-        new AnthropicTextProcessor.Builder()
+        new StructuredEntityExtractor.Builder()
           .withScope(this)
-          .withIdentifier('AnthropicTextProcessor')
+          .withIdentifier('StructuredEntityExtractor')
           .withCacheStorage(cache)
           .withRegion('us-east-1')
-          .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
-          .withPrompt(prompt)
-          .withAssistantPrefill('{')
-          .withModelParameters({
-            temperature: 0.5,
-            max_tokens: 4096
-          })
+          .withSchema(schema)
           .build()
       )
       // Write the results to the destination bucket.

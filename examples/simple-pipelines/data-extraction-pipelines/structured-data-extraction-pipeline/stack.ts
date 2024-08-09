@@ -24,35 +24,32 @@ import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
-import { SentenceTextSplitter } from '@project-lakechain/sentence-text-splitter';
 import { StructuredEntityExtractor } from '@project-lakechain/structured-entity-extractor';
-import { Transform } from '@project-lakechain/transform';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
-import { concat } from './funclets/concat';
-import { conditional } from './funclets/conditional';
 import { schema } from './schema';
 
-import {
-  Reducer,
-  ConditionalStrategy
-} from '@project-lakechain/reducer';
-
 /**
- * The target language for the translation.
+ * An example showcasing how to use Amazon Bedrock
+ * to extract structured data from documents.
+ *
+ *
+ *                   ┌──────────────────────┐
+ *    ┌─────────────►│  PDF Text Converter  ├───────┐
+ *    │              └──────────────────────┘       |
+ *    |                                             ▼
+ * ┌──────────────┐   ┌────────────────────┐   ┌─────────────────────────────┐   ┌──────┐
+ * │   S3 Input   ├──►│  Pandoc Converter  ├──►│ Structured Entity Extractor ├──►│  S3  │
+ * └──────────────┘   └────────────────────┘   └─────────────────────────────┘   └──────┘
+ *
  */
-const TARGET_LANGUAGE = 'French';
-
-/**
- * Example stack for translating documents using LLMs on Amazon Bedrock.
- */
-export class BedrockTranslationPipeline extends cdk.Stack {
+export class StructuredDataExtractionPipeline extends cdk.Stack {
 
   /**
    * Stack constructor.
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline demonstrating how to use Amazon Bedrock to translate documents.',
+      description: 'A pipeline extracting structured data from documents.',
       ...env
     });
 
@@ -85,7 +82,8 @@ export class BedrockTranslationPipeline extends cdk.Stack {
     ///////     Lakechain Pipeline      ///////
     ///////////////////////////////////////////
 
-    // Monitor a bucket for uploaded objects.
+    // Create the S3 trigger monitoring the bucket
+    // for uploaded objects.
     const trigger = new S3EventTrigger.Builder()
       .withScope(this)
       .withIdentifier('Trigger')
@@ -109,59 +107,19 @@ export class BedrockTranslationPipeline extends cdk.Stack {
       .withSource(trigger)
       .build();
 
-    // Split text documents into chunks of maximum 4096 bytes while
-    // preserving sentence boundaries.
-    // @note This is because a single invocation to a Bedrock model can only
-    // output a maximum of 4096 tokens.
-    const sentenceTextSplitter = new SentenceTextSplitter.Builder()
-      .withScope(this)
-      .withIdentifier('SentenceTextSplitter')
-      .withCacheStorage(cache)
-      .withSources([
-        pdfConverter,
-        pandocConverter,
-        trigger
-      ])
-      .withMaxBytesLength(4096)
-      .build();
-    
-    // The `StructuredEntityExtractor` middleware will translate the text
-    // in a JSON structured way.
+    // We are using the `StructuredEntityExtractor` to extract
+    // structured data from the documents.
     const extractor = new StructuredEntityExtractor.Builder()
       .withScope(this)
       .withIdentifier('StructuredEntityExtractor')
       .withCacheStorage(cache)
       .withRegion('us-east-1')
-      .withSource(sentenceTextSplitter)
+      .withSources([
+        pdfConverter,
+        pandocConverter,
+        trigger
+      ])
       .withSchema(schema)
-      .withInstructions(`
-        You must accurately translate the given text to ${TARGET_LANGUAGE} while ensuring
-        that you translate exactly the entire text, sentence by sentence.
-      `)
-      .build();
-
-    // The reducer middleware will reduce all the translated
-    // chunks into a single aggregated document that will be
-    // passed to the next middleware.
-    const reducer = new Reducer.Builder()
-      .withScope(this)
-      .withIdentifier('Reducer')
-      .withCacheStorage(cache)
-      .withSource(extractor)
-      .withReducerStrategy(new ConditionalStrategy.Builder()
-        .withConditional(conditional)
-        .build()
-      )
-      .build();
-
-    // The transform middleware will sort and concatenate all the
-    // translated documents into a single text file.
-    const transform = new Transform.Builder()
-      .withScope(this)
-      .withIdentifier('Transform')
-      .withCacheStorage(cache)
-      .withSource(reducer)
-      .withTransformExpression(concat)
       .build();
 
     // Write the results to the destination bucket.
@@ -169,8 +127,8 @@ export class BedrockTranslationPipeline extends cdk.Stack {
       .withScope(this)
       .withIdentifier('S3StorageConnector')
       .withCacheStorage(cache)
+      .withSource(extractor)
       .withDestinationBucket(destination)
-      .withSource(transform)
       .build();
 
     // Display the source bucket information in the console.
@@ -192,10 +150,10 @@ const app = new cdk.App();
 
 // Environment variables.
 const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_DEFAULT_ACCOUNT;
-const region = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
+const region  = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
 
 // Deploy the stack.
-new BedrockTranslationPipeline(app, 'BedrockTranslationPipeline', {
+new StructuredDataExtractionPipeline(app, 'StructuredDataExtractionPipeline', {
   env: {
     account,
     region

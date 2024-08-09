@@ -27,17 +27,18 @@ import * as scheduler from '@aws-cdk/aws-scheduler-alpha';
 import { Construct } from 'constructs';
 import { CacheStorage, when } from '@project-lakechain/core';
 import { SchedulerEventTrigger } from '@project-lakechain/scheduler-event-trigger';
-import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
 import { PollySynthesizer, dsl as v } from '@project-lakechain/polly-synthesizer';
 import { Condition } from '@project-lakechain/condition';
 import { SyndicationFeedProcessor } from '@project-lakechain/syndication-feed-processor';
 import { Newspaper3kParser } from '@project-lakechain/newspaper3k';
+import { StructuredEntityExtractor } from '@project-lakechain/structured-entity-extractor';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 import { FfmpegProcessor } from '@project-lakechain/ffmpeg-processor';
 import { Transform } from '@project-lakechain/transform';
-import { ffmpegIntent } from './funclets/ffmpeg';
+import { concat } from './funclets/ffmpeg';
 import { filterOut } from './funclets/filter';
 import { transformExpression } from './funclets/transform';
+import { schema } from './schema';
 
 import {
   Reducer,
@@ -90,22 +91,22 @@ export class PodcastGeneratorStack extends cdk.Stack {
     ///////////////////////////////////////////
 
     // Schedules the execution of the pipeline every 24 hours.
-    // The AWS News RSS feed will be forwarded as a document
+    // The AWS News RSS feed will be forwarded as an RSS document
     // to the pipeline.
     const trigger = new SchedulerEventTrigger.Builder()
       .withScope(this)
       .withIdentifier('SchedulerEventTrigger')
       .withCacheStorage(cache)
       .withSchedule(
-        scheduler.ScheduleExpression.rate(cdk.Duration.days(1))
+        scheduler.ScheduleExpression.rate(cdk.Duration.minutes(5))
       )
       .withDocuments([
-        'https://www.bfmtv.com/rss/news-24-7/'
+        'https://aws.amazon.com/fr/blogs/aws/feed/'
       ])
       .build();
 
     // The syndication feed processor will parse the RSS feed
-    // associated with the input URL, and create a new document
+    // associated with the input URL, and create a new HTML document
     // for each feed item.
     const feeds = new SyndicationFeedProcessor.Builder()
       .withScope(this)
@@ -146,24 +147,23 @@ export class PodcastGeneratorStack extends cdk.Stack {
       .withReducerStrategy(new TimeWindowStrategy.Builder()
         .withTimeWindow(cdk.Duration.seconds(15))
         .withJitter(cdk.Duration.seconds(5))
-        .build()
-      )
+        .build())
       .build();
 
-    // This step uses Anthropic Claude on Bedrock to generate a
-    // podcast story using the aggregated input document containing
-    // the text for all gathered blog posts.
-    const podcastGenerator = new AnthropicTextProcessor.Builder()
+    // This step uses Amazon Bedrock to generate a podcast story
+    // using the aggregated input document containing the text
+    // for all gathered blog posts.
+    // This is generated as a structured JSON.
+    const podcastGenerator = new StructuredEntityExtractor.Builder()
       .withScope(this)
-      .withIdentifier('AnthropicTextProcessor')
+      .withIdentifier('StructuredEntityExtractor')
       .withCacheStorage(cache)
-      .withSource(feedReducer)
       .withRegion('us-east-1')
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
-      .withPrompt(prompt)
+      .withSource(feedReducer)
+      .withSchema(schema)
+      .withInstructions(prompt)
       .withModelParameters({
-        temperature: 0.5,
-        max_tokens: 4096
+        temperature: 0.5
       })
       .build();
 
@@ -217,8 +217,7 @@ export class PodcastGeneratorStack extends cdk.Stack {
       .withReducerStrategy(new TimeWindowStrategy.Builder()
         .withTimeWindow(cdk.Duration.minutes(2))
         .withJitter(cdk.Duration.seconds(10))
-        .build()
-      )
+        .build())
       .build();
 
     // The FFMPEG processor will concatenate the audio files
@@ -229,7 +228,7 @@ export class PodcastGeneratorStack extends cdk.Stack {
       .withCacheStorage(cache)
       .withVpc(vpc)
       .withSource(voiceReducer)
-      .withIntent(ffmpegIntent)
+      .withIntent(concat)
       .build();
 
     // Write the results to the destination bucket.
