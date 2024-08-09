@@ -58,10 +58,9 @@ export const ModelParametersSchema = z.object({
   maxTokenCount: z
     .number()
     .min(0)
-    .max(8000)
+    .max(8192)
     .optional()
-
-}).passthrough();
+});
 
 // Export the `ModelParameters` type.
 export type ModelParameters = z.infer<typeof ModelParametersSchema>;

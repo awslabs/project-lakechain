@@ -102,7 +102,7 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
-    const key = `${event.data().chainId()}/amazon.${document.etag()}.txt`;
+    const key = `${event.data().chainId()}/${MODEL_ID}.${document.etag()}.txt`;
 
     // Transform the document.
     const value = await this.transform(event);
