@@ -20,9 +20,9 @@ title: Extractor
 
 ---
 
-The `StructuredEntityExtractor` middleware can be used to accurately extract structured entities as a JSON document from text using large-language models. The middleware uses models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html) to extract structured entities from text documents.
+The `StructuredEntityExtractor` middleware can accurately extract structured entities from text documents using large-language models. The middleware uses models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html), along with [Bedrock Tools](https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html), to extract structured entities from text documents.
 
-With this middleware, you can specify a [Zod](https://zod.dev/) typed schema with your constraints and the middleware will convert the schema into a JSON schema specification with [Bedrock Tools](https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html) to perform a structured and typed extraction. It also validates the generated data against that schema, and automatically prompts the underlying model with any error generated to improve the quality of the extraction.
+To ground the process of entity extraction, you specify a [Zod](https://zod.dev/) typed schema describing your entities and their constraints. This middleware validates the LLM generated data against that schema, and automatically prompts the underlying model with any error generated to improve the quality of the extraction.
 
 ---
 
@@ -215,6 +215,20 @@ const extractor = new StructuredEntityExtractor.Builder()
   .withSchema(schema)
   .build();
 ```
+
+<br />
+
+---
+
+### ⚙️ Model Parameters
+
+You can optionally forward specific parameters to the underlying LLM using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+Parameter   | Description | Min | Max | Default
+----------- | ----------- | --- | --- | -------
+temperature | Controls the randomness of the generated text. | 0 | 1 | 0
+maxTokens   | The maximum number of tokens to generate. | 1 | 4096 | 4096
+topP        | The cumulative probability of the top tokens to sample from. | 0 | 1 | N/A
 
 <br />
 
