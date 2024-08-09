@@ -28,7 +28,8 @@ import icon from '../../../assets/icon-amazon.svg';
 
 ---
 
-*Bedrock text processors expose different constructs that leverage the Generative AI text models powered by [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html). Using these constructs, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!*
+*Bedrock text processors expose different constructs that leverage the Generative AI text models powered by [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html).
+Using these constructs, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!*
 
 The Titan text processor is part of the Bedrock text processors and allows you to leverage Amazon Titan machine-learning models within your pipelines.
 
@@ -63,14 +64,14 @@ class Stack extends cdk.Stack {
       .withIdentifier('TitanTextProcessor')
       .withCacheStorage(cache)
       .withSource(source)
-      .withModel(TitanTextModel.AMAZON_TITAN_TEXT_EXPRESS_V1)
+      .withModel(TitanTextModel.AMAZON_TITAN_TEXT_PREMIER_V1)
       .withPrompt(`
         Give a detailed summary of the text with the following constraints:
         - Write the summary in the same language as the original text.
         - Keep the original meaning, style, and tone of the text in the summary.
       `)
       .withModelParameters({
-        maxTokenCount: 4096
+        maxTokenCount: 3072
       })
       .build();
   }
@@ -98,7 +99,13 @@ const titan = new TitanTextProcessor.Builder()
   .build();
 ```
 
-You can choose amongst the following models : `AMAZON_TITAN_TEXT_EXPRESS_V1`, and `AMAZON_TITAN_TEXT_LITE_V1`.
+> 💁 You can choose amongst the following models — see the [Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html) for more information.
+
+Model Name | Model identifier
+---------- | ----------------
+AMAZON_TITAN_TEXT_EXPRESS_V1 | `amazon.titan-text-express-v1`
+AMAZON_TITAN_TEXT_LITE_V1 | `amazon.titan-text-lite-v1`
+AMAZON_TITAN_TEXT_PREMIER_V1 | `amazon.titan-text-premier-v1:0`
 
 <br />
 
@@ -130,7 +137,13 @@ const titan = new TitanTextProcessor.Builder()
 
 ### ⚙️ Model Parameters
 
-You can forward specific parameters to text models using the `.withModelParameters` method. See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+You can forward specific parameters to the text models using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+Parameter     | Description | Min | Max | Default
+------------- | ----------- | --- | --- | -------
+temperature   | Controls the randomness of the generated text. | 0 | 1 | 0.7
+maxTokenCount | The maximum number of tokens to generate. | 0 | Depends on the model | 512
+topP          | The cumulative probability of the top tokens to sample from. | 0 | 1 | 0.9
 
 <br />
 
