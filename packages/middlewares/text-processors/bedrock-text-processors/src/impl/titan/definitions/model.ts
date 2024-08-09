@@ -23,11 +23,6 @@ export interface TitanTextModelProps {
    * The name of the model.
    */
   name: string;
-
-  /**
-   * The maximum number of tokens supported by the model.
-   */
-  maxTokens: number;
 }
 
 /**
@@ -41,17 +36,11 @@ export class TitanTextModel {
   public readonly name: string;
 
   /**
-   * The maximum number of tokens supported by the model.
-   */
-  public readonly maxTokens: number;
-
-  /**
    * The Bedrock `amazon.titan-text-lite-v1` model.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
   public static readonly AMAZON_TITAN_TEXT_LITE_V1 = new TitanTextModel({
-    name: 'amazon.titan-text-lite-v1',
-    maxTokens: 4000
+    name: 'amazon.titan-text-lite-v1'
   });
 
   /**
@@ -59,8 +48,15 @@ export class TitanTextModel {
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
    */
   public static readonly AMAZON_TITAN_TEXT_EXPRESS_V1 = new TitanTextModel({
-    name: 'amazon.titan-text-express-v1',
-    maxTokens: 8000
+    name: 'amazon.titan-text-express-v1'
+  });
+
+  /**
+   * The Bedrock `amazon.titan-text-premier-v1:0` model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids-arns.html
+   */
+  public static readonly AMAZON_TITAN_TEXT_PREMIER_V1 = new TitanTextModel({
+    name: 'amazon.titan-text-premier-v1:0'
   });
 
   /**
@@ -73,8 +69,11 @@ export class TitanTextModel {
     return (new TitanTextModel(props));
   }
 
+  /**
+   * Initialize the Titan text model.
+   * @param props the properties of the model.
+   */
   constructor(props: TitanTextModelProps) {
     this.name = props.name;
-    this.maxTokens = props.maxTokens;
   }
 }
