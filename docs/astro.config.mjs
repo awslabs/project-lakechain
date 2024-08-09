@@ -139,9 +139,6 @@ export default defineConfig({
 					label: 'Anthropic',
 					link: '/generative-ai/anthropic-text-processor'
 				}, {
-					label: 'AI21',
-					link: '/generative-ai/ai21-text-processor'
-				}, {
 					label: 'Cohere',
 					link: '/generative-ai/cohere-text-processor'
 				}, {

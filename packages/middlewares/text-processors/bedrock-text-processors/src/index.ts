@@ -20,11 +20,6 @@ export {
 } from './impl/anthropic';
 
 export {
-  AI21TextProcessor,
-  AI21TextModel
-} from './impl/ai21';
-
-export {
   TitanTextProcessor,
   TitanTextModel
 } from './impl/titan';
