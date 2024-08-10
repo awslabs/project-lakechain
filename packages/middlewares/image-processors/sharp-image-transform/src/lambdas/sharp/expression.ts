@@ -115,7 +115,7 @@ export async function* processExpression(event: CloudEvent): AsyncGenerator<Resu
   const buffer = await pipeline.toBuffer();
 
   // The new image metadata.
-  const metadata = await pipeline.metadata();
+  const metadata = await sharp(buffer).metadata();
 
   yield {
     buffer,
@@ -126,8 +126,8 @@ export async function* processExpression(event: CloudEvent): AsyncGenerator<Resu
         kind: 'image',
         attrs: {
           dimensions: {
-            width: metadata.width,
-            height: metadata.height
+            width: metadata.width!,
+            height: metadata.height!
           }
         }
       }

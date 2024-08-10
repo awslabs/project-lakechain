@@ -28,7 +28,6 @@ export const BedrockEmbeddingPropsSchema = MiddlewarePropsSchema.extend({
    */
   model: z
     .custom<TitanEmbeddingModel>()
-    .optional()
     .default(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V2),
 
   /**
@@ -37,6 +36,18 @@ export const BedrockEmbeddingPropsSchema = MiddlewarePropsSchema.extend({
    */
   region: z
     .string()
+    .optional(),
+
+  /**
+   * The size of the embedding to generate.
+   * @note this is only valid for multimodal models.
+   */
+  embeddingSize: z
+    .union([
+      z.literal(256),
+      z.literal(512),
+      z.literal(1024)
+    ])
     .optional()
 });
 

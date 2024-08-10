@@ -22,9 +22,13 @@ import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { CacheStorage } from '@project-lakechain/sdk/cache';
-import { TitanEmbeddingModel } from '../../definitions/embedding-model';
 import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 
+import {
+  TitanEmbeddingModel,
+  BASE_TEXT_INPUTS,
+  BASE_IMAGE_INPUTS
+} from '../../definitions/embedding-model';
 import {
   BatchProcessor,
   EventType,
@@ -35,6 +39,9 @@ import {
  * Environment variables.
  */
 const EMBEDDING_MODEL: TitanEmbeddingModel = JSON.parse(process.env.EMBEDDING_MODEL as string);
+const EMBEDDING_SIZE: number | undefined = process.env.EMBEDDING_SIZE ?
+  parseInt(process.env.EMBEDDING_SIZE) :
+  undefined;
 
 /**
  * The Bedrock runtime.
@@ -64,6 +71,40 @@ const cacheStorage = new CacheStorage();
 class Lambda implements LambdaInterface {
 
   /**
+   * Creates vector embeddings for the given input.
+   * @param input a string or image buffer to vectorize.
+   * @returns a promise that resolves to the vector embeddings.
+   */
+  private async vectorize(input: string | Buffer): Promise<number[]> {
+    const body: any = {};
+
+    // Set the input text or image.
+    if (Buffer.isBuffer(input)) {
+      body['inputImage'] = input.toString('base64');
+    } else {
+      body['inputText'] = input;
+    }
+
+    // Set the embedding size if provided.
+    if (EMBEDDING_SIZE) {
+      body['embeddingConfig'] = {
+        outputEmbeddingLength: EMBEDDING_SIZE
+      };
+    }
+
+    // Invoke the embedding model.
+    const response = await bedrock.invokeModel({
+      body: JSON.stringify(body),
+      modelId: EMBEDDING_MODEL.name,
+      accept: 'application/json',
+      contentType: 'application/json'
+    });
+
+    // Parse the response as a JSON object.
+    return (JSON.parse(response.body.transformToString()).embedding);
+  }
+
+  /**
    * Creates vector embeddings for the given document
    * and references the vector embeddings in the metadata.
    * @param event the CloudEvent to process.
@@ -71,25 +112,22 @@ class Lambda implements LambdaInterface {
   @next()
   private async processEvent(event: CloudEvent) {
     const document = event.data().document();
+    let embeddings: number[];
 
     // Load the document in memory.
-    const text = (await document.data().asBuffer()).toString('utf-8');
+    const data = await document.data().asBuffer();
 
-    // Vectorize the document.
-    const response = await bedrock.invokeModel({
-      body: JSON.stringify({
-        inputText: text
-      }),
-      modelId: EMBEDDING_MODEL.name,
-      accept: 'application/json',
-      contentType: 'application/json'
-    });
-
-    // Parse the response as a JSON object.
-    const value = JSON.parse(response.body.transformToString());
+    // Vectorize the data based on the document type.
+    if (BASE_TEXT_INPUTS.includes(document.mimeType())) {
+      embeddings = await this.vectorize(data.toString('utf-8'));
+    } else if (BASE_IMAGE_INPUTS.includes(document.mimeType())) {
+      embeddings = await this.vectorize(data);
+    } else {
+      throw new Error(`Unsupported document type: ${document.mimeType()}`);
+    }
 
     // Store the embeddings in the middleware cache storage.
-    const pointer = await cacheStorage.put('embeddings', value.embedding);
+    const pointer = await cacheStorage.put('embeddings', embeddings);
 
     // We update the document metadata with the embeddings.
     merge(event.data().props.metadata, {
@@ -99,7 +137,7 @@ class Lambda implements LambdaInterface {
           embeddings: {
             vectors: pointer,
             model: EMBEDDING_MODEL.name,
-            dimensions: EMBEDDING_MODEL.props?.dimensions
+            dimensions: embeddings.length
           }
         }
       }

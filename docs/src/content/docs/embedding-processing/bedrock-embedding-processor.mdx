@@ -22,15 +22,16 @@ import { Image } from 'astro:assets';
 
 ---
 
-This package enables developers to use embedding models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html) to create vector embeddings for text and markdown documents within their pipelines. It exposes different constructs that you can integrate as part of your pipelines, including Amazon Titan, and Cohere embedding processors.
+This package enables developers to use embedding models hosted on [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html) to create vector embeddings for text and image documents within their pipelines.
+It exposes different constructs that you can integrate as part of your pipelines, including Amazon Titan, and Cohere embedding processors.
 
 ---
 
 ### 📝 Embedding Documents
 
-To use the Bedrock embedding processors, you import the Titan or Cohere construct in your CDK stack and specify the embedding model you want to use.
+To use the Bedrock embedding processors, you import the Titan or Cohere constructs in your CDK stack and specify the embedding model you want to use.
 
-#### Amazon Titan
+#### Titan Text
 
 > ℹ️ The below example demonstrates how to use the Amazon Titan embedding processor to create vector embeddings for text documents.
 
@@ -50,6 +51,35 @@ class Stack extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(source) // 👈 Specify a data source
       .withModel(TitanEmbeddingModel.AMAZON_TITAN_EMBED_TEXT_V1)
+      .build();
+  }
+}
+```
+
+<br />
+
+---
+
+#### Titan Multimodal
+
+> ℹ️ The below example demonstrates how to use the Amazon Titan embedding processor to create vector embeddings for images.
+
+```typescript
+import { TitanEmbeddingProcessor, TitanEmbeddingModel } from '@project-lakechain/bedrock-embedding-processors';
+import { CacheStorage } from '@project-lakechain/core';
+
+class Stack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string) {
+    // The cache storage.
+    const cache = new CacheStorage(this, 'Cache');
+
+    // Creates embeddings for input documents using Amazon Titan.
+    const embeddingProcessor = new TitanEmbeddingProcessor.Builder()
+      .withScope(this)
+      .withIdentifier('BedrockEmbeddingProcessor')
+      .withCacheStorage(cache)
+      .withSource(source) // 👈 Specify a data source
+      .withModel(TitanEmbeddingModel.AMAZON_TITAN_EMBED_IMAGE_V1)
       .build();
   }
 }
@@ -82,25 +112,6 @@ class Stack extends cdk.Stack {
       .build();
   }
 }
-```
-
-<br />
-
----
-
-#### Escape Hatches
-
-Both Titan and Cohere constructs reference embedding models currently supported by Amazon Bedrock through the `TitanEmbeddingModel` and `CohereEmbeddingModel` classes. In case a model is not yet referenced, we allow developers to specify a custom model identifier.
-
-```typescript
-const embeddingProcessor = new TitanEmbeddingProcessor.Builder()
-  .withScope(this)
-  .withIdentifier('BedrockEmbeddingProcessor')
-  .withCacheStorage(cache)
-  .withSource(source)
-  // Specify a custom embedding model to use.
-  .withModel(TitanEmbeddingModel.of('specific.model-id'))
-  .build();
 ```
 
 <br />
@@ -204,17 +215,25 @@ The middlewares part of this package are based on a Lambda compute running on an
 
 ##### Supported Inputs
 
-|  Mime Type  | Description |
-| ----------- | ----------- |
-| `text/plain` | UTF-8 text documents. |
-| `text/markdown` | UTF-8 markdown documents. |
+The supported inputs depend on the selected model.
+
+|  Mime Type  | Description | Model
+| ----------- | ----------- | -----
+| `text/plain` | UTF-8 text documents. | Amazon Titan Text and Cohere
+| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text and Cohere
+| `image/jpeg` | JPEG image documents. | Amazon Titan Multimodal
+| `image/png` | PNG image documents. | Amazon Titan Multimodal
 
 ##### Supported Outputs
 
-|  Mime Type  | Description |
-| ----------- | ----------- |
-| `text/plain` | UTF-8 text documents. |
-| `text/markdown` | UTF-8 markdown documents. |
+The supported outputs depend on the selected model.
+
+|  Mime Type  | Description | Model
+| ----------- | ----------- | -----
+| `text/plain` | UTF-8 text documents. | Amazon Titan Text and Cohere
+| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text and Cohere
+| `image/jpeg` | JPEG image documents. | Amazon Titan Multimodal
+| `image/png` | PNG image documents. | Amazon Titan Multimodal
 
 ##### Supported Compute Types
 
@@ -230,3 +249,4 @@ The middlewares part of this package are based on a Lambda compute running on an
 
 - [Bedrock OpenSearch Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/embedding-pipelines/bedrock-opensearch-pipeline) - An example showcasing an embedding pipeline using Amazon Bedrock and OpenSearch.
 - [Cohere OpenSearch Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/embedding-pipelines/cohere-opensearch-pipeline) - An example showcasing an embedding pipeline using Cohere models on Bedrock and OpenSearch.
+- [Bedrock Multimodal Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/embedding-pipelines/bedrock-multimodal-pipeline) - An example showcasing an embedding pipeline using the Titan multimodal embedding model.

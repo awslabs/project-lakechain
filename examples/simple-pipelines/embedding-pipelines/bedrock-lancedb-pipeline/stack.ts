@@ -150,8 +150,7 @@ export class BedrockLanceDbPipeline extends cdk.Stack {
         .withIdentifier('EfsStorage')
         .withFileSystem(fileSystem)
         .withVpc(vpc)
-        .build()
-      )
+        .build())
       .build();
 
     // Display the source bucket information in the console.

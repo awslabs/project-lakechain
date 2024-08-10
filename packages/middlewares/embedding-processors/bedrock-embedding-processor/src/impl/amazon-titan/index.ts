@@ -89,6 +89,16 @@ class TitanEmbeddingProcessorBuilder extends MiddlewareBuilder {
   }
 
   /**
+   * Sets the size of the embedding to generate.
+   * @note this is only valid for multimodal models.
+   * @param size the size of the embedding to generate.
+   */
+  public withEmbeddingSize(size: 256 | 512 | 1024) {
+    this.providerProps.embeddingSize = size;
+    return (this);
+  }
+
+  /**
    * @returns a new instance of the `TitanEmbeddingProcessor`
    * service constructed with the given parameters.
    */
@@ -128,7 +138,7 @@ export class TitanEmbeddingProcessor extends Middleware {
   /**
    * Construct constructor.
    */
-  constructor(scope: Construct, id: string, props: BedrockEmbeddingProps) {
+  constructor(scope: Construct, id: string, private props: BedrockEmbeddingProps) {
     super(scope, id, description, {
       ...props,
       queueVisibilityTimeout: cdk.Duration.seconds(
@@ -137,7 +147,13 @@ export class TitanEmbeddingProcessor extends Middleware {
     });
 
     // Validate the properties.
-    props = this.parse(BedrockEmbeddingPropsSchema, props);
+    this.props = this.parse(BedrockEmbeddingPropsSchema, props);
+
+    // Validate that the selected model does support
+    // setting the embedding size.
+    if (this.props.embeddingSize && !this.props.model.props.supportsEmbeddingSize) {
+      throw new Error('Setting an embedding size is not supported by the given model.');
+    }
 
     /////////////////////////////////////////
     /////   Middleware Event Handler    /////
@@ -146,24 +162,25 @@ export class TitanEmbeddingProcessor extends Middleware {
     this.processor = new node.NodejsFunction(this, 'Compute', {
       description: 'A function creating vector embeddings using Amazon Titan models.',
       entry: path.resolve(__dirname, 'lambdas', 'vectorizer', 'index.js'),
-      vpc: props.vpc,
-      memorySize: props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
+      vpc: this.props.vpc,
+      memorySize: this.props.maxMemorySize ?? DEFAULT_MEMORY_SIZE,
       timeout: PROCESSING_TIMEOUT,
       runtime: EXECUTION_RUNTIME,
       architecture: lambda.Architecture.ARM_64,
       tracing: lambda.Tracing.ACTIVE,
-      environmentEncryption: props.kmsKey,
+      environmentEncryption: this.props.kmsKey,
       logGroup: this.logGroup,
-      insightsVersion: props.cloudWatchInsights ?
+      insightsVersion: this.props.cloudWatchInsights ?
         LAMBDA_INSIGHTS_VERSION :
         undefined,
       environment: {
         POWERTOOLS_SERVICE_NAME: description.name,
         POWERTOOLS_METRICS_NAMESPACE: NAMESPACE,
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
-        LAKECHAIN_CACHE_STORAGE: props.cacheStorage.id(),
-        EMBEDDING_MODEL: JSON.stringify(props.model),
-        BEDROCK_REGION: props.region ?? ''
+        LAKECHAIN_CACHE_STORAGE: this.props.cacheStorage.id(),
+        EMBEDDING_MODEL: JSON.stringify(this.props.model),
+        BEDROCK_REGION: this.props.region ?? '',
+        EMBEDDING_SIZE: this.props.embeddingSize?.toString() ?? ''
       },
       bundling: {
         minify: true,
@@ -186,14 +203,14 @@ export class TitanEmbeddingProcessor extends Middleware {
         'bedrock:InvokeModel'
       ],
       resources: [
-        `arn:${cdk.Aws.PARTITION}:bedrock:${props.region}::foundation-model/${props.model.name}`,
+        `arn:${cdk.Aws.PARTITION}:bedrock:${this.props.region}::foundation-model/${this.props.model.name}`
       ]
     }));
 
     // Plug the SQS queue into the lambda function.
     this.processor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
       batchSize: props.batchSize ?? 2,
-      maxConcurrency: 5,
+      maxConcurrency: this.props.maxConcurrency ?? 5,
       reportBatchItemFailures: true
     }));
 
@@ -224,10 +241,7 @@ export class TitanEmbeddingProcessor extends Middleware {
    * type by this middleware.
    */
   supportedInputTypes(): string[] {
-    return ([
-      'text/plain',
-      'text/markdown'
-    ]);
+    return (this.props.model.props.inputs);
   }
 
   /**

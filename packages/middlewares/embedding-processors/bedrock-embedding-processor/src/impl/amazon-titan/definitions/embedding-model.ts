@@ -21,16 +21,33 @@
 export interface TitanModelProps {
   
   /**
-   * The dimensions of the embedding model.
+   * The input mime-types supported by the model.
    */
-  dimensions?: number;
+  inputs: string[];
 
   /**
-   * The maximum number of tokens that the
-   * embedding model can process.
+   * Whether the model supports setting an embedding size.
    */
-  maxTokens?: number;
+  supportsEmbeddingSize: boolean;
 }
+
+/**
+ * An array of base input mime-types supported
+ * by Titan text embedding models.
+ */
+export const BASE_TEXT_INPUTS = [
+  'text/plain',
+  'text/markdown'
+];
+
+/**
+ * An array of base input mime-types supported
+ * by the Titan multimodal embedding models.
+ */
+export const BASE_IMAGE_INPUTS = [
+  'image/png',
+  'image/jpeg'
+];
 
 /**
  * The available embedding models provided
@@ -43,8 +60,8 @@ export class TitanEmbeddingModel {
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/embeddings.html
    */
   static readonly AMAZON_TITAN_EMBED_TEXT_V1 = new TitanEmbeddingModel('amazon.titan-embed-text-v1', {
-    dimensions: 1536,
-    maxTokens: 8192
+    inputs: BASE_TEXT_INPUTS,
+    supportsEmbeddingSize: false
   });
 
   /**
@@ -52,8 +69,17 @@ export class TitanEmbeddingModel {
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/embeddings.html
    */
   static readonly AMAZON_TITAN_EMBED_TEXT_V2 = new TitanEmbeddingModel('amazon.titan-embed-text-v2:0', {
-    dimensions: 1024,
-    maxTokens: 8192
+    inputs: BASE_TEXT_INPUTS,
+    supportsEmbeddingSize: false
+  });
+
+  /**
+   * The Bedrock `amazon.titan-embed-image-v1` embedding model.
+   * @see https://docs.aws.amazon.com/bedrock/latest/userguide/embeddings.html
+   */
+  static readonly AMAZON_TITAN_EMBED_IMAGE_V1 = new TitanEmbeddingModel('amazon.titan-embed-image-v1', {
+    inputs: BASE_IMAGE_INPUTS,
+    supportsEmbeddingSize: true
   });
 
   /**
@@ -63,9 +89,14 @@ export class TitanEmbeddingModel {
    * @param props the properties of the embedding model.
    * @returns a new instance of the `TitanEmbeddingModel`.
    */
-  public static of(name: string, props?: TitanModelProps) {
+  public static of(name: string, props: TitanModelProps) {
     return (new TitanEmbeddingModel(name, props));
   }
 
-  constructor(public name: string, public props?: TitanModelProps) {}
+  /**
+   * `TitanEmbeddingModel` constructor.
+   * @param name the name of the embedding model.
+   * @param props the properties of the embedding model.
+   */
+  constructor(public name: string, public props: TitanModelProps) {}
 }
