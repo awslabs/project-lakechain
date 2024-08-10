@@ -41,10 +41,10 @@
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.623.0",
     "@aws-sdk/client-sns": "^3.623.0",
-    "@types/aws-lambda": "^8.10.126",
+    "@types/aws-lambda": "^8.10.143",
     "@types/fluent-ffmpeg": "2.1.25",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.2.0",
     "rimraf": "^6.0.1",
     "shx": "^0.3.4"
   },
