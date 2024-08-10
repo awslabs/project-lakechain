@@ -210,3 +210,4 @@ mathstral
 nomic
 mxbai
 minilm
+multimodal
