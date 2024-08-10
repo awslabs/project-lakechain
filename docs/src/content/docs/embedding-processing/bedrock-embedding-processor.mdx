@@ -89,6 +89,30 @@ class Stack extends cdk.Stack {
 
 ---
 
+##### Embedding Size
+
+When using the Amazon Titan multimodal embedding model, you can specify the size of the embeddings generated for the images using the `.withEmbeddingSize` API.
+
+> 💁 The default embedding size is set to 1024, and valid sizes are 256, 512, and 1024. Note that embedding size customization is only available for Amazon Titan multimodal models.
+
+```typescript
+import { TitanEmbeddingProcessor, TitanEmbeddingModel } from '@project-lakechain/bedrock-embedding-processors';
+
+const embeddingProcessor = new TitanEmbeddingProcessor.Builder()
+  .withScope(this)
+  .withIdentifier('BedrockEmbeddingProcessor')
+  .withCacheStorage(cache)
+  .withSource(source)
+  .withModel(TitanEmbeddingModel.AMAZON_TITAN_EMBED_IMAGE_V1)
+  .withEmbeddingSize(512) // 👈 Specify the embedding size
+  .build();
+
+```
+
+<br />
+
+---
+
 #### Cohere
 
 > ℹ️ The below example uses one of the supported Cohere embedding models.
@@ -219,8 +243,8 @@ The supported inputs depend on the selected model.
 
 |  Mime Type  | Description | Model
 | ----------- | ----------- | -----
-| `text/plain` | UTF-8 text documents. | Amazon Titan Text and Cohere
-| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text and Cohere
+| `text/plain` | UTF-8 text documents. | Amazon Titan Text, Cohere
+| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text, Cohere
 | `image/jpeg` | JPEG image documents. | Amazon Titan Multimodal
 | `image/png` | PNG image documents. | Amazon Titan Multimodal
 
@@ -230,8 +254,8 @@ The supported outputs depend on the selected model.
 
 |  Mime Type  | Description | Model
 | ----------- | ----------- | -----
-| `text/plain` | UTF-8 text documents. | Amazon Titan Text and Cohere
-| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text and Cohere
+| `text/plain` | UTF-8 text documents. | Amazon Titan Text, Cohere
+| `text/markdown` | UTF-8 markdown documents. | Amazon Titan Text, Cohere
 | `image/jpeg` | JPEG image documents. | Amazon Titan Multimodal
 | `image/png` | PNG image documents. | Amazon Titan Multimodal
 
