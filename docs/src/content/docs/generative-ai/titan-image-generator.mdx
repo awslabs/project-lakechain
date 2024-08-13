@@ -9,6 +9,11 @@ import originalOutpaintImage from '../../../assets/titan-outpainting-original-im
 import outpaintedImage from '../../../assets/titan-outpainting-outpainted-image.png';
 import originalBackgroundImage from '../../../assets/titan-background-removal-original-image.png';
 import backgroundRemovedImage from '../../../assets/titan-background-removed-image.png';
+import originalColorGuidedImage from '../../../assets/titan-color-guided-original-image.png';
+import colorPalette from '../../../assets/titan-color-guided-color-palette.png';
+import colorGuidedImage from '../../../assets/titan-color-guided-image.png';
+import originalObjectRemovalImage from '../../../assets/titan-object-removal-original-image.png';
+import objectRemovedImage from '../../../assets/titan-object-removed-image.png';
 import icon from '../../../assets/icon-amazon.svg';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -274,6 +279,29 @@ To perform color guided image generation, you use the `TitanImageGenerator` and 
 
 > 💁 Color guided image generation is only available with the Titan Model image generator v2 model.
 
+<br />
+<p align="center">
+  <table style="display: table; margin: auto">
+    <tr>
+      <th>Reference Image</th>
+      <th>Color Palette</th>
+      <th>Generated Image</th>
+    </tr>
+    <tr>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="140" src={originalColorGuidedImage} alt="Original Image" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="140" src={colorPalette} alt="Color Palette" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={colorGuidedImage} alt="Generated Image" />
+      </td>
+    </tr>
+  </table>
+</p>
+<br />
+
 #### Example
 
 ```typescript
@@ -311,6 +339,25 @@ With the Amazon Titan Image Generator, you can use semantic masks based on a pro
 By using the inpainting capabilities of the Titan Image Generator, you can use content-aware inpainting to remove objects from images.
 
 To perform object removal, you use the `TitanImageGenerator` and provide it with a `ImageInpaintingTask` without any textual prompt.
+
+<br />
+<p align="center">
+  <table style="display: table; margin: auto">
+    <tr>
+      <th>Original Image</th>
+      <th>Object Removed</th>
+    </tr>
+    <tr>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={originalObjectRemovalImage} alt="Original Image" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={objectRemovedImage} alt="Object Removed" />
+      </td>
+    </tr>
+  </table>
+</p>
+<br />
 
 #### Example
 
