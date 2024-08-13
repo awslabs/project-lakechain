@@ -131,11 +131,9 @@ export const next = (
   }
 ): CloudEventMethodDecorator => {
   return (_target, _propertyKey, descriptor) => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const originalMethod = descriptor.value!;
 
     descriptor.value = async function (this: CallableFunction, ...args): Promise<CloudEvent> {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const handlerRef = this;
 
       // Call the original function and get the cloud event from it.

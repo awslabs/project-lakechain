@@ -16,10 +16,8 @@
 
 import fs from 'fs';
 import path from 'path';
-import xray from 'aws-xray-sdk';
 
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { Document } from '@project-lakechain/sdk/models';
 
 /**
@@ -31,14 +29,6 @@ const TARGET_BUCKET = process.env.PROCESSED_FILES_BUCKET;
  * A map of extensions to mime types.
  */
 const mimeTypes = JSON.parse(fs.readFileSync('./mime-types.json'));
-
-/**
- * The S3 client.
- */
-const s3 = xray.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
-  maxAttempts: 3
-}));
 
 /**
  * The default mime type to use in case a more precise
@@ -72,7 +62,7 @@ export const mimeTypeFromBuffer = async (file) => {
     const stream = fs.createReadStream(file);
     const type = await fileTypeFromStream(stream);
     return (type?.mime);
-  } catch (err) {
+  } catch (_) {
     // We could not infer the file type from its content.
     return (undefined);
   }
