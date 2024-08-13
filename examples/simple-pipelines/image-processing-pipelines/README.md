@@ -13,7 +13,7 @@ Pipeline | Description | Model
 [Face Detection Pipeline](face-detection-pipeline) | An example showcasing how to build face detection pipelines using Project Lakechain. | Amazon Rekognition
 [Face Extraction Pipeline](face-extraction-pipeline) | An example showcasing how to extract faces detected in images. | Amazon Rekognition
 [Image Background Removal (Rembg)](image-background-removal) | A pipeline demonstrating automatic image background removal using [Rembg](https://github.com/danielgatis/rembg) running in AWS Lambda. | Rembg
-[Image Background Removal (Titan)](titan-image-background-removal) | A pipeline demonstrating automatic image background removal using [Amazon Titan](https://huggingface.co/docs/transformers/main/model_doc/titan) on Amazon Bedrock. | Amazon Titan
+[Image Background Removal (Titan)](titan-image-background-removal) | A pipeline demonstrating automatic image background removal using [Amazon Titan](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html) on Amazon Bedrock. | Amazon Titan
 [Image Captioning Pipeline](image-captioning-pipeline) | A pipeline demonstrating image captioning using the [BLIP2 model](https://huggingface.co/docs/transformers/main/model_doc/blip-2). | BLIP2
 [Image Moderation Pipeline](image-moderation-pipeline) | A pipeline demonstrating how to classify moderated images. | Amazon Rekognition
 
