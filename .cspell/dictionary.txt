@@ -211,3 +211,4 @@ nomic
 mxbai
 minilm
 multimodal
+outpaint
