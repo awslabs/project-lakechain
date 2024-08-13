@@ -21,17 +21,17 @@ By using the inpainting capabilities of the Titan Image Generator v2, you can us
 
 <br />
 <p align="center">
-  <table style="display: table; margin: auto">
+  <table align="center">
     <tr>
       <th>Original Image</th>
       <th>Result</th>
     </tr>
     <tr>
-      <td style="padding-top: 0.8em; padding-bottom: 1em">
+      <td>
         <img width="220" src="assets/original.png" alt="Original Image" />
       </td>
-      <td style="padding-top: 0.8em; padding-bottom: 1em">
-        <img width="220" src="assets/result.png" alt="Background Removed" />
+      <td>
+        <img width="220" src="assets/result.png" alt="Result" />
       </td>
     </tr>
   </table>

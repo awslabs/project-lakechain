@@ -212,3 +212,4 @@ mxbai
 minilm
 multimodal
 outpaint
+meinberg

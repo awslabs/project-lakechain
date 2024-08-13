@@ -25,7 +25,7 @@ Below is an example of the result of the image generation process executed by th
 
 <br />
 <p align="center">
-  <table style="display: table; margin: auto">
+  <table>
     <tr>
       <th>Reference Image</th>
       <th>Prompt</th>
@@ -33,17 +33,17 @@ Below is an example of the result of the image generation process executed by th
       <th>Generated Image</th>
     </tr>
     <tr>
-      <td style="padding-top: 0.8em; padding-bottom: 1em">
+      <td>
         <img width="220" src="assets/original.jpg" alt="Original Image" />
       </td>
-      <td style="padding-top: 0.8em; padding-bottom: 1em;">
+      <td>
         <em>"a small amazon brown cardboard robot walking on a table"</em>
       </td>
-      <td style="padding-top: 0.8em; padding-bottom: 1em;">
+      <td>
         <img width="220" src="assets/color-palette.png" alt="Color Palette" />
       </td>
-      <td style="padding-top: 0.8em; padding-bottom: 1em">
-        <img width="220" src="assets/result.png" alt="Background Removed" />
+      <td>
+        <img width="220" src="assets/result.png" alt="Generated Image" />
       </td>
     </tr>
   </table>
