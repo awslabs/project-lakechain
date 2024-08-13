@@ -1,6 +1,6 @@
 {
   "name": "pdf-vision-pipeline",
-  "description": "An example showcasing how to parse PDF documents using a vision model.",
+  "description": "An example showcasing how to transform PDF documents into text using a vision model.",
   "version": "0.7.0",
   "private": true,
   "scripts": {

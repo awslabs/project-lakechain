@@ -16,6 +16,7 @@ Pipeline | Description | Model
 [Image Background Removal (Titan)](titan-image-background-removal) | A pipeline demonstrating automatic image background removal using [Amazon Titan](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html) on Amazon Bedrock. | Amazon Titan
 [Image Captioning Pipeline](image-captioning-pipeline) | A pipeline demonstrating image captioning using the [BLIP2 model](https://huggingface.co/docs/transformers/main/model_doc/blip-2). | BLIP2
 [Image Moderation Pipeline](image-moderation-pipeline) | A pipeline demonstrating how to classify moderated images. | Amazon Rekognition
+[Titan Object Removal Pipeline](titan-object-removal-pipeline) | An example showcasing how to perform object removal in images using Amazon Titan. | Amazon Titan
 
 ### Other Pipelines
 

@@ -25,7 +25,9 @@ export const imageInpainting = async (event: CloudEvent, model: string, task: Im
       taskType: task.taskType,
       inPaintingParams: {
         image: (await event.resolve(task.image)).toString('base64'),
-        text: await event.resolve(task.text),
+        text: task.text ?
+          await event.resolve(task.text) :
+          undefined,
         negativeText: task.negativeText ?
           await event.resolve(task.negativeText) :
           undefined,

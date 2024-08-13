@@ -32,7 +32,8 @@ const ImageInpaintingTaskPropsSchema = z.object({
    * The prompt associated with the task.
    */
   text: z
-    .custom<dsl.IReference<any>>(),
+    .custom<dsl.IReference<any>>()
+    .optional(),
 
   /**
    * The negative prompt to use when generating images.

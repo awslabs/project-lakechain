@@ -1,11 +1,11 @@
 {
-  "name": "jmespath-parsing-pipeline",
-  "description": "An example showcasing how to transform JSON documents at scale.",
+  "name": "titan-object-removal-pipeline",
+  "description": "An example showcasing how to perform object removal in images using Amazon Titan.",
   "version": "0.7.0",
   "private": true,
   "scripts": {
-    "build": "npx tsc",
-    "build-pkg": "npx lerna run build --scope=jmespath-parsing-pipeline --include-dependencies",
+    "build": "tsc",
+    "build-pkg": "npx lerna run build --scope=titan-object-removal-pipeline --include-dependencies",
     "clean": "npx rimraf dist/ cdk.out/ node_modules/",
     "audit": "npm audit && npm run synth --silent | cfn_nag",
     "lint": "npx eslint .",
@@ -26,16 +26,17 @@
   "devDependencies": {
     "@types/node": "^22.2.0",
     "esbuild": "0.21.5",
-    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@project-lakechain/jmespath-processor": "*",
+    "@project-lakechain/bedrock-image-generators": "*",
     "@project-lakechain/s3-event-trigger": "*",
-    "@project-lakechain/s3-storage-connector": "*"
+    "@project-lakechain/s3-storage-connector": "*",
+    "@project-lakechain/sharp-image-transform": "*"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.151.0",
-    "constructs": "^10.0.0"
+    "constructs": "^10.3.0"
   }
 }

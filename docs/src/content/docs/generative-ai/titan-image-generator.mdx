@@ -129,7 +129,7 @@ const imageGenerator = new TitanImageGenerator.Builder()
 
 ---
 
-### 🎨 Image Outpainting
+### 🖌️ Image Outpainting
 
 The Amazon Titan image model also supports outpainting, relative to a mask prompt. Image outpainting refers to painting an existing image outside of the area delimited by the mask image.
 
@@ -257,6 +257,76 @@ const imageGenerator = new TitanImageGenerator.Builder()
     // Reference the current document as the image to transform.
     .withImage(r.reference(r.document()))
     .build())
+  .build();
+```
+
+<br />
+<br />
+
+---
+
+### 🎨 Color Guided Generation
+
+The Titan model allows users to influence how an image is generated based on a color palette.
+This feature is useful when you want to generate images that adhere to a specific color branding guideline.
+
+To perform color guided image generation, you use the `TitanImageGenerator` and provide it with a `ColorGuidedGenerationTask`.
+
+> 💁 Color guided image generation is only available with the Titan Model image generator v2 model.
+
+#### Example
+
+```typescript
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
+import {
+  TitanImageGenerator,
+  ColorGuidedGenerationTask,
+  TitanImageModel
+} from '@project-lakechain/bedrock-image-generators';
+
+const imageGenerator = new TitanImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('ImageGenerator')
+  .withCacheStorage(cache)
+  .withSource(source) // 👈 Specify a data source.
+  .withImageModel(TitanImageModel.TITAN_IMAGE_GENERATOR_V2)
+  .withTask(new ColorGuidedGenerationTask.Builder()
+    .withTextPrompt(prompt)
+    .withTextNegativePrompt('low quality, blurry, or poorly lit')
+    // Using the input image as a reference.
+    .withReferenceImage(r.reference(r.document()))
+    .withColors(['#ff9900', '#0079c1'])
+  )
+  .build();
+```
+
+<br />
+<br />
+
+---
+
+### 🧽 Object Removal
+
+With the Amazon Titan Image Generator, you can use semantic masks based on a prompt to isolate a certain subject in an image and segment it.
+By using the inpainting capabilities of the Titan Image Generator, you can use content-aware inpainting to remove objects from images.
+
+To perform object removal, you use the `TitanImageGenerator` and provide it with a `ImageInpaintingTask` without any prompt.
+
+#### Example
+
+```typescript
+import { TitanImageGenerator, ImageInpaintingTask, TitanImageModel } from '@project-lakechain/bedrock-image-generators';
+
+const imageGenerator = new TitanImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('ImageGenerator')
+  .withCacheStorage(cache)
+  .withSource(source) // 👈 Specify a data source.
+  .withImageModel(TitanImageModel.TITAN_IMAGE_GENERATOR_V2)
+  .withTask(new ImageInpaintingTask.Builder()
+    .withMaskPrompt('cat')
+    .build()
+  )
   .build();
 ```
 
