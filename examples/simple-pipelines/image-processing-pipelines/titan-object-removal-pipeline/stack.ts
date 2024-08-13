@@ -108,7 +108,7 @@ export class TitanObjectRemovalPipeline extends cdk.Stack {
       )
       .pipe(
         // Remove cats from the image using an inpainting task,
-        // and not providing any prompt.
+        // and not providing any textual prompt.
         new TitanImageGenerator.Builder()
           .withScope(this)
           .withIdentifier('ImageGenerator')

@@ -310,7 +310,7 @@ const imageGenerator = new TitanImageGenerator.Builder()
 With the Amazon Titan Image Generator, you can use semantic masks based on a prompt to isolate a certain subject in an image and segment it.
 By using the inpainting capabilities of the Titan Image Generator, you can use content-aware inpainting to remove objects from images.
 
-To perform object removal, you use the `TitanImageGenerator` and provide it with a `ImageInpaintingTask` without any prompt.
+To perform object removal, you use the `TitanImageGenerator` and provide it with a `ImageInpaintingTask` without any textual prompt.
 
 #### Example
 
@@ -322,7 +322,6 @@ const imageGenerator = new TitanImageGenerator.Builder()
   .withIdentifier('ImageGenerator')
   .withCacheStorage(cache)
   .withSource(source) // 👈 Specify a data source.
-  .withImageModel(TitanImageModel.TITAN_IMAGE_GENERATOR_V2)
   .withTask(new ImageInpaintingTask.Builder()
     .withMaskPrompt('cat')
     .build()
