@@ -31,13 +31,13 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.623.0",
-    "@aws-sdk/client-sns": "^3.623.0",
-    "@aws-sdk/client-transcribe": "^3.623.0",
+    "@aws-sdk/client-dynamodb": "^3.629.0",
+    "@aws-sdk/client-sns": "^3.629.0",
+    "@aws-sdk/client-transcribe": "^3.629.0",
     "@types/aws-lambda": "^8.10.143",
     "@types/jest": "^29.5.7",
     "@types/node": "^22.2.0",
-    "cdk-nag": "^2.28.176",
+    "cdk-nag": "^2.28.178",
     "esbuild": "0.21.5",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.4"

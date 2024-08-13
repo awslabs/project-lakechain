@@ -1,0 +1,42 @@
+{
+  "name": "titan-image-background-removal",
+  "description": "Builds a pipeline demonstrating image background removal using the Amazon Titan model.",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "build-pkg": "npx lerna run build --scope=titan-image-background-removal --include-dependencies",
+    "clean": "npx rimraf dist/ cdk.out/ node_modules/",
+    "audit": "npm audit && npm run synth --silent | cfn_nag",
+    "lint": "npx eslint .",
+    "synth": "npx --yes cdk synth",
+    "deploy": "npx --yes cdk deploy",
+    "hotswap": "npx --yes cdk deploy --hotswap",
+    "destroy": "npx --yes cdk destroy --all"
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^22.2.0",
+    "esbuild": "0.21.5",
+    "ts-jest": "^29.0.0",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@project-lakechain/s3-event-trigger": "*",
+    "@project-lakechain/sharp-image-transform": "*",
+    "@project-lakechain/bedrock-image-generators": "*",
+    "@project-lakechain/s3-storage-connector": "*"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.151.0",
+    "constructs": "^10.3.0"
+  }
+}

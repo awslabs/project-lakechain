@@ -23,6 +23,8 @@ Below is an example of the result of the inpainting process executed by this exa
   <img src="assets/result.png">
 </p>
 
+> ℹ️ Note that during the pipeline execution, the image will be resized to a 1024x1024 resolution with a [contain fit](https://sharp.pixelplumbing.com/api-resize) to match the input requirements of the Titan model.
+
 ## 📝 Requirements
 
 The following requirements are needed to deploy the infrastructure associated with this pipeline:

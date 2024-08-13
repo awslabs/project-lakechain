@@ -32,8 +32,7 @@ const ImageInpaintingTaskPropsSchema = z.object({
    * The prompt associated with the task.
    */
   text: z
-    .custom<dsl.IReference<any>>()
-    .optional(),
+    .custom<dsl.IReference<any>>(),
 
   /**
    * The negative prompt to use when generating images.
@@ -69,7 +68,7 @@ const ImageInpaintingTaskPropsSchema = z.object({
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html
    */
   imageGenerationParameters: z.custom<ImageGenerationParameters>()
-    .optional()
+    .default(new ImageGenerationParameters.Builder().build())
 });
 
 // The type of the `ImageInpaintingProps` schema.
@@ -188,7 +187,14 @@ export class ImageInpaintingTask {
    * Creates a new instance of the `ImageInpaintingTask` class.
    * @param props the task properties.
    */
-  constructor(public props: ImageInpaintingProps) {}
+  constructor(public props: ImageInpaintingProps) {
+    if (!props.maskImage && !props.maskPrompt) {
+      throw new Error('Must specify either mask image or mask prompt.');
+    }
+    if (props.maskImage && props.maskPrompt) {
+      throw new Error('Cannot specify both mask image and mask prompt.');
+    }
+  }
 
   /**
    * @returns the text prompt associated with the task.

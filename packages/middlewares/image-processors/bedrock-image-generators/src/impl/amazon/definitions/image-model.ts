@@ -23,7 +23,13 @@ export class TitanImageModel {
    * The Bedrock `amazon.titan-image-generator-v1` model.
    * @see https://aws.amazon.com/fr/bedrock/titan/
    */
-  public static TITAN_IMAGE_GENERATOR_V1 = new TitanImageModel('amazon.titan-image-generator-v1');
+  public static readonly TITAN_IMAGE_GENERATOR_V1 = new TitanImageModel('amazon.titan-image-generator-v1');
+
+  /**
+   * The Bedrock `amazon.titan-image-generator-v2` model.
+   * @see https://aws.amazon.com/fr/bedrock/titan/
+   */
+  public static readonly TITAN_IMAGE_GENERATOR_V2 = new TitanImageModel('amazon.titan-image-generator-v2:0');
 
   /**
    * Create a new instance of the `TitanImageModel`
@@ -35,5 +41,9 @@ export class TitanImageModel {
     return (new TitanImageModel(name));
   }
 
+  /**
+   * `TitanImageModel` constructor.
+   * @param name the name of the model.
+   */
   constructor(public name: string) {}
 }

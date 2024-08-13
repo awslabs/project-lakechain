@@ -7,6 +7,8 @@ import originalInpaintImage from '../../../assets/titan-inpainting-original-imag
 import inpaintedImage from '../../../assets/titan-inpainting-inpainted-image.png';
 import originalOutpaintImage from '../../../assets/titan-outpainting-original-image.png';
 import outpaintedImage from '../../../assets/titan-outpainting-outpainted-image.png';
+import originalBackgroundImage from '../../../assets/titan-background-removal-original-image.png';
+import backgroundRemovedImage from '../../../assets/titan-background-removed-image.png';
 import icon from '../../../assets/icon-amazon.svg';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -178,13 +180,15 @@ const imageGenerator = new TitanImageGenerator.Builder()
 
 ### ✨ Image Variation
 
-The Titan model also supports taking an image as an input, and transforming that image using a textual prompt into a new image. To perform image variation, you use the `TitanImageGenerator` and provide it with a `ImageVariationTask`.
+The Titan model also supports taking an image as an input, and transforming that image using a textual prompt into a new image.
+To perform image variation, you use the `TitanImageGenerator` and provide it with a `ImageVariationTask`.
 
 ![Variation Process](../../../assets/titan-image-variation-process.png)
 
 #### Example
 
 ```typescript
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 import { TitanImageGenerator, ImageVariationTask } from '@project-lakechain/bedrock-image-generators';
 
 const imageGenerator = new TitanImageGenerator.Builder()
@@ -199,6 +203,60 @@ const imageGenerator = new TitanImageGenerator.Builder()
     .withImage(r.reference(r.document()))
     .build()
   )
+  .build();
+```
+
+<br />
+<br />
+
+---
+
+### ✂️ Background Removal
+
+The Titan model supports identifying the main subject within a picture and cleanly and accurately remove the background of the image, leaving only the main subject.
+To perform background removal, you use the `TitanImageGenerator` and provide it with a `BackgroundRemovalTask`.
+
+> 💁 Background removal is only available with the Titan Model image generator v2 model.
+
+<br />
+<p align="center">
+  <table style="display: table; margin: auto">
+    <tr>
+      <th>Original Image</th>
+      <th>Background Removed</th>
+    </tr>
+    <tr>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={originalBackgroundImage} alt="Original Image" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={backgroundRemovedImage} alt="Background Removed" />
+      </td>
+    </tr>
+  </table>
+</p>
+<br />
+
+#### Example
+
+```typescript
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
+import {
+  TitanImageGenerator,
+  BackgroundRemovalTask,
+  TitanImageModel
+} from '@project-lakechain/bedrock-image-generators';
+
+const imageGenerator = new TitanImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('ImageGenerator')
+  .withCacheStorage(cache)
+  .withSource(source) // 👈 Specify a data source.
+  .withImageModel(TitanImageModel.TITAN_IMAGE_GENERATOR_V2)
+  .withTask(new BackgroundRemovalTask.Builder()
+    // Reference the current document as the image to transform.
+    .withImage(r.reference(r.document()))
+    .build())
   .build();
 ```
 
@@ -273,7 +331,7 @@ Below are the parameters you can pass to the image generation tasks. See the [of
 | `cfgScale` | Specifies how strongly the generated image should adhere to the prompt. | 8.0 |
 | `height` | The height of the generated image. | 1024 |
 | `width` | The width of the generated image. | 1024 |
-| `seed` | Determines the initial noise setting. | 0 |
+| `seed` | Determines the initial noise setting. | random |
 
 <br />
 <br />
@@ -324,3 +382,4 @@ region to generate images.
 
 - [Titan Inpainting Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/generative-pipelines/titan-inpainting-pipeline) - An example showcasing how to perform image inpainting using Amazon Titan.
 - [Image Outpainting Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/generative-pipelines/image-outpainting-pipeline) - An example showcasing how to perform image outpainting using Amazon Titan.
+- [Titan Background Removal Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-processing-pipelines/titan-image-background-removal-pipeline) - Builds a pipeline demonstrating image background removal using the Amazon Titan model.

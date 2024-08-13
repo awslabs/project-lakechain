@@ -51,11 +51,21 @@ const ImageVariationTaskPropsSchema = z.object({
     .default(dsl.reference(dsl.document())),
 
   /**
+   * The similarity strength to use when generating images.
+   * @default 0.7
+   */
+  similarityStrength: z
+    .number()
+    .min(0.2)
+    .max(1.0)
+    .default(0.7),
+
+  /**
    * The image generation parameters.
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html
    */
   imageGenerationParameters: z.custom<ImageGenerationParameters>()
-    .optional()
+    .default(new ImageGenerationParameters.Builder().build())
 });
 
 // The type of the `ImageVariationProps` schema.
@@ -117,6 +127,15 @@ export class ImageVariationTaskBuilder {
   }
 
   /**
+   * @param similarityStrength the similarity strength to use.
+   * @returns the current builder instance.
+   */
+  public withSimilarityStrength(similarityStrength: number) {
+    this.props.similarityStrength = similarityStrength;
+    return (this);
+  }
+
+  /**
    * @param imageGenerationParameters the image generation parameters.
    * @returns the current builder instance.
    */
@@ -169,6 +188,13 @@ export class ImageVariationTask {
    */
   public image() {
     return (this.props.image);
+  }
+
+  /**
+   * @returns the similarity strength associated with the task.
+   */
+  public similarityStrength() {
+    return (this.props.similarityStrength);
   }
 
   /**

@@ -93,7 +93,7 @@ class TitanEmbeddingProcessorBuilder extends MiddlewareBuilder {
    * @note this is only valid for multimodal models.
    * @param size the size of the embedding to generate.
    */
-  public withEmbeddingSize(size: 256 | 512 | 1024) {
+  public withEmbeddingSize(size: 256 | 384 | 1024) {
     this.providerProps.embeddingSize = size;
     return (this);
   }

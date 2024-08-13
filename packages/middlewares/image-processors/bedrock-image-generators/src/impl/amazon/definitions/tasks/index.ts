@@ -18,3 +18,5 @@ export * from './text-to-image-task';
 export * from './image-inpainting-task';
 export * from './image-outpainting-task';
 export * from './image-variation-task';
+export * from './background-removal-task';
+export * from './color-guided-generation-task';

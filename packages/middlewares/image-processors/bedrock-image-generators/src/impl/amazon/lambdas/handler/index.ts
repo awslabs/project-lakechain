@@ -17,20 +17,23 @@
 import { SQSEvent, Context, SQSRecord } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
-import { CloudEvent } from '@project-lakechain/sdk/models';
+import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { textToImage } from './generation/text-to-image';
 import { imageInpainting } from './generation/image-inpainting';
 import { imageOutpainting } from './generation/image-outpainting';
 import { imageVariation } from './generation/image-variation';
+import { backgroundRemoval } from './generation/background-removal';
+import { colorGuidedGeneration } from './generation/color-guided-generation';
 
 import {
   TextToImageProps,
   ImageInpaintingProps,
   ImageOutpaintingProps,
-  ImageVariationProps
+  ImageVariationProps,
+  BackgroundRemovalProps,
+  ColorGuidedGenerationProps
 } from '../../definitions/tasks';
 import {
   BatchProcessor,
@@ -44,21 +47,16 @@ import {
 type TaskProps = TextToImageProps
   | ImageInpaintingProps
   | ImageOutpaintingProps
-  | ImageVariationProps;
+  | ImageVariationProps
+  | BackgroundRemovalProps
+  | ColorGuidedGenerationProps;
 
 /**
  * Environment variables.
  */
 const TASK: TaskProps = JSON.parse(process.env.TASK as string);
-const PROCESSED_FILES_BUCKET = process.env.PROCESSED_FILES_BUCKET as string;
-
-/**
- * The S3 client.
- */
-const s3 = tracer.captureAWSv3Client(new S3Client({
-  region: process.env.AWS_REGION,
-  maxAttempts: 5
-}));
+const IMAGE_MODEL     = process.env.IMAGE_MODEL as string;
+const TARGET_BUCKET   = process.env.PROCESSED_FILES_BUCKET as string;
 
 /**
  * The async batch processor processes the received
@@ -88,24 +86,16 @@ class Lambda implements LambdaInterface {
     const document = newEvent.data().document();
     const key = `${newEvent.data().chainId()}/amazon-titan.${document.etag()}-${idx}.png`;
 
-    // Upload the image to S3.
-    const res = await s3.send(new PutObjectCommand({
-      Bucket: PROCESSED_FILES_BUCKET,
-      Key: key,
-      Body: image,
-      ContentType: 'image/png',
-      ContentLength: image.byteLength
-    }));
-
-    // Update the event.
-    document.props.url = new S3DocumentDescriptor.Builder()
-      .withBucket(PROCESSED_FILES_BUCKET)
-      .withKey(key)
-      .build()
-      .asUri();
-    document.props.type = 'image/png';
-    document.props.size = image.byteLength;
-    document.props.etag = res.ETag?.replace(/"/g, '');
+    // Create a new document with the generated image.
+    newEvent.data().props.document = await Document.create({
+      url: new S3DocumentDescriptor.Builder()
+        .withBucket(TARGET_BUCKET)
+        .withKey(key)
+        .build()
+        .asUri(),
+      type: 'image/png',
+      data: image
+    });
 
     return (newEvent);
   }
@@ -117,15 +107,26 @@ class Lambda implements LambdaInterface {
    */
   private async processEvent(event: CloudEvent) {
     let images: Buffer[] = [];
+    
+    // By default, we set the seed to a random value if
+    // it is not defined by the user.
+    if (!TASK.imageGenerationParameters.seed) {
+      (TASK.imageGenerationParameters.seed as any) = Math.floor(Math.random() * 214783647);
+    }
 
+    // Execute the task.
     if (TASK.taskType === 'TEXT_IMAGE') {
-      images = await textToImage(event, TASK);
+      images = await textToImage(event, IMAGE_MODEL, TASK);
     } else if (TASK.taskType === 'INPAINTING') {
-      images = await imageInpainting(event, TASK);
+      images = await imageInpainting(event, IMAGE_MODEL, TASK);
     } else if (TASK.taskType === 'OUTPAINTING') {
-      images = await imageOutpainting(event, TASK);
+      images = await imageOutpainting(event, IMAGE_MODEL, TASK);
     } else if (TASK.taskType === 'IMAGE_VARIATION') {
-      images = await imageVariation(event, TASK);
+      images = await imageVariation(event, IMAGE_MODEL, TASK);
+    } else if (TASK.taskType === 'BACKGROUND_REMOVAL') {
+      images = await backgroundRemoval(event, IMAGE_MODEL, TASK);
+    } else if (TASK.taskType === 'COLOR_GUIDED_GENERATION') {
+      images = await colorGuidedGeneration(event, IMAGE_MODEL, TASK);
     } else {
       throw new Error(`Unsupported task type`);
     }

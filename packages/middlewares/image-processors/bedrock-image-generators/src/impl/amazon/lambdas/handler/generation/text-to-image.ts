@@ -4,11 +4,6 @@ import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { TextToImageProps } from '../../../definitions/tasks';
 
 /**
- * Environment variables.
- */
-const IMAGE_MODEL = process.env.IMAGE_MODEL as string;
-
-/**
  * The Bedrock runtime.
  */
 const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
@@ -19,12 +14,12 @@ const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
 /**
  * Executes the given text to image task.
  * @param event the document event.
+ * @param model the model to use.
  * @param task the task to execute.
  * @returns a promise that resolves to a collection of image
  * buffers.
  */
-export const textToImage = async (event: CloudEvent, task: TextToImageProps) => {  
-  // Generate the image(s).
+export const textToImage = async (event: CloudEvent, model: string, task: TextToImageProps) => {  
   const response = await bedrock.invokeModel({
     body: JSON.stringify({
       taskType: task.taskType,
@@ -36,7 +31,7 @@ export const textToImage = async (event: CloudEvent, task: TextToImageProps) => 
       },
       imageGenerationConfig: task.imageGenerationParameters
     }),
-    modelId: IMAGE_MODEL,
+    modelId: model,
     accept: 'application/json',
     contentType: 'application/json'
   });

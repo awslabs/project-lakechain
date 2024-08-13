@@ -4,11 +4,6 @@ import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { ImageOutpaintingProps } from '../../../definitions/tasks';
 
 /**
- * Environment variables.
- */
-const IMAGE_MODEL = process.env.IMAGE_MODEL as string;
-
-/**
  * The Bedrock runtime.
  */
 const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
@@ -19,20 +14,18 @@ const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
 /**
  * Executes the given image outpainting task.
  * @param event the document event.
+ * @param model the model to use.
  * @param task the task to execute.
  * @returns a promise that resolves to a collection of image
  * buffers.
  */
-export const imageOutpainting = async (event: CloudEvent, task: ImageOutpaintingProps) => {
-  // Generate the image(s).
+export const imageOutpainting = async (event: CloudEvent, model: string, task: ImageOutpaintingProps) => {
   const response = await bedrock.invokeModel({
     body: JSON.stringify({
       taskType: task.taskType,
       outPaintingParams: {
         image: (await event.resolve(task.image)).toString('base64'),
-        text: task.text ?
-          await event.resolve(task.text) :
-          undefined,
+        text: await event.resolve(task.text),
         negativeText: task.negativeText ?
           await event.resolve(task.negativeText) :
           undefined,
@@ -45,7 +38,7 @@ export const imageOutpainting = async (event: CloudEvent, task: ImageOutpainting
       },
       imageGenerationConfig: task.imageGenerationParameters
     }),
-    modelId: IMAGE_MODEL,
+    modelId: model,
     accept: 'application/json',
     contentType: 'application/json'
   });

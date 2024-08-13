@@ -23,12 +23,12 @@
     "@aws-lambda-powertools/logger": "^2.7.0",
     "@aws-lambda-powertools/metrics": "^2.7.0",
     "@aws-lambda-powertools/tracer": "^2.7.0",
-    "langchain": "^0.2.14",
+    "langchain": "^0.2.15",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.623.0",
-    "@aws-sdk/client-sns": "^3.623.0",
+    "@aws-sdk/client-s3": "^3.629.0",
+    "@aws-sdk/client-sns": "^3.629.0",
     "@types/aws-lambda": "^8.10.143",
     "@types/lodash": "^4.17.7",
     "esbuild": "0.21.5"

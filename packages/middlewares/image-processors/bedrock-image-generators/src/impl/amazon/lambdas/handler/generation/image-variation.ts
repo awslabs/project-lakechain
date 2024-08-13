@@ -4,11 +4,6 @@ import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { ImageVariationProps } from '../../../definitions/tasks';
 
 /**
- * Environment variables.
- */
-const IMAGE_MODEL = process.env.IMAGE_MODEL as string;
-
-/**
  * The Bedrock runtime.
  */
 const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
@@ -23,8 +18,7 @@ const bedrock = tracer.captureAWSv3Client(new BedrockRuntime({
  * @returns a promise that resolves to a collection of image
  * buffers.
  */
-export const imageVariation = async (event: CloudEvent, task: ImageVariationProps) => {
-  // Generate the image(s).
+export const imageVariation = async (event: CloudEvent, model: string, task: ImageVariationProps) => {
   const response = await bedrock.invokeModel({
     body: JSON.stringify({
       taskType: task.taskType,
@@ -37,11 +31,12 @@ export const imageVariation = async (event: CloudEvent, task: ImageVariationProp
           undefined,
         negativeText: task.negativeText ?
           await event.resolve(task.negativeText) :
-          undefined
+          undefined,
+        similarityStrength: task.similarityStrength
       },
       imageGenerationConfig: task.imageGenerationParameters
     }),
-    modelId: IMAGE_MODEL,
+    modelId: model,
     accept: 'application/json',
     contentType: 'application/json'
   });

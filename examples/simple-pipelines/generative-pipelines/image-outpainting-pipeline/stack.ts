@@ -89,47 +89,45 @@ export class ImageOutpaintingPipeline extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // Ensure the input image dimensions are compatible with the
-    // dimensions expected by the Titan model. We resize the image
-    // to 1024x1024, and convert it to PNG.
-    const imageTransform = new SharpImageTransform.Builder()
-      .withScope(this)
-      .withIdentifier('ImageTransform')
-      .withCacheStorage(cache)
-      .withSource(trigger)
-      .withSharpTransforms(
-        sharp()
-          .resize(1024, 1024)
-          .png()
+    trigger
+      .pipe(
+        // Ensure the input image dimensions are compatible with the
+        // dimensions expected by the Titan model. We resize the image
+        // to 1024x1024, and convert it to PNG.
+        new SharpImageTransform.Builder()
+          .withScope(this)
+          .withIdentifier('ImageTransform')
+          .withCacheStorage(cache)
+          .withSharpTransforms(
+            sharp()
+              .resize({ width: 1024, height: 1024, fit: 'contain' })
+              .png()
+          )
+          .build()
       )
-      .build();
-
-    // Modify the input images using Titan on Amazon Bedrock.
-    const imageGenerator = new TitanImageGenerator.Builder()
-      .withScope(this)
-      .withIdentifier('ImageGenerator')
-      .withCacheStorage(cache)
-      .withSource(imageTransform)
-      .withRegion('us-east-1')
-      .withTask(new ImageOutpaintingTask.Builder()
-        .withTextPrompt('Beautiful garden and swimming pool')
-        .withMaskPrompt('house')
-        .build()
+      .pipe(
+        // Modify the input images using Titan on Amazon Bedrock.
+        new TitanImageGenerator.Builder()
+          .withScope(this)
+          .withIdentifier('ImageGenerator')
+          .withCacheStorage(cache)
+          .withRegion('us-east-1')
+          .withTask(new ImageOutpaintingTask.Builder()
+            .withTextPrompt('Beautiful garden and swimming pool')
+            .withMaskPrompt('house')
+            .build()
+          )
+          .build()
       )
-      .build();
-
-    // Write both the resized image and the generated image
-    // to the destination bucket.
-    new S3StorageConnector.Builder()
-      .withScope(this)
-      .withIdentifier('Storage')
-      .withCacheStorage(cache)
-      .withDestinationBucket(destination)
-      .withSources([
-        imageTransform,
-        imageGenerator
-      ])
-      .build();
+      .pipe(
+        // Store the generated images in the destination bucket.
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('Storage')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
+      );
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {

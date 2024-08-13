@@ -34,7 +34,9 @@ import {
   TextToImageTask,
   ImageInpaintingTask,
   ImageOutpaintingTask,
-  ImageVariationTask
+  ImageVariationTask,
+  BackgroundRemovalTask,
+  ColorGuidedGenerationTask
 } from './definitions/tasks';
 import {
   Middleware,
@@ -79,6 +81,7 @@ class TitanImageGeneratorBuilder extends MiddlewareBuilder {
    * Sets the Titan image model to use for generating images.
    * @param model the Titan image model to use.
    * @returns the current builder instance.
+   * @default TitanImageModel.TITAN_IMAGE_GENERATOR_V2
    */
   public withImageModel(model: TitanImageModel) {
     this.middlewareProps.imageModel = model;
@@ -93,7 +96,9 @@ class TitanImageGeneratorBuilder extends MiddlewareBuilder {
   public withTask(task: TextToImageTask
     | ImageInpaintingTask
     | ImageOutpaintingTask
-    | ImageVariationTask) {
+    | ImageVariationTask
+    | BackgroundRemovalTask
+    | ColorGuidedGenerationTask) {
     this.middlewareProps.task = task;
     return (this);
   }
@@ -199,7 +204,8 @@ export class TitanImageGenerator extends Middleware {
         minify: true,
         externalModules: [
           '@aws-sdk/client-s3',
-          '@aws-sdk/client-sns'
+          '@aws-sdk/client-sns',
+          '@aws-sdk/client-bedrock-runtime'
         ]
       }
     });
@@ -212,7 +218,7 @@ export class TitanImageGenerator extends Middleware {
     // Plug the SQS queue into the lambda function.
     this.eventProcessor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
       batchSize: this.props.batchSize ?? 1,
-      maxConcurrency: 2,
+      maxConcurrency: this.props.maxConcurrency ?? 2,
       reportBatchItemFailures: true
     }));
 
@@ -294,6 +300,6 @@ export class TitanImageGenerator extends Middleware {
   }
 }
 
+export * from './definitions/tasks';
 export { TitanImageModel } from './definitions/image-model';
-export { TextToImageTask, ImageInpaintingTask, ImageOutpaintingTask } from './definitions/tasks';
 export { ImageGenerationParameters } from './definitions/image-generation-props';

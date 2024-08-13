@@ -21,7 +21,9 @@ import {
   TextToImageTask,
   ImageInpaintingTask,
   ImageOutpaintingTask,
-  ImageVariationTask
+  ImageVariationTask,
+  BackgroundRemovalTask,
+  ColorGuidedGenerationTask
 } from './tasks';
 
 /**
@@ -31,11 +33,11 @@ export const TitanImageGeneratorPropsSchema = MiddlewarePropsSchema.extend({
 
   /**
    * The image model to use.
-   * @default TitanImageModel.TITAN_IMAGE_GENERATOR_V1
+   * @default TitanImageModel.TITAN_IMAGE_GENERATOR_V2
    */
   imageModel: z
     .instanceof(TitanImageModel)
-    .default(TitanImageModel.TITAN_IMAGE_GENERATOR_V1),
+    .default(TitanImageModel.TITAN_IMAGE_GENERATOR_V2),
 
   /**
    * The task to execute by the image model.
@@ -44,7 +46,9 @@ export const TitanImageGeneratorPropsSchema = MiddlewarePropsSchema.extend({
     z.custom<TextToImageTask>(),
     z.custom<ImageInpaintingTask>(),
     z.custom<ImageOutpaintingTask>(),
-    z.custom<ImageVariationTask>()
+    z.custom<ImageVariationTask>(),
+    z.custom<BackgroundRemovalTask>(),
+    z.custom<ColorGuidedGenerationTask>()
   ]),
 
   /**

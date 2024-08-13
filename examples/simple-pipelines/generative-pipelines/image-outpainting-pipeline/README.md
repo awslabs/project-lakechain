@@ -23,6 +23,10 @@ Below is an example of the result of the outpainting process executed by this ex
   <img src="assets/result.png">
 </p>
 
+> ℹ️ Note that during the pipeline execution, the image will be resized to a 1024x1024 resolution with a [contain fit](https://sharp.pixelplumbing.com/api-resize) to match the input requirements of the Titan model.
+
+To use this pipeline, simply upload images of a house to the input bucket, and the pipeline will automatically outpaint the image and upload the result to the output bucket. You can of course update the code of the pipeline to mask another type of object in the image.
+
 ## 📝 Requirements
 
 The following requirements are needed to deploy the infrastructure associated with this pipeline:

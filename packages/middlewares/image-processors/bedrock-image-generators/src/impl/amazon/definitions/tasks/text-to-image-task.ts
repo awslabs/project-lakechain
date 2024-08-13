@@ -45,7 +45,7 @@ export const TextToImageTaskPropsSchema = z.object({
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html
    */
   imageGenerationParameters: z.custom<ImageGenerationParameters>()
-    .optional()
+    .default(new ImageGenerationParameters.Builder().build())
 });
 
 // The type of the `TextToImageProps` schema.

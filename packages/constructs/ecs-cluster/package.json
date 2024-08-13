@@ -39,12 +39,12 @@
     "@project-lakechain/sdk": "^0.7.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-ecs": "^3.623.0",
-    "@aws-sdk/client-sqs": "^3.623.0",
+    "@aws-sdk/client-ecs": "^3.629.0",
+    "@aws-sdk/client-sqs": "^3.629.0",
     "@types/aws-lambda": "^8.10.143",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.2.0",
-    "cdk-nag": "^2.28.176",
+    "cdk-nag": "^2.28.178",
     "esbuild": "0.21.5",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",

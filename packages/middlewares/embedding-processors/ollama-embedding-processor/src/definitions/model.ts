@@ -88,6 +88,36 @@ export class OllamaEmbeddingModel {
   });
 
   /**
+   * The `bge-m3` model.
+   * @see https://ollama.com/library/bge-m3
+   */
+  public static readonly BGE_M3 = new OllamaEmbeddingModel('bge-m3', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: BASE_TEXT_INPUTS
+  });
+
+  /**
+   * The `bge-large` model.
+   * @see https://ollama.com/library/bge-large
+   */
+  public static readonly BGE_LARGE = new OllamaEmbeddingModel('bge-large', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: BASE_TEXT_INPUTS
+  });
+
+  /**
+   * The `paraphrase-multilingual` model.
+   * @see https://ollama.com/library/paraphrase-multilingual
+   */
+  public static readonly PARAPHRASE_MULTILINGUAL = new OllamaEmbeddingModel('paraphrase-multilingual', {
+    tag: 'latest',
+    inputs: BASE_TEXT_INPUTS,
+    outputs: BASE_TEXT_INPUTS
+  });
+
+  /**
    * Create a new instance of the `OllamaEmbeddingModel`
    * by name.
    * @param name the name of the model.

@@ -233,7 +233,8 @@ export class SdxlImageGenerator extends Middleware {
         minify: true,
         externalModules: [
           '@aws-sdk/client-s3',
-          '@aws-sdk/client-sns'
+          '@aws-sdk/client-sns',
+          '@aws-sdk/client-bedrock-runtime'
         ]
       }
     });
@@ -246,7 +247,7 @@ export class SdxlImageGenerator extends Middleware {
     // Plug the SQS queue into the lambda function.
     this.eventProcessor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
       batchSize: this.props.batchSize ?? 1,
-      maxConcurrency: 2,
+      maxConcurrency: this.props.maxConcurrency ?? 2,
       reportBatchItemFailures: true
     }));
 

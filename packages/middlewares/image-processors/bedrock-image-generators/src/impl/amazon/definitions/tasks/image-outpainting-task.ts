@@ -32,8 +32,7 @@ const ImageOutpaintingTaskPropsSchema = z.object({
    * The prompt associated with the task.
    */
   text: z
-    .custom<dsl.IReference<any>>()
-    .optional(),
+    .custom<dsl.IReference<any>>(),
 
   /**
    * The negative prompt to use when generating images.
@@ -69,8 +68,7 @@ const ImageOutpaintingTaskPropsSchema = z.object({
    * @default DEFAULT
    */
   outPaintingMode: z
-    .string()
-    .optional()
+    .enum(['DEFAULT', 'PRECISE'])
     .default('DEFAULT'),
 
   /**
@@ -78,7 +76,7 @@ const ImageOutpaintingTaskPropsSchema = z.object({
    * @see https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-titan-image.html
    */
   imageGenerationParameters: z.custom<ImageGenerationParameters>()
-    .optional()
+    .default(new ImageGenerationParameters.Builder().build())
 });
 
 // The type of the `ImageOutpaintingProps` schema.
@@ -169,7 +167,7 @@ export class ImageOutpaintingTaskBuilder {
    * @param outPaintingMode the outpainting mode to use.
    * @returns the current builder instance.
    */
-  public withOutPaintingMode(outPaintingMode: string) {
+  public withOutPaintingMode(outPaintingMode: 'DEFAULT' | 'PRECISE') {
     this.props.outPaintingMode = outPaintingMode;
     return (this);
   }
@@ -206,7 +204,14 @@ export class ImageOutpaintingTask {
    * Creates a new instance of the `ImageOutpaintingTask` class.
    * @param props the task properties.
    */
-  constructor(public props: ImageOutpaintingProps) {}
+  constructor(public props: ImageOutpaintingProps) {
+    if (!props.maskImage && !props.maskPrompt) {
+      throw new Error('Must specify either mask image or mask prompt.');
+    }
+    if (props.maskImage && props.maskPrompt) {
+      throw new Error('Cannot specify both mask image and mask prompt.');
+    }
+  }
 
   /**
    * @returns the text prompt associated with the task.

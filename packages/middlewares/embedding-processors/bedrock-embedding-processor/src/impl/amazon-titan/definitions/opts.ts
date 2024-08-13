@@ -45,7 +45,7 @@ export const BedrockEmbeddingPropsSchema = MiddlewarePropsSchema.extend({
   embeddingSize: z
     .union([
       z.literal(256),
-      z.literal(512),
+      z.literal(384),
       z.literal(1024)
     ])
     .optional()
