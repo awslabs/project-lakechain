@@ -28,9 +28,8 @@ import icon from '../../../assets/icon-cohere.svg';
 
 ---
 
-*Bedrock text processors expose different constructs that leverage the Generative AI text models powered by [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html). Using these constructs, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!*
-
-The Cohere text processor is part of the Bedrock text processors and allows you to leverage machine-learning models provided by Cohere within your pipelines.
+The Cohere text processor allows you to leverage machine-learning models provided by Cohere on Amazon Bedrock within your pipelines.
+Using this construct, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!
 
 ---
 
@@ -98,7 +97,14 @@ const cohere = new CohereTextProcessor.Builder()
   .build();
 ```
 
-You can choose amongst the following models : `COHERE_COMMAND_TEXT_V14`, and `COHERE_COMMAND_LIGHT_TEXT_V14`.
+> 💁 You can choose amongst the following models — see the [Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html) for more information.
+
+Model Name | Model identifier
+---------- | ----------------
+COHERE_COMMAND_TEXT_V14 | `cohere.command-text-v14`
+COHERE_COMMAND_LIGHT_TEXT_V14 | `cohere.command-light-text-v14`
+COHERE_COMMAND_R | `cohere.command-r-v1:0`
+COHERE_COMMAND_R_PLUS | `cohere.command-r-plus-v1:0`
 
 <br />
 
@@ -130,7 +136,15 @@ const cohere = new CohereTextProcessor.Builder()
 
 ### ⚙️ Model Parameters
 
-You can forward specific parameters to text models using the `.withModelParameters` method. See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+You can optionally forward specific parameters to the underlying LLM using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+> 💁 See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+
+Parameter   | Description | Min | Max | Default
+----------- | ----------- | --- | --- | -------
+temperature | Controls the randomness of the generated text. | 0 | 1 | 0.3
+maxTokens   | The maximum number of tokens to generate. | 1 | 4096 | 4096
+topP        | The cumulative probability of the top tokens to sample from. | 0.01 | 0.99 | 0.75
 
 <br />
 

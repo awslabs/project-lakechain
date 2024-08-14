@@ -28,9 +28,8 @@ import icon from '../../../assets/icon-meta.svg';
 
 ---
 
-*Bedrock text processors expose different constructs that leverage the Generative AI text models powered by [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html). Using these constructs, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!*
-
-The Llama text processor is part of the Bedrock text processors and allows you to leverage the Llama family of large-language models provided by [Meta](https://ai.meta.com/meta-ai/) within your pipelines.
+The Llama text processor allows you to leverage the [Llama family](https://llama.meta.com/) of large-language models provided by [Meta](https://ai.meta.com/meta-ai/) on Amazon bedrock within your pipelines.
+Using this construct, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!
 
 ---
 
@@ -140,7 +139,15 @@ const llama = new LlamaTextProcessor.Builder()
 
 ### ⚙️ Model Parameters
 
-You can forward specific parameters to text models using the `.withModelParameters` method. See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+You can optionally forward specific parameters to the underlying LLM using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+> 💁 See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
+
+Parameter   | Description | Min | Max | Default
+----------- | ----------- | --- | --- | -------
+temperature | Controls the randomness of the generated text. | 0 | 1 | 0.5
+maxTokens   | The maximum number of tokens to generate. | 1 | 2048 | 512
+topP        | The cumulative probability of the top tokens to sample from. | 0 | 1 | 0.9
 
 <br />
 

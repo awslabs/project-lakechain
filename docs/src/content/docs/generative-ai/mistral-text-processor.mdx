@@ -28,9 +28,8 @@ import icon from '../../../assets/icon-mistral.svg';
 
 ---
 
-*Bedrock text processors expose different constructs that leverage the Generative AI text models powered by [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html). Using these constructs, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!*
-
-The Mistral text processor is part of the Bedrock text processors and allows you to leverage the [Mistral and Mixtral](https://mistral.ai/fr/technology/#models) large-language models provided by Mistral AI within your pipelines.
+The Mistral text processor allows you to leverage the [Mistral and Mixtral](https://mistral.ai/fr/technology/#models) large-language models provided by Mistral AI on Amazon Bedrock within your pipelines.
+Using this construct, you can use prompt engineering techniques to transform text documents, including, text summarization, text translation, information extraction, and more!
 
 ---
 
@@ -98,8 +97,15 @@ const mistral = new MistralTextProcessor.Builder()
   .withPrompt(prompt)
   .build();
 ```
+> 💁 You can choose amongst the following models — see the [Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html) for more information.
 
-You can choose amongst the following models : `MISTRAL_7B_INSTRUCT`, `MIXTRAL_8x7B_INSTRUCT` and `MISTRAL_LARGE`.
+Model Name | Model identifier
+---------- | ----------------
+MISTRAL_7B_INSTRUCT | `mistral.mistral-7b-instruct-v0:2`
+MIXTRAL_8x7B_INSTRUCT | `mistral.mixtral-8x7b-instruct-v0:1`
+MISTRAL_LARGE | `mistral.mistral-large-2402-v1:0`
+MISTRAL_LARGE_2 | `mistral.mistral-large-2407-v1:0`
+MISTRAL_SMALL | `mistral.mistral-small-2402-v1:0`
 
 <br />
 
@@ -131,14 +137,15 @@ const mistral = new MistralTextProcessor.Builder()
 
 ### ⚙️ Model Parameters
 
-You can forward specific parameters to the text models using the `.withModelParameters` method. Below is a description of the supported parameters.
+You can optionally forward specific parameters to the underlying LLM using the `.withModelParameters` method. Below is a description of the supported parameters.
+
+> 💁 See the [Bedrock Inference Parameters](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html) for more information on the parameters supported by the different models.
 
 Parameter   | Description | Min | Max | Default
 ----------- | ----------- | --- | --- | -------
-temperature | Controls the randomness of the generated text. | 0 | 1 | N/A
-max_tokens  | The maximum number of tokens to generate. | 1 | 4096 | 4096
-top_p       | Controls the diversity of text that the model generates by setting the percentage of most-likely candidates that the model considers for the next token. | 0 | 1 | N/A
-top_k       | Controls the number of most-likely candidates that the model considers for the next token. | 1 | 200 | N/A
+temperature | Controls the randomness of the generated text. | 0 | 1 | Model dependant
+maxTokens   | The maximum number of tokens to generate. | 1 | Model dependant | N/A
+topP        | The cumulative probability of the top tokens to sample from. | 0 | 1 | Model dependant
 
 <br />
 

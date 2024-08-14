@@ -128,6 +128,10 @@ export class CohereTextModel {
     return (new CohereTextModel(props));
   }
 
+  /**
+   * Constructs a new instance of the `CohereTextModel`.
+   * @param props the properties of the model.
+   */
   constructor(props: CohereTextModelProps) {
     this.name = props.name;
     this.inputs = props.inputs;
