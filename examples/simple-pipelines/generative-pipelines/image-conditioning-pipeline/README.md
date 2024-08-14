@@ -27,7 +27,7 @@ Below is an example of the result of the image generation process executed by th
 
 <br />
 <p align="center">
-  <table>
+  <table align="center">
     <tr>
       <th>Reference Image</th>
       <th>Prompt</th>
