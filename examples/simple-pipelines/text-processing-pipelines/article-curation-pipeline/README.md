@@ -16,7 +16,7 @@ flowchart LR
 
 In this pipeline, we analyze a set of articles and blog post from different [AWS Blogs](https://aws.amazon.com/blogs/). The `SchedulerEventTrigger` middleware is used to specify a static list of RSS feeds that trigger a pipeline at a given time, or on a schedule.
 
-In this example, we trigger the pipeline _5 minutes_ after the deployment of the example starts such that it executes automatically, but you can modify the example as you see fit to regularly inspect AWS Blogs for new articles.
+In this example, we trigger the pipeline _10 minutes_ after the deployment of the example starts such that it executes automatically, but you can modify the example as you see fit to regularly inspect AWS Blogs for new articles.
 
 Once the pipeline is triggered, the pipeline extracts from the RSS feeds the latest articles and then extracts from the gathered raw HTML documents the relevant text of the article using the `Newspaper3k` middleware which provides an NLP model that is optimized for HTML article text extraction.
 
@@ -55,7 +55,7 @@ You can then deploy the example to your account (ensure the AWS CDK is installed
 npm run deploy
 ```
 
-> ℹ️ Note that this pipeline will automatically trigger the pipeline 5 minutes after the deployment of the stack. You can see the result of the execution in CloudWatch Logs and in the destination bucket. Also note that you can re-deploy this example at any time to trigger the pipeline again.
+> ℹ️ Note that this pipeline will automatically trigger the pipeline 10 minutes after the deployment of the stack. You can see the result of the execution in CloudWatch Logs and in the destination bucket. Also note that you can re-deploy this example at any time to trigger the pipeline again.
 
 ## 🧹 Clean up
 

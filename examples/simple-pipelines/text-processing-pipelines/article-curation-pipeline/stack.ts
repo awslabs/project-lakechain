@@ -29,9 +29,9 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**
  * @returns a date based on the local timezone
- * with a given offset which is by default 5 minutes.
+ * with a given offset which is by default 10 minutes.
  */
-const time = (offset = 5): Date => {
+const time = (offset = 10): Date => {
   const date = new Date();
   date.setMinutes(date.getMinutes() + offset);
   return (date);
@@ -85,7 +85,7 @@ export class ArticleStack extends cdk.Stack {
       'https://aws.amazon.com/blogs/architecture/feed/'
     ];
 
-    // Schedules the execution of the pipeline 5 minutes
+    // Schedules the execution of the pipeline 10 minutes
     // after the deployment of the stack.
     const trigger = new SchedulerEventTrigger.Builder()
       .withScope(this)
