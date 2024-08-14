@@ -44,7 +44,7 @@
     "@types/aws-lambda": "^8.10.143",
     "@types/fluent-ffmpeg": "2.1.25",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.3.0",
     "rimraf": "^6.0.1",
     "shx": "^0.3.4"
   },

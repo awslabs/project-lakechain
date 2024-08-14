@@ -36,7 +36,7 @@
     "@types/aws-lambda": "^8.10.143",
     "@types/gunzip-maybe": "^1.4.2",
     "@types/jest": "^29.5.12",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.3.0",
     "@types/tar-stream": "^3.1.3",
     "esbuild": "0.21.5",
     "rimraf": "^6.0.1"
