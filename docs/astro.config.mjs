@@ -114,6 +114,9 @@ export default defineConfig({
 				}, {
 					label: 'Hashing',
 					link: '/image-processing/hashing-image-processor'
+				}, {
+					label: 'Canny Edge',
+					link: '/image-processing/canny-edge-detector'
 				}]
 			}, {
 				label: 'Embeddings',

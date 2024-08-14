@@ -27,7 +27,12 @@ export const textToImage = async (event: CloudEvent, model: string, task: TextTo
         text: await event.resolve(task.text),
         negativeText: task.negativeText ?
           await event.resolve(task.negativeText) :
-          undefined
+          undefined,
+        controlMode: task.controlMode ?? undefined,
+        conditionImage: task.conditionImage ?
+          (await event.resolve(task.conditionImage)).toString('base64') :
+          undefined,
+        controlStrength: task.controlStrength ?? undefined
       },
       imageGenerationConfig: task.imageGenerationParameters
     }),

@@ -14,6 +14,8 @@ import colorPalette from '../../../assets/titan-color-guided-color-palette.png';
 import colorGuidedImage from '../../../assets/titan-color-guided-image.png';
 import originalObjectRemovalImage from '../../../assets/titan-object-removal-original-image.png';
 import objectRemovedImage from '../../../assets/titan-object-removed-image.png';
+import originalImageConditioningImage from '../../../assets/titan-image-conditioning-original-image.png';
+import conditionedImage from '../../../assets/titan-image-conditioning-conditioned-image.png';
 import icon from '../../../assets/icon-amazon.svg';
 
 <span title="Label: Pro" data-view-component="true" class="Label Label--api text-uppercase">
@@ -371,6 +373,58 @@ const imageGenerator = new TitanImageGenerator.Builder()
   .withSource(source) // 👈 Specify a data source.
   .withTask(new ImageInpaintingTask.Builder()
     .withMaskPrompt('cat')
+    .build()
+  )
+  .build();
+```
+
+<br />
+<br />
+
+---
+
+### 📏 Image Conditioning
+
+The Titan model supports [image conditioning](https://aws.amazon.com/fr/blogs/aws/amazon-titan-image-generator-v2-is-now-available-in-amazon-bedrock/), which allows you to shape your creations with precision and intention.
+By providing a reference image, you can instruct the model to focus on specific visual characteristics, such as edges, object outlines, and structural elements, or segmentation maps that define distinct regions and objects within the reference image.
+
+To perform image conditioning, you use the `TitanImageGenerator` and provide it with a `TextToImageTask` with a reference image.
+
+> 💁 Image conditioning is only available with the Titan Model image generator v2 model.
+
+<br />
+<p align="center">
+  <table style="display: table; margin: auto">
+    <tr>
+      <th>Original Image</th>
+      <th>Generated Image</th>
+    </tr>
+    <tr>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={originalImageConditioningImage} alt="Original Image" />
+      </td>
+      <td style="padding-top: 0.8em; padding-bottom: 1em">
+        <Image width="220" src={conditionedImage} alt="Generated Image" />
+      </td>
+    </tr>
+  </table>
+</p>
+<br />
+
+#### Example
+
+```typescript
+import { TitanImageGenerator, TextToImageTask } from '@project-lakechain/bedrock-image-generators';
+
+const imageGenerator = new TitanImageGenerator.Builder()
+  .withScope(this)
+  .withIdentifier('ImageGenerator')
+  .withCacheStorage(cache)
+  .withSource(source) // 👈 Specify a data source.
+  .withTask(new TextToImageTask.Builder()
+    .withPrompt('a tiger as a hand drawn sketch')
+    .withControlMode('CANNY_EDGE')
+    .withConditionImage(r.reference(r.document()))
     .build()
   )
   .build();

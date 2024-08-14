@@ -18,31 +18,39 @@
 
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as r from '@project-lakechain/core/dsl/vocabulary/reference';
 
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { SharpImageTransform, SharpFunction, CloudEvent } from '@project-lakechain/sharp-image-transform';
+import { SharpImageTransform, sharp } from '@project-lakechain/sharp-image-transform';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
+import {
+  TitanImageGenerator,
+  TextToImageTask,
+  ImageGenerationParameters,
+  TitanImageModel
+} from '@project-lakechain/bedrock-image-generators';
 
 /**
- * Example stack for resizing images to a collection of
- * different sizes using the Sharp library.
+ * An example stack showcasing how to generate images using
+ * the Titan image generator with image conditioning.
+ *
  * The pipeline looks as follows:
  *
- * ┌────────────┐   ┌─────────────────────────┐   ┌─────────────┐
- * │  S3 Input  ├──►│  Sharp Image Processor  ├──►│  S3 Output  │
- * └────────────┘   └─────────────────────────┘   └─────────────┘
+ * ┌────────────┐   ┌─────────┐   ┌───────────┐   ┌─────────────┐
+ * │  S3 Input  ├──►│  Sharp  ├──►│  Bedrock  ├──►│  S3 Output  │
+ * └────────────┘   └─────────┘   └───────────┘   └─────────────┘
  *
  */
-export class ImageResizePipeline extends cdk.Stack {
+export class ImageConditioningPipeline extends cdk.Stack {
 
   /**
    * Stack constructor.
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline resizing images.',
+      description: 'A pipeline using Amazon Bedrock and Amazon Titan to perform image conditioning generation.',
       ...env
     });
 
@@ -75,8 +83,11 @@ export class ImageResizePipeline extends cdk.Stack {
     ///////     Lakechain Pipeline      ///////
     ///////////////////////////////////////////
 
+    // The prompt to use for the image generation.
+    const prompt = 'a tiger as a hand drawn sketch';
+
     // Create the S3 trigger monitoring the bucket
-    // for uploaded objects.
+    // for uploaded images.
     const trigger = new S3EventTrigger.Builder()
       .withScope(this)
       .withIdentifier('Trigger')
@@ -84,40 +95,50 @@ export class ImageResizePipeline extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // The image resizing operation using the Sharp middleware
-    // implements a funclet yielding the different sizes of images.
-    const imageResize = new SharpImageTransform.Builder()
-      .withScope(this)
-      .withIdentifier('SharpTransform')
-      .withCacheStorage(cache)
-      .withSource(trigger)
-      .withSharpTransforms(async function*(event: CloudEvent, sharp: SharpFunction) {
-        const sizes = [
-          { width: 100, height: 100 },
-          { width: 200, height: 200 },
-          { width: 300, height: 300 }
-        ];
-
-        // Load the image in memory.
-        const buffer = await event.data().document().data().asBuffer();
-
-        // Resize the image to the specified sizes.
-        for (const size of sizes) {
-          yield sharp(buffer)
-            .resize(size.width, size.height)
-            .png();
-        }
-      })
-      .build();
-
-    // Write the results to the destination bucket.
-    new S3StorageConnector.Builder()
-      .withScope(this)
-      .withIdentifier('S3StorageConnector')
-      .withCacheStorage(cache)
-      .withDestinationBucket(destination)
-      .withSource(imageResize)
-      .build();
+    trigger
+      .pipe(
+        // Ensure the input image dimensions are compatible with the
+        // dimensions expected by the Titan model. We resize the image
+        // to 1024x1024, and convert it to PNG.
+        new SharpImageTransform.Builder()
+          .withScope(this)
+          .withIdentifier('ImageTransform')
+          .withCacheStorage(cache)
+          .withSharpTransforms(
+            sharp()
+              .resize({ width: 1024, height: 1024, fit: 'contain' })
+              .png()
+          )
+          .build()
+      )
+      .pipe(
+        // Image conditioning generation using Amazon Titan.
+        new TitanImageGenerator.Builder()
+          .withScope(this)
+          .withIdentifier('ImageGenerator')
+          .withCacheStorage(cache)
+          .withRegion('us-east-1')
+          .withImageModel(TitanImageModel.TITAN_IMAGE_GENERATOR_V2)
+          .withTask(new TextToImageTask.Builder()
+            .withPrompt(prompt)
+            .withControlMode('CANNY_EDGE')
+            .withConditionImage(r.reference(r.document()))
+            .withImageGenerationParameters(new ImageGenerationParameters.Builder()
+              .withWidth(1024)
+              .withHeight(1024)
+              .build())
+            .build())
+          .build()
+      )
+      .pipe(
+        // Store the generated images in the destination bucket.
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('Storage')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
+      );
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {
@@ -141,7 +162,7 @@ const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_DEFAULT_ACCOU
 const region  = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
 
 // Deploy the stack.
-new ImageResizePipeline(app, 'ImageResizePipeline', {
+new ImageConditioningPipeline(app, 'ImageConditioningPipeline', {
   env: {
     account,
     region

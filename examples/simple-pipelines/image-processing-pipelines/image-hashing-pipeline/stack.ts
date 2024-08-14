@@ -85,28 +85,30 @@ export class ImageHashingPipeline extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // Compute the hash of images using different algorithms.
-    const hash = new HashingImageProcessor.Builder()
-      .withScope(this)
-      .withIdentifier('HashingImageProcessor')
-      .withCacheStorage(cache)
-      .withSource(trigger)
-      // Optionally specify which algorithms to use.
-      .withAverageHashing(true)
-      .withPerceptualHashing(true)
-      .withDifferenceHashing(true)
-      .withWaveletHashing(true)
-      .withColorHashing(true)
-      .build();
-  
-    // Write the images to the destination bucket.
-    new S3StorageConnector.Builder()
-      .withScope(this)
-      .withIdentifier('SharpStorageConnector')
-      .withCacheStorage(cache)
-      .withSource(hash)
-      .withDestinationBucket(destination)
-      .build();
+    trigger
+      // Compute the hash of images using different algorithms.
+      .pipe(
+        new HashingImageProcessor.Builder()
+          .withScope(this)
+          .withIdentifier('HashingImageProcessor')
+          .withCacheStorage(cache)
+          // Optionally specify which algorithms to use.
+          .withAverageHashing(true)
+          .withPerceptualHashing(true)
+          .withDifferenceHashing(true)
+          .withWaveletHashing(true)
+          .withColorHashing(true)
+          .build()
+      )
+      // Write the images to the destination bucket.
+      .pipe(
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('SharpStorageConnector')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
+      );
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {

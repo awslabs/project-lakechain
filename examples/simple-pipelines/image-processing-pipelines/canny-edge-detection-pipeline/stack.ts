@@ -22,27 +22,28 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { SharpImageTransform, SharpFunction, CloudEvent } from '@project-lakechain/sharp-image-transform';
+import { CannyEdgeDetector } from '@project-lakechain/canny-edge-detector';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**
- * Example stack for resizing images to a collection of
- * different sizes using the Sharp library.
+ * An example stack showcasing how to perform canny edge detection
+ * on images.
+ *
  * The pipeline looks as follows:
  *
- * ┌────────────┐   ┌─────────────────────────┐   ┌─────────────┐
- * │  S3 Input  ├──►│  Sharp Image Processor  ├──►│  S3 Output  │
- * └────────────┘   └─────────────────────────┘   └─────────────┘
+ * ┌──────────────┐    ┌───────────────────────┐    ┌─────────────┐
+ * │   S3 Input   ├───►│  Canny Edge Detector  ├───►│  S3 Output  │
+ * └──────────────┘    └───────────────────────┘    └─────────────┘
  *
  */
-export class ImageResizePipeline extends cdk.Stack {
+export class CannyEdgeDetectionPipeline extends cdk.Stack {
 
   /**
    * Stack constructor.
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline resizing images.',
+      description: 'A pipeline performing canny edge detection on images.',
       ...env
     });
 
@@ -59,8 +60,8 @@ export class ImageResizePipeline extends cdk.Stack {
       enforceSSL: true
     });
 
-    // The destination bucket.
-    const destination = new s3.Bucket(this, 'Destination', {
+    // The destination images bucket.
+    const destination = new s3.Bucket(this, 'DestinationBucket', {
       encryption: s3.BucketEncryption.S3_MANAGED,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true,
@@ -84,40 +85,29 @@ export class ImageResizePipeline extends cdk.Stack {
       .withBucket(source)
       .build();
 
-    // The image resizing operation using the Sharp middleware
-    // implements a funclet yielding the different sizes of images.
-    const imageResize = new SharpImageTransform.Builder()
-      .withScope(this)
-      .withIdentifier('SharpTransform')
-      .withCacheStorage(cache)
-      .withSource(trigger)
-      .withSharpTransforms(async function*(event: CloudEvent, sharp: SharpFunction) {
-        const sizes = [
-          { width: 100, height: 100 },
-          { width: 200, height: 200 },
-          { width: 300, height: 300 }
-        ];
-
-        // Load the image in memory.
-        const buffer = await event.data().document().data().asBuffer();
-
-        // Resize the image to the specified sizes.
-        for (const size of sizes) {
-          yield sharp(buffer)
-            .resize(size.width, size.height)
-            .png();
-        }
-      })
-      .build();
-
-    // Write the results to the destination bucket.
-    new S3StorageConnector.Builder()
-      .withScope(this)
-      .withIdentifier('S3StorageConnector')
-      .withCacheStorage(cache)
-      .withDestinationBucket(destination)
-      .withSource(imageResize)
-      .build();
+    trigger
+      .pipe(
+        // Perform canny edge detection on uploaded images
+        // and extract the edges.
+        new CannyEdgeDetector.Builder()
+          .withScope(this)
+          .withIdentifier('CannyEdgeDetector')
+          .withCacheStorage(cache)
+          .withLowerThreshold(100)
+          .withUpperThreshold(200)
+          .withApertureSize(3)
+          .withL2Gradient(false)
+          .build()
+      )
+      .pipe(
+        // Write images to the destination bucket.
+        new S3StorageConnector.Builder()
+          .withScope(this)
+          .withIdentifier('DestinationStorageConnector')
+          .withCacheStorage(cache)
+          .withDestinationBucket(destination)
+          .build()
+      );
 
     // Display the source bucket information in the console.
     new cdk.CfnOutput(this, 'SourceBucketName', {
@@ -141,7 +131,7 @@ const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_DEFAULT_ACCOU
 const region  = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
 
 // Deploy the stack.
-new ImageResizePipeline(app, 'ImageResizePipeline', {
+new CannyEdgeDetectionPipeline(app, 'CannyEdgeDetectionPipeline', {
   env: {
     account,
     region

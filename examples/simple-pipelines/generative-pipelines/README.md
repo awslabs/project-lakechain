@@ -17,3 +17,4 @@ Pipeline | Description
 [SDXL Inpainting Pipeline](sdxl-inpainting-pipeline) | An example showcasing how to perform image inpainting using SDXL on Amazon Bedrock.
 [Titan Inpainting Pipeline](titan-inpainting-pipeline) | An example showcasing how to perform image inpainting using Amazon Titan.
 [Color Guided Image Pipeline](color-guided-image-pipeline) | An example showcasing how to perform color guided image generation using Amazon Titan.
+[Image Conditioning Pipeline](image-conditioning-pipeline) | An example showcasing how to perform image conditioning generation using Amazon Titan.

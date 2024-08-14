@@ -27,3 +27,4 @@ Pipeline | Description
 [Image Transforms Pipeline](image-transforms-pipeline) | A pipeline showcasing how to transform images.
 [Image Watermarking Pipeline](image-watermarking-pipeline) | A pipeline demonstrating how to watermark images.
 [Laplacian Variance Pipeline](laplacian-variance-pipeline) | An example showcasing how to compute the Laplacian variance of images.
+[Canny Edge Detection Pipeline](canny-edge-detection-pipeline) | An example showcasing how to perform canny edge detection on images.
