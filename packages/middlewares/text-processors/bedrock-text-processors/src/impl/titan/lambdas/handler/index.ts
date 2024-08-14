@@ -19,9 +19,13 @@ import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
-import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 
+import {
+  BedrockRuntime,
+  ConverseCommand,
+  Message
+} from '@aws-sdk/client-bedrock-runtime';
 import {
   BatchProcessor,
   EventType,
@@ -32,7 +36,7 @@ import {
  * Environment variables.
  */
 const MODEL_ID         = process.env.MODEL_ID;
-const PROMPT           = JSON.parse(process.env.PROMPT as string);
+const USER_PROMPT      = JSON.parse(process.env.USER_PROMPT as string);
 const MODEL_PARAMETERS = JSON.parse(process.env.MODEL_PARAMETERS as string);
 const TARGET_BUCKET    = process.env.PROCESSED_FILES_BUCKET as string;
 
@@ -59,14 +63,23 @@ const processor = new BatchProcessor(EventType.SQS);
 class Lambda implements LambdaInterface {
 
   /**
-   * @param event the cloud event to use to resolve the prompt.
-   * @returns the prompt to use for generating text.
+   * Creates the content array to pass to the model.
+   * @param events the events to create a prompt for.
+   * @returns a promise to an array of messages to pass to the model.
    */
-  private async getPrompt(event: CloudEvent) {
+  private async getContent(event: CloudEvent) {
+    const content = [{
+      text: (await event.resolve(USER_PROMPT)).toString('utf-8')
+    }];
+
+    // Add the document to the prompt.
     const document = event.data().document();
-    const prompt = (await event.resolve(PROMPT)).toString('utf-8');
-    const content = (await document.data().asBuffer()).toString('utf-8');
-    return (`${content}\n\n${prompt}`);
+    const text     = (await document.data().asBuffer()).toString('utf-8');
+    content.push({
+      text: `<document>\n${text}\n</document>`
+    });
+    
+    return (content);
   }
 
   /**
@@ -75,22 +88,21 @@ class Lambda implements LambdaInterface {
    * @returns a promise to a buffer containing the transformed document.
    */
   private async transform(event: CloudEvent): Promise<Buffer> {
-    // Generate the text using the given parameters.
-    const response = await bedrock.invokeModel({
-      body: JSON.stringify({
-        textGenerationConfig: {
-          ...MODEL_PARAMETERS
-        },
-        inputText: await this.getPrompt(event)
-      }),
-      modelId: MODEL_ID,
-      accept: 'application/json',
-      contentType: 'application/json'
-    });
+    const messages: Message[] = [{
+      role: 'user',
+      content: await this.getContent(event)
+    }];
 
-    // Parse the response into a buffer.
+    // Invoke the model.
+    const response = await bedrock.send(new ConverseCommand({
+      modelId: MODEL_ID,
+      messages,
+      inferenceConfig: MODEL_PARAMETERS
+    }));
+
+    // Return the generated text.
     return (Buffer.from(
-      JSON.parse(response.body.transformToString()).results[0].outputText
+      response.output?.message?.content?.[0].text!
     ));
   }
 

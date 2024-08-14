@@ -19,9 +19,14 @@ import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
-import { BedrockRuntime } from '@aws-sdk/client-bedrock-runtime';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 
+import {
+  BedrockRuntime,
+  ConverseCommand,
+  ConverseCommandInput,
+  Message
+} from '@aws-sdk/client-bedrock-runtime';
 import {
   BatchProcessor,
   EventType,
@@ -34,7 +39,6 @@ import {
 const MODEL_ID          = process.env.MODEL_ID;
 const SYSTEM_PROMPT     = process.env.SYSTEM_PROMPT;
 const USER_PROMPT       = JSON.parse(process.env.PROMPT as string);
-const ASSISTANT_PREFILL = process.env.ASSISTANT_PREFILL as string;
 const MODEL_PARAMETERS  = JSON.parse(process.env.MODEL_PARAMETERS as string);
 const TARGET_BUCKET     = process.env.PROCESSED_FILES_BUCKET as string;
 
@@ -61,74 +65,23 @@ const processor = new BatchProcessor(EventType.SQS);
 class Lambda implements LambdaInterface {
 
   /**
-   * @param event the cloud event to use to resolve the prompt.
-   * @returns the prompt to use for generating text for Llama3.
+   * Creates the content array to pass to the model.
+   * @param events the events to create a prompt for.
+   * @returns a promise to an array of messages to pass to the model.
    */
-  private async getPromptv3(event: CloudEvent) {
-    let text = '<|begin_of_text|>';
+  private async getContent(event: CloudEvent) {
+    const content = [{
+      text: (await event.resolve(USER_PROMPT)).toString('utf-8')
+    }];
 
-    // Load the document and prompt.
+    // Add the document to the prompt.
     const document = event.data().document();
-    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
-    const content = (await document.data().asBuffer()).toString('utf-8');
-
-    // Add the system prompt.
-    if (SYSTEM_PROMPT) {
-      text += `<|start_header_id|>system<|end_header_id|>\n${SYSTEM_PROMPT}<|eot_id|>`;
-    }
+    const text     = (await document.data().asBuffer()).toString('utf-8');
+    content.push({
+      text: `<document>\n${text}\n</document>`
+    });
     
-    // Add the user prompt and content.
-    text += `<|start_header_id|>user<|end_header_id|>\n${prompt}\n\n\`\`\`\n${content}\n\`\`\`<|eot_id|>`;
-    
-    // Add the assistant.
-    text += `<|start_header_id|>assistant<|end_header_id|>`;
-
-    // Add the assistant prefill.
-    if (ASSISTANT_PREFILL) {
-      text += `\n${ASSISTANT_PREFILL}`;
-    }
-
-    return (text);
-  }
-
-  /**
-   * @param event the cloud event to use to resolve the prompt.
-   * @returns the prompt to use for generating text for Llama2.
-   */
-  private async getPromptv2(event: CloudEvent) {
-    let text = '[INST]';
-    const document = event.data().document();
-    const prompt = (await event.resolve(USER_PROMPT)).toString('utf-8');
-    const content = (await document.data().asBuffer()).toString('utf-8');
-
-    // Add the system prompt.
-    if (SYSTEM_PROMPT) {
-      text += `<<SYS>>${SYSTEM_PROMPT}<</SYS>>`;
-    }
-
-    // Add the user prompt and content.
-    text += (`\n${prompt}\n\n${content}[/INST]`);
-
-    // Add the assistant prefill.
-    if (ASSISTANT_PREFILL) {
-      text += `\n${ASSISTANT_PREFILL}`;
-    }
-    
-    return (text);
-  }
-
-  /**
-   * @param event the cloud event to use to resolve the prompt.
-   * @returns the prompt to use for generating text.
-   */
-  private async getPrompt(event: CloudEvent) {
-    if (MODEL_ID?.startsWith('meta.llama2')) {
-      return (this.getPromptv2(event));
-    } else if (MODEL_ID?.startsWith('meta.llama3')) {
-      return (this.getPromptv3(event));
-    } else {
-      throw new Error(`Unsupported model ID: ${MODEL_ID}`);
-    }
+    return (content);
   }
 
   /**
@@ -137,31 +90,32 @@ class Lambda implements LambdaInterface {
    * @returns a promise to a buffer containing the transformed document.
    */
   private async transform(event: CloudEvent): Promise<Buffer> {
-    const response = await bedrock.invokeModel({
-      body: JSON.stringify({
-        ...MODEL_PARAMETERS,
-        prompt: await this.getPrompt(event)
-      }),
+    const messages: Message[] = [{
+      role: 'user',
+      content: await this.getContent(event)
+    }];
+
+    // Request to the model.
+    const request: ConverseCommandInput = {
       modelId: MODEL_ID,
-      accept: 'application/json',
-      contentType: 'application/json'
-    });
+      messages,
+      inferenceConfig: MODEL_PARAMETERS
+    };
 
-    // Parse the response into a buffer.
-    let buffer = Buffer.from(
-      JSON.parse(response.body.transformToString()).generation
-    );
-
-    // If an assistant prefill has been passed to the model, we
-    // prepend it to the generated text.
-    if (ASSISTANT_PREFILL) {
-      buffer = Buffer.concat([
-        Buffer.from(ASSISTANT_PREFILL),
-        buffer
-      ]);
+    // Add the system prompt if available.
+    if (SYSTEM_PROMPT) {
+      request.system = [{
+        text: SYSTEM_PROMPT
+      }];
     }
 
-    return (buffer);
+    // Invoke the model.
+    const response = await bedrock.send(new ConverseCommand(request));
+
+    // Return the generated text.
+    return (Buffer.from(
+      response.output?.message?.content?.[0].text!
+    ));
   }
 
   /**

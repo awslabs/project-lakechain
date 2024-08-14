@@ -32,6 +32,8 @@ export const ModelParametersSchema = z.object({
    * higher-probability words.
    * When you set the temperature further away from zero,
    * the model may select a lower-probability word.
+   * @min 0
+   * @max 1
    */
   temperature: z
     .number()
@@ -45,6 +47,8 @@ export const ModelParametersSchema = z.object({
    * ignores less probable ones.
    * Top P is similar to Top K, but instead of capping the number of choices,
    * it caps choices based on the sum of their probabilities.
+   * @min 0
+   * @max 1
    */
   topP: z
     .number()
@@ -54,11 +58,13 @@ export const ModelParametersSchema = z.object({
 
   /**
    * Specifies the maximum number of tokens to use in the generated response.
+   * @min 0
+   * @max 2048
    */
-  maxTokenCount: z
+  maxTokens: z
     .number()
-    .min(0)
-    .max(8192)
+    .min(1)
+    .max(2048)
     .optional()
 });
 

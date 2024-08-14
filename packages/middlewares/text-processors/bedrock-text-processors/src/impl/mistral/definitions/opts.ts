@@ -25,7 +25,13 @@ import { TextProcessorPropsSchema } from '../../shared/opts';
 export const ModelParametersSchema = z.object({
 
   /**
-   * Controls the randomness of predictions made by the model.
+   * Large language models use probability to construct the words in a sequence.
+   * For any given sequence, there is a probability distribution of options for
+   * the next word in the sequence.
+   * When you set the temperature closer to zero, the model tends to select the
+   * higher-probability words.
+   * When you set the temperature further away from zero,
+   * the model may select a lower-probability word.
    * @min 0
    * @max 1
    */
@@ -36,23 +42,15 @@ export const ModelParametersSchema = z.object({
     .optional(),
 
   /**
-   * Controls the number of most-likely candidates that the model considers for the next token.
-   * @min 0
-   * @max 200
-   */
-  top_k: z
-    .number()
-    .min(0)
-    .max(200)
-    .optional(),
-
-  /**
-   * Controls the diversity of text that the model generates by setting the percentage of
-   * most-likely candidates that the model considers for the next token. 
+   * Top P defines a cut off based on the sum of probabilities of the potential choices.
+   * If you set Top P below 1.0, the model considers the most probable options and
+   * ignores less probable ones.
+   * Top P is similar to Top K, but instead of capping the number of choices,
+   * it caps choices based on the sum of their probabilities.
    * @min 0
    * @max 1
    */
-  top_p: z
+  topP: z
     .number()
     .min(0)
     .max(1)
@@ -61,14 +59,14 @@ export const ModelParametersSchema = z.object({
   /**
    * Specifies the maximum number of tokens to use in the generated response.
    * @min 0
-   * @max 8192
+   * @max 2048
    */
-  max_tokens: z
+  maxTokens: z
     .number()
     .min(1)
-    .max(8192)
-
-}).passthrough();
+    .max(2048)
+    .optional()
+});
 
 // Export the `ModelParameters` type.
 export type ModelParameters = z.infer<typeof ModelParametersSchema>;
@@ -89,7 +87,7 @@ export const MistralTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
    */
   modelParameters: ModelParametersSchema
     .default({
-      max_tokens: 4096
+      maxTokens: 2048
     }),
 
   /**
@@ -104,15 +102,7 @@ export const MistralTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
    */
   prompt: z.custom<dsl.IReference<
     dsl.IReferenceSubject
-  >>(),
-
-  /**
-   * The assistant prefill to use for generating text.
-   */
-  assistantPrefill: z
-    .string()
-    .optional()
-    .default('')
+  >>()
 });
 
 // The type of the `MistralTextProcessorProps` schema.

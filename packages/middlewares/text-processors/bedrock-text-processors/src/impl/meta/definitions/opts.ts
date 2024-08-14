@@ -32,6 +32,8 @@ export const ModelParametersSchema = z.object({
    * higher-probability words.
    * When you set the temperature further away from zero,
    * the model may select a lower-probability word.
+   * @min 0
+   * @max 1
    */
   temperature: z
     .number()
@@ -40,29 +42,31 @@ export const ModelParametersSchema = z.object({
     .optional(),
 
   /**
-  * Top P defines a cut off based on the sum of probabilities of the potential choices.
-  * If you set Top P below 1.0, the model considers the most probable options and
-  * ignores less probable ones.
-  * Top P is similar to Top K, but instead of capping the number of choices,
-  * it caps choices based on the sum of their probabilities.
-  */
-  top_p: z
+   * Top P defines a cut off based on the sum of probabilities of the potential choices.
+   * If you set Top P below 1.0, the model considers the most probable options and
+   * ignores less probable ones.
+   * Top P is similar to Top K, but instead of capping the number of choices,
+   * it caps choices based on the sum of their probabilities.
+   * @min 0
+   * @max 1
+   */
+  topP: z
     .number()
     .min(0)
     .max(1)
     .optional(),
 
   /**
-   * Specify the maximum number of tokens to use in the generated response.
-   * The model truncates the response once the generated text exceeds `max_gen_len`.
+   * Specifies the maximum number of tokens to use in the generated response.
+   * @min 0
+   * @max 2048
    */
-  max_gen_len: z
+  maxTokens: z
     .number()
     .min(1)
     .max(2048)
     .optional()
-
-}).passthrough();
+});
 
 // Export the `ModelParameters` type.
 export type ModelParameters = z.infer<typeof ModelParametersSchema>;
@@ -96,15 +100,7 @@ export const LlamaTextProcessorPropsSchema = TextProcessorPropsSchema.extend({
    */
   prompt: z.custom<dsl.IReference<
     dsl.IReferenceSubject
-  >>(),
-
-  /**
-   * The assistant prefill to use for generating text.
-   */
-  assistantPrefill: z
-    .string()
-    .optional()
-    .default('')
+  >>()
 });
 
 // The type of the `LlamaTextProcessorProps` schema.

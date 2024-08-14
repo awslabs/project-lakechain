@@ -57,7 +57,7 @@ const description: ServiceDescription = {
  * The maximum time the processing lambda
  * is allowed to run.
  */
-const PROCESSING_TIMEOUT = cdk.Duration.minutes(5);
+const PROCESSING_TIMEOUT = cdk.Duration.minutes(3);
 
 /**
  * The execution runtime for used compute.
@@ -225,7 +225,7 @@ export class TitanTextProcessor extends Middleware {
         SNS_TARGET_TOPIC: this.eventBus.topicArn,
         PROCESSED_FILES_BUCKET: this.storage.id(),
         MODEL_ID: this.props.model.name,
-        PROMPT: JSON.stringify(this.props.prompt),
+        USER_PROMPT: JSON.stringify(this.props.prompt),
         MODEL_PARAMETERS: JSON.stringify(this.props.modelParameters),
         BEDROCK_REGION: this.props.region ?? cdk.Aws.REGION,
         OVERFLOW_STRATEGY: this.props.overflowStrategy

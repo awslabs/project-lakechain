@@ -120,14 +120,10 @@ export class TitanSummarizationPipeline extends cdk.Stack {
       ])
       .withRegion('us-east-1')
       .withModel(TitanTextModel.AMAZON_TITAN_TEXT_PREMIER_V1)
-      .withPrompt(`
-        Provide a detailed summary of the given text with the following constraints:
-        - Write a very detailed summary in the same language as the original text.
-        - Do not say "Here is a summary", just write the summary as is.
-      `)
+      .withPrompt('Provide a short summary of the given text')
       .withModelParameters({
         temperature: 0.5,
-        maxTokenCount: 3072
+        maxTokens: 2048
       })
       .build();
 

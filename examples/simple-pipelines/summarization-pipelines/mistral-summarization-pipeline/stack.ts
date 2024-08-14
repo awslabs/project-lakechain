@@ -22,14 +22,14 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { LlamaTextProcessor, LlamaModel } from '@project-lakechain/bedrock-text-processors';
+import { MistralTextProcessor, MistralTextModel } from '@project-lakechain/bedrock-text-processors';
 import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
 import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
 
 /**
  * An example showcasing how to use Amazon Bedrock
- * to summarize text using the Bedrock Text Processors.
+ * to summarize text using Mistral models on Amazon Bedrock.
  * The pipeline looks as follows:
  *
  *
@@ -42,14 +42,14 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
  * └──────────────┘   └────────────────────┘   └─────────┘   └─────────────┘
  *
  */
-export class LlamaSummarizationPipeline extends cdk.Stack {
+export class MistralSummarizationPipeline extends cdk.Stack {
 
   /**
    * Stack constructor.
    */
   constructor(scope: Construct, id: string, env: cdk.StackProps) {
     super(scope, id, {
-      description: 'A pipeline summarizing text documents using Amazon Bedrock.',
+      description: 'A pipeline summarizing text documents using Mistral models on Amazon Bedrock.',
       ...env
     });
 
@@ -107,11 +107,11 @@ export class LlamaSummarizationPipeline extends cdk.Stack {
       .withSource(trigger)
       .build();
 
-    // We are using the `LlamaTextProcessor` component to summarize
+    // We are using the `MistralTextProcessor` component to summarize
     // the input text.
-    const textSummarizer = new LlamaTextProcessor.Builder()
+    const textSummarizer = new MistralTextProcessor.Builder()
       .withScope(this)
-      .withIdentifier('LlamaTextProcessor')
+      .withIdentifier('MistralTextProcessor')
       .withCacheStorage(cache)
       .withSources([
         pdfConverter,
@@ -119,7 +119,7 @@ export class LlamaSummarizationPipeline extends cdk.Stack {
         trigger
       ])
       .withRegion('us-west-2')
-      .withModel(LlamaModel.LLAMA3_1_8B_INSTRUCT_V1)
+      .withModel(MistralTextModel.MISTRAL_LARGE_2)
       .withPrompt('Provide a short summary of the given text')
       .withModelParameters({
         temperature: 0.5,
@@ -158,7 +158,7 @@ const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_DEFAULT_ACCOU
 const region  = process.env.CDK_DEFAULT_REGION ?? process.env.AWS_DEFAULT_REGION;
 
 // Deploy the stack.
-new LlamaSummarizationPipeline(app, 'LlamaSummarizationPipeline', {
+new MistralSummarizationPipeline(app, 'MistralSummarizationPipeline', {
   env: {
     account,
     region
