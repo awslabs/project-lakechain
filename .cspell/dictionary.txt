@@ -213,3 +213,5 @@ minilm
 multimodal
 outpaint
 meinberg
+karvounis
+sobel
