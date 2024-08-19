@@ -40,7 +40,7 @@
     "@project-lakechain/service-linked-role": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.151.0",
+    "aws-cdk-lib": "2.152.0",
     "constructs": "^10.3.0"
   }
 }

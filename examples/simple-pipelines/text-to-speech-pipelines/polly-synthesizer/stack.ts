@@ -32,9 +32,9 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
  * Amazon Polly.
  * The pipeline looks as follows:
  *
- * ┌───────────────────────┐   ┌────────────────────┐   ┌───────────────────┐   ┌───────────┐
- * │ S3 Ingestion Provider ├──►│ NLP Text Processor ├──►│ Polly Synthesizer ├──►│ S3 Output │
- * └───────────────────────┘   └────────────────────┘   └───────────────────┘   └───────────┘
+ * ┌────────────┐   ┌────────────────────┐   ┌───────────────────┐   ┌───────────┐
+ * │ S3 Trigger ├──►│ NLP Text Processor ├──►│ Polly Synthesizer ├──►│ S3 Output │
+ * └────────────┘   └────────────────────┘   └───────────────────┘   └───────────┘
  *
  */
 export class TextToSpeechStack extends cdk.Stack {

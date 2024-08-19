@@ -32,9 +32,9 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
  * The pipeline looks as follows:
  *
  *
- * ┌───────────────────────┐   ┌─────────────────┐   ┌───────────┐
- * │ S3 Ingestion Provider ├──►│ BERT Summarizer │──►│ S3 Output │
- * └───────────────────────┘   └─────────────────┘   └───────────┘
+ * ┌────────────┐   ┌─────────────────┐   ┌───────────┐
+ * │ S3 Trigger ├──►│ BERT Summarizer │──►│ S3 Output │
+ * └────────────┘   └─────────────────┘   └───────────┘
  *
  * @note For the sake of simplicity, this example only takes
  * plain text documents as an input from the source S3 bucket.

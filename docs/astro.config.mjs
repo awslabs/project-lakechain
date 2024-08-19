@@ -91,23 +91,23 @@ export default defineConfig({
 			}, {
 				label: 'Image Processing',
 				items: [{
-					label: 'Blip2',
-					link: '/image-processing/blip2-image-processor'
-				}, {
 					label: 'Sharp',
 					link: '/image-processing/sharp-image-transform'
 				}, {
-					label: 'Metadata',
-					link: '/image-processing/image-metadata-extractor'
-				}, {
-					label: 'Image Drawing',
-					link: '/image-processing/image-layer-processor'
+					label: 'Blip2',
+					link: '/image-processing/blip2-image-processor'
 				}, {
 					label: 'Rekognition',
 					link: '/image-processing/rekognition-image-processor'
 				}, {
 					label: 'Background Removal',
 					link: '/image-processing/rembg-image-processor'
+				}, {
+					label: 'Metadata',
+					link: '/image-processing/image-metadata-extractor'
+				}, {
+					label: 'Image Drawing',
+					link: '/image-processing/image-layer-processor'
 				}, {
 					label: 'Laplacian',
 					link: '/image-processing/laplacian-image-processor'
@@ -130,11 +130,11 @@ export default defineConfig({
 					label: 'CLIP',
 					link: '/embedding-processing/clip-image-processor'
 				}, {
-					label: 'PANN',
-					link: '/embedding-processing/panns-embedding-processor'
-				}, {
 					label: 'Ollama',
 					link: '/embedding-processing/ollama-embedding-processor'
+				}, {
+					label: 'PANN',
+					link: '/embedding-processing/panns-embedding-processor'
 				}]
 			}, {
 				label: 'Generative AI',
@@ -199,20 +199,20 @@ export default defineConfig({
 			}, {
 				label: 'Text Processing',
 				items: [{
-					label: 'BERT Summarizer',
-					link: '/text-processing/bert-extractive-summarizer'
-				}, {
-					label: 'KeyBERT',
-					link: '/text-processing/keybert-text-processor'
-				}, {
-					label: 'Newspaper3k',
-					link: '/text-processing/newspaper3k'
-				}, {
-					label: 'Trafilatura',
-					link: '/text-processing/trafilatura'
+					label: 'PDF',
+					link: '/text-processing/pdf-text-converter'
 				}, {
 					label: 'Email',
 					link: '/text-processing/email-text-processor'
+				}, {
+					label: 'Translate',
+					link: '/text-processing/translate-text-processor'
+				}, {
+					label: 'RSS Feeds',
+					link: '/text-processing/syndication-feed-processor'
+				}, {
+					label: 'Subtitles',
+					link: '/text-processing/subtitle-processor'
 				}, {
 					label: 'NLP',
 					link: '/text-processing/nlp-text-processor'
@@ -220,41 +220,44 @@ export default defineConfig({
 					label: 'Pandoc',
 					link: '/text-processing/pandoc-text-converter'
 				}, {
-					label: 'PDF',
-					link: '/text-processing/pdf-text-converter'
+					label: 'Newspaper3k',
+					link: '/text-processing/newspaper3k'
 				}, {
-					label: 'RSS Feeds',
-					link: '/text-processing/syndication-feed-processor'
+					label: 'Trafilatura',
+					link: '/text-processing/trafilatura'
+				}, {
+					label: 'BERT Summarizer',
+					link: '/text-processing/bert-extractive-summarizer'
+				}, {
+					label: 'KeyBERT',
+					link: '/text-processing/keybert-text-processor'
 				},{
 					label: 'Text Transform',
 					link: '/text-processing/text-transform-processor'
 				}, {
-					label: 'Translate',
-					link: '/text-processing/translate-text-processor'
-				}, {
 					label: 'JMESPath',
 					link: '/text-processing/jmespath-processor'
-				}, {
-					label: 'Subtitles',
-					link: '/text-processing/subtitle-processor'
 				}]
 			}, {
 				label: 'Audio Processing',
 				items: [{
-					label: ' Metadata',
-					link: '/audio-processing/audio-metadata-extractor'
-				}, {
-					label: 'Bark',
-					link: '/audio-processing/bark-synthesizer'
-				}, {
 					label: 'Polly',
 					link: '/audio-processing/polly-synthesizer'
+				}, {
+					label: 'Whisper',
+					link: '/audio-processing/whisper-transcriber'
 				}, {
 					label: 'Transcribe',
 					link: '/audio-processing/transcribe-audio-processor'
 				}, {
-					label: 'Whisper',
-					link: '/audio-processing/whisper-transcriber'
+					label: 'ElevenLabs',
+					link: '/audio-processing/elevenlabs-synthesizer'
+				}, {
+					label: 'Metadata',
+					link: '/audio-processing/audio-metadata-extractor'
+				}, {
+					label: 'Bark',
+					link: '/audio-processing/bark-synthesizer'
 				}]
 			}, {
 				label: 'Text Splitters',
@@ -277,22 +280,22 @@ export default defineConfig({
 			}, {
 				label: 'Flow Control',
 				items: [{
-					label: 'Passthrough',
-					link: '/flow-control/passthrough'
-				}, {
-					label: 'Delay',
-					link: '/flow-control/delay'
-				}, {
 					label: 'Condition',
 					link: '/flow-control/condition'
 				}, {
 					label: 'Reducer',
 					link: '/flow-control/reducer'
+				}, {
+					label: 'Passthrough',
+					link: '/flow-control/passthrough'
+				}, {
+					label: 'Delay',
+					link: '/flow-control/delay'
 				}]
 			}, {
 				label: 'Video Processing',
 				items: [{
-					label: 'Metadata Extractor',
+					label: 'Metadata',
 					link: '/video-processing/metadata-extractor'
 				}, {
 					label: 'FFMPEG',

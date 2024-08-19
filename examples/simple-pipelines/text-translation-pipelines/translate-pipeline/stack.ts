@@ -29,9 +29,9 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
  * Example stack for translating documents in a pipeline.
  * The pipeline looks as follows:
  *
- * ┌───────────────────────┐   ┌────────────────────────────┐   ┌────┐
- * │ S3 Ingestion Provider ├──►│ Text Translation Processor ├──►| S3 |
- * └───────────────────────┘   └────────────────────────────┘   └────┘
+ * ┌────────────┐   ┌────────────────────────────┐   ┌────┐
+ * │ S3 Trigger ├──►│ Text Translation Processor ├──►| S3 |
+ * └────────────┘   └────────────────────────────┘   └────┘
  *
  */
 export class TextTranslationPipeline extends cdk.Stack {

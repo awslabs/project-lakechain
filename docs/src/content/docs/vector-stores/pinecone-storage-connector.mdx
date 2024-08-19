@@ -30,6 +30,8 @@ import icon from '../../../assets/icon-pinecone.svg';
 
 The Pinecone storage connector makes it easy to index vector embeddings produced by other middlewares in a [Pinecone](https://www.pinecone.io/) Pod or Serverless index. This connector uses the [Pinecone TypeScript SDK](https://github.com/pinecone-io/pinecone-ts-client) to integrate embeddings associated with processed documents with your indexes, while respecting the Pinecone throttling limits.
 
+> ℹ️ This middleware interacts with a third-party API outside of your AWS account.
+
 ---
 
 ### 🌲 Indexing Documents

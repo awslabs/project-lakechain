@@ -37,8 +37,8 @@ import { PineconeStorageConnector } from '@project-lakechain/pinecone-storage-co
  * │  S3  ├──►│ Text Splitter ├──►│ Bedrock Embeddings │──►|  Pinecone  │
  * └──────┘   └───────────────┘   └────────────────────┘   └────────────┘
  *
- * @note You will need to pass the name of your Pinecone API key
- * as an environment variable named `PINECONE_API_KEY_SECRET_NAME`.
+ * @note You will need to pass the AWS Secrets Manager name of your Pinecone
+ * API key as an environment variable named `PINECONE_API_KEY_SECRET_NAME`.
  * 
  * For example:
  * PINECONE_API_KEY_SECRET_NAME='pinecone/secret' \

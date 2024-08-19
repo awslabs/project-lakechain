@@ -1,0 +1,60 @@
+{
+  "name": "@project-lakechain/elevenlabs-synthesizer",
+  "description": "Synthesizes text into speech using the Elevenlabs API.",
+  "version": "0.7.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.374.0",
+    "@aws-sdk/client-sns": "^3.374.0",
+    "@types/aws-lambda": "^8.10.143",
+    "@types/jest": "^29.5.7",
+    "@types/node": "^22.4.0",
+    "esbuild": "0.21.5",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/batch": "^2.7.0",
+    "@aws-lambda-powertools/logger": "^2.7.0",
+    "@aws-lambda-powertools/metrics": "^2.7.0",
+    "@aws-lambda-powertools/parameters": "^2.7.0",
+    "@aws-lambda-powertools/tracer": "^2.7.0",
+    "@project-lakechain/core": "^0.7.0",
+    "@project-lakechain/sdk": "^0.7.0",
+    "elevenlabs": "^0.15.0",
+    "p-throttle": "^6.2.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.152.0",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  }
+}

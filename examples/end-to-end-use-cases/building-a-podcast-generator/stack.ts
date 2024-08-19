@@ -98,7 +98,7 @@ export class PodcastGeneratorStack extends cdk.Stack {
       .withIdentifier('SchedulerEventTrigger')
       .withCacheStorage(cache)
       .withSchedule(
-        scheduler.ScheduleExpression.rate(cdk.Duration.minutes(5))
+        scheduler.ScheduleExpression.rate(cdk.Duration.hours(24))
       )
       .withDocuments([
         'https://aws.amazon.com/fr/blogs/aws/feed/'

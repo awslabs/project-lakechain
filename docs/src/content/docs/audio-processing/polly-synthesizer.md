@@ -24,7 +24,7 @@ The Polly Synthesizer allows to synthesize speech from text using the [Amazon Po
 
 ---
 
-### 📝 Synthesizing Text
+### 🗣️ Synthesizing Text
 
 To use this middleware, you import it in your CDK stack and instantiate it as part of a pipeline.
 
@@ -63,7 +63,7 @@ class Stack extends cdk.Stack {
 }
 ```
 
-<br>
+<br />
 
 ---
 
@@ -85,7 +85,7 @@ const synthesizer = new PollySynthesizer.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
@@ -111,17 +111,17 @@ const synthesizer = new PollySynthesizer.Builder()
   .build();
 ```
 
-<br>
+<br />
 
 ---
 
 ### ℹ️ Limits
 
-This middleware automatically applies a throttling mechanism when consuming messages from its input queue to stay within the minimal [Amazon Polly Throttling Rates](https://docs.aws.amazon.com/polly/latest/dg/limits.html) of 1 tps.
+This middleware automatically applies a throttling mechanism when consuming messages from its input queue to stay within the minimal [Amazon Polly Throttling Rates](https://docs.aws.amazon.com/polly/latest/dg/limits.html) of 2 tps.
 
 The applicable [limit](https://docs.aws.amazon.com/polly/latest/dg/limits.html) of 200,000 characters in Amazon Polly also applies to text documents processed by this middleware.
 
-<br>
+<br />
 
 ---
 
@@ -135,13 +135,13 @@ Once the synthesis task is completed, the *result handler* function is invoked w
 
 ![Polly Synthesizer Architecture](../../../assets/polly-synthesizer-architecture.png)
 
-<br>
+<br />
 
 ---
 
 ### 🏷️ Properties
 
-<br>
+<br />
 
 ##### Supported Inputs
 
@@ -161,7 +161,7 @@ Once the synthesis task is completed, the *result handler* function is invoked w
 | ----- | ----------- |
 | `CPU` | This middleware only supports CPU compute. |
 
-<br>
+<br />
 
 ---
 

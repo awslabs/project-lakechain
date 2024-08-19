@@ -266,7 +266,7 @@ export class Document {
     const writable   = dataSource.asWriteStream({ ContentType: input.type });
 
     // Create a new document instance.
-    const document   = new Document.Builder()
+    const document = new Document.Builder()
       .withUrl(input.url)
       .withType(input.type);
 
@@ -280,7 +280,7 @@ export class Document {
       input.data.pipe(writable);
     }
 
-    const promise = new Promise((resolve, reject) => {
+    return (new Promise((resolve, reject) => {
       // Document upload is complete.
       writable.on('uploaded', (res: any) => {
         if (res.ETag) {
@@ -295,9 +295,7 @@ export class Document {
         console.error('Failed to write data to the data source.');
         reject(err);
       });
-    });
-
-    return (promise as Promise<Document>);
+    })) as Promise<Document>;
   }
 
   /**

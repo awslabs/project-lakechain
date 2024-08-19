@@ -33,9 +33,9 @@ import { S3StorageConnector } from '@project-lakechain/s3-storage-connector';
  * the Bark model.
  * The pipeline looks as follows:
  *
- * ┌───────────────────────┐   ┌────────────────────┐   ┌──────────────────┐   ┌───────────┐
- * │ S3 Ingestion Provider ├──►│ NLP Text Processor ├──►│ Bark Synthesizer ├──►│ S3 Output │
- * └───────────────────────┘   └────────────────────┘   └──────────────────┘   └───────────┘
+ * ┌────────────┐   ┌────────────────────┐   ┌──────────────────┐   ┌───────────┐
+ * │ S3 Trigger ├──►│ NLP Text Processor ├──►│ Bark Synthesizer ├──►│ S3 Output │
+ * └────────────┘   └────────────────────┘   └──────────────────┘   └───────────┘
  *
  * @see https://github.com/suno-ai/bark
  */
