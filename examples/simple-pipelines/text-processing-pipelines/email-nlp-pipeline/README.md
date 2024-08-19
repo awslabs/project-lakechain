@@ -40,7 +40,7 @@ The following requirements are needed to deploy the infrastructure associated wi
 
 ## 🚀 Deploy
 
-Head to the directory [`examples/simple-pipelines/email-nlp-pipeline`](/examples/simple-pipelines/email-nlp-pipeline) in the repository and run the following commands to build the example:
+Head to the directory [`examples/simple-pipelines/text-processing-pipelines/email-nlp-pipeline`](/examples/simple-pipelines/text-processing-pipelines/email-nlp-pipeline) in the repository and run the following commands to build the example:
 
 ```bash
 npm install
