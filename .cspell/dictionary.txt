@@ -215,3 +215,6 @@ outpaint
 meinberg
 karvounis
 sobel
+elevenlabs
+exavit
+ulaw
