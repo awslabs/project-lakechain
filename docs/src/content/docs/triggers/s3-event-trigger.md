@@ -247,4 +247,4 @@ The S3 trigger receives S3 events from subscribed buckets on its SQS input queue
 
 - [Face Detection Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/image-processing-pipelines/face-detection-pipeline) - An example showcasing how to build face detection pipelines using Project Lakechain.
 - [NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/nlp-pipeline) - Builds a pipeline for extracting metadata from text-oriented documents.
-- [E-mail NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/email-nlp-pipeline) - An example showcasing how to analyze e-mails using E-mail parsing and Amazon Comprehend.
+- [E-mail NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/email-nlp-pipeline) - An example showcasing how to analyze e-mails using E-mail parsing and Amazon Comprehend.

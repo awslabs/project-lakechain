@@ -207,4 +207,4 @@ The supported output types for this middleware consist of a variant that depends
 
 ### 📖 Examples
 
-- [E-mail NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/email-nlp-pipeline/) - An example showcasing how to analyze e-mails.
+- [E-mail NLP Pipeline](https://github.com/awslabs/project-lakechain/tree/main/examples/simple-pipelines/text-processing-pipelines/email-nlp-pipeline/) - An example showcasing how to analyze e-mails.
