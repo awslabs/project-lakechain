@@ -8,7 +8,7 @@ The ElevenLabs synthesizer automatically throttles calls made to the ElevenLabs 
 
 This example uses by default the `Rachel` voice tailored for English narration speech generation, and the latest `eleven_multilingual_v2` model.
 
-> 💁 See the [ElevenLabs premaid voices](https://elevenlabs.io/docs/voices/premade-voices) and the [ElevenLabs models](https://elevenlabs.io/docs/speech-synthesis/models) for more information on the available voices and models.
+> 💁 See the [ElevenLabs pre-maid voices](https://elevenlabs.io/docs/voices/premade-voices) and the [ElevenLabs models](https://elevenlabs.io/docs/speech-synthesis/models) for more information on the available voices and models.
 
 ## :dna: Pipeline
 
