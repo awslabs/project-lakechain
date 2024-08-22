@@ -17,6 +17,10 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
           fetch-depth: 0
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
       - name: Install dependencies
         run: npm install
       - name: Build all packages
@@ -29,10 +33,10 @@ jobs:
           npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
       - name: Version
         run: |
-          npx lerna version minor --force-publish --no-changelog --no-commit-hooks --yes
+          npx lerna version minor --no-changelog --no-commit-hooks --no-private --yes
       - name: Release packages
         run: |
-          npx lerna publish from-git --no-private --no-changelog --yes
+          npx lerna publish from-git --no-private --no-changelog --yes --throttle --throttle-size 1 --throttle-delay 2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
