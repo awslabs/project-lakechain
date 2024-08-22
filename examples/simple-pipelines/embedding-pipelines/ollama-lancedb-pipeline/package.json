@@ -1,7 +1,7 @@
 {
   "name": "ollama-lancedb-pipeline",
   "description": "An example showcasing an embedding pipeline using Ollama and LanceDB.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

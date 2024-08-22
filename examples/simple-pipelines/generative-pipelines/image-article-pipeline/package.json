@@ -1,7 +1,7 @@
 {
   "name": "image-article-pipeline",
   "description": "An example showcasing how to automatically generate images for text articles using Amazon Bedrock.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

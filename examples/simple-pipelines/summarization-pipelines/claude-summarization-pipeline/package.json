@@ -1,7 +1,7 @@
 {
   "name": "claude-summarization-pipeline",
   "description": "Builds a pipeline for text summarization using Claude models on Amazon Bedrock.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

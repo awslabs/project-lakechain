@@ -1,7 +1,7 @@
 {
   "name": "bedrock-multimodal-pipeline",
   "description": "An example showcasing an embedding pipeline using the Titan multimodal embedding model.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

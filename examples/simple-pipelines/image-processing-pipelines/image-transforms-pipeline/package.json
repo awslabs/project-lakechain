@@ -1,7 +1,7 @@
 {
   "name": "image-transforms-pipeline",
   "description": "A pipeline showcasing how to transform images.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "build": "tsc",

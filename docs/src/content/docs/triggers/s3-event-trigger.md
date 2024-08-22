@@ -6,7 +6,7 @@ title: S3 Trigger
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.7.0
+  0.8.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/s3-event-trigger">
