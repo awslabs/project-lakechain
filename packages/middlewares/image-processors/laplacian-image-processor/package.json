@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/laplacian-image-processor",
   "description": "Computes the Laplacian variance of images.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -38,7 +38,7 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.7.0"
+    "@project-lakechain/core": "^0.8.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.152.0",
