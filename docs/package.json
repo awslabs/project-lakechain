@@ -23,9 +23,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@astrojs/starlight": "^0.25.5",
-    "astro": "^4.13.4",
-    "sharp": "^0.33.4"
+    "@astrojs/starlight": "^0.26.2",
+    "astro": "^4.15.2",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
