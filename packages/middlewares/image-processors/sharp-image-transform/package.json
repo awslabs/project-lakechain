@@ -36,7 +36,7 @@
     "@types/aws-lambda": "^8.10.119",
     "@types/jest": "^29.0.0",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.2",
     "rimraf": "^6.0.1",
     "sharp": "^0.33.5"
   },

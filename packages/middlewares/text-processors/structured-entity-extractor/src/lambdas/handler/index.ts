@@ -30,7 +30,8 @@ import {
 import {
   BedrockRuntime,
   ConverseCommand,
-  Message
+  Message,
+  ContentBlock
 } from '@aws-sdk/client-bedrock-runtime';
 import {
   BatchProcessor,
@@ -139,7 +140,7 @@ class Lambda implements LambdaInterface {
    * @param events the events to create a prompt for.
    * @returns a promise to an array of messages to pass to the model.
    */
-  private async getContent(events: CloudEvent[]) {
+  private async getContent(events: CloudEvent[]): Promise<ContentBlock[]> {
     const content = [{
       text: USER_PROMPT
     }];

@@ -22,12 +22,12 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.635.0",
-    "@aws-sdk/credential-provider-node": "^3.635.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.637.0",
+    "@aws-sdk/credential-provider-node": "^3.637.0",
     "@opensearch-project/opensearch": "^2.11.0",
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
-    "ora": "^8.0.1",
+    "ora": "^8.1.0",
     "prompts": "^2.4.2",
     "zod": "^3.23.8",
     "zod-error": "^1.5.0"

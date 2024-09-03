@@ -31,7 +31,7 @@
   },
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-sdk/client-sts": "3.635.0",
+    "@aws-sdk/client-sts": "3.637.0",
     "boxen": "^8.0.1",
     "chalk": "^5.3.0",
     "cli-table3": "^0.6.4",
@@ -42,16 +42,16 @@
     "middleware-chain-js": "^2.0.2",
     "mkdirp": "^3.0.1",
     "open": "^10.1.0",
-    "ora": "^8.0.1",
+    "ora": "^8.1.0",
     "pretty-bytes": "^6.1.1",
     "prompts": "^2.4.2",
     "stdin-discarder": "^0.2.2",
-    "update-notifier": "^7.1.0",
+    "update-notifier": "^7.3.0",
     "zod": "^3.23.8",
     "zod-error": "^1.5.0"
   },
   "devDependencies": {
-    "eslint": "^9.9.0",
+    "eslint": "^9.9.1",
     "jest": "^29.7.0"
   }
 }

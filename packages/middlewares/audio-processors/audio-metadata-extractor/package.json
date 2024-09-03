@@ -37,14 +37,14 @@
     "@project-lakechain/core": "^0.8.0",
     "@project-lakechain/sdk": "^0.8.0",
     "lodash": "^4.17.21",
-    "music-metadata": "^10.2.0"
+    "music-metadata": "^10.3.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.635.0",
-    "@aws-sdk/client-sns": "^3.635.0",
-    "@types/aws-lambda": "^8.10.143",
+    "@aws-sdk/client-s3": "^3.637.0",
+    "@aws-sdk/client-sns": "^3.637.0",
+    "@types/aws-lambda": "^8.10.145",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.2",
     "esbuild": "0.21.5",
     "rimraf": "^6.0.1"
   },
