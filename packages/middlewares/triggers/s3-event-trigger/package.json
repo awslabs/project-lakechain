@@ -51,7 +51,7 @@
     "@aws-lambda-powertools/tracer": "^2.7.0",
     "@project-lakechain/core": "^0.8.0",
     "@project-lakechain/sdk": "^0.8.0",
-    "file-type": "19.4.1"
+    "file-type": "19.5.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.152.0",
