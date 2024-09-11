@@ -60,7 +60,7 @@ The e-mail text processor can extract the following formats from e-mail document
 - `html`: Extracts the body of the e-mail as HTML.
 - `json`: Extracts the body and the attributes of the e-mail as JSON.
 
-> 💁 You can specify the output format by using the `withFormat` method. By default, the output format is `text`.
+> 💁 You can specify the output format by using the `withOutputFormat` method. By default, the output format is `text`.
 
 ```typescript
 const emailProcessor = new EmailTextProcessor.Builder()
@@ -68,7 +68,7 @@ const emailProcessor = new EmailTextProcessor.Builder()
   .withIdentifier('EmailProcessor')
   .withCacheStorage(cache)
   .withSource(source)
-  .withFormat('html') // 👈 Specify the output format
+  .withOutputFormat('html') // 👈 Specify the output format
   .build();
 ```
 

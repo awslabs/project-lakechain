@@ -33,7 +33,7 @@ The SQS storage connector makes it possible to capture the result of one or mult
 To use the SQS storage connector, you import it in your CDK stack, and connect it to a data source providing documents.
 
 ```typescript
-import { SQSStorageConnector } from '@project-lakechain/sqs-storage-connector';
+import { SqsStorageConnector } from '@project-lakechain/sqs-storage-connector';
 import { CacheStorage } from '@project-lakechain/core';
 
 class Stack extends cdk.Stack {
@@ -45,9 +45,9 @@ class Stack extends cdk.Stack {
     const queue = // ...
 
     // Create the SQS storage connector.
-    const connector = new SQSStorageConnector.Builder()
+    const connector = new SqsStorageConnector.Builder()
       .withScope(this)
-      .withIdentifier('SQSStorageConnector')
+      .withIdentifier('SqsStorageConnector')
       .withCacheStorage(cache)
       .withSource(source) // 👈 Specify a data source
       .withDestinationQueue(queue)
