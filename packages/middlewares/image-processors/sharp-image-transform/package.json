@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/sharp-image-transform",
   "description": "A middleware transforming images using the sharp library.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -45,9 +45,9 @@
     "@aws-lambda-powertools/logger": "^2.7.0",
     "@aws-lambda-powertools/metrics": "^2.7.0",
     "@aws-lambda-powertools/tracer": "^2.7.0",
-    "@project-lakechain/core": "^0.8.0",
-    "@project-lakechain/layers": "^0.8.0",
-    "@project-lakechain/sdk": "^0.8.0",
+    "@project-lakechain/core": "^0.9.0",
+    "@project-lakechain/layers": "^0.9.0",
+    "@project-lakechain/sdk": "^0.9.0",
     "esbuild": "0.21.5",
     "lodash": "^4.17.21",
     "serialize-javascript": "^6.0.2"

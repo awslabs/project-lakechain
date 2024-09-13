@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/opensearch-vector-storage-connector",
   "description": "Stores document embeddings in an OpenSearch vector index.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -43,10 +43,10 @@
     "@aws-lambda-powertools/logger": "^2.7.0",
     "@aws-lambda-powertools/metrics": "^2.7.0",
     "@aws-lambda-powertools/tracer": "^2.7.0",
-    "@project-lakechain/core": "^0.8.0",
-    "@project-lakechain/opensearch-collection": "^0.8.0",
-    "@project-lakechain/opensearch-index": "^0.8.0",
-    "@project-lakechain/sdk": "^0.8.0"
+    "@project-lakechain/core": "^0.9.0",
+    "@project-lakechain/opensearch-collection": "^0.9.0",
+    "@project-lakechain/opensearch-index": "^0.9.0",
+    "@project-lakechain/sdk": "^0.9.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.152.0",

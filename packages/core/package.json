@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/core",
   "description": "Core package for building middlewares with Project Lakechain.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

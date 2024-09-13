@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/s3-event-trigger",
   "description": "Triggers pipelines upon events being emitted from S3 buckets.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -49,8 +49,8 @@
     "@aws-lambda-powertools/logger": "^2.7.0",
     "@aws-lambda-powertools/metrics": "^2.7.0",
     "@aws-lambda-powertools/tracer": "^2.7.0",
-    "@project-lakechain/core": "^0.8.0",
-    "@project-lakechain/sdk": "^0.8.0",
+    "@project-lakechain/core": "^0.9.0",
+    "@project-lakechain/sdk": "^0.9.0",
     "file-type": "19.5.0"
   },
   "peerDependencies": {
