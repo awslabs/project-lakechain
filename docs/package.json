@@ -24,7 +24,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@astrojs/starlight": "^0.27.1",
-    "astro": "^4.15.4",
+    "astro": "^4.15.5",
     "sharp": "^0.33.5"
   },
   "devDependencies": {

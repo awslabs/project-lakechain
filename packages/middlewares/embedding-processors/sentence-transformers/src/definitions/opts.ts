@@ -28,7 +28,7 @@ export const SentenceTransformersPropsSchema = MiddlewarePropsSchema.extend({
    * The VPC used by the middleware.
    */
   vpc: z.custom<ec2.IVpc>(
-    (data) => data instanceof ec2.Vpc,
+    (data) => !!data,
     { message: 'A VPC is required by the Sentence Transformers middleware.' }
   ),
 

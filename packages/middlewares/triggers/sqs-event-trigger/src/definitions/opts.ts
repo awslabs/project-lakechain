@@ -28,7 +28,7 @@ export const SqsEventTriggerPropsSchema = MiddlewarePropsSchema.extend({
    */
   queues: z
     .array(z.custom<sqs.IQueue>(
-      (data) => data instanceof sqs.Queue
+      (data) => !!data
     ))
     .nonempty()
 });

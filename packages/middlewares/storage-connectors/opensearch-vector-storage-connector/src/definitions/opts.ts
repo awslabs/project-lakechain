@@ -31,7 +31,7 @@ export const OpenSearchVectorStorageConnectorPropsSchema = MiddlewarePropsSchema
    * Describes the OpenSearch endpoint to store the vectors in.
    */
   endpoint: z.custom<opensearch.IDomain | oss.ICollection>(
-    (data) => data instanceof opensearch.Domain || data instanceof oss.Collection,
+    (data) => !!data,
     { message: 'An OpenSearch endpoint is required by the OpenSearch Vector Storage middleware.' }
   ),
 
@@ -48,7 +48,7 @@ export const OpenSearchVectorStorageConnectorPropsSchema = MiddlewarePropsSchema
    * The VPC used by the middleware.
    */
   vpc: z.custom<ec2.IVpc>(
-    (data) => data instanceof ec2.Vpc,
+    (data) => !!data,
     { message: 'A VPC is required by the OpenSearch Vector Storage middleware.' }
   ),
 

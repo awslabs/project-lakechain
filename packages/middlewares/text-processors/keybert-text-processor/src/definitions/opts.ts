@@ -28,7 +28,7 @@ export const KeybertTextProcessorPropsSchema = MiddlewarePropsSchema.extend({
    * The VPC used by the middleware.
    */
   vpc: z.custom<ec2.IVpc>(
-    (data) => data instanceof ec2.Vpc,
+    (data) => !!data,
     { message: 'A VPC is required by the KeyBERT Text Processor middleware.' }
   ),
 

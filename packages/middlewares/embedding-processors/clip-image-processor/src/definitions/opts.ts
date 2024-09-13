@@ -28,7 +28,7 @@ export const ClipImageProcessorPropsSchema = MiddlewarePropsSchema.extend({
    * The VPC used by the middleware.
    */
   vpc: z.custom<ec2.IVpc>((value) => {
-    return (value instanceof ec2.Vpc);
+    return !!(value);
   }, {
     message: 'A VPC is required by the Clip processor.'
   }),

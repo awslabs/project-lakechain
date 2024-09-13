@@ -42,7 +42,7 @@ export const S3StorageConnectorPropsSchema = MiddlewarePropsSchema.extend({
    * The destination bucket.
    */
   destinationBucket: z.custom<s3.IBucket>(
-    (data) => data instanceof s3.Bucket,
+    (data) => !!data,
     { message: 'A destination bucket is required by the S3 Storage Connector middleware.' }
   ),
 

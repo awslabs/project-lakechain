@@ -37,7 +37,7 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/node": "^22.2.0",
     "esbuild": "0.21.5",
     "npkill": "^0.12.1",

@@ -17,7 +17,7 @@
     "destroy": "npx cdk destroy --all"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/node": "20.11.19",
     "esbuild": "0.21.5",
     "aws-cdk": "2.152.0",

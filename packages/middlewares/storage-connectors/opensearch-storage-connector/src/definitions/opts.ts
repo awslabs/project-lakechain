@@ -38,12 +38,10 @@ export const OpenSearchStorageConnectorPropsSchema = MiddlewarePropsSchema.exten
   /**
    * Describes the OpenSearch domain to store the data in.
    */
-  domain: z.custom<opensearch.Domain>(value => {
-    if (value instanceof opensearch.Domain) {
-      return value;
-    }
-    throw new Error('The OpenSearch domain must be an instance of the `opensearch.Domain` class.');
-  }),
+  domain: z.custom<opensearch.Domain>(
+    value => !!value,
+    { message: 'An OpenSearch domain is required by the OpenSearch Storage middleware.' }
+  ),
 
   /**
    * The name of the index in which the data will be stored.
@@ -53,12 +51,10 @@ export const OpenSearchStorageConnectorPropsSchema = MiddlewarePropsSchema.exten
   /**
    * An optional VPC to use for accessing the OpenSearch domain.
    */
-  vpc: z.custom<ec2.IVpc>(value => {
-    if (value instanceof ec2.Vpc) {
-      return value;
-    }
-    throw new Error('The VPC must be an instance of the `ec2.Vpc` class.');
-  }).optional(),
+  vpc: z.custom<ec2.IVpc>(
+    value => !!value,
+    { message: 'The VPC must be an instance of the `ec2.Vpc` class.' }
+  ).optional(),
 
   /**
    * Buffering options for the Firehose delivery
