@@ -37,7 +37,7 @@ aws ssm start-session \
     --region <your region> \
     --target <your bastion instance id> \
     --document-name AWS-StartPortForwardingSessionToRemoteHost \
-    --parameters host="<your opensearch endpoint>", portNumber="443", localPortNumber="8443"
+    --parameters host="<your opensearch endpoint>, portNumber=443, localPortNumber=8443"
 ```
 
 ## Usage
