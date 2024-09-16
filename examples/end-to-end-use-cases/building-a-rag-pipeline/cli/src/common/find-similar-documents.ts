@@ -38,7 +38,7 @@ export const findSimilarDocuments = async (
     body: {
       query: {
         bool: {
-          should: [
+          must: [
             {
               knn: {
                 embeddings: {
@@ -46,15 +46,9 @@ export const findSimilarDocuments = async (
                   k
                 }
               }
-            },
-            {
-              match: {
-                text: question
-              }
             }
-          ],
-          minimum_should_match: 1
-        },
+          ]
+        }
       },
       size: k
     }
