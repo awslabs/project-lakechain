@@ -12,7 +12,6 @@
     "docs": "npm install --prefix ./docs && npm run --prefix ./docs dev",
     "prettier:check": "npx prettier --check .",
     "graph": "npx nx graph",
-    "prepare": "npx husky",
     "synth": "npx lerna run synth",
     "audit": "npx lerna run audit"
   },
