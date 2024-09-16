@@ -45,7 +45,7 @@ import {
 const description: ServiceDescription = {
   name: 'pdf-text-converter',
   description: 'Converts PDF documents into different formats.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

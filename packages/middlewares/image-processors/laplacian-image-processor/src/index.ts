@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'laplacian-image-processor',
   description: 'Computes the Laplacian variance of images.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

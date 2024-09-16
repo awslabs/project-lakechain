@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'trafilatura',
   description: 'Converts HTML documents into plain text and extracts their metadata using Trafilatura.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

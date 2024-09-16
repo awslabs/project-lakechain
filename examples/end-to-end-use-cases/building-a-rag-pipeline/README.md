@@ -109,7 +109,7 @@ Before moving towards the retrieval step of interrogating an LLM using the RAG C
 
 Since the OpenSearch domain deployed in this example resides in a new isolated VPC that's not accessible from the public Internet, you will need to use a bastion host in that VPC to access the OpenSearch domain from your local machine.
 
-> 💁 You can for example use an EC2 bastion host to establish a soft VPN connection to your VPC (see [`sshuttle`](https://github.com/sshuttle/sshuttle)). Alternatively, you can also run this example within an [AWS Cloud9](https://docs.aws.amazon.com/cloud9/latest/user-guide/welcome.html) instance located in the same VPC as the OpenSearch endpoint.
+> 💁 You can for example use an EC2 bastion host to establish a soft VPN connection to your VPC using [`sshuttle`](https://github.com/sshuttle/sshuttle). Alternatively, you can also run this example within an [AWS Cloud9](https://docs.aws.amazon.com/cloud9/latest/user-guide/welcome.html) instance located in the same VPC as the OpenSearch endpoint.
 
 The URL of the OpenSearch domain is displayed in the CDK outputs as `OpenSearchEndpoint`, and you can check whether you have access using the following command.
 
@@ -139,8 +139,8 @@ npm install
 You can then invoke the CLI and ask a question to your documents. For example, if your deployment region is `eu-west-1` and you would like to use Amazon Bedrock in the `us-east-1` region, you can run the following command:
 
 ```bash
-node dist/index.js \
-  --opensearch-endpoint 'https://domain.eu-west-1.es.amazonaws.com' \
+npx tsx --tsconfig tsconfig.json src/index.ts \
+  --opensearch-endpoint 'https://vpc-opensearch-vectors-example.eu-west-1.es.amazonaws.com' \
   --opensearch-region eu-west-1 \
   --bedrock-region us-east-1
 ```

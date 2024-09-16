@@ -22,6 +22,7 @@ import { Client } from '@opensearch-project/opensearch';
  * @param client the OpenSearch client.
  * @param indexName the name of the index to query.
  * @param embeddings the embeddings to use to find similar documents.
+ * @param question the user question to use to filter the results.
  * @param k the number of similar documents to retrieve.
  * @returns an array of similar documents.
  */
@@ -29,26 +30,35 @@ export const findSimilarDocuments = async (
   client: Client,
   indexName: string,
   embeddings: Array<number>,
+  question: string,
   k = 5
 ): Promise<Array<any>> => {
-  const { body } = await client.search({
+  const res = await client.search({
     index: indexName,
     body: {
       query: {
         bool: {
-          must: [{
-            knn: {
-              embeddings: {
-                vector: embeddings,
-                k
+          should: [
+            {
+              knn: {
+                embeddings: {
+                  vector: embeddings,
+                  k
+                }
+              }
+            },
+            {
+              match: {
+                text: question
               }
             }
-          }]
-        }
+          ],
+          minimum_should_match: 1
+        },
       },
       size: k
     }
   });
 
-  return (body.hits.hits);
+  return (res.body.hits.hits);
 };

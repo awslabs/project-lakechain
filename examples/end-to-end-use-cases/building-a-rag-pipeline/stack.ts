@@ -27,7 +27,7 @@ import { PdfTextConverter } from '@project-lakechain/pdf-text-converter';
 import { PandocTextConverter } from '@project-lakechain/pandoc-text-converter';
 import { TranscribeAudioProcessor } from '@project-lakechain/transcribe-audio-processor';
 import { RecursiveCharacterTextSplitter } from '@project-lakechain/recursive-character-text-splitter';
-import { TitanEmbeddingProcessor } from '@project-lakechain/bedrock-embedding-processors';
+import { CohereEmbeddingProcessor, CohereEmbeddingModel } from '@project-lakechain/bedrock-embedding-processors';
 import { OpenSearchDomain } from '@project-lakechain/opensearch-domain';
 import { OpenSearchVectorStorageConnector, OpenSearchVectorIndexDefinition } from '@project-lakechain/opensearch-vector-storage-connector';
 import { AnthropicTextProcessor, AnthropicTextModel } from '@project-lakechain/bedrock-text-processors';
@@ -117,7 +117,7 @@ export class RagPipeline extends cdk.Stack {
       .withIdentifier('TextProcessor')
       .withCacheStorage(cache)
       .withSource(transcribe)
-      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_INSTANT_V1)
+      .withModel(AnthropicTextModel.ANTHROPIC_CLAUDE_V3_SONNET)
       .withRegion('us-east-1')
       .withPrompt(`
         Give a very comprehensive description of the content of this transcription file with these constraints:
@@ -137,7 +137,7 @@ export class RagPipeline extends cdk.Stack {
       .withScope(this)
       .withIdentifier('RecursiveCharacterTextSplitter')
       .withCacheStorage(cache)
-      .withChunkSize(4096)
+      .withChunkSize(2000)
       .withSources([
         trigger,
         pdfConverter,
@@ -150,13 +150,16 @@ export class RagPipeline extends cdk.Stack {
     ////   Embeddings with Bedrock   ////
     /////////////////////////////////////
 
-    // Create embeddings for each chunk of text using
-    // the Amazon Titan embedding model hosted on Amazon Bedrock.
-    const bedrockProcessor = new TitanEmbeddingProcessor.Builder()
+    // Creates embeddings for the text using a Cohere embedding
+    // model hosted on Amazon Bedrock.
+    const embeddingProcessor = new CohereEmbeddingProcessor.Builder()
       .withScope(this)
-      .withIdentifier('BedrockEmbeddingProcessor')
+      .withIdentifier('CohereEmbeddingProcessor')
       .withCacheStorage(cache)
       .withSource(textSplitter)
+      // You can specify the embedding model to use.
+      .withModel(CohereEmbeddingModel.COHERE_EMBED_MULTILINGUAL_V3)
+      // You can also specify a region that supports Amazon Bedrock.
       .withRegion('us-east-1')
       .build();
 
@@ -170,7 +173,7 @@ export class RagPipeline extends cdk.Stack {
       .withIdentifier('TextVectorStorage')
       .withCacheStorage(cache)
       .withEndpoint(openSearch.domain)
-      .withSource(bedrockProcessor)
+      .withSource(embeddingProcessor)
       .withVpc(vpc)
       .withIncludeDocument(true)
       .withIndex(new OpenSearchVectorIndexDefinition.Builder()
@@ -178,7 +181,7 @@ export class RagPipeline extends cdk.Stack {
         .withKnnMethod('hnsw')
         .withKnnEngine('nmslib')
         .withSpaceType('l2')
-        .withDimensions(1536)
+        .withDimensions(1024)
         .withParameters({ 'ef_construction': 512, 'm': 16 })
         .build()
       )

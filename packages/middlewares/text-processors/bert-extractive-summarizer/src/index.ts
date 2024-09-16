@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'bert-extractive-summarizer',
   description: 'Provides text summarization using the Bert Extractive Summarizer model.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

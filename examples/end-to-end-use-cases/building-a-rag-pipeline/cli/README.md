@@ -22,15 +22,23 @@ npm install
 
 ## Access the VPC
 
-Because OpenSearch is deployed in a VPC private subnet for security reasons, you will need to get access to the VPC to run this tool, as it will need to query your OpenSearch index. To do so, you have two options.
+Because OpenSearch is deployed in a VPC private subnet for security reasons, you will need to get access to the VPC to run this tool, as it will need to query your OpenSearch index. To do so, you have a few options.
 
-### Cloud9 or EC2
+### Sshuttle
 
-One option is to run this example on a [Cloud9](https://aws.amazon.com/cloud9/) or EC2 instance located, or having access to, the VPC in which OpenSearch has been deployed.
+You can use an EC2 bastion host in the same VPC as the deployed example to establish a soft VPN connection to your VPC using [`sshuttle`](https://github.com/sshuttle/sshuttle). This way you local computer will be able to access instances within the example VPC as if they were on your local network.
 
 ### Port Forwarding
 
-Alternatively, you can use the [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html) to access the VPC from your local machine using port forwarding.
+You can use the [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html) to access the VPC from your local machine using port forwarding.
+
+```bash
+aws ssm start-session \
+    --region <your region> \
+    --target <your bastion instance id> \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters host="<your opensearch endpoint>", portNumber="443", localPortNumber="8443"
+```
 
 ## Usage
 
@@ -40,7 +48,7 @@ Run the CLI by passing it with the required configuration.
 > You can also omit any parameters and let the command-line tool prompt you for the missing information.
 
 ```bash
-node dist/index.js \
+npx tsx --tsconfig tsconfig.json src/index.ts \
   --opensearch-endpoint 'https://vpc-opensearch-vectors-example.eu-west-1.es.amazonaws.com' \
   --opensearch-region eu-west-1 \
   --bedrock-region us-east-1

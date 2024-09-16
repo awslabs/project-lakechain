@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'reducer',
   description: 'A middleware allowing to reduce multiple events into a single event.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

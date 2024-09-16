@@ -42,7 +42,7 @@ import { InfrastructureDefinition } from './definitions/infrastructure';
 const description: ServiceDescription = {
   name: 'ollama-processor',
   description: 'Processes documents using models supported by Ollama.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

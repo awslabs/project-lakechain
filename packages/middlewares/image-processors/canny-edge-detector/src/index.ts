@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'canny-edge-detector',
   description: 'Creates a new image with the edges detected using the Canny edge detector algorithm.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

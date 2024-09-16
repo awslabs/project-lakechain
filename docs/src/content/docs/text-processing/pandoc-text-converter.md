@@ -6,7 +6,7 @@ title: Pandoc
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.8.0
+  0.9.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/pandoc-text-converter">

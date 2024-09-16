@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'mistral-text-processor',
   description: 'Generative text processing using Mistral models on Amazon Bedrock.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

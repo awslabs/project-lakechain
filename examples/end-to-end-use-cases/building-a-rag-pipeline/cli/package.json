@@ -1,7 +1,7 @@
 {
   "name": "rag-cli",
-  "version": "1.0.0",
-  "description": "A CLI for interacting with documents.",
+  "version": "1.1.0",
+  "description": "A CLI for interacting with documents using retrieval augmented generation.",
   "type": "module",
   "private": true,
   "bin": {
@@ -22,9 +22,9 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/client-bedrock-runtime": "^3.650.0",
-    "@aws-sdk/credential-provider-node": "^3.650.0",
-    "@opensearch-project/opensearch": "^2.11.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.651.1",
+    "@aws-sdk/credential-provider-node": "^3.651.1",
+    "@opensearch-project/opensearch": "^2.12.0",
     "commander": "^12.1.0",
     "figlet": "^1.7.0",
     "ora": "^8.1.0",
@@ -34,9 +34,10 @@
   },
   "devDependencies": {
     "@types/figlet": "^1.5.8",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.5.5",
     "@types/prompts": "^2.4.9",
     "rimraf": "^6.0.1",
-    "typescript": "^5.5.4"
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
   }
 }

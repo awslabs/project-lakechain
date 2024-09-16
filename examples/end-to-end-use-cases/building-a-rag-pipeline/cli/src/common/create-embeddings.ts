@@ -28,12 +28,16 @@ export const createEmbeddings = async (
 ): Promise<Array<number>> => {
   const response = await client.invokeModel({
     body: JSON.stringify({
-      inputText: text
+      texts: [text],
+      input_type: 'search_query'
     }),
-    modelId: 'amazon.titan-embed-text-v1',
+    modelId: 'cohere.embed-multilingual-v3',
     accept: 'application/json',
     contentType: 'application/json'
   });
 
-  return (JSON.parse(response.body.transformToString()).embedding);
+  // Parse the response as a JSON object.
+  const value = JSON.parse(response.body.transformToString());
+
+  return (value.embeddings[0]);
 };

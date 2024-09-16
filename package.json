@@ -1,7 +1,7 @@
 {
   "name": "project-lakechain",
   "description": "Build scalable and modular document processing pipelines on AWS.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "build": "npx lerna run build",
     "test": "npx lerna run test",

@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'scheduler-event-trigger',
   description: 'An event-based trigger based on configured schedules.',
-  version: '0.7.0',
+  version: '0.9.0',
   attrs: {}
 };
 

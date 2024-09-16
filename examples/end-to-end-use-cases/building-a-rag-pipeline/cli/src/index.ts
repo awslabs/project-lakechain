@@ -24,7 +24,6 @@ import { createOpenSearchClient } from './common/opensearch-client.js';
 import { createBedrockClient } from './common/bedrock-client.js';
 import { createEmbeddings } from './common/create-embeddings.js';
 import { findSimilarDocuments } from './common/find-similar-documents.js';
-import { createPrompt } from './common/create-prompt.js';
 import { queryLlm } from './common/query-llm.js';
 
 import {
@@ -44,8 +43,9 @@ program
   .option('-e, --opensearch-endpoint <opensearch-endpoint>', 'The OpenSearch endpoint to use to retrieve documents.')
   .option('-i, --index-name <index-name>', '(Optional) The index name to use to retrieve documents.')
   .option('-r, --opensearch-region <opensearch-region>', '(Optional) The AWS region in which OpenSearch is deployed.')
-  .option('-b, --bedrock-region <bedrock-region>', '(Optional) The AWS region in which Bedrock is deployed.')
+  .option('-b, --bedrock-region <bedrock-region>', '(Optional) The AWS region in which Bedrock is deployed. Defaults to us-east-1.')
   .option('-k, --number-of-similar-documents <number-of-similar-documents>', '(Optional) The number of similar documents to retrieve.')
+  .option('-m, --model-id <model-id>', '(Optional) The model ID to use to query the large language model.')
   .parse(process.argv);
 
 /**
@@ -69,7 +69,10 @@ const OptionsSchema = z.object({
     .optional(),
   bedrockRegion: z
     .string()
-    .optional(),
+    .default('us-east-1'),
+  modelId: z
+    .string()
+    .default('anthropic.claude-3-sonnet-20240229-v1:0'),
   numberOfSimilarDocuments: z
     .number()
     .min(1)
@@ -130,8 +133,8 @@ try {
   try {
     await opensearch.info();
     spinner.succeed('Connection to OpenSearch successful.');
-  } catch (err) {
-    spinner.fail('Connection to OpenSearch failed.');
+  } catch (err: any) {
+    spinner.fail(`Connection to OpenSearch failed: ${err.message}`);
     process.exit(1);
   }
 
@@ -145,9 +148,8 @@ try {
   try {
     embeddings = await createEmbeddings(bedrock, question);
     spinner.succeed('Embeddings created.');
-  } catch (err) {
-    spinner.fail('Embeddings creation failed.');
-    console.error(err);
+  } catch (err: any) {
+    spinner.fail(`Embeddings creation failed: ${err.message}`);
     process.exit(1);
   }
 
@@ -162,30 +164,14 @@ try {
       opensearch,
       options.indexName,
       embeddings,
+      question,
       options.numberOfSimilarDocuments
     );
     spinner.succeed('Most similar documents retrieved.');
-  } catch (err) {
-    spinner.fail('Most similar documents not found.');
-    console.error(err);
+  } catch (err: any) {
+    spinner.fail(`Most similar documents retrieval failed: ${err.message}`);
     process.exit(1);
   }
-
-
-  /**
-   * Creating the prompt to pass to the large language model.
-   */
-  let prompt = null;
-  try {
-    spinner = ora('Creating the prompt to pass to the LLM...').start();
-    prompt = createPrompt(hits.map((hit: any) => hit._source.text));
-    spinner.succeed('Prompt created.');
-  } catch (err) {
-    spinner.fail('Prompt creation failed.');
-    console.error(err);
-    process.exit(1);
-  }
-
 
   /**
    * Querying the large language model using the created prompt,
@@ -193,12 +179,17 @@ try {
    */
   let events = null;
   try {
+    const prompts = hits.map((hit: any) => hit._source.text);
     spinner = ora('Querying the LLM...').start();
-    events = await queryLlm(bedrock, prompt, question);
+    events = await queryLlm(
+      bedrock,
+      prompts,
+      question,
+      options.modelId
+    );
     spinner.succeed('Stream created.');
-  } catch (err) {
-    spinner.fail('Stream creation failed.');
-    console.error(err);
+  } catch (err: any) {
+    spinner.fail(`Querying the LLM failed: ${err.message}`);
     process.exit(1);
   }
 
@@ -206,11 +197,9 @@ try {
    * Displaying the response in streaming.
    */
   console.log();
-  for await (const event of events ?? []) {
-    if (event.chunk) {
-      process.stdout.write(JSON.parse(
-        new TextDecoder().decode(event.chunk.bytes)
-      ).completion);
+  for await (const event of events.stream!) {
+    if (event.contentBlockDelta?.delta?.text) {
+      process.stdout.write(event.contentBlockDelta.delta.text);
     }
   }
 })();
