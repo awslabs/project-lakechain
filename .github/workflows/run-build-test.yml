@@ -14,17 +14,28 @@ jobs:
       matrix:
         version: [20, 22]
     steps:
+      # Checkout and setup.
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+
+      # Set node version.
       - name: Set node version
         uses: actions/setup-node@26961cf329f22f6837d5f54c3efd76b480300ace
         with:
           node-version: ${{ matrix.version }}
+
+      # Install dependencies.
       - name: Install dependencies
         run: npm install
+
+      # Build all packages.
       - name: Build all packages
         run: npm run build
+
+      # Run linting.
       - name: Run linting
         run: npm run lint
+
+      # Run unit tests.
       - name: Run unit tests
         run: npm test
