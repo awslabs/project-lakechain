@@ -1,7 +1,7 @@
 {
   "name": "sentence-transformers-pipeline",
   "description": "An example showcasing how to create embeddings using Sentence Transformers.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -37,7 +37,7 @@
     "@project-lakechain/sentence-transformers": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.152.0",
+    "aws-cdk-lib": "2.158.0",
     "constructs": "^10.3.0"
   }
 }

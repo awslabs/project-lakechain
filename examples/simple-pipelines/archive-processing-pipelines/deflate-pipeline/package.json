@@ -1,7 +1,7 @@
 {
   "name": "deflate-pipeline",
   "description": "An example showcasing how to archive multiple documents.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -38,7 +38,7 @@
     "@project-lakechain/sharp-image-transform": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.152.0",
+    "aws-cdk-lib": "2.158.0",
     "constructs": "^10.0.0"
   }
 }

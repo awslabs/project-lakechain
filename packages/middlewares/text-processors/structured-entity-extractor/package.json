@@ -52,7 +52,7 @@
     "zod-to-json-schema": "^3.23.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.152.0",
+    "aws-cdk-lib": "2.158.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

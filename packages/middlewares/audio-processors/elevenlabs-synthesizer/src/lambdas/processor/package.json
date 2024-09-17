@@ -25,7 +25,7 @@
     "@aws-lambda-powertools/tracer": "^2.7.0",
     "@project-lakechain/core": "^0.7.0",
     "@project-lakechain/sdk": "^0.7.0",
-    "elevenlabs": "^0.15.0",
+    "elevenlabs": "^0.16.0",
     "p-throttle": "^6.2.0"
   },
   "devDependencies": {

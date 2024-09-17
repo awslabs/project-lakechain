@@ -241,7 +241,7 @@ export class LanceDbStorageConnector extends Middleware {
     this.processor.addEventSource(new sources.SqsEventSource(this.eventQueue, {
       batchSize: props.batchSize ?? 10,
       maxBatchingWindow: props.batchingWindow ?? cdk.Duration.seconds(10),
-      maxConcurrency: 5
+      maxConcurrency: props.maxConcurrency ?? 5
     }));
 
     super.bind();

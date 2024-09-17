@@ -1,7 +1,7 @@
 {
   "name": "building-a-video-subtitle-service",
   "description": "Builds a pipeline for automatic multi-lingual video subtitles generation.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",
@@ -41,7 +41,7 @@
     "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.152.0",
+    "aws-cdk-lib": "2.158.0",
     "constructs": "^10.3.0"
   }
 }

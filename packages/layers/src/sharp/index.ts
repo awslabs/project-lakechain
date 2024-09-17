@@ -32,15 +32,19 @@ export class SharpLayer {
    * compiled for ARM64.
    */
   static arm64(scope: Construct, id: string): lambda.LayerVersion {
-    const runtime = lambda.Runtime.NODEJS_18_X;
     const architecture = lambda.Architecture.ARM_64;
+
+    // The Docker image to use to build the layer.
+    const image = cdk.DockerImage.fromRegistry(
+      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-arm64'
+    );
 
     // Builds the Sharp library for the target architecture
     // and outputs the result in the /asset-output directory.
     const layerAsset = new s3assets.Asset(scope, `Asset-${id}`, {
       path: path.join(__dirname),
       bundling: {
-        image: runtime.bundlingImage,
+        image,
         platform: architecture.dockerPlatform,
         command: [
           '/bin/bash',

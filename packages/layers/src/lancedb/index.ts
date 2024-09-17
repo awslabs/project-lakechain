@@ -32,15 +32,19 @@ export class LanceDbLayer {
    * compiled for ARM64.
    */
   static arm64(scope: Construct, id: string): lambda.LayerVersion {
-    const runtime = lambda.Runtime.NODEJS_18_X;
     const architecture = lambda.Architecture.ARM_64;
+
+    // The Docker image to use to build the layer.
+    const image = cdk.DockerImage.fromRegistry(
+      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-arm64'
+    );
 
     // Builds the LanceDB library for the target architecture
     // and outputs the result in the /asset-output directory.
     const layerAsset = new s3assets.Asset(scope, `Asset-${id}`, {
       path: path.join(__dirname),
       bundling: {
-        image: runtime.bundlingImage,
+        image,
         platform: architecture.dockerPlatform,
         command: [
           '/bin/bash',
@@ -64,6 +68,53 @@ export class LanceDbLayer {
       ],
       compatibleArchitectures: [
         lambda.Architecture.ARM_64
+      ]
+    }));
+  }
+
+  /**
+   * @param scope the construct scope.
+   * @param id the construct identifier.
+   * @returns a lambda layer version for the LanceDB library
+   * compiled for X64.
+   */
+  static x64(scope: Construct, id: string): lambda.LayerVersion {
+    const architecture = lambda.Architecture.X86_64;
+
+    // The Docker image to use to build the layer.
+    const image = cdk.DockerImage.fromRegistry(
+      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-x86_64'
+    );
+
+    // Builds the LanceDB library for the target architecture
+    // and outputs the result in the /asset-output directory.
+    const layerAsset = new s3assets.Asset(scope, `Asset-${id}`, {
+      path: path.join(__dirname),
+      bundling: {
+        image,
+        platform: architecture.dockerPlatform,
+        command: [
+          '/bin/bash',
+          '-c',
+          'npm install --prefix=/asset-output/nodejs --arch=x64 --platform=linux vectordb @lancedb/vectordb-linux-x64-gnu'
+        ],
+        outputType: cdk.BundlingOutput.AUTO_DISCOVER,
+        network: 'host',
+        user: 'root'
+      }
+    });
+
+    return (new lambda.LayerVersion(scope, id, {
+      description: 'Provides a lambda layer for LanceDB.',
+      code: lambda.Code.fromBucket(
+        layerAsset.bucket,
+        layerAsset.s3ObjectKey
+      ),
+      compatibleRuntimes: [
+        lambda.Runtime.NODEJS_18_X
+      ],
+      compatibleArchitectures: [
+        lambda.Architecture.X86_64
       ]
     }));
   }

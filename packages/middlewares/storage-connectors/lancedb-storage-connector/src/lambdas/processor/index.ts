@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import * as lancedb from "vectordb";
+import * as lancedb from 'vectordb';
 
 import { SQSEvent, Context } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';

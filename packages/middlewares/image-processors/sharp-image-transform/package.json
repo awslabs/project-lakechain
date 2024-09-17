@@ -38,7 +38,8 @@
     "@types/lodash": "^4.17.7",
     "@types/node": "^22.5.4",
     "rimraf": "^6.0.1",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "@types/serialize-javascript": "^5.0.4"
   },
   "dependencies": {
     "@aws-lambda-powertools/batch": "^2.7.0",
@@ -53,7 +54,7 @@
     "serialize-javascript": "^6.0.2"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.152.0",
+    "aws-cdk-lib": "2.158.0",
     "constructs": "^10.3.0"
   },
   "lint-staged": {
