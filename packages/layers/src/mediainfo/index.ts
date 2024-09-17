@@ -43,15 +43,19 @@ export class MediaInfoLayer {
     architecture: lambda.Architecture,
     version: string = DEFAULT_MEDIA_INFO_VERSION
   ): lambda.LayerVersion {
-    const runtime  = lambda.Runtime.PYTHON_3_11;
     const archName = architecture === lambda.Architecture.ARM_64 ? 'arm64' : 'x64';
+
+    // The Docker image to use to build the layer.
+    const image = cdk.DockerImage.fromRegistry(
+      `public.ecr.aws/sam/build-python3.11:1.124.0-${architecture.name}`
+    );
 
     // Build the layer.
     const layerAsset = new s3assets.Asset(scope, `Asset-${id}`, {
       path: path.join(__dirname),
       assetHashType: cdk.AssetHashType.OUTPUT,
       bundling: {
-        image: runtime.bundlingImage,
+        image,
         platform: architecture.dockerPlatform,
         command: [
           '/bin/bash',
