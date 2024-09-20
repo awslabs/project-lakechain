@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/ollama-embedding-processor",
   "description": "Creates embeddings from documents using Ollama models.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -35,8 +35,8 @@
     "shx": "^0.3.4"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.9.0",
-    "@project-lakechain/ecs-cluster": "^0.9.0"
+    "@project-lakechain/core": "^0.10.0",
+    "@project-lakechain/ecs-cluster": "^0.10.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.158.0",

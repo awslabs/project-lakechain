@@ -1,7 +1,7 @@
 {
   "name": "@project-lakechain/zip-processor",
   "description": "Inflates and deflates Zip documents from a source to a destination bucket.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -46,8 +46,8 @@
     "@aws-lambda-powertools/logger": "^2.7.0",
     "@aws-lambda-powertools/metrics": "^2.7.0",
     "@aws-lambda-powertools/tracer": "^2.7.0",
-    "@project-lakechain/core": "^0.9.0",
-    "@project-lakechain/sdk": "^0.9.0",
+    "@project-lakechain/core": "^0.10.0",
+    "@project-lakechain/sdk": "^0.10.0",
     "archiver": "^7.0.1",
     "streamz": "^1.8.12",
     "unzipper": "^0.12.3"

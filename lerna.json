@@ -14,6 +14,6 @@
     "examples/simple-pipelines/*-pipelines/*",
     "examples/end-to-end-use-cases/*"
   ],
-  "version": "0.9.0",
+  "version": "0.10.0",
   "npmClient": "npm"
 }
