@@ -80,16 +80,18 @@ class OpenSearchVectorStorageConnectorBuilder extends MiddlewareBuilder {
    * Specifies the OpenSearch endpoint to use.
    */
   public withEndpoint(endpoint: opensearch.IDomain | oss.ICollection | opensearchserverless.CfnCollection) {
-    if (endpoint instanceof opensearchserverless.CfnCollection) {
+    const e = endpoint as any;
+
+    if (e.collectionName && e.collectionArn && e.collectionId && e.collectionEndpoint) {
       endpoint = oss.Collection.fromCollectionAttributes(this.scope, 'Collection', {
-        collectionName: endpoint.name,
-        collectionArn: endpoint.attrArn,
-        collectionId: endpoint.attrId,
-        collectionEndpoint: endpoint.attrCollectionEndpoint,
-        dashboardEndpoint: endpoint.attrDashboardEndpoint
+        collectionName: e.name,
+        collectionArn: e.attrArn,
+        collectionId: e.attrId,
+        collectionEndpoint: e.attrCollectionEndpoint,
+        dashboardEndpoint: e.attrDashboardEndpoint
       });
     }
-    this.providerProps.endpoint = endpoint;
+    this.providerProps.endpoint = e;
     return (this);
   }
 
@@ -238,15 +240,24 @@ export class OpenSearchVectorStorageConnector extends Middleware {
       reportBatchItemFailures: true
     }));
 
-    if (this.props.endpoint instanceof opensearch.Domain) {
+    ///////////////////////////////////////////
+    ///////////    Permissions      ///////////
+    ///////////////////////////////////////////
+
+    // Get the service identifier of the endpoint.
+    const serviceIdentifier = this.getServiceIdentifier(this.props.endpoint);
+
+    if (serviceIdentifier === 'es') {
       // Grant the lambda function permissions to write
-      // to the OpenSearch index.
-      this.props.endpoint.grantWrite(this.processor);
-    } else if (this.props.endpoint instanceof oss.Collection) {
+      // to the OpenSearch domain.
+      (this.props.endpoint as opensearch.Domain).grantWrite(this.processor);
+    } else if (serviceIdentifier === 'aoss') {
+      const endpoint = this.props.endpoint as oss.Collection;
+
       // If the endpoint is a collection, we need to create an
       // access policy on the collection to allow the lambda function
       // to manage the index.
-      this.props.endpoint.addAccessPolicy(
+      endpoint.addAccessPolicy(
         this.node.id,
         [this.processor.role!.roleArn],
         [
@@ -264,7 +275,7 @@ export class OpenSearchVectorStorageConnector extends Middleware {
       this.processor.addToRolePolicy(new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ['aoss:APIAccessAll'],
-        resources: [this.props.endpoint.collectionArn]
+        resources: [endpoint.collectionArn]
       }));
     }
 
@@ -277,10 +288,12 @@ export class OpenSearchVectorStorageConnector extends Middleware {
    * @returns the endpoint URL.
    */
   private getEndpoint(endpoint: opensearch.IDomain | oss.ICollection): string {
-    if (endpoint instanceof opensearch.Domain) {
-      return (`https://${endpoint.domainEndpoint}`);
-    } else if (endpoint instanceof oss.Collection) {
-      return (endpoint.collectionEndpoint);
+    const serviceIdentifier = this.getServiceIdentifier(endpoint);
+
+    if (serviceIdentifier === 'es') {
+      return (`https://${(endpoint as opensearch.Domain).domainEndpoint}`);
+    } else if (serviceIdentifier === 'aoss') {
+      return ((endpoint as oss.Collection).collectionEndpoint);
     } else {
       throw new Error('Invalid endpoint.');
     }
@@ -289,12 +302,20 @@ export class OpenSearchVectorStorageConnector extends Middleware {
   /**
    * Get the service identifier of the OpenSearch endpoint.
    * @param endpoint the OpenSearch endpoint.
-   * @returns the service identifier.
+   * @returns a string identifying the service.
    */
   private getServiceIdentifier(endpoint: opensearch.IDomain | oss.ICollection): ServiceIdentifier {
-    if (endpoint instanceof opensearch.Domain) {
+    const e = endpoint as any;
+    
+    if (e.domainArn
+      && e.domainName
+      && e.domainId
+      && e.domainEndpoint) {
       return ('es');
-    } else if (endpoint instanceof oss.Collection) {
+    } else if (e.collectionName
+      && e.collectionArn
+      && e.collectionId
+      && e.collectionEndpoint) {
       return ('aoss');
     } else {
       throw new Error('Invalid endpoint.');

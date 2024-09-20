@@ -121,15 +121,17 @@ export class OpenSearchIndex extends Construct {
       }
     });
 
-    if (props.endpoint instanceof opensearch.Domain) {
+    if (serviceIdentifier === 'es') {
       // Allow the lambda function to manage the index.
-      props.endpoint.grantWrite(processor);
-    } else if (props.endpoint instanceof oss.Collection) {
+      (props.endpoint as opensearch.Domain).grantWrite(processor);
+    } else if (serviceIdentifier === 'aoss') {
+      const endpoint = props.endpoint as oss.Collection;
+
       // If the endpoint is a collection, we also need to create an
       // access policy on the collection to allow the lambda function
       // to manage the index.
       // Add a new access policy.
-      props.endpoint.addAccessPolicy(
+      endpoint.addAccessPolicy(
         this.indexName,
         [processor.role!.roleArn],
         ['aoss:CreateIndex', 'aoss:DeleteIndex', 'aoss:UpdateIndex']
@@ -140,7 +142,7 @@ export class OpenSearchIndex extends Construct {
       processor.addToRolePolicy(new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ['aoss:APIAccessAll'],
-        resources: [props.endpoint.collectionArn]
+        resources: [endpoint.collectionArn]
       }));
     }
 
@@ -167,10 +169,12 @@ export class OpenSearchIndex extends Construct {
    * @returns the endpoint URL.
    */
   private getEndpoint(endpoint: opensearch.IDomain | oss.ICollection): string {
-    if (endpoint instanceof opensearch.Domain) {
-      return (`https://${endpoint.domainEndpoint}`);
-    } else if (endpoint instanceof oss.Collection) {
-      return (endpoint.collectionEndpoint);
+    const serviceIdentifier = this.getServiceIdentifier(endpoint);
+
+    if (serviceIdentifier === 'es') {
+      return (`https://${(endpoint as opensearch.Domain).domainEndpoint}`);
+    } else if (serviceIdentifier === 'aoss') {
+      return ((endpoint as oss.Collection).collectionEndpoint);
     } else {
       throw new Error('Invalid endpoint.');
     }
@@ -182,9 +186,17 @@ export class OpenSearchIndex extends Construct {
    * @returns the service identifier.
    */
   private getServiceIdentifier(endpoint: opensearch.IDomain | oss.ICollection): ServiceIdentifier {
-    if (endpoint instanceof opensearch.Domain) {
+    const e = endpoint as any;
+    
+    if (e.domainArn
+      && e.domainName
+      && e.domainId
+      && e.domainEndpoint) {
       return ('es');
-    } else if (endpoint instanceof oss.Collection) {
+    } else if (e.collectionName
+      && e.collectionArn
+      && e.collectionId
+      && e.collectionEndpoint) {
       return ('aoss');
     } else {
       throw new Error('Invalid endpoint.');

@@ -35,7 +35,7 @@ export const EcsClusterPropsSchema = z.object({
    * The VPC used by the middleware.
    */
   vpc: z.custom<ec2.IVpc>(
-    (data) => data instanceof ec2.Vpc,
+    (data) => data instanceof Object,
     { message: 'A VPC is required by the ECS cluster.' }
   ),
 
@@ -44,7 +44,7 @@ export const EcsClusterPropsSchema = z.object({
    * will be consuming messages.
    */
   eventQueue: z.custom<sqs.IQueue>(
-    (data) => data instanceof sqs.Queue,
+    (data) => data instanceof Object,
     { message: 'The input SQS queue is required by the ECS cluster.' }
   ),
 
@@ -53,7 +53,7 @@ export const EcsClusterPropsSchema = z.object({
    * will be publishing events.
    */
   eventBus: z.custom<sns.ITopic>(
-    (data) => data instanceof sns.Topic,
+    (data) => data instanceof Object,
     { message: 'The output SNS event bus is required by the ECS cluster.' }
   ),
 
