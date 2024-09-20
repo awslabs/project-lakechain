@@ -46,7 +46,7 @@ import {
 const description: ServiceDescription = {
   name: 'elevenlabs-synthesizer',
   description: 'Synthesizes text into speech using the Elevenlabs API.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

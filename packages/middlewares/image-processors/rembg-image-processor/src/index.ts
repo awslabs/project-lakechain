@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'rembg-image-processor',
   description: 'Automatically remove background from images using the Rembg.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

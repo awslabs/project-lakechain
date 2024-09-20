@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'tar-deflate-processor',
   description: 'Archives input documents into Tarballs.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

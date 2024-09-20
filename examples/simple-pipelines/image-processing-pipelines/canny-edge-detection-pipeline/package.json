@@ -1,7 +1,7 @@
 {
   "name": "canny-edge-detection-pipeline",
   "description": "An example showcasing how to perform canny edge detection on images.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "tsc",

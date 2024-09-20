@@ -49,7 +49,7 @@ import {
 const description: ServiceDescription = {
   name: 'llama-text-processor',
   description: 'Generative text processing using Llama models on Amazon Bedrock.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

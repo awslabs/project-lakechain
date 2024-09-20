@@ -1,7 +1,7 @@
 {
   "name": "structured-data-extraction-pipeline",
   "description": "Builds a pipeline for structured data extraction from documents using Amazon Bedrock.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

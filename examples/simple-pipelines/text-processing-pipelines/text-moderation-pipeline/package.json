@@ -1,7 +1,7 @@
 {
   "name": "text-moderation-pipeline",
   "description": "An example showcasing how to moderate text documents using Amazon Comprehend.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

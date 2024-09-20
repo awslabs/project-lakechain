@@ -48,7 +48,7 @@ import {
 const description: ServiceDescription = {
   name: 'sdxl-image-generator',
   description: 'Generates images with Generative AI using SDXL on Amazon Bedrock.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

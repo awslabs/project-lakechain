@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'image-layer-processor',
   description: 'Applies layer operations on images.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

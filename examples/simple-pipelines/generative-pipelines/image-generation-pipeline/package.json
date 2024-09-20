@@ -1,7 +1,7 @@
 {
   "name": "image-generation-pipeline",
   "description": "An example showcasing how to generate image using SDXL and Titan models on Amazon Bedrock.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

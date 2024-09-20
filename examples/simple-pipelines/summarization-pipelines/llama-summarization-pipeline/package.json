@@ -1,7 +1,7 @@
 {
   "name": "llama-summarization-pipeline",
   "description": "Builds a pipeline for text summarization using Llama models on Amazon Bedrock.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "npx tsc",

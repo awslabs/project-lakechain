@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'neo4j-storage-connector',
   description: 'A data store connector for Neo4j.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

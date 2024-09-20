@@ -47,7 +47,7 @@ import {
 const description: ServiceDescription = {
   name: 'ollama-embedding-processor',
   description: 'Creates embeddings from documents using Ollama models.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

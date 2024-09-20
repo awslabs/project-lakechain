@@ -42,7 +42,7 @@ import { BarkLanguage } from './definitions/language';
 const description: ServiceDescription = {
   name: 'bark-synthesizer',
   description: 'Synthesize text to audio using the Bark model.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

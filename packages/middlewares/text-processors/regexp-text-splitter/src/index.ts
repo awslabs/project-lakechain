@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'regexp-text-splitter',
   description: 'Transforms text into chunks of tokens based on regular expressions.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

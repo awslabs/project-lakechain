@@ -51,7 +51,7 @@ import {
 const description: ServiceDescription = {
   name: 'structured-entity-extractor',
   description: 'Extracts structured entities from processed documents.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

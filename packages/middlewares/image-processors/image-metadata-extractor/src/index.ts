@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'image-metadata-extractor',
   description: 'Extracts the metadata of images.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

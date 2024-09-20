@@ -43,7 +43,7 @@ import {
 const description: ServiceDescription = {
   name: 'email-text-processor',
   description: 'Transforms e-mail documents into different output formats.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

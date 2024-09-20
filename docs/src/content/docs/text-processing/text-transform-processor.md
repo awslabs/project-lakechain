@@ -6,7 +6,7 @@ title: Text Transform
   Unstable API
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--version text-uppercase">
-  0.9.0
+  0.10.0
 </span>
 <span title="Label: Pro" data-view-component="true" class="Label Label--package">
   <a target="_blank" href="https://www.npmjs.com/package/@project-lakechain/text-transform-processor">

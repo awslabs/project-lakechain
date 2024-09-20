@@ -44,7 +44,7 @@ import {
 const description: ServiceDescription = {
   name: 'lancedb-storage-connector',
   description: 'A data store connector for LanceDB.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

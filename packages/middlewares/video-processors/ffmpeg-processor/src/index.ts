@@ -48,7 +48,7 @@ import {
 const description: ServiceDescription = {
   name: 'ffmpeg-processor',
   description: 'Processes media documents using FFMPEG.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

@@ -41,7 +41,7 @@ import {
 const description: ServiceDescription = {
   name: 'pinecone-storage-connector',
   description: 'A data store connector for Pinecone.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

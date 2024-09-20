@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'video-metadata-extractor',
   description: 'Extracts the metadata of video files.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

@@ -42,7 +42,7 @@ import {
 const description: ServiceDescription = {
   name: 'jmespath-processor',
   description: 'Applies JMESPath expressions to JSON documents.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 

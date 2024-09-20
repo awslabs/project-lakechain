@@ -1,7 +1,7 @@
 {
   "name": "audio-extraction-pipeline",
   "description": "An example showcasing how to use FFMPEG to extract audio from video files.",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "scripts": {
     "build": "tsc",

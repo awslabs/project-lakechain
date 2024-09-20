@@ -36,7 +36,7 @@ import { Blip2ImageProcessorProps, Blip2ImageProcessorPropsSchema } from './defi
 const description: ServiceDescription = {
   name: 'blip2-image-processor',
   description: 'Extracts image captioning information from images using the Blip2 model.',
-  version: '0.9.0',
+  version: '0.10.0',
   attrs: {}
 };
 
