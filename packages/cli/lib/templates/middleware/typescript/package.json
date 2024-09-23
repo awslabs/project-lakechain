@@ -25,14 +25,14 @@
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.158.0",
+    "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.7.0",
-    "@project-lakechain/sdk": "^0.7.0",
+    "@project-lakechain/core": "^0.10.0",
+    "@project-lakechain/sdk": "^0.10.0",
     "esbuild": "0.21.5",
-    "aws-cdk-lib": "2.158.0",
+    "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
   }

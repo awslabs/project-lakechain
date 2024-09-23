@@ -36,7 +36,7 @@
     "@types/node": "^22.2.0",
     "cdk-nag": "^2.27.229",
     "esbuild": "0.21.5",
-    "eslint": "^9.10.0",
+    "eslint": "^9.11.0",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5"
   },
@@ -45,7 +45,7 @@
     "@opensearch-project/opensearch": "^2.11.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.158.0",
+    "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

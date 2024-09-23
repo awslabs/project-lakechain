@@ -53,7 +53,7 @@
     "tar-stream": "^3.1.7"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.158.0",
+    "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0"
   },
   "lint-staged": {

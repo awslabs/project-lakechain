@@ -26,7 +26,7 @@
     "@aws-sdk/client-s3": "^3.654.0",
     "@aws-sdk/client-sns": "^3.654.0",
     "@aws-sdk/client-sqs": "^3.654.0",
-    "@project-lakechain/sdk": "^0.5.0",
+    "@project-lakechain/sdk": "^0.10.0",
     "aws-xray-sdk": "^3.5.4",
     "fluent-ffmpeg": "^2.1.3"
   },
