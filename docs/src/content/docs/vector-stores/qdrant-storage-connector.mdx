@@ -96,10 +96,6 @@ const connector = new QdrantStorageConnector.Builder()
 
 ---
 
-<br />
-
----
-
 #### Configure Named vector
 
 Since Qdrant supports [multiple vectors](https://qdrant.tech/documentation/concepts/vectors/#named-vectors) per entry, you can use the `withVectorName` option to specify one.
@@ -119,6 +115,8 @@ const connector = new QdrantStorageConnector.Builder()
       .withUrl('https://xyz-example.eu-central.aws.cloud.qdrant.io:6333')
       .build();
 ```
+
+<br />
 
 ---
 
