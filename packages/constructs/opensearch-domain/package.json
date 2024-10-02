@@ -32,10 +32,10 @@
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
     "@types/jest": "^29.5.7",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.7.4",
     "cdk-nag": "^2.27.229",
     "esbuild": "0.21.5",
-    "eslint": "^9.11.0",
+    "eslint": "^9.11.1",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5"
   },

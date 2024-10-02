@@ -27,10 +27,10 @@
     "typescript": "~5.3.3"
   },
   "dependencies": {
-    "@project-lakechain/core": "^0.7.0",
-    "@project-lakechain/s3-event-trigger": "^0.7.0",
-    "@project-lakechain/pdf-text-converter": "^0.7.0",
-    "@project-lakechain/s3-storage-connector": "^0.7.0",
+    "@project-lakechain/core": "^0.10.0",
+    "@project-lakechain/s3-event-trigger": "^0.10.0",
+    "@project-lakechain/pdf-text-converter": "^0.10.0",
+    "@project-lakechain/s3-storage-connector": "^0.10.0",
     "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"

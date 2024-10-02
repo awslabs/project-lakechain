@@ -16,16 +16,16 @@
     "deploy": "npx cdk deploy"
   },
   "devDependencies": {
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.7.4",
     "esbuild": "0.21.5",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@project-lakechain/s3-event-trigger": "^0.7.0",
+    "@project-lakechain/s3-event-trigger": "^0.10.0",
     "simple-text-processor": "file:../",
-    "@project-lakechain/s3-storage-connector": "^0.7.0",
+    "@project-lakechain/s3-storage-connector": "^0.10.0",
     "aws-cdk-lib": "2.159.1",
     "constructs": "^10.3.0",
     "source-map-support": "^0.5.21"
