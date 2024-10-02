@@ -1,0 +1,59 @@
+{
+  "name": "@project-lakechain/qdrant-storage-connector",
+  "description": "A data store connector for Qdrant.",
+  "version": "0.10.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "npx rimraf dist/ node_modules/",
+    "lint": "npx eslint .",
+    "prettier:check": "npx prettier --check ."
+  },
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/awslabs/project-lakechain"
+  },
+  "bugs": {
+    "url": "https://github.com/awslabs/project-lakechain/issues"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://awslabs.github.io/project-lakechain/",
+  "devDependencies": {
+    "@aws-sdk/client-s3": "^3.654.0",
+    "@aws-sdk/client-secrets-manager": "^3.654.0",
+    "@types/aws-lambda": "^8.10.145",
+    "@types/jest": "^29.5.7",
+    "@types/node": "^22.5.4",
+    "esbuild": "0.21.5",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/batch": "^2.7.0",
+    "@aws-lambda-powertools/logger": "^2.7.0",
+    "@aws-lambda-powertools/metrics": "^2.7.0",
+    "@aws-lambda-powertools/parameters": "^2.7.0",
+    "@aws-lambda-powertools/tracer": "^2.7.0",
+    "@project-lakechain/core": "^0.10.0",
+    "@project-lakechain/sdk": "^0.10.0",
+    "@qdrant/js-client-rest": "^1.11.0"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "2.159.1",
+    "constructs": "^10.3.0"
+  },
+  "lint-staged": {
+    "*.{ts, json}": "npx eslint",
+    "*.{js,json,md}": "npx prettier --check"
+  }
+}
