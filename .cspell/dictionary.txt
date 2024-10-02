@@ -218,3 +218,6 @@ sobel
 elevenlabs
 exavit
 ulaw
+qdrant
+qdrantdata
+uuidv
