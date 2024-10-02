@@ -64,8 +64,8 @@ This file contains a list of third-party libraries used in this project, and the
 | [tar-stream](https://github.com/mafintosh/tar-stream)                                    | MIT                                                |
 | [gunzip-maybe](https://github.com/mafintosh/gunzip-maybe)                                | MIT                                                |
 | [file-type](https://github.com/sindresorhus/file-type)                                   | MIT                                                |
-| [python-ftfy](https://github.com/rspeer/python-ftfy)                                     | Apache License 2.0               |
-| [regex](https://github.com/mrabarnett/mrab-regex)                                        | Apache License 2.0               |
+| [python-ftfy](https://github.com/rspeer/python-ftfy)                                     | Apache License 2.0                                 |
+| [regex](https://github.com/mrabarnett/mrab-regex)                                        | Apache License 2.0                                 |
 | [torchvision](https://github.com/pytorch/vision)                                         | BSD 3-Clause                                       |
 | [torchaudio](https://github.com/pytorch/audio)                                           | BSD 2-Clause                                       |
 | [transformers](https://github.com/huggingface/transformers)                              | Apache License 2.0                                 |
@@ -84,9 +84,9 @@ This file contains a list of third-party libraries used in this project, and the
 | [pymediainfo](https://github.com/sbraz/pymediainfo)                                      | MIT                                                |
 | [unzipper](https://github.com/ZJONSSON/node-unzipper)                                    | MIT                                                |
 | [tqdm](https://github.com/tqdm/tqdm)                                                     | MPL2 + MIT                                         |
-| [pypandoc](https://pypi.org/project/pypandoc/)                                           | MIT                                 |
+| [pypandoc](https://pypi.org/project/pypandoc/)                                           | MIT                                                |
 | [Pillow](https://pypi.org/project/pillow/)                                               | Historical Permission Notice and Disclaimer (HPND) |
-| [pandoc](https://github.com/jgm/pandoc)                                                  | GPLv2*                                              |
+| [pandoc](https://github.com/jgm/pandoc)                                                  | GPLv2\*                                            |
 | [funcy](https://github.com/Suor/funcy)                                                   | BSD 3-Clause                                       |
 | [encodec](https://github.com/facebookresearch/encodec)                                   | MIT                                                |
 | [pydub](https://github.com/jiaaro/pydub/)                                                | MIT                                                |
@@ -102,7 +102,8 @@ This file contains a list of third-party libraries used in this project, and the
 | [mailparser](https://github.com/nodemailer/mailparser)                                   | MIT                                                |
 | [feedparser](https://github.com/kurtmckee/feedparser)                                    | BSD 2-Clause                                       |
 | [streamz](https://github.com/ZJONSSON/streamz)                                           | BSD 3-Clause                                       |
-| [wink-nlp](https://github.com/winkjs/wink-nlp)                                           | MIT |
+| [wink-nlp](https://github.com/winkjs/wink-nlp)                                           | MIT                                                |
+| [@qdrant/js-client-rest](https://github.com/qdrant/qdrant-js)                            | Apache License 2.0                                 |
 
 *\*Pandoc is made available by the official [`pandoc/latex`](https://hub.docker.com/r/pandoc/latex) Docker image. This project does not redistribute the Pandoc binaries or source code.*
 

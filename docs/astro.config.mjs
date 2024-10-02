@@ -177,6 +177,9 @@ export default defineConfig({
 				}, {
 					label: 'LanceDB',
 					link: '/vector-stores/lancedb-storage-connector'
+				}, {
+					label: 'Qdrant',
+					link: '/vector-stores/qdrant-storage-connector'
 				}]
 			}, {
 				label: 'Data Stores',
