@@ -151,15 +151,13 @@ class Lambda implements LambdaInterface {
     const event = CloudEvent.from(JSON.parse(record.body));
     const client = await createClient();
     await client.upsert(QDRANT_COLLECTION_NAME, {
-      points: [
-        {
-          id: uuidv4(),
-          vector: {
-            [QDRANT_VECTOR_NAME]: await this.getEmbeddings(event)
-          },
-          payload: await this.getPayload(event),
-        }
-      ],
+      points: [{
+        id: uuidv4(),
+        vector: {
+          [QDRANT_VECTOR_NAME]: await this.getEmbeddings(event)
+        },
+        payload: await this.getPayload(event),
+      }],
       wait: true
     });
   }

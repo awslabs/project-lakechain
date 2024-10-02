@@ -33,9 +33,9 @@ import { QdrantStorageConnector } from '@project-lakechain/qdrant-storage-connec
  * The pipeline looks as follows:
  *
  *
- * ┌──────┐   ┌───────────────┐   ┌────────────────────┐   ┌────────────┐
- * │  S3  ├──►│ Text Splitter ├──►│ Bedrock Embeddings │──►|  Qdrant    │
- * └──────┘   └───────────────┘   └────────────────────┘   └────────────┘
+ * ┌──────┐   ┌───────────────┐   ┌────────────────────┐   ┌──────────┐
+ * │  S3  ├──►│ Text Splitter ├──►│ Bedrock Embeddings │──►|  Qdrant  │
+ * └──────┘   └───────────────┘   └────────────────────┘   └──────────┘
  *
  * @note You will need to pass the AWS Secrets Manager name of your Qdrant
  * API key as an environment variable named `QDRANT_API_KEY_SECRET_NAME`.
@@ -125,7 +125,7 @@ export class BedrockQdrantPipeline extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(embeddingProcessor)
       .withCollectionName('aws')
-      .withUrl('https://3b5fa58e-2be0-4aaf-8b6b-757985d97402.us-east4-0.gcp.cloud.qdrant.io:6333')
+      .withUrl('https://<example>.cloud.qdrant.io:6333')
       .withApiKey(qdrantApiKey)
       .withStoreText(true)
       .build();

@@ -43,6 +43,5 @@ export const createClient = async (maxAge = 180) => {
     apiKey: apiKey
   });
 
-
-  return client;
+  return (client);
 };
