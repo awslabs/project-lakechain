@@ -35,7 +35,7 @@ By using the inpainting capabilities of the Titan Image Generator v2, you can us
       </td>
     </tr>
   </table>
-  <p align="center">Credits to <a href="https://unsplash.com/fr/@wrenmeinberg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Wren Meinberg</a> sur <a href="https://unsplash.com/fr/photos/chat-tigre-sur-le-rebord-AL2-t0GrSko?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  <p align="center">Credits to Wren Meinberg on <a href="https://unsplash.com/fr/photos/chat-tigre-sur-le-rebord-AL2-t0GrSko?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   </p>
 </p>
 <br />
