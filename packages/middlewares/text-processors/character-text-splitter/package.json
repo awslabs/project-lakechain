@@ -39,13 +39,13 @@
     "rimraf": "^6.0.1"
   },
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^2.7.0",
-    "@aws-lambda-powertools/logger": "^2.7.0",
-    "@aws-lambda-powertools/metrics": "^2.7.0",
-    "@aws-lambda-powertools/tracer": "^2.7.0",
+    "@aws-lambda-powertools/batch": "^2.11.0",
+    "@aws-lambda-powertools/logger": "^2.11.0",
+    "@aws-lambda-powertools/metrics": "^2.11.0",
+    "@aws-lambda-powertools/tracer": "^2.11.0",
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/sdk": "^0.10.0",
-    "langchain": "^0.3.2",
+    "langchain": "^0.3.6",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

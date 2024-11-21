@@ -31,16 +31,16 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-lambda-powertools/commons": "^2.7.0",
-    "@aws-lambda-powertools/logger": "^2.7.0",
-    "@aws-lambda-powertools/metrics": "^2.7.0",
-    "@aws-lambda-powertools/tracer": "^2.7.0",
+    "@aws-lambda-powertools/commons": "^2.11.0",
+    "@aws-lambda-powertools/logger": "^2.11.0",
+    "@aws-lambda-powertools/metrics": "^2.11.0",
+    "@aws-lambda-powertools/tracer": "^2.11.0",
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/sdk": "^0.10.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-ecs": "^3.662.0",
-    "@aws-sdk/client-sqs": "^3.662.0",
+    "@aws-sdk/client-ecs": "^3.696.0",
+    "@aws-sdk/client-sqs": "^3.696.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.4",

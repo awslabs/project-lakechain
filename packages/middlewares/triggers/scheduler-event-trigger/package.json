@@ -31,7 +31,7 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-sns": "^3.662.0",
+    "@aws-sdk/client-sns": "^3.696.0",
     "@types/is-html": "^2.0.2",
     "@types/jest": "^29.5.7",
     "@types/node": "^22.7.4",
@@ -43,10 +43,10 @@
   "dependencies": {
     "@aws-cdk/aws-scheduler-alpha": "^2.159.1-alpha.0",
     "@aws-cdk/aws-scheduler-targets-alpha": "^2.159.1-alpha.0",
-    "@aws-lambda-powertools/batch": "^2.7.0",
-    "@aws-lambda-powertools/logger": "^2.7.0",
-    "@aws-lambda-powertools/metrics": "^2.7.0",
-    "@aws-lambda-powertools/tracer": "^2.7.0",
+    "@aws-lambda-powertools/batch": "^2.11.0",
+    "@aws-lambda-powertools/logger": "^2.11.0",
+    "@aws-lambda-powertools/metrics": "^2.11.0",
+    "@aws-lambda-powertools/tracer": "^2.11.0",
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/sdk": "^0.10.0",
     "file-type": "19.5.0"
