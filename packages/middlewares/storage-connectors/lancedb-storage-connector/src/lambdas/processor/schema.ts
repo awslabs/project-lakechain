@@ -17,7 +17,7 @@ import {
  * @param event the event to normalize.
  * @returns the normalized event.
  */
-export const normalizeEvent = (event: CloudEvent) => {
+export const normalizeEvent = (event: CloudEvent): any => {
   const data = event.data();
 
   // Ensure metadata are present.
@@ -50,7 +50,10 @@ export const normalizeEvent = (event: CloudEvent) => {
 export const makeSchema = (vectorSize: number) => {
   return (new Schema([
     // The vector embeddings.
-    new Field('vector', new FixedSizeList(vectorSize, new Field('item', new Float32())), false),
+    new Field('vector', new FixedSizeList(
+      vectorSize,
+      new Field('item', new Float32())
+    ), false),
     
     // A unique identifier for the document.
     new Field('id', new Utf8()),

@@ -24,9 +24,9 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^22.7.4",
-    "esbuild": "0.21.5",
-    "ts-jest": "^29.0.0",
+    "@types/node": "^22.13.4",
+    "esbuild": "0.25.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
