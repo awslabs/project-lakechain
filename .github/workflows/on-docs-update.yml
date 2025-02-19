@@ -27,7 +27,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: Install, build, and upload documentation
-        uses: withastro/action@9a7959a16949e620a22e74f81c10cb7ce3b76924
+        uses: withastro/action@56781b97402ce0487b7e61ce2cb960c0e2cc5289
         with:
           path: ./docs
       - name: Upload artifact

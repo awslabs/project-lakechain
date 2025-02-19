@@ -16,11 +16,11 @@ jobs:
     steps:
       # Checkout and setup.
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
 
       # Set node version.
       - name: Set node version
-        uses: actions/setup-node@26961cf329f22f6837d5f54c3efd76b480300ace
+        uses: actions/setup-node@802632921f8532d2409ae6eac3313b6f81f11122
         with:
           node-version: ${{ matrix.version }}
 
