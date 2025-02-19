@@ -120,7 +120,7 @@ NagSuppressions.addStackSuppressions(
 
 NagSuppressions.addResourceSuppressionsByPath(
     mockStack,
-    '/NagStack/SchedulerRoleForTarget-1441a7/DefaultPolicy/Resource',
+    '/NagStack/SchedulerRoleForTarget-e77123/DefaultPolicy/Resource',
     [
       { id: 'AwsSolutions-IAM5', reason: '* is used for the Lambda versions/aliases' },
     ],

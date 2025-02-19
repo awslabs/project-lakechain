@@ -36,7 +36,7 @@
     "@project-lakechain/zip-processor": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.159.1",
+    "aws-cdk-lib": "2.179.0",
     "constructs": "^10.0.0"
   }
 }
