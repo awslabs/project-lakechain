@@ -1,6 +1,6 @@
-boto3==1.34.22
+boto3==1.36.23
 ftfy==6.1.3
 regex==2023.12.25
 tqdm==4.66.4
-torchvision==0.16.2
+torchvision==0.21.0
 git+https://github.com/openai/CLIP.git

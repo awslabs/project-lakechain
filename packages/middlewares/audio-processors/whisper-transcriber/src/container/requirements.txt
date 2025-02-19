@@ -1,4 +1,4 @@
-boto3==1.34.29
+boto3==1.36.23
 pydantic==2.5.3
 ctranslate2==3.24.0
 faster-whisper==0.10.0
