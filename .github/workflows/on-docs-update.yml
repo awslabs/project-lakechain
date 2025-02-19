@@ -25,13 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: Install, build, and upload documentation
         uses: withastro/action@9a7959a16949e620a22e74f81c10cb7ce3b76924
         with:
           path: ./docs
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@027b0ddc3de8dbe7e5a699814c4508ca8ecefc5f
+        uses: actions/upload-pages-artifact@2d163be3ddce01512f3eea7ac5b7023b5d643ce1
         with:
           path: ./docs/dist
 
@@ -45,4 +45,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@7a9bd943aa5e5175aeb8502edcc6c1c02d398e10
+        uses: actions/deploy-pages@854d7aa1b99e4509c4d1b53d69b7ba4eaf39215a
