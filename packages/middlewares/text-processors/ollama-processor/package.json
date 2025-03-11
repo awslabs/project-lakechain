@@ -28,8 +28,8 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.7",
-    "@types/node": "^22.7.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.10",
     "esbuild": "0.25.1",
     "rimraf": "^6.0.1",
     "shx": "^0.3.4"

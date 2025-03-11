@@ -41,7 +41,7 @@
     "ts-jest": "^29.2.6"
   },
   "dependencies": {
-    "@aws-sdk/client-iam": "^3.750.0"
+    "@aws-sdk/client-iam": "^3.758.0"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.179.0",

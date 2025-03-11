@@ -1,5 +1,5 @@
-boto3==1.34.145
+boto3==1.37.11
 aws_lambda_powertools==2.41.0
 aws-xray-sdk==2.14.0
-ollama===0.3.0
-filelock===3.15.4
+ollama===0.4.7
+filelock===3.17.0

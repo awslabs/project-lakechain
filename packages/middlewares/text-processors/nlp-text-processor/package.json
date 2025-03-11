@@ -30,9 +30,9 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@aws-sdk/client-comprehend": "^3.750.0",
-    "@aws-sdk/client-s3": "^3.750.0",
-    "@aws-sdk/client-sns": "^3.750.0",
+    "@aws-sdk/client-comprehend": "^3.758.0",
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@aws-sdk/client-sns": "^3.758.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/jest": "^29.0.0",
     "@types/lodash": "^4.17.9",
@@ -50,8 +50,8 @@
     "@project-lakechain/sdk": "^0.10.0",
     "lodash": "^4.17.21",
     "truncate-utf8-bytes": "^1.0.2",
-    "wink-eng-lite-web-model": "1.8.0",
-    "wink-nlp": "2.3.0"
+    "wink-eng-lite-web-model": "1.8.1",
+    "wink-nlp": "2.3.2"
   },
   "peerDependencies": {
     "aws-cdk-lib": "2.179.0",
