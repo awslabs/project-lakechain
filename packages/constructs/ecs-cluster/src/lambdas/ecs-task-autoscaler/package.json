@@ -30,7 +30,7 @@
     "@aws-sdk/client-sqs": "^3.750.0",
     "@types/aws-lambda": "^8.10.119",
     "aws-sdk-client-mock": "^4.1.0",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.1",
     "eslint": "^9.11.1",
     "tsx": "^4.19.2"
   }

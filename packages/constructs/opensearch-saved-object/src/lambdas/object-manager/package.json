@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.1",
     "eslint": "^9.11.1"
   }
 }

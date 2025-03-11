@@ -31,7 +31,7 @@
     "@aws-sdk/client-sns": "^3.750.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/lodash": "^4.17.9",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.1",
     "eslint": "^9.11.1"
   }
 }

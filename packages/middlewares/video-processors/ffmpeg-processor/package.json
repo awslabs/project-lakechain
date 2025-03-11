@@ -34,7 +34,7 @@
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/ecs-cluster": "^0.10.0",
     "@project-lakechain/sdk": "^0.10.0",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.1",
     "fluent-ffmpeg": "^2.1.3",
     "serialize-javascript": "^6.0.2"
   },

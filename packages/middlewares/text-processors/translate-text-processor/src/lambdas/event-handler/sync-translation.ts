@@ -76,7 +76,7 @@ export const processSync = async (event: CloudEvent) => {
     event.data().props.document = await Document.create({
       url: toUri(TARGET_BUCKET, outputKey),
       type: document.mimeType(),
-      data: Buffer.from(res.TranslatedDocument?.Content ?? '')
+      data: Buffer.from(res.TranslatedDocument?.Content! ?? '')
     });
 
     // Update the metadata.

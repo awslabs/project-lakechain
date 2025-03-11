@@ -29,7 +29,7 @@
     "figlet": "^1.7.0",
     "ora": "^8.1.1",
     "prompts": "^2.4.2",
-    "zod": "^3.23.8",
+    "zod": "^3.24.2",
     "zod-error": "^1.5.0"
   },
   "devDependencies": {

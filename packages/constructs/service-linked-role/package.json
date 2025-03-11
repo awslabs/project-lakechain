@@ -35,10 +35,10 @@
     "@types/jest": "^29.5.7",
     "@types/node": "^22.7.4",
     "cdk-nag": "^2.27.229",
-    "esbuild": "0.25.0",
+    "esbuild": "0.25.1",
     "eslint": "^9.11.1",
     "rimraf": "^6.0.1",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.6"
   },
   "dependencies": {
     "@aws-sdk/client-iam": "^3.750.0"
