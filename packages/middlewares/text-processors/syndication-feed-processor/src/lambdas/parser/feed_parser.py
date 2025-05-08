@@ -74,7 +74,7 @@ def get_description(
   return description
 
 
-def get_feed_item_hash(item: feedparser.util.FeedParserDict) -> str or None:
+def get_feed_item_hash(item: feedparser.util.FeedParserDict) -> str | None:
   """
   A helper function returning the hash associated with a feed item.
 
