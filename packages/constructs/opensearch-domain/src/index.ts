@@ -153,9 +153,9 @@ export class OpenSearchDomain extends Construct {
         userPoolId: this.userPool.userPoolId,
         role: new iam.Role(this, 'CognitoAccessForAmazonOpenSearch', {
           assumedBy: new iam.ServicePrincipal('opensearchservice.amazonaws.com'),
-          managedPolicies: [{
-            managedPolicyArn: 'arn:aws:iam::aws:policy/AmazonOpenSearchServiceCognitoAccess'
-          }]
+          managedPolicies: [
+            iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonOpenSearchServiceCognitoAccess')
+          ]
         })
       },
       ...props.opts

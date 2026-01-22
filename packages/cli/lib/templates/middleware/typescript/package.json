@@ -15,24 +15,24 @@
     "prettier:check": "npx prettier --check ."
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.758.0",
-    "@aws-sdk/client-sns": "^3.758.0",
-    "@types/aws-lambda": "^8.10.145",
-    "@types/lodash": "^4.17.9",
-    "@types/node": "^22.7.4",
-    "esbuild": "0.25.1",
-    "rimraf": "^6.0.1",
+    "@aws-sdk/client-s3": "^3.974.0",
+    "@aws-sdk/client-sns": "^3.974.0",
+    "@types/aws-lambda": "^8.10.160",
+    "@types/lodash": "^4.17.23",
+    "@types/node": "^25.0.10",
+    "esbuild": "0.27.2",
+    "rimraf": "^6.1.2",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.179.0",
+    "aws-cdk-lib": "2.235.1",
     "constructs": "^10.4.2"
   },
   "dependencies": {
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/sdk": "^0.10.0",
-    "esbuild": "0.25.1",
-    "aws-cdk-lib": "2.179.0",
+    "esbuild": "0.27.2",
+    "aws-cdk-lib": "2.235.1",
     "constructs": "^10.4.2",
     "source-map-support": "^0.5.21"
   }

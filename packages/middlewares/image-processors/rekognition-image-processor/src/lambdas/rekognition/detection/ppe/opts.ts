@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ProtectiveEquipmentType } from '@aws-sdk/client-rekognition/dist-types/models';
+import { ProtectiveEquipmentType } from '@aws-sdk/client-rekognition';
 
 export interface DetectPpeOpts {
   minConfidence: number;

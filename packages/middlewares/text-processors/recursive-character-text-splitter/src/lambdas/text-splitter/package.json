@@ -19,19 +19,19 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^2.14.0",
-    "@aws-lambda-powertools/logger": "^2.14.0",
-    "@aws-lambda-powertools/metrics": "^2.14.0",
-    "@aws-lambda-powertools/tracer": "^2.14.0",
-    "langchain": "^0.3.18",
-    "lodash": "^4.17.21"
+    "@aws-lambda-powertools/batch": "^2.30.2",
+    "@aws-lambda-powertools/logger": "^2.30.2",
+    "@aws-lambda-powertools/metrics": "^2.30.2",
+    "@aws-lambda-powertools/tracer": "^2.30.2",
+    "langchain": "0.3.37",
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.758.0",
-    "@aws-sdk/client-sns": "^3.758.0",
-    "@types/aws-lambda": "^8.10.145",
-    "@types/lodash": "^4.17.9",
-    "esbuild": "0.25.1",
+    "@aws-sdk/client-s3": "^3.974.0",
+    "@aws-sdk/client-sns": "^3.974.0",
+    "@types/aws-lambda": "^8.10.160",
+    "@types/lodash": "^4.17.23",
+    "esbuild": "0.27.2",
     "eslint": "^9.11.1"
   }
 }

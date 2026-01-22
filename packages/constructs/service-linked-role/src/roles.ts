@@ -799,8 +799,7 @@ export const ROLE_MAP: Record<Service, ServiceLinkedRoleProps> = {
       datasync.CfnLocationObjectStorage,
       datasync.CfnLocationFSxONTAP,
       datasync.CfnLocationFSxLustre,
-      datasync.CfnLocationFSxOpenZFS,
-      datasync.CfnStorageSystem
+      datasync.CfnLocationFSxOpenZFS
     ]
   },
   'dms-fleet-advisor': {
