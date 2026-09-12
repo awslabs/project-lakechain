@@ -8,5 +8,4 @@ Below is a list of the different examples available in this directory.
 
 Pipeline | Description
 --- | ---
-[Bark Synthesizer](bark-synthesizer) | A pipeline for synthesizing text to speech using the Bark model.
 [Polly Synthesizer](polly-synthesizer) | A pipeline for synthesizing text to speech using Amazon Polly.

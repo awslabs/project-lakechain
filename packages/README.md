@@ -89,14 +89,6 @@ To synthesize all CDK example stacks, run:
 npm run synth
 ```
 
-## Lint
-
-To lint all packages, run:
-
-```bash
-npm run lint
-```
-
 ## Scopes and Versioning
 
 Every package in this repository is a publishable NPM package, scoped under `@project-lakechain/`. Every package follows [Semantic Versioning](https://semver.org/), and a fixed versioning strategy.
