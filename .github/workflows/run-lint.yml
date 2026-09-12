@@ -14,7 +14,7 @@ jobs:
 
       # Checkout and setup.
       - name: Checkout repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       # Set node version.
       - name: Set node version

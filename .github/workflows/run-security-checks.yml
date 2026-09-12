@@ -13,7 +13,9 @@ jobs:
     steps:
       # Checkout and setup.
       - name: Checkout repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
 
       # Set node version.
       - name: Set node version
@@ -31,7 +33,7 @@ jobs:
 
       # GitLeaks.
       - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@4df650038e2eb9f7329218df929c2780866e61a3
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
@@ -58,7 +60,7 @@ jobs:
         working-directory: docs
     steps:
       - name: Checkout repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Set Node version
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
