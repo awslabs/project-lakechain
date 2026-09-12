@@ -23,7 +23,7 @@ import { Construct } from 'constructs';
 /**
  * The version of the MediaInfo library to use.
  */
-const DEFAULT_MEDIA_INFO_VERSION = '23.10';
+const DEFAULT_MEDIA_INFO_VERSION = '26.05';
 
 /**
  * Provides a lambda layer for the MediaInfo library.
@@ -47,7 +47,7 @@ export class MediaInfoLayer {
 
     // The Docker image to use to build the layer.
     const image = cdk.DockerImage.fromRegistry(
-      `public.ecr.aws/sam/build-python3.11:1.124.0-${architecture.name}`
+      `public.ecr.aws/sam/build-python3.14:1.166.2-${architecture.name}`
     );
 
     // Build the layer.
@@ -60,11 +60,11 @@ export class MediaInfoLayer {
         command: [
           '/bin/bash',
           '-c', [
-            'yum install -y wget unzip',
-            `wget https://mediaarea.net/download/binary/libmediainfo0/${version}/MediaInfo_DLL_${version}_Lambda_${archName}.zip`,
-            `unzip -o MediaInfo_DLL_${version}_Lambda_${archName}.zip`,
+            'workspace=$(mktemp -d)',
+            `curl --fail --location --silent --show-error --output "$workspace/mediainfo.zip" https://mediaarea.net/download/binary/libmediainfo0/${version}/MediaInfo_DLL_${version}_Lambda_${archName}.zip`,
+            'unzip -q "$workspace/mediainfo.zip" -d "$workspace"',
             'mkdir -p /asset-output/python',
-            'cp -L lib/* /asset-output/python'
+            'cp -L "$workspace"/lib/* /asset-output/python'
           ].join(' && ')
         ],
         outputType: cdk.BundlingOutput.AUTO_DISCOVER,
@@ -81,10 +81,11 @@ export class MediaInfoLayer {
         layerAsset.s3ObjectKey
       ),
       compatibleRuntimes: [
+        lambda.Runtime.PYTHON_3_14,
+        lambda.Runtime.PYTHON_3_13,
+        lambda.Runtime.PYTHON_3_12,
         lambda.Runtime.PYTHON_3_11,
-        lambda.Runtime.PYTHON_3_10,
-        lambda.Runtime.PYTHON_3_9,
-        lambda.Runtime.PYTHON_3_8
+        lambda.Runtime.PYTHON_3_10
       ],
       compatibleArchitectures: [architecture]
     }));
