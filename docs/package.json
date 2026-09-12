@@ -4,14 +4,17 @@
   "type": "module",
   "version": "0.8.0",
   "private": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
-    "dev": "npx astro dev",
-    "start": "npx astro dev",
-    "build": "npx astro build",
-    "preview": "npx astro preview",
-    "astro": "npx astro",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
     "audit": "npm audit",
-    "clean": "npx rimraf .astro/ node_modules/ dist/"
+    "clean": "rimraf .astro/ node_modules/ dist/"
   },
   "author": {
     "name": "Amazon Web Services",
@@ -23,11 +26,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@astrojs/starlight": "^0.31.1",
-    "astro": "^5.16.14",
-    "sharp": "^0.34.5"
+    "@astrojs/starlight": "0.42.0",
+    "astro": "7.3.2",
+    "sharp": "0.35.4"
   },
   "devDependencies": {
-    "rimraf": "^6.1.2"
+    "rimraf": "6.1.3"
   }
 }

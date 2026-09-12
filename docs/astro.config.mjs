@@ -5,15 +5,12 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	site: process.env.ASTRO_SITE,
 	base: '/project-lakechain',
-	markdown: {
-		gfm: true
-  },
 	integrations: [
 		starlight({
 			title: 'Project Lakechain',
 			description: 'Build scalable document processing pipelines on AWS.',
 			defaultLocale: 'en',
-			favicon: '/src/assets/favicon.ico',
+			favicon: '/favicon.svg',
 			logo: {
 				light: '/src/assets/icon.png',
 				dark: '/src/assets/icon.png',
@@ -25,9 +22,11 @@ export default defineConfig({
 				'./src/styles/custom.css',
 				'./src/styles/terminal.css'
 			],
-			social: {
-				github: 'https://github.com/awslabs/project-lakechain'
-			},
+			social: [{
+				icon: 'github',
+				label: 'GitHub',
+				href: 'https://github.com/awslabs/project-lakechain'
+			}],
 			sidebar: [{
 				label: 'General',
 				items: [{
@@ -258,9 +257,6 @@ export default defineConfig({
 				}, {
 					label: 'Metadata',
 					link: '/audio-processing/audio-metadata-extractor'
-				}, {
-					label: 'Bark',
-					link: '/audio-processing/bark-synthesizer'
 				}]
 			}, {
 				label: 'Text Splitters',

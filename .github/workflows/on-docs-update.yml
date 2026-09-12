@@ -6,12 +6,13 @@ on:
       - main
     paths:
       - 'docs/**'
+  pull_request:
+    paths:
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   # Lint the code and check for spelling errors.
@@ -27,18 +28,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
       - name: Install, build, and upload documentation
-        uses: withastro/action@56781b97402ce0487b7e61ce2cb960c0e2cc5289
+        uses: withastro/action@44706356b4eb735f8b9035699eb4796241a040c4
         with:
           path: ./docs
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@2d163be3ddce01512f3eea7ac5b7023b5d643ce1
-        with:
-          path: ./docs/dist
+          node-version: 24
+          package-manager: npm@11.12.0
 
   # Deploy the documentation to GitHub Pages.
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
