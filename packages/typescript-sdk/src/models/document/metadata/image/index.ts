@@ -80,7 +80,7 @@ export const ImageMetadataSchema = z.object({
    * any EXIF metadata.
    */
   exif: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('The EXIF metadata associated with the image.')
     .optional(),
 
@@ -188,7 +188,7 @@ export const ImageMetadataSchema = z.object({
    * User defined metadata of the image.
    */
   custom: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('User defined metadata of the image.')
     .optional()
 });

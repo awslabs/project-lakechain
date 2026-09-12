@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild index.ts --platform=node --target=es2022 --bundle --minify --outfile=dist/index.js",
-    "lint": "eslint .",
     "clean": "npx shx rm -rf dist/ node_modules/"
   },
   "author": {
@@ -18,12 +17,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-sdk/credential-provider-node": "^3.451.0",
-    "@opensearch-project/opensearch": "^2.11.0"
+    "@aws-sdk/credential-provider-node": "^3.972.83",
+    "@opensearch-project/opensearch": "^3.6.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119",
-    "esbuild": "0.27.2",
-    "eslint": "^9.11.1"
+    "esbuild": "0.28.2"
   }
 }

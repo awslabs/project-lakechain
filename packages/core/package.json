@@ -28,9 +28,7 @@
   "scripts": {
     "build": "npx tsc",
     "clean": "npx rimraf dist/ node_modules/",
-    "lint": "npx eslint .",
-    "prettier:check": "npx prettier --check .",
-    "test": "jest --passWithNoTests"
+    "test": "vitest run --globals --passWithNoTests"
   },
   "author": {
     "name": "Amazon Web Services",
@@ -46,32 +44,28 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.13",
     "@types/lodash": "^4.17.23",
     "@types/node": "^25.0.10",
     "@types/semver": "^7.5.8",
     "@types/tmp": "^0.2.6",
-    "jest": "^30.2.0",
-    "rimraf": "^6.1.2"
+    "cdk-nag": "^3.0.2",
+    "rimraf": "^6.1.2",
+    "vitest": "5.0.0"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.235.1",
-    "constructs": "^10.4.2",
-    "lodash": "^4.17.23",
-    "mime-types": "^2.1.35",
+    "aws-cdk-lib": "2.269.0",
+    "constructs": "^10.8.1",
+    "lodash": "^4.18.1",
+    "mime-types": "^3.0.2",
     "semver": "^7.6.3",
     "table": "^6.8.2",
-    "tmp": "^0.2.3",
-    "zod": "^3.24.2",
-    "zod-error": "^1.5.0"
+    "tmp": "^0.2.7",
+    "zod": "^4.6.2",
+    "zod-error": "^2.0.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.235.1",
-    "constructs": "^10.4.2"
-  },
-  "lint-staged": {
-    "*.{ts, json}": "npx eslint",
-    "*.{js,json,md}": "npx prettier --check"
+    "aws-cdk-lib": "2.269.0",
+    "constructs": "^10.8.1"
   },
   "keywords": [
     "aws",

@@ -63,7 +63,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.seconds(30);
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -80,18 +80,21 @@ class OpenSearchVectorStorageConnectorBuilder extends MiddlewareBuilder {
    * Specifies the OpenSearch endpoint to use.
    */
   public withEndpoint(endpoint: opensearch.IDomain | oss.ICollection | opensearchserverless.CfnCollection) {
-    const e = endpoint as any;
+    if (endpoint instanceof opensearchserverless.CfnCollection) {
+      if (!endpoint.name) {
+        throw new Error('An OpenSearch Serverless CfnCollection endpoint must have a name.');
+      }
 
-    if (e.collectionName && e.collectionArn && e.collectionId && e.collectionEndpoint) {
-      endpoint = oss.Collection.fromCollectionAttributes(this.scope, 'Collection', {
-        collectionName: e.name,
-        collectionArn: e.attrArn,
-        collectionId: e.attrId,
-        collectionEndpoint: e.attrCollectionEndpoint,
-        dashboardEndpoint: e.attrDashboardEndpoint
+      endpoint = oss.Collection.fromCollectionAttributes(this.scope, `${this.identifier}Collection`, {
+        collectionName: endpoint.name,
+        collectionArn: endpoint.attrArn,
+        collectionId: endpoint.attrId,
+        collectionEndpoint: endpoint.attrCollectionEndpoint,
+        dashboardEndpoint: endpoint.attrDashboardEndpoint
       });
     }
-    this.providerProps.endpoint = e;
+
+    this.providerProps.endpoint = endpoint;
     return (this);
   }
 

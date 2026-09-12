@@ -20,7 +20,7 @@ import { Pointer } from '../../src/pointer';
 import { CacheStorage } from '../../src/index.js';
 import { mockClient } from 'aws-sdk-client-mock';
 import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
-import { sdkStreamMixin } from '@aws-sdk/util-stream-node';
+import { sdkStreamMixin } from '@smithy/core/serde';
 import { Readable } from 'node:stream';
 
 describe('Cache Storage', () => {

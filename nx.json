@@ -1,18 +1,7 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "build-pkg",
-          "lint"
-        ]
-      }
-    }
-  },
   "targetDefaults": {
     "build": {
+      "cache": true,
       "dependsOn": [
         "^build"
       ],
@@ -21,6 +10,7 @@
       ]
     },
     "build-pkg": {
+      "cache": true,
       "dependsOn": [
         "^build-pkg"
       ],
@@ -39,6 +29,7 @@
       ]
     },
     "lint": {
+      "cache": true,
       "dependsOn": [
         "^lint"
       ]
@@ -54,11 +45,6 @@
         "build"
       ]
     },
-    "prettier:check": {
-      "dependsOn": [
-        "^prettier:check"
-      ]
-    },
     "test:coverage": {
       "dependsOn": [
         "^test:coverage"
@@ -69,5 +55,6 @@
         "^postbuild"
       ]
     }
-  }
+  },
+  "analytics": false
 }

@@ -19,6 +19,21 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
 /**
+ * The default Powertools Python layer version.
+ */
+const DEFAULT_PYTHON_LAYER_VERSION = 37;
+
+/**
+ * The default Python runtime.
+ */
+const DEFAULT_PYTHON_RUNTIME = lambda.Runtime.PYTHON_3_11;
+
+/**
+ * The default Powertools TypeScript layer version.
+ */
+const DEFAULT_TYPESCRIPT_LAYER_VERSION = 50;
+
+/**
  * Interface for the PowerTools Python layer.
  */
 class PowerToolsPythonLayer {
@@ -30,9 +45,16 @@ class PowerToolsPythonLayer {
    * @returns a lambda layer version for the AWS PowerTools Python library
    * compiled for x64.
    */
-  static x64(scope: Construct, id: string, version = 60): lambda.ILayerVersion {
+  static x64(
+    scope: Construct,
+    id: string,
+    version = DEFAULT_PYTHON_LAYER_VERSION,
+    runtime = DEFAULT_PYTHON_RUNTIME
+  ): lambda.ILayerVersion {
+    const runtimeName = runtime.name.replace('.', '');
+
     return (lambda.LayerVersion.fromLayerVersionArn(scope, id,
-      `arn:aws:lambda:${cdk.Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV2:${version}`
+      `arn:aws:lambda:${cdk.Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-${runtimeName}-x86_64:${version}`
     ));
   }
 
@@ -43,9 +65,16 @@ class PowerToolsPythonLayer {
    * @returns a lambda layer version for the AWS PowerTools Python library
    * compiled for ARM64.
    */
-  static arm64(scope: Construct, id: string, version = 60): lambda.ILayerVersion {
+  static arm64(
+    scope: Construct,
+    id: string,
+    version = DEFAULT_PYTHON_LAYER_VERSION,
+    runtime = DEFAULT_PYTHON_RUNTIME
+  ): lambda.ILayerVersion {
+    const runtimeName = runtime.name.replace('.', '');
+
     return (lambda.LayerVersion.fromLayerVersionArn(scope, id,
-      `arn:aws:lambda:${cdk.Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:${version}`
+      `arn:aws:lambda:${cdk.Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-${runtimeName}-arm64:${version}`
     ));
   }
 }
@@ -60,9 +89,13 @@ class PowerToolsTypescriptLayer {
    * @param id the construct identifier.
    * @returns a lambda layer version for the AWS PowerTools Typescript library.
    */
-  static layer(scope: Construct, id: string, version = 27): lambda.ILayerVersion {
+  static layer(
+    scope: Construct,
+    id: string,
+    version = DEFAULT_TYPESCRIPT_LAYER_VERSION
+  ): lambda.ILayerVersion {
     return (lambda.LayerVersion.fromLayerVersionArn(scope, id,
-      `arn:aws:lambda:${cdk.Aws.REGION}:094274105915:layer:AWSLambdaPowertoolsTypeScript:${version}`
+      `arn:aws:lambda:${cdk.Aws.REGION}:094274105915:layer:AWSLambdaPowertoolsTypeScriptV2:${version}`
     ));
   }
 }

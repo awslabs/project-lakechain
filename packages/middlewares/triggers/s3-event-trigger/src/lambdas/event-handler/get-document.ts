@@ -16,7 +16,7 @@
 
 import mimeTypes from './mime-types.json';
 
-import { Readable } from 'stream';
+import { Readable } from 'node:stream';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { S3Bucket, S3Object } from './definitions/s3';
 import { Document, DocumentMetadata, EventType } from '@project-lakechain/sdk/models';
@@ -99,7 +99,9 @@ export const mimeTypeFromBuffer = async (bucket: S3Bucket, obj: S3Object): Promi
     // If not, we try to read from the stream to determine
     // what the mime type is.
     if (res.Body) {
-      const type = await fileTypeFromStream(res.Body as Readable);
+      const type = await fileTypeFromStream(
+        Readable.toWeb(res.Body as Readable)
+      );
       return (type?.mime);
     }
     return (undefined);

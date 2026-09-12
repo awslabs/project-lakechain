@@ -16,6 +16,7 @@
 
 import mimeTypes from './mime-types.json';
 import { createHash } from 'crypto';
+import { Readable } from 'node:stream';
 import { Document, createDataSource } from '@project-lakechain/sdk/models';
 
 /**
@@ -56,7 +57,7 @@ export const mimeTypeFromBuffer = async (uri: string): Promise<string | undefine
     const fileTypeFromStream = (await import('file-type')).fileTypeFromStream;
     const dataSource = createDataSource(uri);
     const type = await fileTypeFromStream(
-      await dataSource.asReadStream()
+      Readable.toWeb(await dataSource.asReadStream())
     );
     return (type?.mime);
   } catch (err) {

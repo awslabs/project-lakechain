@@ -20,17 +20,21 @@
  * @group nag/middleware/transcribe-audio-processor
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack, RemovalPolicy } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { TranscribeAudioProcessor } from '../../src';
-import { CacheStorage } from '@project-lakechain/core';
+import { App, Stack, RemovalPolicy } from 'aws-cdk-lib';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+
+import { CacheStorage } from '@project-lakechain/core';
 import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
+import { TranscribeAudioProcessor } from '../../src';
 import { suppressNagS3EventTrigger } from './suppress';
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
@@ -74,18 +78,17 @@ new TranscribeAudioProcessor.Builder()
     .withSource(source)
     .build();
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
 suppressNagS3EventTrigger(mockStack, bucket);
 
-NagSuppressions.addStackSuppressions(
+acknowledge(
     mockStack,
     [
       {id: 'AwsSolutions-L1', reason: 'Using NodeJS 18 which was the latest until very recently'},
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/TranscribeAudioProcessor/Storage/Storage/Resource',
     [
@@ -93,7 +96,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/TranscribeAudioProcessor/TranscribeRole/DefaultPolicy/Resource',
     [
@@ -101,7 +104,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/TranscribeAudioProcessor/InputHandler/ServiceRole/DefaultPolicy/Resource',
     [
@@ -109,7 +112,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/TranscribeAudioProcessor/ResultHandler/ServiceRole/DefaultPolicy/Resource',
     [
@@ -117,7 +120,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -125,7 +128,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -133,7 +136,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/TranscribeAudioProcessor/Topic/Resource',
   [
@@ -141,7 +144,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/TranscribeAudioProcessor/Topic/Resource',
   [
@@ -152,13 +155,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations
-      .fromStack(mockStack)
-      .findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

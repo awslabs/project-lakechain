@@ -164,7 +164,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async handler(event: SQSEvent, _: Context) {
     return (await processPartialResponse(
       event, this.recordHandler.bind(this), processor

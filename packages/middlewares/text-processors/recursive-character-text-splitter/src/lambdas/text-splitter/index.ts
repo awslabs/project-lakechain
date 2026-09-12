@@ -22,7 +22,7 @@ import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { CloudEvent, Document, DocumentMetadata } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 
 import {
   SQSEvent,
@@ -152,7 +152,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context): Promise<SQSBatchResponse> {
     return (await processPartialResponse(
       event,

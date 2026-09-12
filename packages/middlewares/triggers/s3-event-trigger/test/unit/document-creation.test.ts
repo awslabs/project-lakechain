@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { Readable } from 'node:stream';
 import assert from 'node:assert';
 import mimeTypes from '../../src/lambdas/event-handler/mime-types.json';
 
 import { it, describe, beforeEach } from 'node:test';
-import { Readable } from 'stream';
 import { mockClient } from 'aws-sdk-client-mock';
-import { sdkStreamMixin } from '@aws-sdk/util-stream-node';
+import { sdkStreamMixin } from '@smithy/core/serde';
 import { S3Client, GetObjectCommand, NoSuchKey } from '@aws-sdk/client-s3';
 import { EventType } from '@project-lakechain/sdk/models';
 

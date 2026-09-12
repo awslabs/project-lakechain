@@ -162,10 +162,12 @@ export const DocumentMetadataSchema = z.object({
    * custom metadata.
    */
   custom: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('Custom metadata associated with the document.')
-    .default({})
-    .optional(),
+    .optional()
+    .meta({
+      default: {}
+    }),
 
   /**
    * Specialized properties for the document.

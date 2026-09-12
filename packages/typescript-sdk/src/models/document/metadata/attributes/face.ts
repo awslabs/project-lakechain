@@ -55,7 +55,7 @@ export type EyeDirection = z.infer<typeof EyeDirectionSchema>;
  */
 export const FaceSchema = z.object({
   boundingBox: BoundingBoxSchema,
-  attributes: z.record(FaceAttributeSchema).optional(),
+  attributes: z.record(z.string(), FaceAttributeSchema).optional(),
   landmarks: z.array(LandmarkSchema).optional(),
   pose: PoseSchema.optional(),
   eyeDirection: EyeDirectionSchema.optional(),

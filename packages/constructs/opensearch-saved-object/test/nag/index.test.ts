@@ -20,14 +20,18 @@
  * @group nag/opensearch-saved-object
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { OpenSearchSavedObject } from '../../src';
+import { App, Stack } from 'aws-cdk-lib';
 import { Domain, EngineVersion, TLSSecurityPolicy } from "aws-cdk-lib/aws-opensearchservice";
+
+import { OpenSearchSavedObject } from '../../src';
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack');
@@ -70,13 +74,12 @@ new OpenSearchSavedObject(mockStack, 'opensearch', {
   }
 });
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
-NagSuppressions.addStackSuppressions(mockStack, [
+acknowledge(mockStack, [
   { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies' }
 ]);
 
-NagSuppressions.addResourceSuppressions(domain, [
+acknowledge(domain, [
   { id: 'AwsSolutions-OS1', reason: 'Resource provided by the customer, not part of the construct' },
   { id: 'AwsSolutions-OS2', reason: 'Resource provided by the customer, not part of the construct' },
   { id: 'AwsSolutions-OS3', reason: 'Resource provided by the customer, not part of the construct' },
@@ -87,7 +90,7 @@ NagSuppressions.addResourceSuppressions(domain, [
   { id: 'AwsSolutions-OS9', reason: 'Resource provided by the customer, not part of the construct' }
 ]);
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Compute/Resource',
     [
@@ -95,7 +98,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Compute/ServiceRole/DefaultPolicy/Resource',
     [
@@ -103,7 +106,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Provider/framework-onEvent/ServiceRole/DefaultPolicy/Resource',
     [
@@ -111,7 +114,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Provider/framework-onEvent/Resource',
     [
@@ -122,11 +125,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations.fromStack(mockStack).findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

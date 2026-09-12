@@ -31,27 +31,24 @@
   },
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "dependencies": {
-    "@aws-sdk/client-sts": "3.758.0",
+    "@aws-sdk/client-sts": "3.1131.0",
     "boxen": "^8.0.1",
-    "chalk": "^5.4.1",
+    "chalk": "^6.0.0",
     "cli-table3": "^0.6.5",
     "command-exists": "^1.2.9",
-    "commander": "^12.0.0",
+    "commander": "^15.0.0",
     "diskusage": "^1.2.0",
     "fs-extra": "^11.3.0",
     "middleware-chain-js": "^2.0.2",
     "mkdirp": "^3.0.1",
-    "open": "^10.1.0",
-    "ora": "^8.2.0",
-    "pretty-bytes": "^6.1.1",
+    "open": "^11.0.3",
+    "ora": "^9.4.1",
+    "pretty-bytes": "^7.1.3",
     "prompts": "^2.4.2",
-    "stdin-discarder": "^0.2.2",
+    "stdin-discarder": "^0.3.2",
     "update-notifier": "^7.3.1",
-    "zod": "^3.24.2",
-    "zod-error": "^1.5.0"
+    "zod": "^4.6.2",
+    "zod-error": "^2.0.0"
   },
-  "devDependencies": {
-    "eslint": "^9.20.1",
-    "jest": "^30.2.0"
-  }
+  "devDependencies": {}
 }

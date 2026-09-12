@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import archiver from 'archiver';
-
-import { ArchiverOptions } from 'archiver';
+import { TarArchive } from 'archiver';
+import type { ArchiverOptions } from 'archiver';
 import { randomUUID } from 'crypto';
 import { S3Stream, S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
 import { SQSEvent, Context, SQSRecord, SQSBatchResponse } from 'aws-lambda';
@@ -146,7 +145,7 @@ class Lambda implements LambdaInterface {
     const outputKey = `${randomUUID()}/${this.getOutputName()}`;
 
     // Create a new archiver instance.
-    const archive = archiver('tar', this.getOpts());
+    const archive = new TarArchive(this.getOpts());
 
     // Create a write stream to the destination bucket.
     const { writeStream, promise } = s3Stream.createS3WriteStream({
@@ -197,7 +196,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context): Promise<SQSBatchResponse> {
     return (await processPartialResponse(
       event, this.recordHandler.bind(this), processor

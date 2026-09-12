@@ -170,7 +170,7 @@ export const TextMetadataSchema = z.object({
    * custom metadata.
    */
   custom: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('Custom metadata associated with the text document.')
     .optional()
 });

@@ -29,13 +29,14 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 
 import { z } from 'zod';
 import { EventEmitter } from 'events';
-import { generateErrorMessage, ErrorMessageOptions } from 'zod-error';
+import { generateErrorMessage } from 'zod-error';
 import { Construct } from 'constructs';
 import { Service, ServiceDescription } from './service';
 import { matchMimeTypes } from './utils/mime-types';
 import { ComputeType } from './compute-type';
 import { ConditionalStatement, when } from './dsl/vocabulary/conditions';
 import { CacheStorage } from './cache-storage';
+import type { ErrorMessageOptions } from 'zod-error';
 
 /**
  * The namespace to be used by middlewares to
@@ -92,8 +93,10 @@ export const MiddlewarePropsSchema = z.object({
    */
   computeType: z
     .nativeEnum(ComputeType)
-    .default(ComputeType.CPU)
-    .optional(),
+    .optional()
+    .meta({
+      default: ComputeType.CPU
+    }),
 
   /**
    * The maximum number of times to retry a failed
@@ -104,8 +107,10 @@ export const MiddlewarePropsSchema = z.object({
   maxRetry: z
     .number()
     .min(0)
-    .default(5)
-    .optional(),
+    .optional()
+    .meta({
+      default: 5
+    }),
 
   /**
    * The visibility timeout to apply to the
@@ -115,8 +120,10 @@ export const MiddlewarePropsSchema = z.object({
     .custom<cdk.Duration>(
       (data) => data instanceof cdk.Duration
     )
-    .default(cdk.Duration.seconds(180))
-    .optional(),
+    .optional()
+    .meta({
+      default: cdk.Duration.seconds(180)
+    }),
 
   /**
    * The maximum amount of time a middleware will

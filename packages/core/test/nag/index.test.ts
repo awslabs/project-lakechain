@@ -20,10 +20,13 @@
  * @group nag/cache-storage
  */
 
-import { App, Aspects, RemovalPolicy, Stack } from 'aws-cdk-lib';
+import { App, RemovalPolicy, Stack } from 'aws-cdk-lib';
+
 import { CacheStorage } from '../../src';
-import { AwsSolutionsChecks, NagSuppressions } from "cdk-nag";
-import { Annotations, Match } from "aws-cdk-lib/assertions";
+import {
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack');
@@ -32,7 +35,7 @@ new CacheStorage(mockStack, 'CacheStorage', {
   removalPolicy: RemovalPolicy.DESTROY
 });
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/CacheStorage/Storage/Resource',
     [
@@ -40,16 +43,11 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations.fromStack(mockStack).findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

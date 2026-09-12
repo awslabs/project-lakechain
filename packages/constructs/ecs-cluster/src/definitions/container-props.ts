@@ -45,8 +45,10 @@ export const ContainerPropsSchema = z.object({
    * @default 4096
    */
   cpuLimit: z.number()
-    .default(4096)
-    .optional(),
+    .optional()
+    .meta({
+      default: 4096
+    }),
 
   /**
    * The container memory limit.
@@ -63,7 +65,7 @@ export const ContainerPropsSchema = z.object({
   /**
    * Custom environment variables to pass to the container.
    */
-  environment: z.record(z.string()).optional()
+  environment: z.record(z.string(), z.string()).optional()
 });
 
 // Export the `ContainerProps` type.

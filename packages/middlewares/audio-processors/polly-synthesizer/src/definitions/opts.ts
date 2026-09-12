@@ -38,7 +38,7 @@ export const PollySynthesizerSchema = MiddlewarePropsSchema.extend({
    * @see https://docs.aws.amazon.com/polly/latest/dg/voicelist.html
    */
   voiceMapping: z
-    .record(z.custom<PollyLanguage>(), z.custom<VoiceDescriptor[]>())
+    .partialRecord(z.custom<PollyLanguage>(), z.custom<VoiceDescriptor[]>())
     .optional()
 });
 

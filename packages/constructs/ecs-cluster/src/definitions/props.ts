@@ -93,12 +93,14 @@ export const EcsClusterPropsSchema = z.object({
    * The file system properties.
    */
   fileSystem: FileSystemPropsSchema
-    .default({
-      throughputMode: efs.ThroughputMode.ELASTIC,
-      containerPath: '/cache',
-      readonly: false
-    })
-    .optional(),
+    .optional()
+    .meta({
+      default: {
+        throughputMode: efs.ThroughputMode.ELASTIC,
+        containerPath: '/cache',
+        readonly: false
+      }
+    }),
 
   /**
    * Whether to enable container insights.
@@ -114,8 +116,10 @@ export const EcsClusterPropsSchema = z.object({
    */
   xraySidecar: z
     .boolean()
-    .default(false)
     .optional()
+    .meta({
+      default: false
+    })
 });
 
 // Export the `EcsClusterProps` type.

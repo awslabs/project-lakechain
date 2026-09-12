@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import * as lancedb from 'vectordb';
-
-import { SQSEvent, Context } from 'aws-lambda';
+import * as lancedb from '@lancedb/lancedb';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
-import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent } from '@project-lakechain/sdk/models';
+
 import { makeSchema, normalizeEvent } from './schema';
+import type { SQSEvent, Context } from 'aws-lambda';
+import type { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 
 /**
  * Environment variables.
@@ -88,10 +88,10 @@ class Lambda implements LambdaInterface {
       table = await db.openTable(LANCEDB_TABLE_NAME);
     } catch (e) {
       // If the table does not exist, we create it.
-      table = await db.createTable({
-        name: LANCEDB_TABLE_NAME,
-        schema: makeSchema(LANCEDB_VECTOR_SIZE)
-      });
+      table = await db.createEmptyTable(
+        LANCEDB_TABLE_NAME,
+        makeSchema(LANCEDB_VECTOR_SIZE)
+      );
     }
 
     return (table);
@@ -122,7 +122,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context) {
     const table = await this.getTable();
     const data  = [];

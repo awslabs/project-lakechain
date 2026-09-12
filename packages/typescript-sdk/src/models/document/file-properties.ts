@@ -22,33 +22,37 @@ export const FilePropertiesSchema = z.object({
    * The extension of the file.
    */
   extension: z
-    .function()
-    .describe('A function returning the file extension.')
-    .returns(z.string()),
+    .function({
+      output: z.string()
+    })
+    .describe('A function returning the file extension.'),
 
   /**
    * The file base name.
    */
   basename: z
-    .function()
-    .describe('A function returning the file base name.')
-    .returns(z.string()),
+    .function({
+      output: z.string()
+    })
+    .describe('A function returning the file base name.'),
 
   /**
    * The file path.
    */
   path: z
-    .function()
-    .describe('A function returning the file path.')
-    .returns(z.string()),
+    .function({
+      output: z.string()
+    })
+    .describe('A function returning the file path.'),
 
   /**
    * The file name without the extension.
    */
   name: z
-    .function()
+    .function({
+      output: z.string()
+    })
     .describe('A function returning the file name without the extension.')
-    .returns(z.string())
 });
 
 export type FileProperties = z.infer<typeof FilePropertiesSchema>;

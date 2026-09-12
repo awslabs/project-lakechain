@@ -20,17 +20,20 @@
  * @group nag/middleware/s3-event-trigger
  */
 
-import path from 'path';
-import fs from 'fs';
-import * as cdk from 'aws-cdk-lib';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { S3EventTrigger } from '../../src';
-import { CacheStorage } from '@project-lakechain/core';
+import * as cdk from 'aws-cdk-lib';
+import { App, Stack } from 'aws-cdk-lib';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
+
+import { CacheStorage } from '@project-lakechain/core';
+import { S3EventTrigger } from '../../src';
 import { suppressNagS3EventTrigger } from './suppress';
+import {
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
@@ -67,11 +70,10 @@ new S3EventTrigger.Builder()
     .withBucket(bucket)
     .build();
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
 suppressNagS3EventTrigger(mockStack, bucket);
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -79,7 +81,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -90,13 +92,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations
-      .fromStack(mockStack)
-      .findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

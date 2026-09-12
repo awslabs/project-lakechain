@@ -20,13 +20,10 @@
  * @group nag/ecs-cluster
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { EcsCluster } from '../../src'
+import { App, Stack } from 'aws-cdk-lib';
 import {
   InstanceClass,
   InstanceSize,
@@ -40,6 +37,13 @@ import { ContainerImage } from 'aws-cdk-lib/aws-ecs';
 import { Queue, QueueEncryption } from 'aws-cdk-lib/aws-sqs';
 import { Topic } from 'aws-cdk-lib/aws-sns';
 import * as logs from 'aws-cdk-lib/aws-logs';
+
+import { EcsCluster } from '../../src'
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack');
@@ -110,15 +114,14 @@ new EcsCluster(mockStack, 'EcsCluster', {
   containerInsights: true
 });
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/vpc/Resource',
     [{ id: 'AwsSolutions-VPC7', reason: 'VPC is provided by the customer, not part of the construct' }],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/EcsCluster/Asg/ASG',
     [
@@ -127,7 +130,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/topic/Resource',
     [
@@ -136,7 +139,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/queue/Resource',
     [
@@ -145,7 +148,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/EcsCluster/InstanceRole/DefaultPolicy/Resource',
     [
@@ -153,7 +156,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/EcsCluster/AutoScaler/Resource',
     [
@@ -161,11 +164,11 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addStackSuppressions(mockStack, [
+acknowledge(mockStack, [
   { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies' }
 ]);
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/EcsCluster/TaskDefinition/Resource',
     [
@@ -173,7 +176,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/EcsCluster/AutoScaler/ServiceRole/DefaultPolicy/Resource',
     [
@@ -184,13 +187,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations
-      .fromStack(mockStack)
-      .findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

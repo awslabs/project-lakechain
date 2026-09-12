@@ -160,7 +160,9 @@ export class EcsCluster extends Construct {
     // The ECS cluster running processing jobs.
     const cluster = new ecs.Cluster(this, 'Cluster', {
       vpc: this.props.vpc,
-      containerInsights: this.props.containerInsights
+      containerInsightsV2: this.props.containerInsights
+        ? ecs.ContainerInsights.ENABLED
+        : ecs.ContainerInsights.DISABLED
     });
 
     // Creating a launch template that will define the characteristics
@@ -334,7 +336,7 @@ export class EcsCluster extends Construct {
     this.autoScaler = new node.NodejsFunction(this, 'AutoScaler', {
       description: 'Manages auto-scaling of tasks in the ECS cluster.',
       entry: path.resolve(__dirname, 'lambdas', 'ecs-task-autoscaler', 'index.js'),
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       tracing: lambda.Tracing.ACTIVE,
       environmentEncryption: this.props.kmsKey,
       logGroup: this.props.logGroup,

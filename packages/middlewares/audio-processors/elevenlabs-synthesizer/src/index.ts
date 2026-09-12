@@ -28,7 +28,7 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
-import { ElevenLabs } from 'elevenlabs';
+import type * as ElevenLabs from '@elevenlabs/elevenlabs-js/api/index.js';
 import { ElevenLabsSynthesizerProps, ElevenLabsSynthesizerPropsSchema } from './definitions/opts';
 import { ElevenLabsModel } from './definitions/model';
 import { VoiceSettings } from './definitions/voice-settings';
@@ -75,7 +75,7 @@ const DEFAULT_MAX_CONCURRENCY = 2;
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -314,5 +314,5 @@ export class ElevenLabsSynthesizer extends Middleware {
   }
 }
 
-export { ElevenLabsModel } from './definitions/model';
+export type { ElevenLabsModel } from './definitions/model';
 export { VoiceSettings } from './definitions/voice-settings';

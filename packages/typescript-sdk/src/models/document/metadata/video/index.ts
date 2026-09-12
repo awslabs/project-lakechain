@@ -116,7 +116,7 @@ export const VideoMetadataSchema = z.object({
    * User-defined metadata associated with the video.
    */
   custom: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('User-defined metadata associated with the video.')
     .optional()
 });

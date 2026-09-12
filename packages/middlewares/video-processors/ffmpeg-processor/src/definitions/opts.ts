@@ -115,4 +115,5 @@ export type FfmpegProcessorProps = z.infer<typeof FfmpegProcessorPropsSchema>;
 
 // Export properties.
 export { CloudEvent } from '@project-lakechain/sdk';
-export { FfmpegCommandOptions, FfmpegCommand } from 'fluent-ffmpeg';
+export type { FfmpegCommandOptions } from 'fluent-ffmpeg';
+export { FfmpegCommand } from 'fluent-ffmpeg';

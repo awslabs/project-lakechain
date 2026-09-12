@@ -12,22 +12,23 @@
     "build": "npx tsc",
     "watch": "npx tsc -w",
     "postinstall": "npm run build",
-    "test": "npx jest",
+    "test": "vitest run --globals --passWithNoTests",
     "deploy": "npx cdk deploy"
   },
   "devDependencies": {
     "@types/node": "^25.0.10",
-    "esbuild": "0.27.2",
+    "esbuild": "0.28.2",
     "rimraf": "^6.1.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
   },
   "dependencies": {
     "@project-lakechain/s3-event-trigger": "^0.10.0",
     "simple-text-processor": "file:../",
     "@project-lakechain/s3-storage-connector": "^0.10.0",
-    "aws-cdk-lib": "2.235.1",
-    "constructs": "^10.4.2",
+    "aws-cdk-lib": "2.269.0",
+    "constructs": "^10.8.1",
     "source-map-support": "^0.5.21"
   }
 }

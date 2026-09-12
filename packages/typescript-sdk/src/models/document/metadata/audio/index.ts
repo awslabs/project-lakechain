@@ -82,7 +82,7 @@ export const AudioMetadataSchema = z.object({
    * User defined metadata associated with the audio track.
    */
   custom: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .describe('User defined metadata associated with the audio track.')
     .optional()
 });

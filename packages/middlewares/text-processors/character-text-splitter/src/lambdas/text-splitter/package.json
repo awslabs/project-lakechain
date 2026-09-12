@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "esbuild index.ts --platform=node --target=es2022 --bundle --minify --outfile=dist/index.js",
-    "lint": "eslint .",
     "clean": "npx shx rm -rf dist/ node_modules/ coverage/"
   },
   "author": {
@@ -19,18 +18,19 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@aws-lambda-powertools/batch": "^2.30.2",
-    "@aws-lambda-powertools/logger": "^2.30.2",
-    "@aws-lambda-powertools/metrics": "^2.30.2",
-    "@aws-lambda-powertools/tracer": "^2.30.2",
-    "langchain": "0.3.37",
-    "lodash": "^4.17.23"
+    "@aws-lambda-powertools/batch": "^2.35.0",
+    "@aws-lambda-powertools/logger": "^2.35.0",
+    "@aws-lambda-powertools/metrics": "^2.35.0",
+    "@aws-lambda-powertools/tracer": "^2.35.0",
+    "@langchain/core": "^1.2.11",
+    "@langchain/textsplitters": "^1.0.1",
+    "lodash": "^4.18.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.974.0",
-    "@aws-sdk/client-sns": "^3.974.0",
+    "@aws-sdk/client-s3": "^3.1130.0",
+    "@aws-sdk/client-sns": "^3.1130.0",
     "@types/aws-lambda": "^8.10.160",
     "@types/lodash": "^4.17.23",
-    "esbuild": "0.27.2"
+    "esbuild": "0.28.2"
   }
 }

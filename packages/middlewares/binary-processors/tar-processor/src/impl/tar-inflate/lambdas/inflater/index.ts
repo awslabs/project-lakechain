@@ -111,7 +111,11 @@ class Lambda implements LambdaInterface {
     const prefix   = `${event.data().chainId()}/${document.etag()}`;
 
     return {
-      handler: (header: tar.Headers, stream: any, next: tar.Callback) => {
+      handler: (
+        header: tar.Header,
+        stream: tar.ExtractEvents['entry'][1],
+        next: tar.ExtractEvents['entry'][2]
+      ) => {
         // We signal the end of the entry read to the tar stream.
         stream.on('end', next);
 
@@ -201,7 +205,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async handler(event: SQSEvent, _: Context) {
     return (await processPartialResponse(
       event, this.recordHandler.bind(this), processor

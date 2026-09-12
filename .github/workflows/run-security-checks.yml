@@ -19,7 +19,7 @@ jobs:
       - name: Set node version
         uses: actions/setup-node@802632921f8532d2409ae6eac3313b6f81f11122
         with:
-          node-version: 20
+          node-version: 22
       
       # Install dependencies.
       - name: Install dependencies
@@ -50,3 +50,30 @@ jobs:
         with:
           targets: './packages'
           options: '-r -c bandit.yml'
+
+  docs-audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+
+      - name: Set Node version
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install documentation dependencies
+        run: npm ci
+
+      - name: Audit documentation dependencies
+        run: npm audit
+
+      - name: Build documentation
+        run: npm run build
+        env:
+          ASTRO_SITE: https://awslabs.github.io

@@ -42,8 +42,10 @@ export const NodePropsSchema = z.object({
    */
   uniqueIdentifier: z
     .boolean()
-    .default(false)
     .optional()
+    .meta({
+      default: false
+    })
 });
 
 /**

@@ -20,15 +20,19 @@
  * @group nag/middleware/sqs-event-trigger
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { SqsEventTrigger } from '../../src';
-import { CacheStorage } from '@project-lakechain/core';
+import { App, Stack } from 'aws-cdk-lib';
 import { Queue, QueueEncryption } from 'aws-cdk-lib/aws-sqs';
+
+import { CacheStorage } from '@project-lakechain/core';
+import { SqsEventTrigger } from '../../src';
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
@@ -65,14 +69,13 @@ new SqsEventTrigger.Builder()
     .withQueue(queue)
     .build();
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
-NagSuppressions.addResourceSuppressions(queue, [
+acknowledge(queue, [
   { id: 'AwsSolutions-SQS3', reason: 'Queue provided by the user, not part of the middleware'},
   { id: 'AwsSolutions-SQS4', reason: 'Queue provided by the user, not part of the middleware'}
-], true);
+]);
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/Cache/Storage/Resource',
     [
@@ -80,7 +83,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SQSEventTrigger/Compute/ServiceRole/DefaultPolicy/Resource',
     [
@@ -88,7 +91,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SQSEventTrigger/Compute/Resource',
     [
@@ -96,14 +99,14 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addStackSuppressions(
+acknowledge(
     mockStack,
     [
       { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies (LambdaBasicExecutionRole)' },
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/SQSEventTrigger/Topic/Resource',
   [
@@ -111,7 +114,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/SQSEventTrigger/Topic/Resource',
   [
@@ -122,11 +125,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations.fromStack(mockStack).findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

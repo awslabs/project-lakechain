@@ -27,7 +27,7 @@ export const PandocTextConverterPropsSchema = MiddlewarePropsSchema.extend({
    * between input types and output types.
    */
   mapping: z
-    .record(z.any())
+    .record(z.string(), z.any())
     .optional()
     .default({})
 });

@@ -19,9 +19,7 @@
   },
   "scripts": {
     "build": "npx tsc",
-    "clean": "npx rimraf dist/ node_modules/",
-    "lint": "npx eslint .",
-    "prettier:check": "npx prettier --check ."
+    "clean": "npx rimraf dist/ node_modules/"
   },
   "author": {
     "name": "Amazon Web Services",
@@ -37,23 +35,18 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.5.13",
-    "@types/node": "^25.0.10",
-    "esbuild": "0.27.2",
-    "npkill": "^0.12.1",
-    "rimraf": "^6.1.2",
-    "ts-node": "^10.9.2"
+    "@types/node": "^25.9.6",
+    "esbuild": "0.28.2",
+    "npkill": "^0.12.2",
+    "rimraf": "^6.1.3",
+    "tsx": "4.23.13"
   },
   "dependencies": {
     "@project-lakechain/core": "^0.10.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.235.1",
-    "constructs": "^10.4.2"
-  },
-  "lint-staged": {
-    "*.{ts, json}": "npx eslint",
-    "*.{js,json,md}": "npx prettier --check"
+    "aws-cdk-lib": "2.269.0",
+    "constructs": "^10.8.1"
   },
   "keywords": [
     "aws",

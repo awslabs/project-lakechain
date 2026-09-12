@@ -125,7 +125,7 @@ export class BedrockQdrantPipeline extends cdk.Stack {
       .withCacheStorage(cache)
       .withSource(embeddingProcessor)
       .withCollectionName('aws')
-      .withUrl('https://<example>.cloud.qdrant.io:6333')
+      .withUrl('https://example.cloud.qdrant.io:6333')
       .withApiKey(qdrantApiKey)
       .withStoreText(true)
       .build();

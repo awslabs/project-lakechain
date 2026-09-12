@@ -56,7 +56,7 @@ const description: ServiceDescription = {
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_24_X;
 
 /**
  * Builder for the `TranscribeAudioProcessor` middleware.
@@ -396,5 +396,5 @@ export class TranscribeAudioProcessor extends Middleware {
   }
 }
 
-export { OutputFormat } from './definitions/output-format';
+export type { OutputFormat } from './definitions/output-format';
 export { LanguageCode } from './definitions/language-code';

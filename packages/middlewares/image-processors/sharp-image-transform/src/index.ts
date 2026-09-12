@@ -65,7 +65,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.minutes(1);
 /**
  * The lambda execution runtime.
  */
-const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -297,4 +297,4 @@ export class SharpImageTransform extends Middleware {
 
 export { sharp } from './definitions/index';
 export { CloudEvent } from '@project-lakechain/sdk';
-export { SharpFunction } from './definitions/opts';
+export type { SharpFunction } from './definitions/opts';

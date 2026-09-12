@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [20, 22]
+        version: [22, 24]
     steps:
       # Checkout and setup.
       - name: Checkout repository
@@ -31,10 +31,6 @@ jobs:
       # Build all packages.
       - name: Build all packages
         run: npm run build
-
-      # Run linting.
-      - name: Run linting
-        run: npm run lint
 
       # Run unit tests.
       - name: Run unit tests

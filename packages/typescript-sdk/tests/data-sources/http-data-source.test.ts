@@ -15,6 +15,8 @@
  */
 
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import assert from 'node:assert';
 
 import { describe, it } from 'node:test';
@@ -102,11 +104,17 @@ describe('HTTPS Data Source', () => {
   /**
    * HTTPS read file test.
    */
-  it('should be able to read from an S3 data source as a file', async () => {
+  it('should be able to read from an HTTPS data source as a file', async (test) => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lakechain-https-test-'));
+    const filePath = path.join(directory, 'file');
+
+    test.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+
     const dataSource = createDataSource(new URL('https://jsonplaceholder.typicode.com/todos/1'));
-    const path = await dataSource.asFile('/tmp/file');
-    const data = fs.readFileSync(path);
+    const outputPath = await dataSource.asFile(filePath);
+    const data = fs.readFileSync(outputPath);
     const json = JSON.parse(data.toString());
+    assert.equal(outputPath, filePath);
     assert.deepEqual(json, ref);
   });
 

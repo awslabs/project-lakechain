@@ -104,7 +104,7 @@ export class OpenSearchIndex extends Construct {
       entry: path.resolve(processorPath, 'index.js'),
       vpc: props.vpc,
       timeout: cdk.Duration.seconds(10),
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       architecture: lambda.Architecture.ARM_64,
       logGroup: props.logGroup,
       environment: {

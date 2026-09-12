@@ -29,8 +29,10 @@ export const FileSystemPropsSchema = z.object({
    */
   throughputMode: z
     .nativeEnum(efs.ThroughputMode)
-    .default(efs.ThroughputMode.ELASTIC)
-    .optional(),
+    .optional()
+    .meta({
+      default: efs.ThroughputMode.ELASTIC
+    }),
 
   /**
    * The path in the container where the file system
@@ -39,8 +41,10 @@ export const FileSystemPropsSchema = z.object({
    */
   containerPath: z
     .string()
-    .default('/cache')
-    .optional(),
+    .optional()
+    .meta({
+      default: '/cache'
+    }),
 
   /**
    * Whether the mount point is read only.
@@ -48,8 +52,10 @@ export const FileSystemPropsSchema = z.object({
    */
   readonly: z
     .boolean()
-    .default(false)
-    .optional(),
+    .optional()
+    .meta({
+      default: false
+    }),
 
   /**
    * The user to grant access to the filesystem.

@@ -17,7 +17,7 @@
 import * as secrets from 'aws-cdk-lib/aws-secretsmanager';
 import { z } from 'zod';
 import { MiddlewarePropsSchema } from '@project-lakechain/core/middleware';
-import { ElevenLabs } from 'elevenlabs';
+import type * as ElevenLabs from '@elevenlabs/elevenlabs-js/api/index.js';
 import { ElevenLabsModel } from './model';
 import { VoiceSettings } from './voice-settings';
 

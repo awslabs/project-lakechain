@@ -60,7 +60,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.seconds(10);
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -310,5 +310,5 @@ export class Condition extends Middleware {
   }
 }
 
-export { ConditionalExpression } from './definitions/opts';
+export type { ConditionalExpression } from './definitions/opts';
 export { CloudEvent } from '@project-lakechain/sdk';

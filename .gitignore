@@ -45,7 +45,6 @@ jspm_packages/
 # Cache
 *.tsbuildinfo
 .npm
-.eslintcache
 .mypy_cache
 __pycache__
 

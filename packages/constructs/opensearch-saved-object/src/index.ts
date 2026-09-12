@@ -87,7 +87,7 @@ export class OpenSearchSavedObject extends Construct {
       description: 'A custom resource allowing to restore saved objects on an OpenSearch domain.',
       entry: path.resolve(processorPath, 'index.js'),
       vpc: props.vpc,
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_24_X,
       architecture: lambda.Architecture.ARM_64,
       logGroup: props.logGroup,
       environment: {

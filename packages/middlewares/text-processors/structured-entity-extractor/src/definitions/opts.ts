@@ -87,7 +87,7 @@ export const StructuredEntityExtractorPropsSchema = MiddlewarePropsSchema.extend
    * The schema to use to extract structured
    * entities from documents.
    */
-  schema: z.custom<z.ZodSchema<any>>(
+  schema: z.custom<z.ZodType>(
     (schema) => schema,
     { message: 'A schema is required to extract structured entities.' }
   ),
@@ -129,4 +129,3 @@ export const StructuredEntityExtractorPropsSchema = MiddlewarePropsSchema.extend
 
 // The type of the `StructuredEntityExtractorProps` schema.
 export type StructuredEntityExtractorProps = z.infer<typeof StructuredEntityExtractorPropsSchema>;
-

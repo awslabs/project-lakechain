@@ -4,10 +4,11 @@
     "outDir": "dist",
     "strict": true,
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "sourceMap": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
     "resolveJsonModule": true
   },
   "include": ["./src/**/*"],

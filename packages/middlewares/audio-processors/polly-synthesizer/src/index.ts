@@ -60,7 +60,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.minutes(1);
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default maximum concurrency for the compute.

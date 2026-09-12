@@ -15,6 +15,8 @@
  */
 
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import assert from 'node:assert';
 
 import { describe, it } from 'node:test';
@@ -22,7 +24,7 @@ import { createDataSource } from '../../src/index.js';
 import { mockClient } from 'aws-sdk-client-mock';
 import { S3Client, GetObjectCommand, NoSuchKey } from '@aws-sdk/client-s3';
 import { Readable } from 'node:stream';
-import { sdkStreamMixin } from '@aws-sdk/util-stream-node';
+import { sdkStreamMixin } from '@smithy/core/serde';
 
 describe('S3 Data Source', () => {
 
@@ -85,8 +87,12 @@ describe('S3 Data Source', () => {
   /**
    * S3 URL file read test.
    */
-  it('should be able to read from an S3 data source as a file', async () => {
+  it('should be able to read from an S3 data source as a file', async (test) => {
     const s3Mock = mockClient(S3Client);
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lakechain-s3-test-'));
+    const filePath = path.join(directory, 'file');
+
+    test.after(() => fs.rmSync(directory, { recursive: true, force: true }));
 
     s3Mock.on(GetObjectCommand).resolves({
       Body: sdkStreamMixin(Readable.from(Buffer.from('Hello World!'))),
@@ -94,9 +100,9 @@ describe('S3 Data Source', () => {
     });
 
     const dataSource = createDataSource(new URL('s3://bucket/key'));
-    const path = await dataSource.asFile('/tmp/file');
-    const data = fs.readFileSync(path);
-    assert.equal(path, '/tmp/file');
+    const outputPath = await dataSource.asFile(filePath);
+    const data = fs.readFileSync(outputPath);
+    assert.equal(outputPath, filePath);
     assert.equal(data.toString(), 'Hello World!');
   });
 

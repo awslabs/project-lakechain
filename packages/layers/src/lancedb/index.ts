@@ -36,7 +36,7 @@ export class LanceDbLayer {
 
     // The Docker image to use to build the layer.
     const image = cdk.DockerImage.fromRegistry(
-      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-arm64'
+      'public.ecr.aws/sam/build-nodejs24.x:1.166.2-arm64'
     );
 
     // Builds the LanceDB library for the target architecture
@@ -49,7 +49,7 @@ export class LanceDbLayer {
         command: [
           '/bin/bash',
           '-c',
-          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux vectordb @lancedb/vectordb-linux-arm64-gnu'
+          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux @lancedb/lancedb@0.38.0 @lancedb/lancedb-linux-arm64-gnu@0.38.0 apache-arrow@18.1.0'
         ],
         outputType: cdk.BundlingOutput.AUTO_DISCOVER,
         network: 'host',
@@ -64,7 +64,7 @@ export class LanceDbLayer {
         layerAsset.s3ObjectKey
       ),
       compatibleRuntimes: [
-        lambda.Runtime.NODEJS_18_X
+        lambda.Runtime.NODEJS_24_X
       ],
       compatibleArchitectures: [
         lambda.Architecture.ARM_64
@@ -83,7 +83,7 @@ export class LanceDbLayer {
 
     // The Docker image to use to build the layer.
     const image = cdk.DockerImage.fromRegistry(
-      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-x86_64'
+      'public.ecr.aws/sam/build-nodejs24.x:1.166.2-x86_64'
     );
 
     // Builds the LanceDB library for the target architecture
@@ -96,7 +96,7 @@ export class LanceDbLayer {
         command: [
           '/bin/bash',
           '-c',
-          'npm install --prefix=/asset-output/nodejs --arch=x64 --platform=linux vectordb @lancedb/vectordb-linux-x64-gnu'
+          'npm install --prefix=/asset-output/nodejs --arch=x64 --platform=linux @lancedb/lancedb@0.38.0 @lancedb/lancedb-linux-x64-gnu@0.38.0 apache-arrow@18.1.0'
         ],
         outputType: cdk.BundlingOutput.AUTO_DISCOVER,
         network: 'host',
@@ -111,7 +111,7 @@ export class LanceDbLayer {
         layerAsset.s3ObjectKey
       ),
       compatibleRuntimes: [
-        lambda.Runtime.NODEJS_18_X
+        lambda.Runtime.NODEJS_24_X
       ],
       compatibleArchitectures: [
         lambda.Architecture.X86_64

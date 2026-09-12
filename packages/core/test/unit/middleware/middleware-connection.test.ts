@@ -145,13 +145,13 @@ describe('Middleware Connections', () => {
     
     // Producer.
     expect(producer.getConsumers().size).toBe(1);
-    expect(producer.getConsumers().entries().next().value[0]).toBe(consumer);
+    expect([...producer.getConsumers().keys()]).toEqual([consumer]);
     expect(producer.getSources().size).toBe(0);
 
     // Consumer.
     expect(consumer.getConsumers().size).toBe(0);
     expect(consumer.getSources().size).toBe(1);
-    expect(consumer.getSources().entries().next().value[0]).toBe(producer);
+    expect([...consumer.getSources().keys()]).toEqual([producer]);
   });
 
   /**
@@ -203,7 +203,7 @@ describe('Middleware Connections', () => {
       // Verify that all consumers, except the first one, are connected to
       // the previous consumer in the array.
       if (i > 0) {
-        expect(consumers[i].getSources().entries().next().value[0]).toBe(consumers[i - 1]);
+        expect([...consumers[i].getSources().keys()]).toEqual([consumers[i - 1]]);
       }
     }
   });

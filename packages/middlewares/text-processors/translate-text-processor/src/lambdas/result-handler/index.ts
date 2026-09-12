@@ -185,7 +185,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handler(event: S3Event, _: Context): Promise<any> {
     return (Promise.all(
       event.Records.map((record) => this.onS3Event(record))

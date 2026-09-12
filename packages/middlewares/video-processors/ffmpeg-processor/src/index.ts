@@ -359,8 +359,10 @@ export class FfmpegProcessor extends Middleware {
 export { InfrastructureDefinition } from './definitions/infrastructure';
 export {
   CloudEvent,
+  FfmpegCommand
+} from './definitions/opts';
+export type {
   FfmpegUtils,
-  FfmpegCommand,
   FfmpegCommandOptions,
   Ffmpeg
 } from './definitions/opts';

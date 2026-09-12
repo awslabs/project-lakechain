@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import archiver from 'archiver';
+import { ZipArchive } from 'archiver';
 
 import { randomUUID } from 'crypto';
 import { S3Stream, S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
@@ -122,7 +122,7 @@ class Lambda implements LambdaInterface {
     const outputKey = `${randomUUID()}/archive.zip`;
 
     // Create a new archiver instance.
-    const archive = archiver('zip', {
+    const archive = new ZipArchive({
       zlib: { level: COMPRESSION_LEVEL }
     });
 
@@ -172,7 +172,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context): Promise<SQSBatchResponse> {
     return (await processPartialResponse(
       event, this.recordHandler.bind(this), processor

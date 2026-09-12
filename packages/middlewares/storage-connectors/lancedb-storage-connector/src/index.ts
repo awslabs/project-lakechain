@@ -57,7 +57,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.seconds(60);
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -224,7 +224,7 @@ export class LanceDbStorageConnector extends Middleware {
         minify: true,
         externalModules: [
           '@aws-sdk/client-s3',
-          'vectordb'
+          '@lancedb/lancedb'
         ]
       }
     });

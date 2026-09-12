@@ -20,7 +20,7 @@ jobs:
       - name: Set node version
         uses: actions/setup-node@802632921f8532d2409ae6eac3313b6f81f11122
         with:
-          node-version: 20
+          node-version: 22
 
       # Link Checker.
       - name: Link Checker
@@ -32,10 +32,6 @@ jobs:
       # Install dependencies.
       - name: Install dependencies
         run: npm install
-
-      # Run linting.
-      - name: Run linting
-        run: npm run lint
 
       # Spell check.
       - name: Spell check

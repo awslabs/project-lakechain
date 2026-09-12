@@ -23,7 +23,8 @@ import { getSecret } from '@aws-lambda-powertools/parameters/secrets';
 import { CloudEvent, Document } from '@project-lakechain/sdk/models';
 import { next } from '@project-lakechain/sdk/decorators';
 import { S3DocumentDescriptor } from '@project-lakechain/sdk/helpers';
-import { ElevenLabsClient, ElevenLabs } from 'elevenlabs';
+import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js/Client.js';
+import type * as ElevenLabs from '@elevenlabs/elevenlabs-js/api/index.js';
 
 import {
   SQSEvent,
@@ -80,11 +81,11 @@ const synthesizeText = throttle(async (text) => {
   // Synthesize the text.
   return (client.textToSpeech.convert(ELEVENLABS_VOICE, {
     text,
-    model_id: ELEVENLABS_MODEL,
-    voice_settings: Object.keys(ELEVENLABS_VOICE_SETTINGS) ?
+    modelId: ELEVENLABS_MODEL,
+    voiceSettings: Object.keys(ELEVENLABS_VOICE_SETTINGS) ?
       ELEVENLABS_VOICE_SETTINGS :
       undefined,
-    output_format: ELEVENLABS_OUTPUT_FORMAT
+    outputFormat: ELEVENLABS_OUTPUT_FORMAT
   }, { maxRetries: 5 }));
 });
 
@@ -92,13 +93,11 @@ const synthesizeText = throttle(async (text) => {
  * Convert a readable stream to a buffer.
  * @param readable the readable stream to convert.
  */
-const streamToBuffer = async (readable: NodeJS.ReadableStream): Promise<Buffer> => {
-  const chunks: Buffer[] = [];
-  for await (const chunk of readable) {
-    chunks.push(chunk as Buffer);
-  }
-  return (Buffer.concat(chunks));
-}
+const streamToBuffer = async (
+  readable: ReadableStream<Uint8Array>
+): Promise<Buffer> => {
+  return Buffer.from(await new Response(readable).arrayBuffer());
+};
 
 /**
  * The lambda class definition containing the lambda handler.
@@ -159,7 +158,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context): Promise<SQSBatchResponse> {
     return (await processPartialResponse(
       event,

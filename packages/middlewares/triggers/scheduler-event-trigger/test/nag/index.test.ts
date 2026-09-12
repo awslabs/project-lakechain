@@ -20,15 +20,19 @@
  * @group nag/middleware/scheduler-event-trigger
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import * as scheduler from '@aws-cdk/aws-scheduler-alpha';
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
+import { App, Stack } from 'aws-cdk-lib';
+
 import { SchedulerEventTrigger } from '../../src';
 import { CacheStorage } from '@project-lakechain/core';
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
@@ -77,9 +81,8 @@ new SchedulerEventTrigger.Builder()
     .withDocuments(uris)
     .build();
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/Cache/Storage/Resource',
     [
@@ -87,7 +90,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SchedulerEventTrigger/Storage/Storage/Resource',
     [
@@ -95,7 +98,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SchedulerEventTrigger/Compute/ServiceRole/DefaultPolicy/Resource',
     [
@@ -103,7 +106,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SchedulerEventTrigger/Compute/Resource',
     [
@@ -111,14 +114,14 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addStackSuppressions(
+acknowledge(
     mockStack,
     [
       { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies (LambdaBasicExecutionRole)' },
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/SchedulerRoleForTarget-e77123/DefaultPolicy/Resource',
     [
@@ -126,7 +129,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource',
     [
@@ -134,7 +137,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource',
     [
@@ -142,7 +145,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/SchedulerEventTrigger/Topic/Resource',
   [
@@ -150,7 +153,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/SchedulerEventTrigger/Topic/Resource',
   [
@@ -161,11 +164,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations.fromStack(mockStack).findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

@@ -200,7 +200,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler({ captureResponse: false })
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: any, context: Context) {
     // Detailed statistics about tasks.
     let tasksRunning = 0;

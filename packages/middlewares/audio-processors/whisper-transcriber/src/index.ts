@@ -292,6 +292,6 @@ export class WhisperTranscriber extends Middleware {
   }
 }
 
-export { WhisperModel } from './definitions/whisper-model';
-export { WhisperEngine } from './definitions/whisper-engine';
-export { OutputFormat } from './definitions/output-format';
+export type { WhisperModel } from './definitions/whisper-model';
+export type { WhisperEngine } from './definitions/whisper-engine';
+export type { OutputFormat } from './definitions/output-format';

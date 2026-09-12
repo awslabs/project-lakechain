@@ -58,7 +58,7 @@ export function ServiceLinkedRole(serviceName: Service) {
       const processor = new node.NodejsFunction(instance, `Role-${serviceLinkedRole}`, {
         description: 'A custom resource allowing to create a service linked role.',
         entry: path.resolve(processorPath, 'index.js'),
-        runtime: lambda.Runtime.NODEJS_18_X,
+        runtime: lambda.Runtime.NODEJS_24_X,
         architecture: lambda.Architecture.ARM_64,
         environment: {
           SERVICE_LINKED_ROLE_NAME: serviceLinkedRole,

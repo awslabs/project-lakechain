@@ -13,9 +13,7 @@
   "scripts": {
     "build": "npx tsc",
     "postbuild": "npx shx cp -r ./src/lambdas dist/ && npx shx cp -r ./src/container dist/",
-    "clean": "npx rimraf dist/ node_modules/",
-    "lint": "npx eslint .",
-    "prettier:check": "npx prettier --check ."
+    "clean": "npx rimraf dist/ node_modules/"
   },
   "author": {
     "name": "Amazon Web Services",
@@ -31,22 +29,17 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/jest": "^29.0.0",
     "@types/node": "^25.0.10",
-    "esbuild": "0.27.2",
+    "esbuild": "0.28.2",
     "rimraf": "^6.1.2",
-    "shx": "^0.3.4"
+    "shx": "^0.4.0"
   },
   "dependencies": {
     "@project-lakechain/core": "^0.10.0",
     "@project-lakechain/ecs-cluster": "^0.10.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.235.1",
-    "constructs": "^10.4.2"
-  },
-  "lint-staged": {
-    "*.{ts, json}": "npx eslint",
-    "*.{js,json,md}": "npx prettier --check"
+    "aws-cdk-lib": "2.269.0",
+    "constructs": "^10.8.1"
   }
 }

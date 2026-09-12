@@ -94,7 +94,7 @@ export const OpenSearchVectorIndexDefinitionPropsSchema = z.object({
    * The parameters used for the nearest neighbor method.
    * @see https://opensearch.org/docs/latest/search-plugins/knn/knn-index#method-definitions
    */
-  parameters: z.record(z.any())
+  parameters: z.record(z.string(), z.any())
 });
 
 // Export the `OpenSearchVectorIndexDefinitionProps` type.

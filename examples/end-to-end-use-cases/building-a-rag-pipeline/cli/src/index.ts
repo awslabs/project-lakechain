@@ -62,8 +62,10 @@ const OptionsSchema = z.object({
     .optional(),
   indexName: z
     .string()
-    .default('text-vectors')
-    .optional(),
+    .optional()
+    .meta({
+      default: 'text-vectors'
+    }),
   opensearchRegion: z
     .string()
     .optional(),

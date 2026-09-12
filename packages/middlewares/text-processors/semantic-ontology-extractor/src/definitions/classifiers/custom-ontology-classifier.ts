@@ -16,13 +16,14 @@
 
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
-import { generateErrorMessage, ErrorMessageOptions } from 'zod-error';
+import { generateErrorMessage } from 'zod-error';
 import { CloudEvent, CacheStorage } from '@project-lakechain/sdk';
 import { DirectedGraph } from 'graphology';
 import { DefaultOntologyClassifier } from './default-ontology-classifier';
 import { Prompt } from './prompt';
 import { Node, NodeSchema } from '../ontology/node';
 import { Edge, EdgeSchema } from '../ontology/edge';
+import type { ErrorMessageOptions } from 'zod-error';
 
 /**
  * System prompt.

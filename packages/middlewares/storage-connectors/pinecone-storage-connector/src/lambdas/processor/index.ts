@@ -18,7 +18,7 @@ import { SQSEvent, Context, SQSRecord } from 'aws-lambda';
 import { logger, tracer } from '@project-lakechain/sdk/powertools';
 import { LambdaInterface } from '@aws-lambda-powertools/commons/types';
 import { CloudEvent } from '@project-lakechain/sdk/models';
-import { RecordMetadata } from '@pinecone-database/pinecone';
+import type { RecordMetadata } from '@pinecone-database/pinecone';
 import { createClient } from './client';
 
 import {
@@ -153,11 +153,13 @@ class Lambda implements LambdaInterface {
     const pinecone = await createClient();
 
     // Upsert the vector embeddings in Pinecone.
-    return (pinecone.upsert([{
-      id: this.getId(event),
-      values: await this.getEmbeddings(event),
-      metadata: await this.getMetadata(event)
-    }]));
+    return (pinecone.upsert({
+      records: [{
+        id: this.getId(event),
+        values: await this.getEmbeddings(event),
+        metadata: await this.getMetadata(event)
+      }]
+    }));
   }
 
   /**
@@ -167,7 +169,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context) {
     return (await processPartialResponse(
       event, this.recordHandler.bind(this), processor

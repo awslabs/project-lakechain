@@ -20,11 +20,15 @@
  * @group nag/opensearch-domain
  */
 
-import { App, Aspects, Stack } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { OpenSearchDomain } from '../../src'
+import { App, Stack } from 'aws-cdk-lib';
 import { SubnetType, Vpc } from "aws-cdk-lib/aws-ec2";
+
+import { OpenSearchDomain } from '../../src'
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack');
@@ -48,26 +52,37 @@ new OpenSearchDomain(mockStack, 'opensearch', {
     }]})
 })
 
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/vpc/Resource',
     [{ id: 'AwsSolutions-VPC7', reason: 'VPC is provided by the customer, not part of the construct' }],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Userpool/Resource',
-    [{ id: 'AwsSolutions-COG3', reason: 'AdvancedSecurityMode incurs additional costs to the user. They can provide their own user pool if they want to enable it.' }],
+    [
+      { id: 'AwsSolutions-COG3', reason: 'AdvancedSecurityMode incurs additional costs to the user. They can provide their own user pool if they want to enable it.' },
+      { id: 'AwsSolutions-COG8', reason: 'The Plus tier incurs additional costs. Customers can provide their own user pool if required.' },
+    ],
 );
 
-NagSuppressions.addStackSuppressions(mockStack, [
+acknowledgeByPath(
+  mockStack,
+  '/NagStack/opensearch/SecurityGroup/Resource',
+  [{
+    id: 'AwsSolutions-EC23',
+    reason: 'The VPC CIDR is unresolved until CloudFormation deployment.'
+  }]
+);
+
+acknowledge(mockStack, [
   { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies' }
 ]);
 
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/opensearch/Domain/Resource',
     [
@@ -78,7 +93,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/AWS679f53fac002430cb0da5b7982bd2287/Resource',
     [
@@ -86,20 +101,14 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addStackSuppressions(mockStack, [
+acknowledge(mockStack, [
   { id: 'AwsSolutions-IAM4', reason: 'Using standard managed policies' }
 ]);
 
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations
-      .fromStack(mockStack)
-      .findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

@@ -11,7 +11,5 @@ coverage
 tslint.json
 tsconfig.json
 .npmignore
-.eslintignore
 .huskyrc.js
-.eslintrc.json
 examples

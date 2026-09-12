@@ -20,18 +20,22 @@
  * @group nag/middleware/whisper-transcriber
  */
 
-import path from 'path';
-import fs from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { App, Aspects, Stack, RemovalPolicy } from 'aws-cdk-lib';
-import { Annotations, Match } from 'aws-cdk-lib/assertions';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
-import { WhisperTranscriber } from '../../src';
-import { CacheStorage } from '@project-lakechain/core';
-import { Bucket } from 'aws-cdk-lib/aws-s3';
-import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
-import { suppressNagS3EventTrigger } from './suppress';
+import { App, Stack, RemovalPolicy } from 'aws-cdk-lib';
 import { SubnetType, Vpc } from 'aws-cdk-lib/aws-ec2';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
+
+import { CacheStorage } from '@project-lakechain/core';
+import { S3EventTrigger } from '@project-lakechain/s3-event-trigger';
+import { WhisperTranscriber } from '../../src';
+import { suppressNagS3EventTrigger } from './suppress';
+import {
+  acknowledge,
+  acknowledgeByPath,
+  getNagErrors
+} from './acknowledge';
 
 const mockApp = new App();
 const mockStack = new Stack(mockApp, 'NagStack', {});
@@ -97,21 +101,16 @@ new WhisperTranscriber.Builder()
     .build();
 
 
-const cloudAssembly = mockApp.synth({force:true});
-const stack = cloudAssembly.getStackByName('NagStack');
-console.log(JSON.stringify(stack.template, null, 2));
-
-Aspects.of(mockStack).add(new AwsSolutionsChecks({ verbose: true }));
 
 suppressNagS3EventTrigger(mockStack, bucket);
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/vpc/Resource',
     [{ id: 'AwsSolutions-VPC7', reason: 'VPC is provided by the customer, not part of the middleware' }],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/TaskDefinition/Resource',
     [
@@ -119,7 +118,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Storage/Storage/Resource',
     [
@@ -127,7 +126,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/Asg/ASG',
     [
@@ -136,14 +135,14 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addStackSuppressions(
+acknowledge(
     mockStack,
     [
       {id: 'AwsSolutions-L1', reason: 'Using NodeJS 18 which was the latest until very recently'},
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/InstanceRole/DefaultPolicy/Resource',
     [
@@ -151,7 +150,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/ExecutionRole/DefaultPolicy/Resource',
     [
@@ -159,7 +158,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/TaskDefinition/TaskRole/DefaultPolicy/Resource',
     [
@@ -167,7 +166,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
     mockStack,
     '/NagStack/WhisperTranscriber/Cluster/AutoScaler/ServiceRole/DefaultPolicy/Resource',
     [
@@ -175,7 +174,7 @@ NagSuppressions.addResourceSuppressionsByPath(
     ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -183,7 +182,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/S3EventTrigger/Topic/Resource',
   [
@@ -191,7 +190,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/WhisperTranscriber/Topic/Resource',
   [
@@ -199,7 +198,7 @@ NagSuppressions.addResourceSuppressionsByPath(
   ],
 );
 
-NagSuppressions.addResourceSuppressionsByPath(
+acknowledgeByPath(
   mockStack,
   '/NagStack/WhisperTranscriber/Topic/Resource',
   [
@@ -210,13 +209,7 @@ NagSuppressions.addResourceSuppressionsByPath(
 describe('CDK Nag', () => {
 
   test('No unsuppressed Errors', () => {
-    const errors = Annotations
-      .fromStack(mockStack)
-      .findError('*', Match.stringLikeRegexp('AwsSolutions-.*'));
-    if (errors && errors.length > 0) {
-      console.log(errors);
-    }
-    expect(errors).toHaveLength(0);
+    expect(getNagErrors(mockStack)).toHaveLength(0);
   });
 
 });

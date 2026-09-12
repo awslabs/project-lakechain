@@ -36,7 +36,6 @@ class Lambda implements LambdaInterface {
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
   @next()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: any, _: Context): Promise<any> {
     return (CloudEvent.from(event));
   }

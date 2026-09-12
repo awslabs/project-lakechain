@@ -169,7 +169,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SQSEvent, _: Context): Promise<SQSBatchResponse> {
     return (await processPartialResponse(
       event, this.sqsRecordHandler.bind(this), processor

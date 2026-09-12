@@ -111,7 +111,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: SNSEvent, _: Context): Promise<any> {
     for (const record of event.Records) {
       try {

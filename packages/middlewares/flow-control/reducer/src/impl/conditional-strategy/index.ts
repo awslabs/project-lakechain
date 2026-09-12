@@ -36,7 +36,7 @@ import {
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME = lambda.Runtime.NODEJS_24_X;
 
 /**
  * An implementation of a reducer strategy that evaluates a

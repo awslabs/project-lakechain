@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "NodeNext",
+    "isolatedModules": true,
     "lib": ["es2020"],
     "moduleResolution": "nodenext",
     "outDir": "dist/",
@@ -22,7 +23,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["./node_modules/@types"]
+    "types": ["node"]
   },
   "exclude": ["node_modules", "cdk.out", "dist/"]
 }

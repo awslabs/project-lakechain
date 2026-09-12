@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { generateErrorMessage, ErrorMessageOptions } from 'zod-error';
+import { generateErrorMessage } from 'zod-error';
+import type { ErrorMessageOptions } from 'zod-error';
 
 /**
  * Options for pretty-printing the error message.

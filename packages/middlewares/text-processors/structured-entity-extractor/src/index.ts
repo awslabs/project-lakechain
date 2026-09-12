@@ -30,7 +30,6 @@ import { ServiceDescription } from '@project-lakechain/core/service';
 import { ComputeType } from '@project-lakechain/core/compute-type';
 import { when } from '@project-lakechain/core/dsl/vocabulary/conditions';
 import { CacheStorage } from '@project-lakechain/core';
-import { zodToJsonSchema } from 'zod-to-json-schema';
 import { Model } from './definitions/model';
 
 import {
@@ -64,7 +63,7 @@ const PROCESSING_TIMEOUT = cdk.Duration.minutes(3);
 /**
  * The execution runtime for used compute.
  */
-const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_18_X;
+const EXECUTION_RUNTIME  = lambda.Runtime.NODEJS_24_X;
 
 /**
  * The default memory size to allocate for the compute.
@@ -96,7 +95,7 @@ class StructuredEntityExtractorBuilder extends MiddlewareBuilder {
    * entities from documents.
    * @returns the current builder instance.
    */
-  public withSchema(schema: z.ZodSchema<any>) {
+  public withSchema(schema: z.ZodType) {
     this.middlewareProps.schema = schema;
     return (this);
   }
@@ -208,7 +207,11 @@ export class StructuredEntityExtractor extends Middleware {
     ///////////////////////////////////////////
 
     // Convert the Zod schema to a JSON schema.
-    const jsonSchema = zodToJsonSchema(this.props.schema) as any;
+    const jsonSchema = z.toJSONSchema(this.props.schema, {
+      target: 'draft-07',
+      io: 'input',
+      unrepresentable: 'any'
+    });
 
     // Stringified JSON schema.
     const schema = JSON.stringify(jsonSchema);

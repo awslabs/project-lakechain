@@ -80,7 +80,6 @@ class Lambda implements LambdaInterface {
    */
   @tracer.captureLambdaHandler()
   @logger.injectLambdaContext()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async handler(event: DynamoDBStreamEvent, _: Context): Promise<any> {
     try {
       const e = CloudEvent.from(event.Records[0].dynamodb!.NewImage!.event.S!);

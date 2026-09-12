@@ -36,7 +36,7 @@ export class SharpLayer {
 
     // The Docker image to use to build the layer.
     const image = cdk.DockerImage.fromRegistry(
-      'public.ecr.aws/sam/build-nodejs18.x:1.124.0-arm64'
+      'public.ecr.aws/sam/build-nodejs24.x:1.166.2-arm64'
     );
 
     // Builds the Sharp library for the target architecture
@@ -49,7 +49,7 @@ export class SharpLayer {
         command: [
           '/bin/bash',
           '-c',
-          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux sharp'
+          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux sharp@0.35.4'
         ],
         outputType: cdk.BundlingOutput.AUTO_DISCOVER,
         network: 'host',
@@ -64,7 +64,7 @@ export class SharpLayer {
         layerAsset.s3ObjectKey
       ),
       compatibleRuntimes: [
-        lambda.Runtime.NODEJS_18_X
+        lambda.Runtime.NODEJS_24_X
       ],
       compatibleArchitectures: [
         lambda.Architecture.ARM_64
