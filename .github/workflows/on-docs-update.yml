@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@85e6279cec87321a52edac9c87bce653a07cf6c2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Install, build, and upload documentation
-        uses: withastro/action@44706356b4eb735f8b9035699eb4796241a040c4
+        uses: withastro/action@e84f40bd8d2caa9e768ec82ad30dd81f0b280853
         with:
           path: ./docs
           node-version: 24
@@ -48,4 +48,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@854d7aa1b99e4509c4d1b53d69b7ba4eaf39215a
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
