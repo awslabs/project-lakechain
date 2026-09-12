@@ -221,3 +221,7 @@ ulaw
 qdrant
 qdrantdata
 uuidv
+mktemp
+textsplitters
+unrepresentable
+Elasti
