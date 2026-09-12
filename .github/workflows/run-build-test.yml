@@ -20,7 +20,7 @@ jobs:
 
       # Set node version.
       - name: Set node version
-        uses: actions/setup-node@802632921f8532d2409ae6eac3313b6f81f11122
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version: ${{ matrix.version }}
 

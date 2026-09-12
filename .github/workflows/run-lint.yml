@@ -18,9 +18,9 @@ jobs:
 
       # Set node version.
       - name: Set node version
-        uses: actions/setup-node@802632921f8532d2409ae6eac3313b6f81f11122
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
-          node-version: 22
+          node-version: 24
 
       # Install dependencies.
       - name: Install dependencies
@@ -28,7 +28,7 @@ jobs:
 
       # Spell check.
       - name: Spell check
-        uses: streetsidesoftware/cspell-action@4dc9d4bdf3974ed26d6f2e973c1e168edff47d80
+        uses: streetsidesoftware/cspell-action@6f3c77c1406bc930f944ba97e9801a22e42caf58
         with:
           files: '**/*.{md,ts}'
           strict: true
