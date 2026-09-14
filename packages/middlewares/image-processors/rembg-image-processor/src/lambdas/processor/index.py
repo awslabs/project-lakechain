@@ -21,7 +21,7 @@ import boto3
 from PIL import Image
 from typing import Optional
 from urllib.parse import urlparse, unquote
-from rembg import remove
+from rembg import remove, new_session
 from publish import publish_event
 from aws_lambda_powertools import Logger, Tracer
 from aws_lambda_powertools.utilities.data_classes import event_source, SQSEvent
@@ -100,6 +100,7 @@ def process_document(event: dict) -> dict:
   # Remove the background from the image.
   new_image = remove(
     image,
+    session=new_session('u2net'),
     alpha_matting=ALPHA_MATTING,
     alpha_matting_foreground_threshold=ALPHA_MATTING_FG_THRESHOLD,
     alpha_matting_background_threshold=ALPHA_MATTING_BG_THRESHOLD,

@@ -2,4 +2,4 @@ boto3
 aws_lambda_powertools
 aws-xray-sdk
 imagehash==4.3.1
-pillow==10.3.0
+pillow==12.3.0

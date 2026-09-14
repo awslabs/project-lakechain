@@ -23,7 +23,7 @@ import logging
 from PIL import Image
 from publish import publish_event
 from urllib.parse import urlparse, unquote
-from rembg import remove
+from rembg import remove, new_session
 from message_provider import sqs_consume_queue
 
 # Configure the logger for the application.
@@ -95,6 +95,7 @@ def process_document(event: dict) -> dict:
   # Remove the background from the image.
   new_image = remove(
     image,
+    session=new_session('u2net'),
     alpha_matting=ALPHA_MATTING,
     alpha_matting_foreground_threshold=ALPHA_MATTING_FG_THRESHOLD,
     alpha_matting_background_threshold=ALPHA_MATTING_BG_THRESHOLD,
