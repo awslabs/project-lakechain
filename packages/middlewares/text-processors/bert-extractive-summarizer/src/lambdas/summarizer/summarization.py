@@ -12,9 +12,41 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import unicodedata
+import transformers
+
+from html.parser import HTMLParser
 from typing import List
+from ftfy import fix_text
+
+# The summarizer package imports optional model classes that were
+# removed from Transformers 5, although this processor only uses BERT.
+if 'LongformerTokenizer' not in dir(transformers):
+  transformers.LongformerTokenizer = transformers.AutoTokenizer
+
+if 'TransfoXLModel' not in dir(transformers):
+  transformers.TransfoXLModel = transformers.AutoModel
+
+if 'TransfoXLTokenizer' not in dir(transformers):
+  transformers.TransfoXLTokenizer = transformers.AutoTokenizer
+
 from summarizer import Summarizer
-from nlpretext import Preprocessor
+
+
+class TextExtractor(HTMLParser):
+  """
+  Extracts plain text from HTML content.
+  """
+
+  def __init__(self):
+    super().__init__(convert_charrefs=True)
+    self.fragments: List[str] = []
+
+  def handle_data(self, data: str) -> None:
+    self.fragments.append(data)
+
+  def text(self) -> str:
+    return ' '.join(self.fragments)
 
 # The Bert summarization model.
 model = Summarizer()
@@ -39,9 +71,13 @@ def clean_text(text: str) -> str:
   :return: A cleaned version of the text in which new lines and tabs are replaced by spaces,
   tables are removed and each sentence is stripped.
   """
-  return Preprocessor().run(
-    filter_lines(text, chars_to_filter)
-  )
+  parser = TextExtractor()
+  parser.feed(filter_lines(text, chars_to_filter))
+  parser.close()
+
+  text = fix_text(parser.text())
+  text = unicodedata.normalize('NFC', text)
+  return ' '.join(text.split())
 
 
 def summarize_text(content: str, ratio = 0.2) -> str:

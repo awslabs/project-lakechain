@@ -16,7 +16,6 @@ import os
 import sys
 import json
 import boto3
-import nltk
 import hashlib
 
 from nltk.tokenize import TextTilingTokenizer
@@ -37,7 +36,6 @@ from aws_lambda_powertools.utilities.batch import (
 # Environment variables.
 SERVICE_NAME         = os.getenv('POWERTOOLS_SERVICE_NAME')
 TARGET_BUCKET        = os.getenv('PROCESSED_FILES_BUCKET')
-CACHE_DIR            = os.environ.get('CACHE_DIR')
 PSEUDO_SENTENCE_SIZE = int(os.environ.get('PSEUDO_SENTENCE_SIZE', 50))
 
 # Runtime function attributes.
@@ -45,12 +43,6 @@ logger    = Logger(service=SERVICE_NAME)
 tracer    = Tracer(service=SERVICE_NAME)
 s3_client = boto3.client('s3')
 processor = BatchProcessor(event_type=EventType.SQS)
-
-# Download the nltk punkt tokenizer and set
-# the download directory.
-nltk.data.path.append(CACHE_DIR)
-nltk.download('punkt', download_dir=CACHE_DIR)
-nltk.download('stopwords', download_dir=CACHE_DIR)
 
 def load_document(url) -> str:
   """

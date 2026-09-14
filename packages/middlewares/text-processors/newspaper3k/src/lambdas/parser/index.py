@@ -16,7 +16,6 @@ import os
 import sys
 import json
 import boto3
-import nltk
 
 from typing import Optional
 from publish import publish_event
@@ -38,12 +37,6 @@ from aws_lambda_powertools.utilities.batch import (
 # Environment variables.
 SERVICE_NAME  = os.getenv('POWERTOOLS_SERVICE_NAME')
 TARGET_BUCKET = os.getenv('PROCESSED_FILES_BUCKET')
-CACHE_DIR     = os.getenv('CACHE_DIR')
-
-# Download the nltk punkt tokenizer and set
-# the download directory.
-nltk.data.path.append(CACHE_DIR)
-nltk.download('punkt', download_dir=CACHE_DIR)
 
 # Runtime function attributes.
 s3_client = boto3.client('s3')

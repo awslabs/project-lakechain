@@ -1,19 +1,18 @@
-FROM public.ecr.aws/lambda/python:3.11
+FROM public.ecr.aws/lambda/python:3.12
 
 # Image arguments.
 ARG PANDOC_VERSION=3.3
 
 # Install dependencies and clean up in one layer
-RUN yum update -y && \
-  yum install -y \
+RUN dnf update -y && \
+  dnf install -y \
       wget \
       tar \
       gzip \
       poppler-utils \
-      python-poppler \
       gcc && \
-  yum clean all && \
-  rm -rf /var/cache/yum
+  dnf clean all && \
+  rm -rf /var/cache/dnf
 
 # Install Pandoc.
 RUN wget https://github.com/jgm/pandoc/releases/download/"${PANDOC_VERSION}"/pandoc-"${PANDOC_VERSION}"-linux-amd64.tar.gz && \

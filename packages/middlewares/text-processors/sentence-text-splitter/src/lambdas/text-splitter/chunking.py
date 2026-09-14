@@ -12,19 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-import os
-import nltk
 from typing import List
 from nltk.tokenize import sent_tokenize
-
-# Environment variables.
-CACHE_DIR = os.environ.get('CACHE_DIR')
-
-# Download the nltk punkt tokenizer and set
-# the download directory.
-nltk.data.path.append(CACHE_DIR)
-nltk.download('punkt', download_dir=CACHE_DIR)
-nltk.download('stopwords', download_dir=CACHE_DIR)
 
 def chunk_text(text: str, max_byte_length: int) -> List[str]:
   """

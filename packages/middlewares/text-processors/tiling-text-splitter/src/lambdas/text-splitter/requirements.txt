@@ -1,5 +1,5 @@
 boto3==1.36.23
 aws_lambda_powertools==2.35.1
 aws-xray-sdk==2.14.0
-nltk==3.8.1
+nltk==3.10.3
 numpy==1.26.4
