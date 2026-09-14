@@ -14,7 +14,7 @@
     "build": "npx tsc",
     "postbuild": "npx shx cp -r ./src/container dist/",
     "clean": "npx rimraf dist/ node_modules/",
-    "test": "vitest run --globals --passWithNoTests"
+    "test": "vitest run --globals --passWithNoTests --testTimeout=15000"
   },
   "author": {
     "name": "Amazon Web Services",

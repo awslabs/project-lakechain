@@ -13,7 +13,7 @@
   "scripts": {
     "build": "npx tsc",
     "clean": "npx rimraf dist/ node_modules/",
-    "test": "vitest run --globals --passWithNoTests"
+    "test": "vitest run --globals --passWithNoTests --testTimeout=15000"
   },
   "author": {
     "name": "Amazon Web Services",

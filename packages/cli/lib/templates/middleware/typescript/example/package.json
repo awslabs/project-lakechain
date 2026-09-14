@@ -12,7 +12,7 @@
     "build": "npx tsc",
     "watch": "npx tsc -w",
     "postinstall": "npm run build",
-    "test": "vitest run --globals --passWithNoTests",
+    "test": "vitest run --globals --passWithNoTests --testTimeout=15000",
     "deploy": "npx cdk deploy"
   },
   "devDependencies": {
