@@ -185,9 +185,9 @@ class Lambda implements LambdaInterface {
       onData: (data: AttachmentStream | MessageText) => {
         if (data.type === 'attachment') {
           if (!INCLUDE_ATTACHMENTS) {
-            data.release();
+            data.release?.();
           } else {
-            this.onAttachment(event, data).then(() => data.release());
+            this.onAttachment(event, data).then(() => data.release?.());
           }
         } else {
           parser.pause();

@@ -4,6 +4,6 @@ aws-xray-sdk==2.14.0
 pypandoc==1.13
 pdfminer.six==20260107
 pdf2image==1.17.0
-Pillow==12.3.0
+Pillow==13.0.0
 pdfplumber==0.11.10
 pypdf==6.18.1

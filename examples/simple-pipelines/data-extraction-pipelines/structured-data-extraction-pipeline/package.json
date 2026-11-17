@@ -23,9 +23,9 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^22.13.4",
+    "@types/node": "^26.6.6",
     "esbuild": "0.28.2",
-    "tsx": "4.23.13"
+    "tsx": "4.23.15"
   },
   "dependencies": {
     "@project-lakechain/pandoc-text-converter": "*",
@@ -33,10 +33,10 @@
     "@project-lakechain/s3-event-trigger": "*",
     "@project-lakechain/s3-storage-connector": "*",
     "@project-lakechain/structured-entity-extractor": "*",
-    "zod": "^4.6.2"
+    "zod": "^4.6.7"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.269.0",
+    "aws-cdk-lib": "2.277.0",
     "constructs": "^10.8.1"
   }
 }

@@ -2,7 +2,7 @@ boto3==1.34.157
 aws_lambda_powertools==2.43.0
 aws-xray-sdk==2.14.0
 newspaper3k==0.2.8
-Pillow==12.3.0
+Pillow==13.0.0
 nltk==3.10.3
 regex==2024.7.24
 lxml-html-clean==0.4.5

@@ -70,15 +70,15 @@
     "reflect-metadata": "^0.2.2",
     "tmp": "^0.2.7",
     "uuid": "^14.0.2",
-    "zod": "^4.6.2"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@smithy/core": "^3.34.1",
     "@types/aws-lambda": "^8.10.160",
-    "@types/lodash": "^4.17.23",
-    "@types/node": "^25.0.10",
+    "@types/lodash": "^4.17.27",
+    "@types/node": "^26.6.6",
     "aws-sdk-client-mock": "^4.1.0",
     "graphology-types": "0.24.8",
-    "tsx": "4.23.13"
+    "tsx": "4.23.15"
   }
 }

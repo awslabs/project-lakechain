@@ -28,9 +28,9 @@
   "dependencies": {
     "@astrojs/starlight": "0.42.0",
     "astro": "7.3.2",
-    "sharp": "0.35.4"
+    "sharp": "0.35.5"
   },
   "devDependencies": {
-    "rimraf": "6.1.3"
+    "rimraf": "^6.1.4"
   }
 }

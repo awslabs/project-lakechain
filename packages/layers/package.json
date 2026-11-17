@@ -35,17 +35,17 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/node": "^25.9.6",
+    "@types/node": "^26.6.6",
     "esbuild": "0.28.2",
     "npkill": "^0.12.2",
-    "rimraf": "^6.1.3",
-    "tsx": "4.23.13"
+    "rimraf": "^6.1.4",
+    "tsx": "4.23.15"
   },
   "dependencies": {
     "@project-lakechain/core": "^0.10.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.269.0",
+    "aws-cdk-lib": "2.277.0",
     "constructs": "^10.8.1"
   },
   "keywords": [

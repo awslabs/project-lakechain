@@ -49,7 +49,7 @@ export class SharpLayer {
         command: [
           '/bin/bash',
           '-c',
-          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux sharp@0.35.4'
+          'npm install --prefix=/asset-output/nodejs --arch=arm64 --platform=linux sharp@0.35.5'
         ],
         outputType: cdk.BundlingOutput.AUTO_DISCOVER,
         network: 'host',

@@ -23,10 +23,10 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^22.13.4",
+    "@types/node": "^26.6.6",
     "esbuild": "0.28.2",
-    "rimraf": "^6.0.1",
-    "tsx": "4.23.13"
+    "rimraf": "^6.1.4",
+    "tsx": "4.23.15"
   },
   "dependencies": {
     "@project-lakechain/clip-image-processor": "*",
@@ -34,7 +34,7 @@
     "@project-lakechain/s3-storage-connector": "*"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.269.0",
+    "aws-cdk-lib": "2.277.0",
     "constructs": "^10.8.1"
   }
 }

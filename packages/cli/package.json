@@ -37,7 +37,6 @@
     "cli-table3": "^0.6.5",
     "command-exists": "^1.2.9",
     "commander": "^15.0.0",
-    "diskusage": "^1.2.0",
     "fs-extra": "^11.3.0",
     "middleware-chain-js": "^2.0.2",
     "mkdirp": "^3.0.1",
@@ -47,7 +46,7 @@
     "prompts": "^2.4.2",
     "stdin-discarder": "^0.3.2",
     "update-notifier": "^7.3.1",
-    "zod": "^4.6.2",
+    "zod": "^4.6.7",
     "zod-error": "^2.0.0"
   },
   "devDependencies": {}

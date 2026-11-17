@@ -1,6 +1,6 @@
 import exists from 'command-exists';
 import ora from 'ora';
-import disk from 'diskusage';
+import { statfs } from 'node:fs/promises';
 import prettyBytes from 'pretty-bytes';
 import chalk from 'chalk';
 
@@ -33,7 +33,8 @@ program
   // Disk space.
   let spinner = ora('Checking disk space ...').start();
   try {
-    const { free } = await disk.check('/');
+    const { bfree, bsize } = await statfs('/');
+    const free = bfree * bsize;
 
     // If the available disk space is less than 10GB, we issue a warning.
     if (free < 10 * 1024 * 1024 * 1024) {

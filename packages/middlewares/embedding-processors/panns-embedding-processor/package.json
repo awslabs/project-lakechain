@@ -29,9 +29,9 @@
   "license": "Apache-2.0",
   "homepage": "https://awslabs.github.io/project-lakechain/",
   "devDependencies": {
-    "@types/node": "^25.0.10",
+    "@types/node": "^26.6.6",
     "esbuild": "0.28.2",
-    "rimraf": "^6.1.2",
+    "rimraf": "^6.1.4",
     "shx": "^0.4.0"
   },
   "dependencies": {
@@ -39,7 +39,7 @@
     "@project-lakechain/ecs-cluster": "^0.10.0"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.269.0",
+    "aws-cdk-lib": "2.277.0",
     "constructs": "^10.8.1"
   }
 }
