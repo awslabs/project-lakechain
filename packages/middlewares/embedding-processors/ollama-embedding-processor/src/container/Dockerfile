@@ -1,38 +1,29 @@
+# syntax=docker/dockerfile:1
+FROM ghcr.io/astral-sh/uv:0.13.8 AS uv
 FROM ollama/ollama:0.3.6
 
-ENV PYTHON_VERSION=3.10
-ENV PYTHONPATH /code/app
-ENV PYTHONUNBUFFERED 1
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONPATH=/code/app \
+    PYTHONUNBUFFERED=1
 
-# Install dependencies.
-RUN export DEBIAN_FRONTEND=noninteractive \
-  && apt-get -y update \
-  && apt-get -y install --no-install-recommends \
-    python${PYTHON_VERSION} \
-    python3-pip \
-    curl \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy Python binaries.
-RUN ln -s -f /usr/bin/python${PYTHON_VERSION} /usr/bin/python3 && \
-    ln -s -f /usr/bin/python${PYTHON_VERSION} /usr/bin/python && \
-    ln -s -f /usr/bin/pip3 /usr/bin/pip
+# Keep Ollama's system libraries and run the worker with its own Python.
+COPY requirements.txt /tmp/requirements.txt
+RUN --mount=from=uv,source=/uv,target=/usr/local/bin/uv \
+    umask 022 \
+    && UV_PYTHON_INSTALL_DIR=/opt/python uv venv --no-cache --managed-python --python 3.12.16 /opt/venv \
+    && uv pip install --no-cache --python /opt/venv/bin/python -r /tmp/requirements.txt \
+    && uv pip check --python /opt/venv/bin/python
 
-# Create a new user for running the application.
 ARG UID=1000
 RUN adduser --uid ${UID} --disabled-password docker-user
 
-# Switch to the docker user.
 USER docker-user
+RUN python3 -c "from filelock import FileLock"
 WORKDIR /home/docker-user
-
-# Copy application files in the container.
-COPY . ./
-
-# Install dependencies.
-RUN pip3 install --upgrade pip && \
-    pip3 install -r requirements.txt
-
-# Set the entrypoint.
+COPY ./app ./app
+COPY start.sh ./start.sh
 ENTRYPOINT [ "/bin/bash", "start.sh" ]

@@ -4,4 +4,4 @@ aws-xray-sdk==2.12.1
 keybert==0.8.3
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.14.0+cpu
-nltk==3.10.3
+nltk==3.10.4

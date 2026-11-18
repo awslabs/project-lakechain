@@ -6,4 +6,4 @@ pdfminer.six==20260107
 pdf2image==1.17.0
 Pillow==13.0.0
 pdfplumber==0.11.10
-pypdf==6.18.1
+pypdf==6.21.4
