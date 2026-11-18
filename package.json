@@ -57,6 +57,10 @@
     "@qdrant/js-client-rest": {
       "undici@7.29.1": "7.30.2"
     },
+    "lerna": {
+      "@npmcli/package-json@8.0.0": "8.0.1",
+      "npm-packlist@11.3.0": "11.3.1"
+    },
     "nx": {
       "undici@7.29.0": "7.30.2"
     }

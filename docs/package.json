@@ -5,7 +5,7 @@
   "version": "0.8.0",
   "private": true,
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "dev": "astro dev",
@@ -27,7 +27,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@astrojs/starlight": "0.42.0",
-    "astro": "7.3.2",
+    "astro": "7.4.7",
     "sharp": "0.35.5"
   },
   "devDependencies": {
